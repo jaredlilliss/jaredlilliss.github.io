@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lilliss IT — independent software, NSW Australia</title>
+<meta name="description" content="Lilliss IT is the independent software practice of Jared Lilliss, NSW, Australia. Builder of Aussie Health Utility, a free, privacy-first consumer health information app.">
+<style>
+  :root {
+    --bg: #fdfdfc;
+    --text: #1a2028;
+    --muted: #5a6472;
+    --accent: #0f6674;
+    --rule: #e3e5e8;
+    --card: #f4f5f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14181d;
+      --text: #e6e9ec;
+      --muted: #98a2ad;
+      --accent: #4cb8c9;
+      --rule: #2a3138;
+      --card: #1c2229;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.65;
+    font-size: 1.0625rem;
+  }
+  main { max-width: 42rem; margin: 0 auto; padding: 4rem 1.5rem 3rem; }
+  header { margin-bottom: 3rem; }
+  h1 { font-size: 1.75rem; font-weight: 650; letter-spacing: -0.01em; }
+  .tagline { color: var(--muted); margin-top: 0.35rem; }
+  h2 {
+    font-size: 1.15rem;
+    font-weight: 650;
+    margin: 2.5rem 0 0.75rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+  p + p { margin-top: 0.85rem; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  ul { padding-left: 1.25rem; margin: 0.85rem 0; }
+  li + li { margin-top: 0.4rem; }
+  .project {
+    background: var(--card);
+    border-radius: 8px;
+    padding: 1.25rem 1.4rem;
+    margin-top: 1rem;
+  }
+  .project h3 { font-size: 1.05rem; font-weight: 650; }
+  .project .status { color: var(--muted); font-size: 0.9rem; margin-top: 0.15rem; }
+  .project p { margin-top: 0.6rem; }
+  footer {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer p + p { margin-top: 0.3rem; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Lilliss IT</h1>
+    <p class="tagline">Independent software practice of Jared Lilliss — New South Wales, Australia</p>
+  </header>
+
+  <p>Lilliss IT builds small, careful software for Australians. The current focus is free,
+  non-commercial consumer utilities that make public information easier to use — no accounts,
+  no advertising, and no collection of personal information.</p>
+
+  <h2>Current project</h2>
+  <div class="project">
+    <h3>Aussie Health Utility</h3>
+    <p class="status">In development</p>
+    <p>A free consumer health information app for Australians. It presents public, aggregate
+    healthcare data in one place:</p>
+    <ul>
+      <li>Live emergency department wait times (NSW)</li>
+      <li>Pharmacy opening hours and open/closed status</li>
+      <li>Medicare Benefits Schedule information and typical specialist costs</li>
+    </ul>
+    <p>The app is anonymous by design: no user accounts, no advertising, no tracking, and no
+    personal information collected. All displayed data is drawn from public government sources
+    and attributed to them.</p>
+    <p>Aussie Health Utility is an information tool only. It is not a medical device and does
+    not diagnose, treat, cure, or prevent any medical condition. Always consult a healthcare
+    professional for medical advice, diagnosis, or treatment.</p>
+  </div>
+
+  <h2>How we work with data sources</h2>
+  <p>Our services retrieve only published, public, aggregate data. Automated access identifies
+  itself honestly (a contactable User-Agent on every request), respects rate limits, and follows
+  each source's licensing — including seeking written permission where a licence requires it.</p>
+
+  <h2>Contact</h2>
+  <!-- 16/08/2026: gmail per the documented go-live fallback; swap to contact@lillissit.com.au once the domain + mailbox exist -->
+  <p>Email: <a href="mailto:jaredlilliss@gmail.com">jaredlilliss@gmail.com</a></p>
+  <p>Privacy questions and requests: see our <a href="/privacy.html">Privacy Policy</a>.</p>
+</main>
+
+<footer>
+  <p>&copy; 2026 Jared Lilliss, trading as Lilliss IT &middot; ABN 78&nbsp;576&nbsp;434&nbsp;613 &middot; NSW, Australia</p>
+  <p><a href="/privacy.html">Privacy Policy</a></p>
+</footer>
+</body>
+</html>
