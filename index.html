@@ -1,116 +1,112 @@
-<!DOCTYPE html>
-<html lang="en-AU">
+<!doctype html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lilliss IT — independent software, NSW Australia</title>
-<meta name="description" content="Lilliss IT is the independent software practice of Jared Lilliss, NSW, Australia. Builder of Aussie Health Utility, a free, privacy-first consumer health information app.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jared Lilliss — Lilliss IT</title>
+<meta name="description" content="Jared Lilliss — IT support and field technician, Sydney and regional NSW. Owner of Lilliss IT.">
 <style>
-  :root {
-    --bg: #fdfdfc;
-    --text: #1a2028;
-    --muted: #5a6472;
-    --accent: #0f6674;
-    --rule: #e3e5e8;
-    --card: #f4f5f6;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #14181d;
-      --text: #e6e9ec;
-      --muted: #98a2ad;
-      --accent: #4cb8c9;
-      --rule: #2a3138;
-      --card: #1c2229;
-    }
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    line-height: 1.65;
-    font-size: 1.0625rem;
-  }
-  main { max-width: 42rem; margin: 0 auto; padding: 4rem 1.5rem 3rem; }
-  header { margin-bottom: 3rem; }
-  h1 { font-size: 1.75rem; font-weight: 650; letter-spacing: -0.01em; }
-  .tagline { color: var(--muted); margin-top: 0.35rem; }
-  h2 {
-    font-size: 1.15rem;
-    font-weight: 650;
-    margin: 2.5rem 0 0.75rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--rule);
-  }
-  p + p { margin-top: 0.85rem; }
-  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
-  ul { padding-left: 1.25rem; margin: 0.85rem 0; }
-  li + li { margin-top: 0.4rem; }
-  .project {
-    background: var(--card);
-    border-radius: 8px;
-    padding: 1.25rem 1.4rem;
-    margin-top: 1rem;
-  }
-  .project h3 { font-size: 1.05rem; font-weight: 650; }
-  .project .status { color: var(--muted); font-size: 0.9rem; margin-top: 0.15rem; }
-  .project p { margin-top: 0.6rem; }
-  footer {
-    max-width: 42rem;
-    margin: 0 auto;
-    padding: 1.5rem;
-    border-top: 1px solid var(--rule);
-    color: var(--muted);
-    font-size: 0.9rem;
-  }
-  footer p + p { margin-top: 0.3rem; }
+:root{
+  --bg:#f7f5f2; --ink:#14161a; --muted:#5d6470; --line:#e2ddd6;
+  --card:#fffefc; --accent:#c2410c; --glow:rgba(194,65,12,.10);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0d1014; --ink:#eceff3; --muted:#98a1ad; --line:#222831;
+  --card:#141920; --accent:#fb923c; --glow:rgba(251,146,60,.13);
+}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg); color:var(--ink); min-height:100vh;
+  font:400 17px/1.65 ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(760px 420px at 15% -8%,var(--glow),transparent 70%);
+}
+.wrap{max-width:680px;margin:0 auto;padding:clamp(56px,11vw,132px) 24px 72px}
+.fade{animation:up .7s cubic-bezier(.22,.7,.3,1) both}
+.d1{animation-delay:.06s}.d2{animation-delay:.13s}.d3{animation-delay:.2s}.d4{animation-delay:.27s}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}}
+.eyebrow{
+  font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-bottom:18px;
+}
+h1{
+  font-size:clamp(38px,8.5vw,62px);line-height:1.04;letter-spacing:-.03em;
+  font-weight:700;margin-bottom:18px;
+}
+.lede{font-size:clamp(18px,3.4vw,21px);color:var(--muted);line-height:1.5;max-width:30ch}
+.rule{height:1px;background:var(--line);margin:44px 0 40px}
+h2{
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;margin-bottom:18px;
+}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:22px 24px;margin-bottom:14px;
+  transition:transform .25s ease,border-color .25s ease;
+}
+.card:hover{transform:translateY(-2px);border-color:var(--accent)}
+.card h3{font-size:17px;font-weight:650;margin-bottom:7px;letter-spacing:-.01em}
+.card p{color:var(--muted);font-size:15.5px;line-height:1.6}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tag{
+  font-size:13px;color:var(--muted);border:1px solid var(--line);
+  border-radius:999px;padding:5px 12px;white-space:nowrap;
+}
+.tag.on{color:var(--accent);border-color:var(--accent)}
+footer{margin-top:48px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}
+a.link{
+  color:var(--ink);text-decoration:none;font-weight:600;font-size:15px;
+  border-bottom:1.5px solid var(--accent);padding-bottom:2px;
+  transition:color .2s ease;
+}
+a.link:hover{color:var(--accent)}
+.note{color:var(--muted);font-size:13.5px;margin-top:26px;line-height:1.55}
 </style>
 </head>
 <body>
-<main>
-  <header>
-    <h1>Lilliss IT</h1>
-    <p class="tagline">Independent software practice of Jared Lilliss — New South Wales, Australia</p>
-  </header>
+<main class="wrap">
+  <p class="eyebrow fade">Sydney &amp; regional NSW</p>
+  <h1 class="fade d1">Jared Lilliss</h1>
+  <p class="lede fade d1">IT support and field technician. Owner of Lilliss IT — the one who scopes it, installs it, documents it and answers the phone when it breaks.</p>
 
-  <p>Lilliss IT builds small, careful software for Australians. The current focus is free,
-  non-commercial consumer utilities that make public information easier to use — no accounts,
-  no advertising, and no collection of personal information.</p>
+  <div class="rule fade d2"></div>
 
-  <h2>Current project</h2>
-  <div class="project">
-    <h3>Aussie Health Utility</h3>
-    <p class="status">In development</p>
-    <p>A free consumer health information app for Australians. It presents public, aggregate
-    healthcare data in one place:</p>
-    <ul>
-      <li>Live emergency department wait times (NSW)</li>
-      <li>Pharmacy opening hours and open/closed status</li>
-      <li>Medicare Benefits Schedule information and typical specialist costs</li>
-    </ul>
-    <p>The app is anonymous by design: no user accounts, no advertising, no tracking, and no
-    personal information collected. All displayed data is drawn from public government sources
-    and attributed to them.</p>
-    <p>Aussie Health Utility is an information tool only. It is not a medical device and does
-    not diagnose, treat, cure, or prevent any medical condition. Always consult a healthcare
-    professional for medical advice, diagnosis, or treatment.</p>
+  <h2 class="fade d2">What I do</h2>
+
+  <div class="card fade d2">
+    <h3>Field &amp; infrastructure</h3>
+    <p>POS and EFTPOS rollouts and fault resolution, structured cabling and switching, CCTV and AV installation, Windows endpoint and hardware support — mostly for hospitality venues and small business, often mid-service.</p>
   </div>
 
-  <h2>How we work with data sources</h2>
-  <p>Our services retrieve only published, public, aggregate data. Automated access identifies
-  itself honestly (a contactable User-Agent on every request), respects rate limits, and follows
-  each source's licensing — including seeking written permission where a licence requires it.</p>
+  <div class="card fade d3">
+    <h3>Certified, and still going</h3>
+    <p>CompTIA A+ and Microsoft Azure Fundamentals (AZ-900) held. Security+ and AZ-500 in progress.</p>
+    <div class="tags">
+      <span class="tag">CompTIA A+</span>
+      <span class="tag">AZ-900</span>
+      <span class="tag on">Security+ · in progress</span>
+      <span class="tag on">AZ-500 · in progress</span>
+    </div>
+  </div>
 
-  <h2>Contact</h2>
-  <!-- 16/08/2026: gmail per the documented go-live fallback; swap to contact@lillissit.com.au once the domain + mailbox exist -->
-  <p>Email: <a href="mailto:jaredlilliss@gmail.com">jaredlilliss@gmail.com</a></p>
-  <p>Privacy questions and requests: see our <a href="/privacy.html">Privacy Policy</a>.</p>
+  <div class="card fade d3">
+    <h3>Building</h3>
+    <p>A privacy-by-design data platform over public Australian health datasets: a polling loop feeding an append-only PostgreSQL time series, with the privacy posture set at the schema level so no personal or health information is ever collected.</p>
+    <div class="tags">
+      <span class="tag">Python</span>
+      <span class="tag">PostgreSQL</span>
+      <span class="tag">Time series</span>
+    </div>
+  </div>
+
+  <footer class="fade d4">
+    <a class="link" href="https://www.linkedin.com/in/jaredlilliss/">LinkedIn</a>
+    <a class="link" href="https://github.com/jaredlilliss">GitHub</a>
+    <a class="link" href="/privacy.html">Privacy</a>
+  </footer>
+  <p class="note fade d4">Available for work across Sydney and regional NSW. Best way to reach me is LinkedIn.</p>
 </main>
-
-<footer>
-  <p>&copy; 2026 Jared Lilliss, trading as Lilliss IT &middot; ABN 78&nbsp;576&nbsp;434&nbsp;613 &middot; NSW, Australia</p>
-  <p><a href="/privacy.html">Privacy Policy</a></p>
-</footer>
 </body>
 </html>
