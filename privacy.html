@@ -11,53 +11,60 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- v3 "After Hours" skin 24/08/2026 — palette matches index.html; legal text unchanged. -->
 <style>
 :root{
-  --bg:#f8f5ef; --surface:#fffdf9; --ink:#221d17; --muted:#6b6257;
-  --line:#e6dfd2; --accent:#a8481c; --accent-soft:rgba(168,72,28,.09);
+  --night:#0A0E16; --panel:rgba(20,28,44,.55); --panel-line:rgba(160,190,235,.14);
+  --panel-line-strong:rgba(160,190,235,.26);
+  --ink:#EDE9DC; --muted:#9BA5B8;
+  --ember:#F2A65A; --ember-soft:rgba(242,166,90,.08); --glow:rgba(242,166,90,.45);
   --serif:"Fraunces",Georgia,"Times New Roman",serif;
   --sans:"Inter",ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"Cascadia Code","Segoe UI Mono",Consolas,monospace;
 }
-@media (prefers-color-scheme:dark){:root{
-  --bg:#16130e; --surface:#1e1a14; --ink:#ede7db; --muted:#a59a88;
-  --line:#332c22; --accent:#e58149; --accent-soft:rgba(229,129,73,.10);
-}}
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
 body{
-  background:var(--bg);color:var(--ink);min-height:100vh;
+  background:var(--night);color:var(--ink);min-height:100vh;
   font:400 17px/1.68 var(--sans);
   -webkit-font-smoothing:antialiased;
 }
+body::after{content:"";position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.04;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .wrap{max-width:680px;margin:0 auto;padding:0 24px}
-header.site{border-bottom:1px solid var(--line)}
-.bar{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:22px 0;flex-wrap:wrap}
+header.site{border-bottom:1px solid var(--panel-line);background:rgba(10,14,22,.7)}
+.bar{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:20px 0;flex-wrap:wrap}
 .wordmark{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.01em;color:var(--ink);text-decoration:none}
-.wordmark span{color:var(--accent)}
-nav a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:500}
-nav a:hover{color:var(--accent)}
+.wordmark span{color:var(--ember)}
+nav a{color:var(--muted);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding-bottom:3px;border-bottom:1px solid transparent}
+nav a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 main{padding:clamp(44px,7vw,72px) 0 48px}
 h1{
   font-family:var(--serif);font-weight:600;
-  font-size:clamp(28px,5vw,38px);letter-spacing:-.01em;line-height:1.15;
+  font-size:clamp(30px,5.4vw,44px);letter-spacing:-.015em;line-height:1.12;
+  text-shadow:0 2px 30px rgba(0,0,0,.5);
 }
-.meta{color:var(--muted);margin-top:8px;font-size:15px}
+.meta{color:var(--muted);margin-top:10px;font:500 13px/1.6 var(--mono);letter-spacing:.06em}
 .summary{
-  background:var(--accent-soft);border:1px solid var(--line);border-radius:14px;
+  background:var(--panel);border:1px solid var(--panel-line-strong);border-left:3px solid var(--ember);
+  border-radius:0 14px 14px 0;
   padding:20px 24px;margin-top:28px;font-weight:500;line-height:1.6;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
 }
 h2{
-  font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.005em;
-  margin:44px 0 12px;padding-top:32px;border-top:1px solid var(--line);
+  font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:-.005em;
+  margin:44px 0 12px;padding-top:32px;border-top:1px solid var(--panel-line-strong);
 }
 p+p{margin-top:14px}
-main p{color:var(--ink)}
-a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
-ul{padding-left:1.25rem;margin:14px 0}
+main p{color:var(--muted)}
+main p strong{color:var(--ink)}
+.summary{color:var(--ink)}
+a{color:var(--ember);text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{text-shadow:0 0 18px var(--glow)}
+ul{padding-left:1.25rem;margin:14px 0;color:var(--muted)}
 li+li{margin-top:8px}
-footer{border-top:1px solid var(--line);padding:28px 0 44px;color:var(--muted);font-size:13.5px;line-height:1.7}
+footer{border-top:1px solid var(--panel-line);padding:28px 0 44px;color:var(--muted);font:400 13px/1.8 var(--mono)}
 footer a{color:var(--muted)}
-footer a:hover{color:var(--accent)}
+footer a:hover{color:var(--ember)}
 </style>
 </head>
 <body>
