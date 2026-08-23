@@ -1,140 +1,148 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-AU">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Privacy Policy — Lilliss IT</title>
-<meta name="description" content="Privacy policy for Lilliss IT and the Aussie Health Utility app. We do not collect personal information.">
+<meta name="description" content="Privacy policy for Lilliss IT (lilliss.au) and the Aussie Health Utility app. We do not collect personal information.">
+<!-- Contact email: jaredlilliss@gmail.com is the documented go-live fallback.
+     When the Proton mailbox on lilliss.au exists, find-replace
+     jaredlilliss@gmail.com -> contact@lilliss.au across this file and index.html. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #fdfdfc;
-    --text: #1a2028;
-    --muted: #5a6472;
-    --accent: #0f6674;
-    --rule: #e3e5e8;
-    --card: #f4f5f6;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #14181d;
-      --text: #e6e9ec;
-      --muted: #98a2ad;
-      --accent: #4cb8c9;
-      --rule: #2a3138;
-      --card: #1c2229;
-    }
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    line-height: 1.65;
-    font-size: 1.0625rem;
-  }
-  main { max-width: 42rem; margin: 0 auto; padding: 4rem 1.5rem 3rem; }
-  header { margin-bottom: 2.5rem; }
-  h1 { font-size: 1.75rem; font-weight: 650; letter-spacing: -0.01em; }
-  .meta { color: var(--muted); margin-top: 0.35rem; font-size: 0.95rem; }
-  h2 {
-    font-size: 1.15rem;
-    font-weight: 650;
-    margin: 2.5rem 0 0.75rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--rule);
-  }
-  p + p { margin-top: 0.85rem; }
-  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
-  ul { padding-left: 1.25rem; margin: 0.85rem 0; }
-  li + li { margin-top: 0.4rem; }
-  .summary {
-    background: var(--card);
-    border-radius: 8px;
-    padding: 1.25rem 1.4rem;
-    margin-top: 1rem;
-    font-weight: 500;
-  }
-  footer {
-    max-width: 42rem;
-    margin: 0 auto;
-    padding: 1.5rem;
-    border-top: 1px solid var(--rule);
-    color: var(--muted);
-    font-size: 0.9rem;
-  }
-  footer p + p { margin-top: 0.3rem; }
+:root{
+  --bg:#f8f5ef; --surface:#fffdf9; --ink:#221d17; --muted:#6b6257;
+  --line:#e6dfd2; --accent:#a8481c; --accent-soft:rgba(168,72,28,.09);
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --sans:"Inter",ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#16130e; --surface:#1e1a14; --ink:#ede7db; --muted:#a59a88;
+  --line:#332c22; --accent:#e58149; --accent-soft:rgba(229,129,73,.10);
+}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--ink);min-height:100vh;
+  font:400 17px/1.68 var(--sans);
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:680px;margin:0 auto;padding:0 24px}
+header.site{border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:22px 0;flex-wrap:wrap}
+.wordmark{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.01em;color:var(--ink);text-decoration:none}
+.wordmark span{color:var(--accent)}
+nav a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:500}
+nav a:hover{color:var(--accent)}
+main{padding:clamp(44px,7vw,72px) 0 48px}
+h1{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(28px,5vw,38px);letter-spacing:-.01em;line-height:1.15;
+}
+.meta{color:var(--muted);margin-top:8px;font-size:15px}
+.summary{
+  background:var(--accent-soft);border:1px solid var(--line);border-radius:14px;
+  padding:20px 24px;margin-top:28px;font-weight:500;line-height:1.6;
+}
+h2{
+  font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.005em;
+  margin:44px 0 12px;padding-top:32px;border-top:1px solid var(--line);
+}
+p+p{margin-top:14px}
+main p{color:var(--ink)}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+ul{padding-left:1.25rem;margin:14px 0}
+li+li{margin-top:8px}
+footer{border-top:1px solid var(--line);padding:28px 0 44px;color:var(--muted);font-size:13.5px;line-height:1.7}
+footer a{color:var(--muted)}
+footer a:hover{color:var(--accent)}
 </style>
 </head>
 <body>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="wordmark" href="/">Lilliss <span>IT</span></a>
+    <nav><a href="/">Home</a></nav>
+  </div>
+</header>
+
 <main>
-  <header>
+  <div class="wrap">
     <h1>Privacy Policy</h1>
     <p class="meta">Lilliss IT &middot; Effective August 2026</p>
-  </header>
 
-  <p class="summary">The short version: we do not collect personal information. This website has
-  no analytics, no cookies and no tracking, and the Aussie Health Utility app has no accounts,
-  no advertising and collects nothing about you.</p>
+    <p class="summary">The short version: we do not collect personal information. This website has
+    no analytics, no cookies and no tracking, and the Aussie Health Utility app has no accounts,
+    no advertising and collects nothing about you.</p>
 
-  <h2>Who we are</h2>
-  <p>This policy covers Jared Lilliss, trading as Lilliss IT (ABN 78&nbsp;576&nbsp;434&nbsp;613),
-  of New South Wales, Australia — referred to below as "we" — and applies to this website
-  (currently served at jaredlilliss.github.io) and the Aussie Health Utility app.</p>
+    <h2>Who we are</h2>
+    <p>This policy covers Jared Lilliss, trading as Lilliss IT (ABN 78&nbsp;576&nbsp;434&nbsp;613),
+    of New South Wales, Australia — referred to below as "we" — and applies to this website
+    (lilliss.au) and the Aussie Health Utility app.</p>
 
-  <h2>What we collect</h2>
-  <p><strong>This website:</strong> we do not use cookies, analytics, or tracking of any kind,
-  and we do not collect personal information. Our hosting provider, GitHub Pages, automatically
-  logs the IP address of each visit and stores it on its own systems for security purposes
-  (see <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" rel="noopener">GitHub's
-  data collection statement</a> and <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">Privacy
-  Statement</a>). We do not receive or have access to these logs.</p>
-  <p><strong>The app:</strong> nothing. Aussie Health Utility has no user accounts, no sign-in,
-  no advertising, and no analytics. It does not collect, store or transmit personal information.
-  The information it displays — emergency department wait times, pharmacy opening hours, and
-  Medicare Benefits Schedule cost information — is public, aggregate data published by
-  government sources.</p>
-  <p><strong>Email:</strong> if you email us, we receive what you send (your address and your
-  message). We use it only to reply and keep it only as ordinary correspondence.</p>
+    <h2>What we collect</h2>
+    <p><strong>This website:</strong> we do not use cookies, analytics, or tracking of any kind,
+    and we do not collect personal information. Our hosting provider, GitHub Pages, automatically
+    logs the IP address of each visit and stores it on its own systems for security purposes
+    (see <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" rel="noopener">GitHub's
+    data collection statement</a> and <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">Privacy
+    Statement</a>). We do not receive or have access to these logs. The page fonts are served by
+    Google Fonts; when your browser fetches them, Google receives the request (including your IP
+    address) under <a href="https://developers.google.com/fonts/faq/privacy" rel="noopener">its
+    Google Fonts privacy notice</a>. We do not receive any of that information.</p>
+    <p><strong>The app:</strong> nothing. Aussie Health Utility has no user accounts, no sign-in,
+    no advertising, and no analytics. It does not collect, store or transmit personal information.
+    The information it displays — emergency department wait times, pharmacy opening hours, and
+    Medicare Benefits Schedule cost information — is public, aggregate data published by
+    government sources.</p>
+    <p><strong>Email:</strong> if you email us, we receive what you send (your address and your
+    message). We use it only to reply and keep it only as ordinary correspondence.</p>
 
-  <h2>What we don't do</h2>
-  <ul>
-    <li>We do not sell, share or disclose personal information to anyone.</li>
-    <li>We do not use personal information for marketing.</li>
-    <li>We do not use personal information in automated decision-making.</li>
-    <li>We hold no databases of personal information at all. Because no personal information is
-    collected, none is retained and there is nothing to delete.</li>
-  </ul>
+    <h2>What we don't do</h2>
+    <ul>
+      <li>We do not sell, share or disclose personal information to anyone.</li>
+      <li>We do not use personal information for marketing.</li>
+      <li>We do not use personal information in automated decision-making.</li>
+      <li>We hold no databases of personal information at all. Because no personal information is
+      collected, none is retained and there is nothing to delete.</li>
+    </ul>
 
-  <h2>Overseas disclosure</h2>
-  <p>We do not disclose personal information to overseas recipients. The one qualification:
-  this website is hosted on GitHub Pages, whose infrastructure is located in the
-  <strong>United States</strong> — so the server logs described above are processed and held
-  there by GitHub, not by us.</p>
+    <h2>Overseas disclosure</h2>
+    <p>We do not disclose personal information to overseas recipients. The one qualification:
+    this website is hosted on GitHub Pages and its fonts are served by Google Fonts, both of whose
+    infrastructure is located in the <strong>United States</strong> — so the server and font-request
+    logs described above are processed and held there by GitHub and Google respectively, not by us.</p>
 
-  <h2>How information is held</h2>
-  <p>The only personal information we hold is email correspondence, which is kept in a
-  professionally hosted, access-controlled mailbox protected by multi-factor authentication.</p>
+    <h2>How information is held</h2>
+    <p>The only personal information we hold is email correspondence, which is kept in a
+    professionally hosted, access-controlled mailbox protected by multi-factor authentication.</p>
 
-  <h2>Access and correction</h2>
-  <p>Because we hold no personal information beyond any email correspondence you have sent us,
-  there is usually nothing to access or correct. If you would like correspondence from you
-  deleted, email us and we will delete it.</p>
+    <h2>Access and correction</h2>
+    <p>Because we hold no personal information beyond any email correspondence you have sent us,
+    there is usually nothing to access or correct. If you would like correspondence from you
+    deleted, email us and we will delete it.</p>
 
-  <h2>Questions and complaints</h2>
-  <!-- 16/08/2026: gmail per the documented go-live fallback; swap to contact@lillissit.com.au once the domain + mailbox exist -->
-  <p>Privacy questions or complaints: <a href="mailto:jaredlilliss@gmail.com">jaredlilliss@gmail.com</a>.
-  We will respond within 30 days. If you are not satisfied with our response, you can contact the
-  Office of the Australian Information Commissioner (<a href="https://www.oaic.gov.au" rel="noopener">oaic.gov.au</a>).</p>
+    <h2>Questions and complaints</h2>
+    <p>Privacy questions or complaints: <a href="mailto:jaredlilliss@gmail.com">jaredlilliss@gmail.com</a>.
+    We will respond within 30 days. If you are not satisfied with our response, you can contact the
+    Office of the Australian Information Commissioner (<a href="https://www.oaic.gov.au" rel="noopener">oaic.gov.au</a>).</p>
 
-  <h2>Changes</h2>
-  <p>If our practices ever change — for example, if a future version of the app introduces a
-  feature that handles any personal information — we will update this policy before that change
-  takes effect and note the new effective date here.</p>
+    <h2>Changes</h2>
+    <p>If our practices ever change — for example, if a future version of the app introduces a
+    feature that handles any personal information — we will update this policy before that change
+    takes effect and note the new effective date here.</p>
+  </div>
 </main>
 
 <footer>
-  <p>&copy; 2026 Jared Lilliss, trading as Lilliss IT &middot; ABN 78&nbsp;576&nbsp;434&nbsp;613 &middot; NSW, Australia</p>
-  <p><a href="/index.html">Home</a></p>
+  <div class="wrap">
+    <p>&copy; 2026 Jared Lilliss, trading as Lilliss IT &middot; ABN 78&nbsp;576&nbsp;434&nbsp;613 &middot; NSW, Australia</p>
+    <p><a href="/">Home</a></p>
+  </div>
 </footer>
+
 </body>
 </html>
