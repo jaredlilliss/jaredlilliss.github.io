@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Jared Lilliss — builds that keep running</title>
-<meta name="description" content="Jared Lilliss — IT field technician and builder, Sydney. Data pipelines, single-file web builds, and automation that survives contact with real machines.">
+<title>Jared Lilliss — Night Shift</title>
+<meta name="description" content="Jared Lilliss — IT field technician and builder, Sydney. One night shift, four systems that keep running: data pipelines, single-file web builds, automation with receipts.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --night:#0A0E16; --panel:rgba(20,28,44,.55); --panel-line:rgba(160,190,235,.14);
-  --panel-line-strong:rgba(160,190,235,.26);
-  --ink:#EDE9DC; --muted:#9BA5B8; --muted-2:#66718A;
+  --night:#0A0E16; --panel:rgba(16,24,40,.62); --panel-line:rgba(160,190,235,.15);
+  --panel-line-strong:rgba(160,190,235,.28);
+  --ink:#EDE9DC; --muted:#A8B2C4; --muted-2:#6A7590;
   --ember:#F2A65A; --ember-deep:#D9622B; --glow:rgba(242,166,90,.5);
   --serif:"Fraunces",Georgia,"Times New Roman",serif;
   --sans:"Inter",ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -25,217 +25,234 @@ body{
   background:var(--night);color:var(--ink);min-height:100vh;
   font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip;
 }
-.wrap{max-width:1020px;margin:0 auto;padding:0 24px}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
 ::selection{background:var(--ember);color:var(--night)}
-body::after{content:"";position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.045;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body::after{content:"";position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* THE SKY — fixed, behind everything, evolves with scroll */
+#sky{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1}
 
 /* header */
-header.site{position:sticky;top:0;z-index:40;background:rgba(10,14,22,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--panel-line)}
-.bar{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:18px 0;flex-wrap:wrap}
+header.site{position:sticky;top:0;z-index:40;background:rgba(10,14,22,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--panel-line)}
+.bar{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:16px 0;flex-wrap:wrap}
 .wordmark{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.01em;color:var(--ink);text-decoration:none}
 .wordmark span{color:var(--ember)}
 nav.top{display:flex;gap:22px;flex-wrap:wrap}
 nav.top a{color:var(--muted);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding-bottom:3px;border-bottom:1px solid transparent}
 nav.top a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 
-/* hero over the night scene */
-.hero{position:relative;overflow:hidden;isolation:isolate;padding:clamp(70px,12vw,150px) 0 0}
-#night{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
-.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(10,14,22,.25) 0%,rgba(10,14,22,0) 45%,rgba(10,14,22,.66) 88%,var(--night) 100%)}
-.kicker{display:flex;align-items:center;gap:14px;font:600 12.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--ember);margin-bottom:26px}
-.kicker::before{content:"";width:34px;height:2px;background:var(--ember);box-shadow:0 0 10px var(--glow)}
+/* shift-log chip — the night's narrator */
+.shiftlog{
+  position:fixed;left:14px;bottom:14px;z-index:60;display:flex;flex-direction:column;gap:2px;
+  background:rgba(8,12,20,.82);border:1px solid var(--panel-line-strong);border-radius:8px;
+  padding:.6rem .75rem;font:600 10px/1.6 var(--mono);letter-spacing:.16em;color:var(--muted-2);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);pointer-events:none;text-transform:uppercase;
+}
+.shiftlog b{color:var(--ember);letter-spacing:.2em}
+.shiftlog b::before{content:"●";margin-right:6px;color:#4ADE80;text-shadow:0 0 8px #4ADE80;animation:blip 2.2s ease-in-out infinite}
+@keyframes blip{50%{opacity:.35}}
+.shiftlog i{font-style:normal;color:var(--ink)}
+@media (max-width:700px){.shiftlog{display:none}}
+@media (prefers-reduced-motion:reduce){.shiftlog b::before{animation:none}}
+
+/* phase tag — each section is a timestamped entry in the shift */
+.phase{display:inline-flex;align-items:center;gap:10px;font:700 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--ember);margin-bottom:16px;border:1px solid rgba(242,166,90,.4);border-radius:4px;padding:.5em .8em;background:rgba(10,14,22,.5)}
+.phase::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ember);box-shadow:0 0 10px var(--glow)}
+
+/* hero */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:90px 0 60px}
 h1{
   font-family:var(--serif);font-weight:600;
-  font-size:clamp(42px,8.4vw,88px);line-height:.98;letter-spacing:-.022em;
-  max-width:14ch;margin-bottom:26px;text-wrap:balance;text-shadow:0 2px 40px rgba(0,0,0,.6);
+  font-size:clamp(46px,10.4vw,120px);line-height:.95;letter-spacing:-.025em;
+  max-width:12ch;margin-bottom:28px;text-wrap:balance;text-shadow:0 4px 60px rgba(0,0,0,.75);
 }
-h1 em{font-style:italic;font-weight:500;color:var(--ember);text-shadow:0 0 34px var(--glow)}
-.lede{font-size:clamp(17.5px,2.6vw,20px);color:var(--muted);line-height:1.6;max-width:54ch}
-.lede strong{color:var(--ink);font-weight:600}
-.hero-links{margin-top:32px;display:flex;gap:22px;flex-wrap:wrap;align-items:center;padding-bottom:clamp(60px,10vw,110px)}
-.hero-links a{color:var(--ink);text-decoration:none;font:500 13px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--ember);padding-bottom:3px}
-.hero-links a:hover{color:var(--ember)}
+h1 em{font-style:italic;font-weight:500;color:var(--ember);text-shadow:0 0 44px var(--glow)}
+.lede{font-size:clamp(17.5px,2.6vw,21px);color:var(--muted);line-height:1.6;max-width:54ch;text-shadow:0 2px 20px rgba(0,0,0,.7)}
+.lede strong{color:var(--ink)}
+.hero-links{margin-top:34px;display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.hero-links a{color:var(--ink);text-decoration:none;font:600 13px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border-bottom:2px solid var(--ember);padding-bottom:4px}
+.hero-links a:hover{color:var(--ember);text-shadow:0 0 24px var(--glow)}
+.scrolldown{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font:600 10px/1 var(--mono);letter-spacing:.3em;color:var(--muted-2);text-transform:uppercase;animation:sink 2.4s ease-in-out infinite}
+@keyframes sink{50%{transform:translateX(-50%) translateY(8px);opacity:.4}}
+@media (prefers-reduced-motion:reduce){.scrolldown{animation:none}}
 
-/* sections */
-section{padding:clamp(52px,8vw,92px) 0;border-top:1px solid var(--panel-line);position:relative;counter-increment:sec}
-body{counter-reset:sec}
-.sec-head{position:relative;margin-bottom:clamp(26px,4vw,40px)}
-.sec-head::before{
-  content:"0" counter(sec);
-  position:absolute;top:-.44em;right:0;z-index:0;
-  font:600 clamp(80px,14vw,170px)/1 var(--serif);letter-spacing:-.04em;
-  color:transparent;-webkit-text-stroke:1.5px rgba(160,190,235,.12);
+/* sections float over the sky on glass */
+section{position:relative;padding:clamp(64px,10vw,120px) 0}
+.sec-head{margin-bottom:clamp(30px,5vw,52px)}
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(34px,6vw,64px);letter-spacing:-.02em;line-height:1.02;margin-bottom:12px;text-shadow:0 3px 40px rgba(0,0,0,.7);text-wrap:balance}
+.sub{color:var(--muted);max-width:58ch;text-shadow:0 2px 16px rgba(0,0,0,.6)}
+
+/* JOBS — each project is a monument */
+.job{position:relative;margin-bottom:clamp(56px,9vw,110px)}
+.job:last-child{margin-bottom:0}
+.jn{
+  position:absolute;top:-.58em;right:-8px;z-index:0;
+  font:600 clamp(120px,24vw,300px)/1 var(--serif);letter-spacing:-.05em;
+  color:transparent;-webkit-text-stroke:1.5px rgba(160,190,235,.16);
   pointer-events:none;user-select:none;
 }
-@supports not (-webkit-text-stroke:1px black){.sec-head::before{color:rgba(160,190,235,.07)}}
-@media (max-width:700px){.sec-head::before{font-size:clamp(3.6rem,16vw,5rem);opacity:.7}}
-.eyebrow{display:flex;align-items:center;gap:12px;font:600 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ember);margin-bottom:14px}
-.eyebrow::after{content:"";flex:1;max-width:120px;height:1px;background:var(--panel-line-strong)}
-h2{font-family:var(--serif);font-weight:600;font-size:clamp(30px,5vw,50px);letter-spacing:-.018em;line-height:1.04;margin-bottom:10px;position:relative;z-index:1}
-.sub{color:var(--muted);max-width:58ch;position:relative;z-index:1}
-
-/* project ledger */
-.proj{list-style:none;border-top:1px solid var(--panel-line-strong)}
-.proj li{
-  display:grid;grid-template-columns:56px minmax(200px,.9fr) 1.5fr;gap:12px 28px;
-  padding:clamp(22px,3.4vw,34px) 12px;border-bottom:1px solid var(--panel-line-strong);
-  align-items:start;position:relative;transition:background .25s ease;
+@supports not (-webkit-text-stroke:1px black){.jn{color:rgba(160,190,235,.07)}}
+.job-card{
+  position:relative;z-index:1;background:var(--panel);border:1px solid var(--panel-line-strong);
+  border-radius:20px;padding:clamp(26px,4.5vw,46px);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 40px 90px -40px rgba(0,0,0,.8);
+  transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;
 }
-.proj li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--ember);opacity:0;transition:opacity .25s ease;box-shadow:0 0 14px var(--glow)}
-.proj li:hover{background:rgba(242,166,90,.05)}
-.proj li:hover::before{opacity:1}
-.proj .n{font:500 13px/1.4 var(--mono);color:var(--ember);opacity:.8}
-.proj h3{font-family:var(--serif);font-weight:600;font-size:clamp(21px,2.7vw,28px);letter-spacing:-.012em;margin-bottom:.5rem}
-.proj h3 a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ember)}
-.proj h3 a:hover{color:var(--ember);text-shadow:0 0 24px var(--glow)}
-.proj .tags{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.6rem}
-.proj .tags span{font:600 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--panel-line-strong);border-radius:99px;padding:.4em .7em}
-.proj p{color:var(--muted);font-size:15.5px;line-height:1.62;max-width:60ch}
-.proj p strong{color:var(--ink)}
-.proj .live{display:inline-block;margin-top:.7rem;color:var(--ink);text-decoration:none;font:600 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--ember);padding-bottom:3px}
-.proj .live:hover{color:var(--ember)}
-@media (max-width:640px){
-  .proj li{grid-template-columns:44px 1fr}
-  .proj p,.proj .tags,.proj .live{grid-column:2}
-}
+@media (hover:hover){.job-card:hover{transform:translateY(-6px);border-color:rgba(242,166,90,.45);box-shadow:0 50px 110px -40px rgba(0,0,0,.9),0 0 60px rgba(242,166,90,.1)}}
+.job h3{font-family:var(--serif);font-weight:600;font-size:clamp(30px,4.6vw,48px);letter-spacing:-.018em;line-height:1.05;margin-bottom:.6rem}
+.job h3 a{color:var(--ink);text-decoration:none;border-bottom:3px solid var(--ember)}
+.job h3 a:hover{color:var(--ember);text-shadow:0 0 30px var(--glow)}
+.job .tags{display:flex;gap:.5rem;flex-wrap:wrap;margin:.9rem 0 1.1rem}
+.job .tags span{font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--panel-line-strong);border-radius:99px;padding:.45em .8em;background:rgba(10,14,22,.4)}
+.job p{color:var(--muted);font-size:clamp(15.5px,1.9vw,17.5px);line-height:1.65;max-width:66ch}
+.job p strong{color:var(--ink)}
+.job .live{display:inline-block;margin-top:1.1rem;color:var(--night);background:linear-gradient(120deg,var(--ember-deep),var(--ember));text-decoration:none;font:700 13px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border-radius:99px;padding:.9em 1.5em;box-shadow:0 0 28px rgba(242,166,90,.3);transition:transform .2s ease,box-shadow .2s ease}
+.job .live:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(242,166,90,.55)}
+.job .nolink{display:inline-block;margin-top:1.1rem;font:600 11.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);border:1px dashed var(--panel-line-strong);border-radius:99px;padding:.9em 1.4em}
 
 /* about + certs */
 .two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:36px}
 .about p+p{margin-top:14px}
-.about p{color:var(--muted)}
-.about p strong{color:var(--ink);font-weight:600}
-.certs{background:var(--panel);border:1px solid var(--panel-line-strong);border-radius:16px;padding:22px 24px;height:fit-content;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.about p{color:var(--muted);text-shadow:0 2px 14px rgba(0,0,0,.5)}
+.about p strong{color:var(--ink)}
+.certs{background:var(--panel);border:1px solid var(--panel-line-strong);border-radius:16px;padding:24px 26px;height:fit-content;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .certs h3{font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
 .certs ul{list-style:none}
-.certs li{padding:11px 0;border-top:1px solid var(--panel-line);font-size:15px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.certs li{padding:12px 0;border-top:1px solid var(--panel-line);font-size:15px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .certs li:first-child{border-top:0;padding-top:0}
 .certs .status{font:500 12.5px/1.6 var(--mono);color:var(--muted-2);white-space:nowrap}
 .certs .status.now{color:var(--ember);text-shadow:0 0 16px var(--glow)}
 
-/* contact */
+/* dawn contact */
 .contact-box{
-  background:var(--panel);border:1px solid var(--panel-line-strong);border-radius:18px;
-  padding:clamp(28px,5vw,48px);position:relative;z-index:1;overflow:hidden;
-  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  background:var(--panel);border:1px solid var(--panel-line-strong);border-radius:22px;
+  padding:clamp(30px,5.5vw,54px);position:relative;overflow:hidden;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 40px 90px -40px rgba(0,0,0,.8);
 }
-.contact-box::before{content:"";position:absolute;inset:-40% 55% 40% -20%;background:radial-gradient(closest-side,rgba(242,166,90,.14),transparent);pointer-events:none}
+.contact-box::before{content:"";position:absolute;inset:-40% 50% 40% -20%;background:radial-gradient(closest-side,rgba(242,166,90,.18),transparent);pointer-events:none}
 .contact-box p{color:var(--muted);max-width:54ch;position:relative}
+.signoff{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(19px,2.6vw,24px);color:var(--ink);margin-bottom:14px;position:relative}
+.signoff em{color:var(--ember);font-style:italic;text-shadow:0 0 30px var(--glow)}
 .contact-box .email{
-  display:inline-block;margin:22px 0 8px;font-family:var(--serif);font-weight:600;
-  font-size:clamp(22px,4.4vw,40px);letter-spacing:-.015em;position:relative;
-  color:var(--ink);text-decoration:none;border-bottom:3px solid var(--ember);padding-bottom:3px;
+  display:inline-block;margin:20px 0 8px;font-family:var(--serif);font-weight:600;
+  font-size:clamp(24px,4.8vw,46px);letter-spacing:-.015em;position:relative;
+  color:var(--ink);text-decoration:none;border-bottom:3px solid var(--ember);padding-bottom:4px;
   overflow-wrap:anywhere;transition:color .18s ease,text-shadow .18s ease;
 }
-.contact-box .email:hover{color:var(--ember);text-shadow:0 0 30px var(--glow)}
-.contact-links{margin-top:22px;display:flex;gap:26px;flex-wrap:wrap;position:relative}
-.contact-links a{color:var(--ink);text-decoration:none;font:500 13px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--ember);padding-bottom:3px}
+.contact-box .email:hover{color:var(--ember);text-shadow:0 0 34px var(--glow)}
+.contact-links{margin-top:24px;display:flex;gap:26px;flex-wrap:wrap;position:relative}
+.contact-links a{color:var(--ink);text-decoration:none;font:600 13px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border-bottom:2px solid var(--ember);padding-bottom:4px}
 .contact-links a:hover{color:var(--ember)}
 
-footer{border-top:1px solid var(--panel-line);padding:36px 0 48px;color:var(--muted-2);font:400 13px/1.8 var(--mono)}
+footer{position:relative;border-top:1px solid var(--panel-line);padding:36px 0 48px;color:var(--muted-2);font:400 13px/1.8 var(--mono)}
 footer a{color:var(--muted-2);text-decoration:none;border-bottom:1px solid var(--panel-line-strong)}
 footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 
 /* reveals */
-.js .rv{opacity:0;transform:translateY(24px);transition:opacity .65s ease var(--rvd,0s),transform .65s cubic-bezier(.22,.8,.3,1) var(--rvd,0s)}
+.js .rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease var(--rvd,0s),transform .7s cubic-bezier(.22,.8,.3,1) var(--rvd,0s)}
 .js .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>
 
+<canvas id="sky" aria-hidden="true"></canvas>
+
 <header class="site">
   <div class="wrap bar">
     <a class="wordmark" href="/">Jared <span>Lilliss</span></a>
     <nav class="top">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a href="#work">The jobs</a>
+      <a href="#about">The builder</a>
+      <a href="#contact">Sign-off</a>
       <a href="/lilliss-it/">Lilliss IT</a>
     </nav>
   </div>
 </header>
 
+<div class="shiftlog" aria-hidden="true">
+  <b>Night shift</b>
+  <span>LOCAL <i id="clock">--:--:--</i></span>
+  <span>PHASE <i id="phase-now">CALLOUT</i></span>
+</div>
+
 <main>
-  <div class="hero">
-    <canvas id="night" aria-hidden="true"></canvas>
+  <section class="hero" data-phase="CALLOUT">
     <div class="wrap">
-      <p class="kicker">Sydney, Australia &middot; field technician &amp; builder</p>
-      <h1>I build things that <em>keep running</em> after I go home.</h1>
-      <p class="lede">Data pipelines that survive reboots, single-file websites that work offline, automation with receipts. By day I'm the IT field tech venues ring when the tills stop &mdash; <strong>the rest of the time I build the systems below.</strong></p>
-      <div class="hero-links">
-        <a href="#work">See the work</a>
+      <p class="phase rv">18:47 · Callout</p>
+      <h1 class="rv">I build things that <em>keep running</em> after I go home.</h1>
+      <p class="lede rv">The city keeps trading after dark, and something is always mid-break. By day I'm the IT field tech venues ring when the tills stop &mdash; <strong>the rest of the night I build the systems below.</strong> Scroll: the shift runs until dawn.</p>
+      <div class="hero-links rv">
+        <a href="#work">Start the shift</a>
         <a href="https://github.com/jaredlilliss">GitHub</a>
         <a href="https://www.linkedin.com/in/jaredlilliss/">LinkedIn</a>
       </div>
     </div>
-  </div>
+    <span class="scrolldown">▼ into the night</span>
+  </section>
 
-  <section id="work">
+  <section id="work" data-phase="THE JOBS">
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="eyebrow">Selected work</p>
-        <h2>Projects with receipts</h2>
-        <p class="sub">Everything here is real, running, and verifiable &mdash; live links where the work is public, honest descriptions where it isn't.</p>
+        <p class="phase">21:40 · The jobs</p>
+        <h2>Four systems, still running</h2>
+        <p class="sub">Everything here is real, live, and verifiable &mdash; links where the work is public, honest descriptions where it isn't.</p>
       </div>
-      <ol class="proj">
-        <li class="rv">
-          <span class="n">01</span>
-          <div>
-            <h3>Aussie Health Utility</h3>
-            <div class="tags"><span>Python</span><span>PostgreSQL</span><span>Linux VPS</span><span>cron</span><span>rclone</span></div>
-          </div>
-          <div>
-            <p>A privacy-by-design data platform over public Australian health datasets: a polling loop feeding an <strong>append-only PostgreSQL time series</strong> of emergency-department wait times, with the privacy posture set at the schema level &mdash; no personal or health information is ever collected. Runs unattended on a Melbourne VPS with health-checked collection, daily dumps, and <strong>automated offsite backups</strong>. Tens of thousands of readings and growing.</p>
-            <span style="display:inline-block;margin-top:.7rem;font:600 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)">Private repo &mdash; described, not linked</span>
-          </div>
-        </li>
-        <li class="rv">
-          <span class="n">02</span>
-          <div>
-            <h3><a href="https://jaredlilliss.github.io/stillwild-concept/">Still Wild &mdash; concept rebuild</a></h3>
-            <div class="tags"><span>Single file</span><span>Canvas</span><span>5 languages</span><span>No frameworks</span></div>
-          </div>
-          <div>
-            <p>A modern concept page for a real Brisbane adventure business, built as <strong>one self-contained HTML file</strong>: a live canvas dawn scene, five-language dictionary (EN &middot; 简体 &middot; 繁體 &middot; 日本語 &middot; 한국어), and an honesty layer that labels every invented detail &mdash; the placeholder prices and concept copy are tagged as exactly that.</p>
-            <a class="live" href="https://jaredlilliss.github.io/stillwild-concept/">View live</a>
-          </div>
-        </li>
-        <li class="rv">
-          <span class="n">03</span>
-          <div>
-            <h3><a href="https://jaredlilliss.github.io/xperience-hitech-test/">The Ascent &mdash; template test</a></h3>
-            <div class="tags"><span>Single file</span><span>Canvas</span><span>Zero libraries</span></div>
-          </div>
-          <div>
-            <p>A hi-tech design-template evaluation restyling public content from a space-industry initiative: an Earth-to-Mars scroll narrative with mission-phase telemetry, an Earth-limb canvas scene, and outlined-numeral typography &mdash; all vanilla, all offline-capable, clearly labelled as an unofficial template test.</p>
-            <a class="live" href="https://jaredlilliss.github.io/xperience-hitech-test/">View live</a>
-          </div>
-        </li>
-        <li class="rv">
-          <span class="n">04</span>
-          <div>
-            <h3><a href="/lilliss-it/">Lilliss IT</a></h3>
-            <div class="tags"><span>Business</span><span>POS/EFTPOS</span><span>Networks</span><span>CCTV/AV</span></div>
-          </div>
-          <div>
-            <p>My trading identity: small-business IT across Sydney and regional NSW &mdash; point-of-sale and payment terminals, Windows fleets, structured cabling, cameras. One person from fault intake to fix. <strong>Trading since 2019, registered 2026.</strong></p>
-            <a class="live" href="/lilliss-it/">The business page</a>
-          </div>
-        </li>
-      </ol>
+
+      <article class="job rv">
+        <span class="jn" aria-hidden="true">01</span>
+        <div class="job-card">
+          <h3>Aussie Health Utility</h3>
+          <div class="tags"><span>Python</span><span>PostgreSQL</span><span>Linux VPS</span><span>cron</span><span>rclone</span></div>
+          <p>A privacy-by-design data platform over public Australian health datasets: a polling loop feeding an <strong>append-only PostgreSQL time series</strong> of emergency-department wait times, privacy set at the schema level &mdash; no personal or health information is ever collected. Runs unattended on a Melbourne VPS with health-checked collection, daily dumps and <strong>automated offsite backups</strong>. Tens of thousands of readings and growing, every night, including this one.</p>
+          <span class="nolink">Private repo &mdash; described, not linked</span>
+        </div>
+      </article>
+
+      <article class="job rv">
+        <span class="jn" aria-hidden="true">02</span>
+        <div class="job-card">
+          <h3><a href="https://jaredlilliss.github.io/stillwild-concept/">Still Wild</a></h3>
+          <div class="tags"><span>Single file</span><span>Canvas scene</span><span>5 languages</span><span>No frameworks</span></div>
+          <p>A modern concept page for a real Brisbane adventure business, built as <strong>one self-contained HTML file</strong>: a living canvas dawn over bush ridges, a five-language dictionary (EN &middot; 简体 &middot; 繁體 &middot; 日本語 &middot; 한국어), and an honesty layer that tags every invented detail as exactly that.</p>
+          <a class="live" href="https://jaredlilliss.github.io/stillwild-concept/">View live</a>
+        </div>
+      </article>
+
+      <article class="job rv">
+        <span class="jn" aria-hidden="true">03</span>
+        <div class="job-card">
+          <h3><a href="https://jaredlilliss.github.io/xperience-hitech-test/">The Ascent</a></h3>
+          <div class="tags"><span>Single file</span><span>Earth-to-Mars scroll</span><span>Zero libraries</span></div>
+          <p>A hi-tech template evaluation restyling public content from a space-industry initiative: an <strong>Earth-to-Mars scroll narrative</strong> with mission-phase telemetry, an Earth-limb canvas scene and outlined-numeral monuments &mdash; all vanilla, offline-capable, and clearly labelled an unofficial template test.</p>
+          <a class="live" href="https://jaredlilliss.github.io/xperience-hitech-test/">View live</a>
+        </div>
+      </article>
+
+      <article class="job rv">
+        <span class="jn" aria-hidden="true">04</span>
+        <div class="job-card">
+          <h3><a href="/lilliss-it/">Lilliss IT</a></h3>
+          <div class="tags"><span>The day job</span><span>POS/EFTPOS</span><span>Networks</span><span>CCTV/AV</span></div>
+          <p>My trading identity: small-business IT across Sydney and regional NSW &mdash; point-of-sale and payment terminals, Windows fleets, structured cabling, cameras. One person from fault intake to fix. <strong>Trading since 2019, registered 2026.</strong></p>
+          <a class="live" href="/lilliss-it/">The business page</a>
+        </div>
+      </article>
     </div>
   </section>
 
-  <section id="about">
+  <section id="about" data-phase="THE BUILDER">
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="eyebrow">About</p>
+        <p class="phase">03:30 · The builder</p>
         <h2>Field tech hands, systems head</h2>
       </div>
       <div class="two-col">
         <div class="about rv">
-          <p><strong>The through-line in everything above is durability.</strong> A pipeline isn't done when it collects once &mdash; it's done when it survives reboots, sleeps, power loss and a change of host. A website isn't done when it looks good on my machine &mdash; it's done when it's one file that works on a phone, offline, in five languages.</p>
-          <p>Day work keeps that honest: when a venue's tills stop mid-service, the fix has to be real, fast, and documented &mdash; what broke, what fixed it, what to watch for next time. I bring the same receipts-first habit to everything I build.</p>
+          <p><strong>The through-line is durability.</strong> A pipeline isn't done when it collects once &mdash; it's done when it survives reboots, sleeps, power loss and a change of host. A website isn't done when it looks good on my machine &mdash; it's done when it's one file that works on a phone, offline, in five languages.</p>
+          <p>Day work keeps that honest: when a venue's tills stop mid-service, the fix has to be real, fast and documented &mdash; what broke, what fixed it, what to watch for next time. Everything I build gets the same receipts-first habit. It's 3:30am somewhere in this page, and the pipeline just backed itself up without me.</p>
         </div>
         <div class="certs rv">
           <h3>Certifications</h3>
@@ -250,13 +267,14 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     </div>
   </section>
 
-  <section id="contact">
+  <section id="contact" data-phase="SIGN-OFF">
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="eyebrow">Contact</p>
-        <h2>Email finds me</h2>
+        <p class="phase">05:58 · Sign-off</p>
+        <h2>Dawn. Everything's still up.</h2>
       </div>
       <div class="contact-box rv">
+        <p class="signoff">The shift ends, the systems don't &mdash; <em>they keep running after I go home.</em></p>
         <p>Work, collaboration, or something broken that needs to stay fixed &mdash; describe it and you'll get a straight answer.</p>
         <a class="email" href="mailto:jaredlilliss@gmail.com">jaredlilliss@gmail.com</a>
         <div class="contact-links">
@@ -277,76 +295,139 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 
 <script>
 document.documentElement.classList.add('js');
-// After Hours — the same living Sydney night as the business page: skyline bands,
-// flickering venue windows, ONE ember window (the job being fixed). Deterministic,
-// still frame under reduced motion, self-heals on resize.
+var STILL=/[?&]noreveal/.test(location.search);
+var REDUCED=matchMedia('(prefers-reduced-motion:reduce)').matches||STILL;
+
+// NIGHT SHIFT SKY — one fixed canvas; scroll moves the night from dusk to dawn.
+// Skyline parallaxes away below; stars own the middle of the shift; dawn floods
+// the horizon at sign-off. Deterministic, still frame under reduced motion.
 (function(){
-  var c=document.getElementById('night');if(!c||!c.getContext)return;
-  var x=c.getContext('2d'),W,H,DPR,bld=[],stars=[],ember=null,REDUCED=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var c=document.getElementById('sky');if(!c||!c.getContext)return;
+  var x=c.getContext('2d'),W,H,DPR,bld=[],stars=[],ember=null,P=0,PT=0;
   function rng(s){return function(){s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+  function lerp(a,b,t){return a+(b-a)*t}
+  // sky keyframes: [top, upper-mid, lower-mid, horizon] as rgb triplets
+  var KEY=[
+    {p:0.00,c:[[19,26,46],[34,32,56],[74,46,42],[132,66,38]],glow:.55,star:.35},  // dusk
+    {p:0.45,c:[[5,8,15],[10,15,26],[16,21,36],[26,26,38]],glow:.16,star:1.0},     // deep night
+    {p:0.80,c:[[6,10,20],[10,17,30],[18,28,46],[30,44,60]],glow:.22,star:.7},     // pre-dawn
+    {p:1.00,c:[[12,20,38],[28,38,60],[120,80,58],[242,166,90]],glow:.9,star:.25}  // dawn
+  ];
+  function skyAt(p){
+    var a=KEY[0],b=KEY[KEY.length-1];
+    for(var i=0;i<KEY.length-1;i++){if(p>=KEY[i].p&&p<=KEY[i+1].p){a=KEY[i];b=KEY[i+1];break}}
+    var t=(p-a.p)/Math.max(.0001,(b.p-a.p));
+    var out={c:[],glow:lerp(a.glow,b.glow,t),star:lerp(a.star,b.star,t)};
+    for(var j=0;j<4;j++){out.c.push([Math.round(lerp(a.c[j][0],b.c[j][0],t)),Math.round(lerp(a.c[j][1],b.c[j][1],t)),Math.round(lerp(a.c[j][2],b.c[j][2],t))])}
+    return out;
+  }
   function build(){
     DPR=Math.min(devicePixelRatio||1,2);
-    W=c.width=c.offsetWidth*DPR;H=c.height=c.offsetHeight*DPR;
-    var r=rng(20190824),gx=0;bld=[];stars=[];
+    W=c.width=innerWidth*DPR;H=c.height=innerHeight*DPR;
+    var r=rng(20260824),gx=0;bld=[];stars=[];
     while(gx<W){
-      var bw=(38+r()*90)*DPR,bh=H*(0.22+r()*0.5),layer=r()<.35?0:1;
+      var bw=(38+r()*90)*DPR,bh=H*(0.16+r()*0.42),layer=r()<.35?0:1;
       var b={x:gx,w:bw,h:bh,layer:layer,win:[]};
       var cols=Math.max(2,Math.floor(bw/(13*DPR))),rows=Math.max(3,Math.floor(bh/(15*DPR)));
       for(var i=0;i<cols;i++)for(var j=0;j<rows;j++){
-        if(r()<0.16){
-          b.win.push({dx:(3+i*13)*DPR,dy:(6+j*15)*DPR,on:.35+r()*.65,ph:r()*6.28,fl:r()<.18});
-        }
+        if(r()<0.15)b.win.push({dx:(3+i*13)*DPR,dy:(6+j*15)*DPR,on:.35+r()*.65,ph:r()*6.28,fl:r()<.18});
       }
       bld.push(b);gx+=bw+(2+r()*10)*DPR;
     }
     var cand=bld.filter(function(b){return b.layer===1&&b.win.length>2&&b.x>W*.5&&b.x<W*.85});
     var eb=cand.length?cand[0]:bld[Math.floor(bld.length*.62)];
-    if(eb&&eb.win.length){ember={b:eb,w:eb.win[Math.floor(eb.win.length/2)]}}
-    for(var k=0;k<Math.min(140,W/9);k++)stars.push({x:r()*W,y:r()*H*.5,z:.3+r()*.7,ph:r()*6.28});
+    if(eb&&eb.win.length)ember={b:eb,w:eb.win[Math.floor(eb.win.length/2)]};
+    for(var k=0;k<Math.min(200,W/6);k++)stars.push({x:r()*W,y:r()*H*.72,z:.3+r()*.7,ph:r()*6.28});
+  }
+  function scrollP(){
+    var d=document.documentElement;
+    var m=Math.max(1,d.scrollHeight-innerHeight);
+    return Math.min(1,Math.max(0,(window.scrollY||d.scrollTop||0)/m));
   }
   function frame(t){
+    PT=STILL?(function(){var m=location.search.match(/[?&]p=([\d.]+)/);return m?Math.min(1,+m[1]):.45})():scrollP();
+    P+= (PT-P)*(REDUCED?1:.08);
+    var S=skyAt(P);
     var g=x.createLinearGradient(0,0,0,H);
-    g.addColorStop(0,'#070B12');g.addColorStop(.55,'#0B1220');g.addColorStop(.82,'#131A2C');g.addColorStop(1,'#1A1A26');
+    g.addColorStop(0,'rgb('+S.c[0].join(',')+')');
+    g.addColorStop(.45,'rgb('+S.c[1].join(',')+')');
+    g.addColorStop(.78,'rgb('+S.c[2].join(',')+')');
+    g.addColorStop(1,'rgb('+S.c[3].join(',')+')');
     x.fillStyle=g;x.fillRect(0,0,W,H);
-    var hg=x.createRadialGradient(W*.62,H*.98,0,W*.62,H*.98,H*.75);
-    hg.addColorStop(0,'rgba(242,166,90,.10)');hg.addColorStop(.5,'rgba(120,90,140,.05)');hg.addColorStop(1,'rgba(0,0,0,0)');
+    // horizon glow (city at night, sun at dawn)
+    var hg=x.createRadialGradient(W*.62,H*1.02,0,W*.62,H*1.02,H*.85);
+    hg.addColorStop(0,'rgba(242,166,90,'+(.14*S.glow*2)+')');
+    hg.addColorStop(.5,'rgba(150,95,120,'+(.05*S.glow)+')');
+    hg.addColorStop(1,'rgba(0,0,0,0)');
     x.fillStyle=hg;x.fillRect(0,0,W,H);
+    // stars
     for(var s=0;s<stars.length;s++){var st=stars[s];
-      x.globalAlpha=(REDUCED?.5:.3+.35*Math.abs(Math.sin(t/2100+st.ph)))*st.z;
-      x.fillStyle='#C9D9F2';x.fillRect(st.x,st.y,1.3*st.z*DPR,1.3*st.z*DPR);
+      x.globalAlpha=(REDUCED?.55:.3+.35*Math.abs(Math.sin(t/2100+st.ph)))*st.z*S.star;
+      x.fillStyle='#C9D9F2';x.fillRect(st.x,st.y,1.35*st.z*DPR,1.35*st.z*DPR);
     }
     x.globalAlpha=1;
-    for(var L=0;L<2;L++)for(var i=0;i<bld.length;i++){var b=bld[i];if(b.layer!==L)continue;
-      x.fillStyle=L===0?'#0C1119':'#080C13';
-      x.fillRect(b.x,H-b.h,b.w,b.h);
-      for(var w=0;w<b.win.length;w++){var win=b.win[w];
-        var a=win.on*(L===0?.35:.62);
-        if(win.fl&&!REDUCED)a*=.55+.45*Math.sin(t/700+win.ph)*Math.sin(t/1900+win.ph*2);
-        x.globalAlpha=Math.max(.06,a);
-        x.fillStyle=L===0?'#8FA7C9':'#D9C89A';
-        x.fillRect(b.x+win.dx,H-b.h+win.dy,6*DPR,8*DPR);
+    // skyline sinks as the shift climbs
+    var yOff=P*H*1.15;
+    if(yOff<H){
+      for(var L=0;L<2;L++)for(var i=0;i<bld.length;i++){var b=bld[i];if(b.layer!==L)continue;
+        var by=H-b.h+yOff*(L===0?.8:1);
+        if(by>H)continue;
+        x.fillStyle=L===0?'#0C1119':'#080C13';
+        x.fillRect(b.x,by,b.w,b.h+yOff);
+        for(var w=0;w<b.win.length;w++){var win=b.win[w];
+          var a=win.on*(L===0?.35:.62)*(1-P*.7);
+          if(win.fl&&!REDUCED)a*=.55+.45*Math.sin(t/700+win.ph)*Math.sin(t/1900+win.ph*2);
+          x.globalAlpha=Math.max(.04,a);
+          x.fillStyle=L===0?'#8FA7C9':'#D9C89A';
+          x.fillRect(b.x+win.dx,by+win.dy,6*DPR,8*DPR);
+        }
+        x.globalAlpha=1;
       }
-      x.globalAlpha=1;
+      if(ember&&P<.5){
+        var eb=ember.b,ew=ember.w;
+        var by2=H-eb.h+yOff, px=eb.x+ew.dx+3*DPR,py=by2+ew.dy+4*DPR;
+        var pulse=(REDUCED?.8:.65+.35*Math.abs(Math.sin(t/1300)))*(1-P*2);
+        if(pulse>0){
+          var rg=x.createRadialGradient(px,py,0,px,py,26*DPR);
+          rg.addColorStop(0,'rgba(242,166,90,'+(.5*pulse)+')');rg.addColorStop(1,'rgba(242,166,90,0)');
+          x.fillStyle=rg;x.fillRect(px-26*DPR,py-26*DPR,52*DPR,52*DPR);
+          x.globalAlpha=1;x.fillStyle='#F2A65A';
+          x.fillRect(eb.x+ew.dx,by2+ew.dy,6*DPR,8*DPR);
+        }
+      }
     }
-    if(ember){
-      var eb=ember.b,ew=ember.w;
-      var px=eb.x+ew.dx+3*DPR,py=H-eb.h+ew.dy+4*DPR;
-      var pulse=REDUCED?.8:.65+.35*Math.abs(Math.sin(t/1300));
-      var rg=x.createRadialGradient(px,py,0,px,py,26*DPR);
-      rg.addColorStop(0,'rgba(242,166,90,'+(.5*pulse)+')');rg.addColorStop(1,'rgba(242,166,90,0)');
-      x.fillStyle=rg;x.fillRect(px-26*DPR,py-26*DPR,52*DPR,52*DPR);
-      x.globalAlpha=1;x.fillStyle='#F2A65A';
-      x.fillRect(eb.x+ew.dx,H-eb.h+ew.dy,6*DPR,8*DPR);
+    // dawn sun rising at the very end
+    if(P>.82){
+      var dp=(P-.82)/.18;
+      var sy=H*(1.05-dp*.13),sx=W*.62;
+      var sun=x.createRadialGradient(sx,sy,0,sx,sy,90*DPR);
+      sun.addColorStop(0,'rgba(255,224,170,'+(.9*dp)+')');
+      sun.addColorStop(.4,'rgba(242,166,90,'+(.5*dp)+')');
+      sun.addColorStop(1,'rgba(242,166,90,0)');
+      x.fillStyle=sun;x.beginPath();x.arc(sx,sy,90*DPR,0,6.29);x.fill();
     }
     if(!REDUCED)requestAnimationFrame(frame);
   }
   build();addEventListener('resize',function(){build();if(REDUCED)frame(0)});
-  if(REDUCED)frame(0);else requestAnimationFrame(frame);
+  if(REDUCED){P=PT=STILL?.45:scrollP();frame(0);addEventListener('scroll',function(){P=PT=scrollP();frame(0)},{passive:true})}
+  else requestAnimationFrame(frame);
 })();
-// reveals + ?noreveal capture hatch + force-show backstop
+
+// shift-log: real local clock + section phase
+(function(){
+  var ck=document.getElementById('clock');
+  if(ck){var tick=function(){var d=new Date();ck.textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0')};tick();setInterval(tick,1000)}
+  var ph=document.getElementById('phase-now');
+  if(ph&&'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)ph.textContent=e.target.getAttribute('data-phase')})},{threshold:.4});
+    [].slice.call(document.querySelectorAll('[data-phase]')).forEach(function(s){io.observe(s)});
+  }
+})();
+
+// reveals + ?noreveal hatch + backstop
 (function(){
   var els=[].slice.call(document.querySelectorAll('.rv'));
-  if(/[?&]noreveal/.test(location.search)){els.forEach(function(e){e.style.transition='none';e.classList.add('in')});return}
+  if(STILL){els.forEach(function(e){e.style.transition='none';e.classList.add('in')});return}
   els.forEach(function(e,i){e.style.setProperty('--rvd',(i%3)*0.08+'s')});
   if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
   var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
