@@ -3,17 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Jared Lilliss — builds that keep running</title>
-<meta name="description" content="Jared Lilliss — IT field technician and builder, Sydney. Data pipelines, single-file web builds, and automation that survives contact with real machines.">
+<title>Lilliss IT — small-business IT support, Sydney</title>
+<meta name="description" content="Lilliss IT — POS/EFTPOS, Windows support, networks, CCTV/AV and small-business IT across Sydney and regional NSW. One person, one point of contact, from fault intake to fix.">
+<!-- Contact email: jaredlilliss@gmail.com is the documented go-live fallback.
+     When the Proton mailbox on lilliss.au exists, find-replace
+     jaredlilliss@gmail.com -> contact@lilliss.au across this file and privacy.html. -->
+<!-- v3 "After Hours" 23/08/2026 — a living night scene; the page commits to one
+     fixed night palette by design. v2 kept alongside as index.v2-20260823.html. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --night:#0A0E16; --panel:rgba(20,28,44,.55); --panel-line:rgba(160,190,235,.14);
+  --night:#0A0E16; --night-2:#0D1320; --panel:rgba(20,28,44,.55); --panel-line:rgba(160,190,235,.14);
   --panel-line-strong:rgba(160,190,235,.26);
   --ink:#EDE9DC; --muted:#9BA5B8; --muted-2:#66718A;
-  --ember:#F2A65A; --ember-deep:#D9622B; --glow:rgba(242,166,90,.5);
+  --ember:#F2A65A; --ember-deep:#D9622B; --glow:rgba(242,166,90,.55);
   --serif:"Fraunces",Georgia,"Times New Roman",serif;
   --sans:"Inter",ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --mono:ui-monospace,"Cascadia Code","Segoe UI Mono",Consolas,monospace;
@@ -25,12 +30,14 @@ body{
   background:var(--night);color:var(--ink);min-height:100vh;
   font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip;
 }
-.wrap{max-width:1020px;margin:0 auto;padding:0 24px}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
 ::selection{background:var(--ember);color:var(--night)}
+
+/* film grain */
 body::after{content:"";position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.045;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* header */
-header.site{position:sticky;top:0;z-index:40;background:rgba(10,14,22,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--panel-line)}
+header.site{position:sticky;top:0;z-index:40;background:rgba(10,14,22,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--panel-line)}
 .bar{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:18px 0;flex-wrap:wrap}
 .wordmark{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.01em;color:var(--ink);text-decoration:none}
 .wordmark span{color:var(--ember)}
@@ -38,7 +45,7 @@ nav.top{display:flex;gap:22px;flex-wrap:wrap}
 nav.top a{color:var(--muted);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding-bottom:3px;border-bottom:1px solid transparent}
 nav.top a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 
-/* hero over the night scene */
+/* hero — the night scene */
 .hero{position:relative;overflow:hidden;isolation:isolate;padding:clamp(70px,12vw,150px) 0 0}
 #night{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(10,14,22,.25) 0%,rgba(10,14,22,0) 45%,rgba(10,14,22,.66) 88%,var(--night) 100%)}
@@ -46,60 +53,64 @@ nav.top a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 .kicker::before{content:"";width:34px;height:2px;background:var(--ember);box-shadow:0 0 10px var(--glow)}
 h1{
   font-family:var(--serif);font-weight:600;
-  font-size:clamp(42px,8.4vw,88px);line-height:.98;letter-spacing:-.022em;
-  max-width:14ch;margin-bottom:26px;text-wrap:balance;text-shadow:0 2px 40px rgba(0,0,0,.6);
+  font-size:clamp(42px,8.6vw,92px);line-height:.98;letter-spacing:-.022em;
+  max-width:15ch;margin-bottom:28px;text-wrap:balance;
+  text-shadow:0 2px 40px rgba(0,0,0,.6);
 }
 h1 em{font-style:italic;font-weight:500;color:var(--ember);text-shadow:0 0 34px var(--glow)}
-.lede{font-size:clamp(17.5px,2.6vw,20px);color:var(--muted);line-height:1.6;max-width:54ch}
+.lede{font-size:clamp(17.5px,2.6vw,20px);color:var(--muted);line-height:1.6;max-width:52ch}
 .lede strong{color:var(--ink);font-weight:600}
-.hero-links{margin-top:32px;display:flex;gap:22px;flex-wrap:wrap;align-items:center;padding-bottom:clamp(60px,10vw,110px)}
-.hero-links a{color:var(--ink);text-decoration:none;font:500 13px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--ember);padding-bottom:3px}
-.hero-links a:hover{color:var(--ember)}
+.hero-meta{margin-top:34px;display:flex;flex-wrap:wrap;border-block:1px solid var(--panel-line-strong);width:fit-content;max-width:100%;background:rgba(10,14,22,.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.chip{font:500 13px/1 var(--mono);letter-spacing:.04em;color:var(--muted);padding:12px 18px;white-space:nowrap;border-left:1px solid var(--panel-line-strong)}
+.chip:first-child{border-left:0}
+.cta-row{margin-top:36px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding-bottom:clamp(60px,10vw,110px)}
+.btn{
+  display:inline-block;background:linear-gradient(120deg,var(--ember-deep),var(--ember));color:#160C05;text-decoration:none;
+  font-weight:600;font-size:15.5px;padding:13px 26px;border-radius:999px;
+  box-shadow:0 0 26px rgba(242,166,90,.3);transition:transform .18s ease,box-shadow .18s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 38px rgba(242,166,90,.55)}
+.cta-side{font:500 12.5px/1.5 var(--mono);color:var(--muted);letter-spacing:.04em}
 
 /* sections */
-section{padding:clamp(52px,8vw,92px) 0;border-top:1px solid var(--panel-line);position:relative;counter-increment:sec}
-body{counter-reset:sec}
-.sec-head{position:relative;margin-bottom:clamp(26px,4vw,40px)}
+section{padding:clamp(52px,8vw,96px) 0;border-top:1px solid var(--panel-line);position:relative}
+.sec-head{position:relative;margin-bottom:clamp(28px,4vw,44px)}
 .sec-head::before{
-  content:"0" counter(sec);
+  counter-increment:sec;content:"0" counter(sec);
   position:absolute;top:-.44em;right:0;z-index:0;
-  font:600 clamp(80px,14vw,170px)/1 var(--serif);letter-spacing:-.04em;
+  font:600 clamp(88px,15vw,180px)/1 var(--serif);letter-spacing:-.04em;
   color:transparent;-webkit-text-stroke:1.5px rgba(160,190,235,.12);
   pointer-events:none;user-select:none;
 }
 @supports not (-webkit-text-stroke:1px black){.sec-head::before{color:rgba(160,190,235,.07)}}
-@media (max-width:700px){.sec-head::before{font-size:clamp(3.6rem,16vw,5rem);opacity:.7}}
+body{counter-reset:sec}
 .eyebrow{display:flex;align-items:center;gap:12px;font:600 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ember);margin-bottom:14px}
 .eyebrow::after{content:"";flex:1;max-width:120px;height:1px;background:var(--panel-line-strong)}
-h2{font-family:var(--serif);font-weight:600;font-size:clamp(30px,5vw,50px);letter-spacing:-.018em;line-height:1.04;margin-bottom:10px;position:relative;z-index:1}
-.sub{color:var(--muted);max-width:58ch;position:relative;z-index:1}
-
-/* project ledger */
-.proj{list-style:none;border-top:1px solid var(--panel-line-strong)}
-.proj li{
-  display:grid;grid-template-columns:56px minmax(200px,.9fr) 1.5fr;gap:12px 28px;
-  padding:clamp(22px,3.4vw,34px) 12px;border-bottom:1px solid var(--panel-line-strong);
-  align-items:start;position:relative;transition:background .25s ease;
+h2{
+  font-family:var(--serif);font-weight:600;font-size:clamp(30px,5vw,52px);
+  letter-spacing:-.018em;line-height:1.04;margin-bottom:10px;position:relative;z-index:1;
 }
-.proj li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--ember);opacity:0;transition:opacity .25s ease;box-shadow:0 0 14px var(--glow)}
-.proj li:hover{background:rgba(242,166,90,.05)}
-.proj li:hover::before{opacity:1}
-.proj .n{font:500 13px/1.4 var(--mono);color:var(--ember);opacity:.8}
-.proj h3{font-family:var(--serif);font-weight:600;font-size:clamp(21px,2.7vw,28px);letter-spacing:-.012em;margin-bottom:.5rem}
-.proj h3 a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ember)}
-.proj h3 a:hover{color:var(--ember);text-shadow:0 0 24px var(--glow)}
-.proj .tags{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.6rem}
-.proj .tags span{font:600 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--panel-line-strong);border-radius:99px;padding:.4em .7em}
-.proj p{color:var(--muted);font-size:15.5px;line-height:1.62;max-width:60ch}
-.proj p strong{color:var(--ink)}
-.proj .live{display:inline-block;margin-top:.7rem;color:var(--ink);text-decoration:none;font:600 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--ember);padding-bottom:3px}
-.proj .live:hover{color:var(--ember)}
+.sub{color:var(--muted);max-width:56ch;position:relative;z-index:1}
+
+/* services ledger */
+.svc{list-style:none;border-top:1px solid var(--panel-line-strong)}
+.svc li{
+  display:grid;grid-template-columns:56px minmax(180px,.8fr) 1.6fr;gap:10px 28px;
+  padding:clamp(20px,3vw,30px) 12px;border-bottom:1px solid var(--panel-line-strong);
+  align-items:baseline;position:relative;transition:background .25s ease;
+}
+.svc li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--ember);opacity:0;transition:opacity .25s ease;box-shadow:0 0 14px var(--glow)}
+.svc li:hover{background:rgba(242,166,90,.05)}
+.svc li:hover::before{opacity:1}
+.svc .n{font:500 13px/1.2 var(--mono);color:var(--ember);opacity:.8}
+.svc h3{font-family:var(--serif);font-weight:600;font-size:clamp(20px,2.6vw,27px);letter-spacing:-.012em}
+.svc p{color:var(--muted);font-size:15.5px;line-height:1.62;max-width:58ch}
 @media (max-width:640px){
-  .proj li{grid-template-columns:44px 1fr}
-  .proj p,.proj .tags,.proj .live{grid-column:2}
+  .svc li{grid-template-columns:44px 1fr}
+  .svc p{grid-column:2}
 }
 
-/* about + certs */
+/* about */
 .two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:36px}
 .about p+p{margin-top:14px}
 .about p{color:var(--muted)}
@@ -131,7 +142,9 @@ h2{font-family:var(--serif);font-weight:600;font-size:clamp(30px,5vw,50px);lette
 .contact-links a{color:var(--ink);text-decoration:none;font:500 13px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--ember);padding-bottom:3px}
 .contact-links a:hover{color:var(--ember)}
 
+/* footer */
 footer{border-top:1px solid var(--panel-line);padding:36px 0 48px;color:var(--muted-2);font:400 13px/1.8 var(--mono)}
+footer .foot-links{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:16px}
 footer a{color:var(--muted-2);text-decoration:none;border-bottom:1px solid var(--panel-line-strong)}
 footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 
@@ -145,12 +158,12 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 
 <header class="site">
   <div class="wrap bar">
-    <a class="wordmark" href="/">Jared <span>Lilliss</span></a>
+    <a class="wordmark" href="/">Lilliss <span>IT</span></a>
     <nav class="top">
-      <a href="#work">Work</a>
+      <a href="#services">Services</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
-      <a href="/lilliss-it/">Lilliss IT</a>
+      <a href="/privacy.html">Privacy</a>
     </nav>
   </div>
 </header>
@@ -159,68 +172,57 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
   <div class="hero">
     <canvas id="night" aria-hidden="true"></canvas>
     <div class="wrap">
-      <p class="kicker">Sydney, Australia &middot; field technician &amp; builder</p>
-      <h1>I build things that <em>keep running</em> after I go home.</h1>
-      <p class="lede">Data pipelines that survive reboots, single-file websites that work offline, automation with receipts. By day I'm the IT field tech venues ring when the tills stop &mdash; <strong>the rest of the time I build the systems below.</strong></p>
-      <div class="hero-links">
-        <a href="#work">See the work</a>
-        <a href="https://github.com/jaredlilliss">GitHub</a>
-        <a href="https://www.linkedin.com/in/jaredlilliss/">LinkedIn</a>
+      <p class="kicker">Sydney &middot; south-west &amp; beyond</p>
+      <h1>Small-business IT, handled by <em>one person</em> you can actually ring.</h1>
+      <p class="lede">Lilliss IT is Jared Lilliss &mdash; an IT support and field technician based in Bass Hill, working across Sydney and regional NSW. <strong>One point of contact from fault intake to fix:</strong> the person who takes the call is the person who scopes it, installs it, documents it and answers when it breaks.</p>
+      <div class="hero-meta">
+        <span class="chip">Trading since 2019, registered 2026</span>
+        <span class="chip">ABN 78 576 434 613</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn" href="#contact">Get in touch</a>
+        <span class="cta-side">No call centre, no ticket queue.</span>
       </div>
     </div>
   </div>
 
-  <section id="work">
+  <section id="services">
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="eyebrow">Selected work</p>
-        <h2>Projects with receipts</h2>
-        <p class="sub">Everything here is real, running, and verifiable &mdash; live links where the work is public, honest descriptions where it isn't.</p>
+        <p class="eyebrow">Services</p>
+        <h2>What I do</h2>
+        <p class="sub">Mostly hospitality venues and small businesses &mdash; often mid-service, when it can't wait until Monday.</p>
       </div>
-      <ol class="proj">
+      <ol class="svc">
         <li class="rv">
           <span class="n">01</span>
-          <div>
-            <h3>Aussie Health Utility</h3>
-            <div class="tags"><span>Python</span><span>PostgreSQL</span><span>Linux VPS</span><span>cron</span><span>rclone</span></div>
-          </div>
-          <div>
-            <p>A privacy-by-design data platform over public Australian health datasets: a polling loop feeding an <strong>append-only PostgreSQL time series</strong> of emergency-department wait times, with the privacy posture set at the schema level &mdash; no personal or health information is ever collected. Runs unattended on a Melbourne VPS with health-checked collection, daily dumps, and <strong>automated offsite backups</strong>. Tens of thousands of readings and growing.</p>
-            <span style="display:inline-block;margin-top:.7rem;font:600 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)">Private repo &mdash; described, not linked</span>
-          </div>
+          <h3>POS &amp; EFTPOS</h3>
+          <p>Rollouts, replacements and fault resolution for point-of-sale and payment terminals &mdash; getting the tills taking money again is the job.</p>
         </li>
         <li class="rv">
           <span class="n">02</span>
-          <div>
-            <h3><a href="https://jaredlilliss.github.io/stillwild-concept/">Still Wild &mdash; concept rebuild</a></h3>
-            <div class="tags"><span>Single file</span><span>Canvas</span><span>5 languages</span><span>No frameworks</span></div>
-          </div>
-          <div>
-            <p>A modern concept page for a real Brisbane adventure business, built as <strong>one self-contained HTML file</strong>: a live canvas dawn scene, five-language dictionary (EN &middot; 简体 &middot; 繁體 &middot; 日本語 &middot; 한국어), and an honesty layer that labels every invented detail &mdash; the placeholder prices and concept copy are tagged as exactly that.</p>
-            <a class="live" href="https://jaredlilliss.github.io/stillwild-concept/">View live</a>
-          </div>
+          <h3>Windows support</h3>
+          <p>Endpoint and hardware support for Windows machines: setup, repair, migration, and the recurring faults nobody has had time to chase down.</p>
         </li>
         <li class="rv">
           <span class="n">03</span>
-          <div>
-            <h3><a href="https://jaredlilliss.github.io/xperience-hitech-test/">The Ascent &mdash; template test</a></h3>
-            <div class="tags"><span>Single file</span><span>Canvas</span><span>Zero libraries</span></div>
-          </div>
-          <div>
-            <p>A hi-tech design-template evaluation restyling public content from a space-industry initiative: an Earth-to-Mars scroll narrative with mission-phase telemetry, an Earth-limb canvas scene, and outlined-numeral typography &mdash; all vanilla, all offline-capable, clearly labelled as an unofficial template test.</p>
-            <a class="live" href="https://jaredlilliss.github.io/xperience-hitech-test/">View live</a>
-          </div>
+          <h3>Networks</h3>
+          <p>Structured cabling, switching and Wi-Fi for small sites &mdash; tidy racks, labelled runs, and documentation you can hand to the next person.</p>
         </li>
         <li class="rv">
           <span class="n">04</span>
-          <div>
-            <h3><a href="/lilliss-it/">Lilliss IT</a></h3>
-            <div class="tags"><span>Business</span><span>POS/EFTPOS</span><span>Networks</span><span>CCTV/AV</span></div>
-          </div>
-          <div>
-            <p>My trading identity: small-business IT across Sydney and regional NSW &mdash; point-of-sale and payment terminals, Windows fleets, structured cabling, cameras. One person from fault intake to fix. <strong>Trading since 2019, registered 2026.</strong></p>
-            <a class="live" href="/lilliss-it/">The business page</a>
-          </div>
+          <h3>CCTV &amp; AV</h3>
+          <p>Camera and audio-visual installation and troubleshooting for venues and shopfronts, from mounting to configuration.</p>
+        </li>
+        <li class="rv">
+          <span class="n">05</span>
+          <h3>Small-business IT</h3>
+          <p>The rest of it: email, printers, backups, vendor wrangling. If it plugs in and the business depends on it, it's in scope.</p>
+        </li>
+        <li class="rv">
+          <span class="n">06</span>
+          <h3>How it runs</h3>
+          <p>You deal with one person the whole way through. Faults get written up honestly &mdash; what broke, what fixed it, and what to watch for next time.</p>
         </li>
       </ol>
     </div>
@@ -230,12 +232,12 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     <div class="wrap">
       <div class="sec-head rv">
         <p class="eyebrow">About</p>
-        <h2>Field tech hands, systems head</h2>
+        <h2>One-man operation, on purpose</h2>
       </div>
       <div class="two-col">
         <div class="about rv">
-          <p><strong>The through-line in everything above is durability.</strong> A pipeline isn't done when it collects once &mdash; it's done when it survives reboots, sleeps, power loss and a change of host. A website isn't done when it looks good on my machine &mdash; it's done when it's one file that works on a phone, offline, in five languages.</p>
-          <p>Day work keeps that honest: when a venue's tills stop mid-service, the fix has to be real, fast, and documented &mdash; what broke, what fixed it, what to watch for next time. I bring the same receipts-first habit to everything I build.</p>
+          <p><strong>Lilliss IT is a one-man operation, on purpose.</strong> No handoffs between a sales rep, a dispatcher and a tech who's never seen your site &mdash; the person you first speak to is the person on the ladder.</p>
+          <p>Away from client work I build a privacy-by-design data platform over public Australian health datasets &mdash; a polling loop feeding an append-only PostgreSQL time series, with the privacy posture set at the schema level so no personal or health information is ever collected. Python, PostgreSQL, time-series work.</p>
         </div>
         <div class="certs rv">
           <h3>Certifications</h3>
@@ -254,15 +256,14 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     <div class="wrap">
       <div class="sec-head rv">
         <p class="eyebrow">Contact</p>
-        <h2>Email finds me</h2>
+        <h2>Email is the reliable way in</h2>
       </div>
       <div class="contact-box rv">
-        <p>Work, collaboration, or something broken that needs to stay fixed &mdash; describe it and you'll get a straight answer.</p>
+        <p>Available for work across Sydney and regional NSW. Email is the reliable way in &mdash; describe the fault, the gear and the urgency, and you'll get a straight answer about whether I can help and when.</p>
         <a class="email" href="mailto:jaredlilliss@gmail.com">jaredlilliss@gmail.com</a>
         <div class="contact-links">
-          <a href="https://github.com/jaredlilliss">GitHub</a>
           <a href="https://www.linkedin.com/in/jaredlilliss/">LinkedIn</a>
-          <a href="/lilliss-it/">Lilliss IT</a>
+          <a href="https://github.com/jaredlilliss">GitHub</a>
         </div>
       </div>
     </div>
@@ -271,15 +272,21 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 
 <footer>
   <div class="wrap">
-    <p>&copy; 2026 Jared Lilliss &middot; NSW, Australia &middot; <a href="/lilliss-it/">Lilliss IT</a> &middot; <a href="/privacy.html">Privacy</a></p>
+    <div class="foot-links">
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+      <a href="/privacy.html">Privacy Policy</a>
+    </div>
+    <p>&copy; 2026 Jared Lilliss, trading as Lilliss IT &middot; ABN 78&nbsp;576&nbsp;434&nbsp;613 &middot; NSW, Australia</p>
+    <p>Trading since 2019, registered 2026 &middot; lilliss.au</p>
   </div>
 </footer>
 
 <script>
 document.documentElement.classList.add('js');
-// After Hours — the same living Sydney night as the business page: skyline bands,
-// flickering venue windows, ONE ember window (the job being fixed). Deterministic,
-// still frame under reduced motion, self-heals on resize.
+// After Hours — a deterministic Sydney night: skyline bands, lit venue windows
+// that flicker, and ONE ember window (the job being fixed). Still frame under
+// reduced motion. Self-heals on resize.
 (function(){
   var c=document.getElementById('night');if(!c||!c.getContext)return;
   var x=c.getContext('2d'),W,H,DPR,bld=[],stars=[],ember=null,REDUCED=matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -287,35 +294,40 @@ document.documentElement.classList.add('js');
   function build(){
     DPR=Math.min(devicePixelRatio||1,2);
     W=c.width=c.offsetWidth*DPR;H=c.height=c.offsetHeight*DPR;
-    var r=rng(20190824),gx=0;bld=[];stars=[];
+    var r=rng(20190823),gx=0;bld=[];stars=[];
     while(gx<W){
       var bw=(38+r()*90)*DPR,bh=H*(0.22+r()*0.5),layer=r()<.35?0:1;
       var b={x:gx,w:bw,h:bh,layer:layer,win:[]};
       var cols=Math.max(2,Math.floor(bw/(13*DPR))),rows=Math.max(3,Math.floor(bh/(15*DPR)));
       for(var i=0;i<cols;i++)for(var j=0;j<rows;j++){
-        if(r()<0.16){
+        if(r()<0.16){ // sparse lit windows — it's late
           b.win.push({dx:(3+i*13)*DPR,dy:(6+j*15)*DPR,on:.35+r()*.65,ph:r()*6.28,fl:r()<.18});
         }
       }
       bld.push(b);gx+=bw+(2+r()*10)*DPR;
     }
+    // one ember window in a mid-height building near the golden-ratio point
     var cand=bld.filter(function(b){return b.layer===1&&b.win.length>2&&b.x>W*.5&&b.x<W*.85});
     var eb=cand.length?cand[0]:bld[Math.floor(bld.length*.62)];
     if(eb&&eb.win.length){ember={b:eb,w:eb.win[Math.floor(eb.win.length/2)]}}
     for(var k=0;k<Math.min(140,W/9);k++)stars.push({x:r()*W,y:r()*H*.5,z:.3+r()*.7,ph:r()*6.28});
   }
   function frame(t){
+    // sky
     var g=x.createLinearGradient(0,0,0,H);
     g.addColorStop(0,'#070B12');g.addColorStop(.55,'#0B1220');g.addColorStop(.82,'#131A2C');g.addColorStop(1,'#1A1A26');
     x.fillStyle=g;x.fillRect(0,0,W,H);
+    // horizon city-glow
     var hg=x.createRadialGradient(W*.62,H*.98,0,W*.62,H*.98,H*.75);
     hg.addColorStop(0,'rgba(242,166,90,.10)');hg.addColorStop(.5,'rgba(120,90,140,.05)');hg.addColorStop(1,'rgba(0,0,0,0)');
     x.fillStyle=hg;x.fillRect(0,0,W,H);
+    // stars
     for(var s=0;s<stars.length;s++){var st=stars[s];
       x.globalAlpha=(REDUCED?.5:.3+.35*Math.abs(Math.sin(t/2100+st.ph)))*st.z;
       x.fillStyle='#C9D9F2';x.fillRect(st.x,st.y,1.3*st.z*DPR,1.3*st.z*DPR);
     }
     x.globalAlpha=1;
+    // buildings back-to-front
     for(var L=0;L<2;L++)for(var i=0;i<bld.length;i++){var b=bld[i];if(b.layer!==L)continue;
       x.fillStyle=L===0?'#0C1119':'#080C13';
       x.fillRect(b.x,H-b.h,b.w,b.h);
@@ -328,6 +340,7 @@ document.documentElement.classList.add('js');
       }
       x.globalAlpha=1;
     }
+    // the ember window — the job being fixed right now
     if(ember){
       var eb=ember.b,ew=ember.w;
       var px=eb.x+ew.dx+3*DPR,py=H-eb.h+ew.dy+4*DPR;
