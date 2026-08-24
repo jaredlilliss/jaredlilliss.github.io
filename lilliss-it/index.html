@@ -46,7 +46,6 @@ html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{
   background:var(--night);color:var(--ink);min-height:100vh;
   font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip;
-  counter-reset:sec;
 }
 /* the text column is inset by the rail allowance on the left, so the cable always
    runs in clear margin and never crosses a glyph */
@@ -135,14 +134,6 @@ h1 em{font-style:italic;font-weight:500;color:var(--ember);text-shadow:0 0 34px 
 /* ———————————————— sections ———————————————— */
 section{padding:clamp(50px,7.5vw,92px) 0;border-top:1px solid var(--ink-14);position:relative}
 .sec-head{position:relative;margin-bottom:clamp(26px,4vw,42px)}
-.sec-head::before{
-  counter-increment:sec;content:"0" counter(sec);
-  position:absolute;top:-.44em;right:0;z-index:0;
-  font:600 clamp(84px,14vw,172px)/1 var(--serif);letter-spacing:-.045em;
-  color:transparent;-webkit-text-stroke:1.5px var(--ink-08);
-  pointer-events:none;user-select:none;
-}
-@supports not (-webkit-text-stroke:1px black){.sec-head::before{color:var(--ink-08)}}
 .eyebrow{display:flex;align-items:center;gap:12px;font:600 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ember);margin-bottom:14px}
 .eyebrow::after{content:"";flex:1;max-width:120px;height:1px;background:var(--ink-28)}
 h2{
@@ -154,17 +145,16 @@ h2{
 /* services — six stations on the one run */
 .svc{list-style:none}
 .svc li{
-  display:grid;grid-template-columns:34px minmax(150px,.75fr) 1.55fr;gap:8px 22px;
+  display:grid;grid-template-columns:minmax(170px,.8fr) 1.6fr;gap:8px 26px;
   padding:clamp(19px,2.7vw,28px) 0;border-bottom:1px solid var(--ink-14);
   align-items:baseline;transition:background .25s ease;
 }
 .svc li:first-child{border-top:1px solid var(--ink-14)}
 .svc li:hover{background:rgba(242,166,90,.045)}
-.svc .n{font:500 11.5px/1.6 var(--mono);color:var(--ember);opacity:.75;letter-spacing:.08em}
 .svc h3{font-family:var(--serif);font-weight:600;font-size:clamp(20px,2.5vw,28px);letter-spacing:-.024em;line-height:1.1}
 .svc p{color:var(--ink-45);font-size:15.5px;line-height:1.62;max-width:58ch}
 @media (max-width:720px){
-  .svc li{grid-template-columns:30px 1fr;gap:4px 14px}
+  .svc li{grid-template-columns:1fr;gap:4px}
   .svc p{grid-column:2}
 }
 
@@ -283,28 +273,22 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
         <p class="sub">Mostly hospitality venues and small businesses &mdash; often mid-service, when it can't wait until Monday.</p>
       </div>
       <ol class="svc">
-        <li class="station rv"><span class="n">01</span>
-          <h3>POS &amp; EFTPOS</h3>
+        <li class="station rv"><h3>POS &amp; EFTPOS</h3>
           <p>Rollouts, replacements and fault resolution for point-of-sale and payment terminals &mdash; getting the tills taking money again is the job.</p>
         </li>
-        <li class="station rv"><span class="n">02</span>
-          <h3>Windows support</h3>
+        <li class="station rv"><h3>Windows support</h3>
           <p>Endpoint and hardware support for Windows machines: setup, repair, migration, and the recurring faults nobody has had time to chase down.</p>
         </li>
-        <li class="station rv"><span class="n">03</span>
-          <h3>Networks</h3>
+        <li class="station rv"><h3>Networks</h3>
           <p>Structured cabling, switching and Wi-Fi for small sites &mdash; tidy racks, labelled runs, and documentation you can hand to the next person.</p>
         </li>
-        <li class="station rv"><span class="n">04</span>
-          <h3>CCTV &amp; AV</h3>
+        <li class="station rv"><h3>CCTV &amp; AV</h3>
           <p>Camera and audio-visual installation and troubleshooting for venues and shopfronts, from mounting to configuration.</p>
         </li>
-        <li class="station rv"><span class="n">05</span>
-          <h3>Small-business IT</h3>
+        <li class="station rv"><h3>Small-business IT</h3>
           <p>The rest of it: email, printers, backups, vendor wrangling. If it plugs in and the business depends on it, it's in scope.</p>
         </li>
-        <li class="station rv"><span class="n">06</span>
-          <h3>How it runs</h3>
+        <li class="station rv"><h3>How it runs</h3>
           <p>You deal with one person the whole way through. Faults get written up honestly &mdash; what broke, what fixed it, and what to watch for next time.</p>
         </li>
       </ol>
