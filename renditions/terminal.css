@@ -1,0 +1,99 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   TERMINAL — a session that never ended.
+
+   The page's own headline is "I build things that keep running after I go home",
+   and the thing that proves it is a log still writing at 4am with nobody
+   watching. So this rendition is the log: phosphor on black, everything
+   monospaced, content set as output rather than as design.
+
+   The strongest argument for it is that it is the least decorated thing here and
+   still the most on-message. A terminal does not need to look like anything —
+   it just has to still be up.
+
+   Departures: one typeface (mono) at one weight, a single phosphor green, zero
+   rounded corners, cards become framed output blocks with a caret, the aurora
+   sky is replaced by a faint scanline field.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root{
+  --rendition:"terminal";
+  --bg:#060807; --bg2:#0A0E0C;
+  --ink:#CFF7DA;
+  --muted:#6E9C7E; --dim:#4E7159;
+  --ember:#7CF6A4; --ember-deep:#3FBF71;
+  --aurora:#0E2B1C;
+  --line:rgba(124,246,164,.16);
+  --card:rgba(12,22,16,.72); --card-edge:rgba(124,246,164,.24);
+  --serif:var(--mono);
+  --sans:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+
+body{
+  background:
+    repeating-linear-gradient(180deg,rgba(124,246,164,.035) 0 1px,transparent 1px 3px),
+    radial-gradient(120% 80% at 50% -10%, #0C1A12 0%, #060807 60%);
+  color:var(--ink);
+  font-family:var(--mono);
+  text-shadow:0 0 6px rgba(124,246,164,.16);
+}
+#sky{opacity:.14}
+.grain{opacity:.05}
+::selection{background:var(--ember);color:#04150B}
+
+/* ── everything is output ────────────────────────────────────────────────── */
+h1{
+  font-family:var(--mono);font-weight:500;
+  font-size:clamp(26px,5.4vw,64px);line-height:1.14;letter-spacing:-.01em;
+}
+h1 .em,h1 em{font-style:normal;color:var(--ember)}
+h1::before{content:"$ ";color:var(--ember-deep)}
+.lede,.sect-sub,.about-copy p,.card p{color:var(--muted)}
+.kicker,.sig,.tag,.st,.num,.fine,.status{font-family:var(--mono);letter-spacing:.14em}
+.sig{color:var(--ink)} .sig b{color:var(--ember)}
+.rendition-tag{
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:#04150B;background:var(--ember-deep);padding:4px 8px;margin-right:12px;
+  align-self:center;white-space:nowrap;
+}
+
+/* section heads read as commands */
+.sect-head{font-family:var(--mono);letter-spacing:-.01em}
+.sect-head::before{content:"> ";color:var(--ember-deep)}
+
+/* ── cards become output blocks ─────────────────────────────────────────── */
+.card,.cert,.board,.strip,.contact{
+  border-radius:0!important;background:var(--card);border:1px solid var(--card-edge);
+  backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;
+}
+.card:hover{border-color:var(--ember);background:rgba(124,246,164,.05);transform:none}
+.tag,.tags span{border-radius:0;border-color:var(--line);color:var(--muted);background:transparent}
+
+/* status pips keep meaning but stop being decorative */
+.dot{background:var(--ember);box-shadow:0 0 8px rgba(124,246,164,.5)}
+.live{color:var(--ember)}          /* text, not a pip — never give this a background */
+.held{background:var(--dim);box-shadow:none}
+
+/* ── buttons: prompts ───────────────────────────────────────────────────── */
+.btn,.go{
+  border-radius:0;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  font-size:12px;box-shadow:none;
+}
+/* .btn is the ghost; only .btn.hot is filled. All three hero CTAs are .btn. */
+.btn{background:transparent;color:var(--ink);border:1px solid var(--card-edge)}
+.btn:hover{background:rgba(124,246,164,.10);border-color:var(--ember);color:var(--ember);transform:none;box-shadow:none}
+.btn.hot{background:var(--ember);color:#04150B;border-color:var(--ember)}
+.btn.hot:hover{background:#9CFFBE;color:#04150B}
+.hero-cta .btn+a,.socials a{color:var(--muted);border-color:var(--line);border-radius:0}
+.socials a:hover{color:var(--ember);border-color:var(--ember)}
+
+.mail{font-family:var(--mono);color:var(--ink);border-bottom-color:var(--ember)}
+.mail:hover{color:var(--ember)}
+
+.bar,.foot{border-color:var(--line)}
+.foot{color:var(--dim)}
+nav a{color:var(--muted);border-radius:0}
+nav a:hover{color:var(--ember);border-color:var(--ember)}
+
+/* the running clock belongs in this rendition more than any other */
+#clock{color:var(--ember)}

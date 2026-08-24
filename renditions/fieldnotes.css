@@ -1,0 +1,93 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   FIELD NOTES — graph paper and a pencil.
+
+   Every one of these projects started as scribble in a notebook in a van or on
+   a counter, long before it was a repo. This rendition is that notebook: 5mm
+   grid, soft graphite ink, a red margin rule, and one blue biro used the way
+   you actually use a second pen — sparingly, for the thing that matters.
+
+   It is the only light rendition of the four, and that is deliberate: the other
+   three are all night pages, and daylight forces different decisions about
+   weight and contrast.
+
+   Departures: paper ground, graphite instead of white ink, boxes drawn rather
+   than filled, hairlines everywhere, and the sky canvas dropped entirely —
+   a notebook has no weather.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root{
+  --rendition:"fieldnotes";
+  --bg:#F5F2E9; --bg2:#EFEBE0;
+  --ink:#23262B; --muted:#5A6068; --dim:#878D95;
+  --ember:#C2453A;             /* the red margin pen */
+  --ember-deep:#93332A;
+  --biro:#2F4B8F;              /* the second pen, used sparingly */
+  --aurora:#2F4B8F;
+  --line:rgba(35,38,43,.16);
+  --card:rgba(255,255,255,.5); --card-edge:rgba(35,38,43,.24);
+  --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+}
+
+/* 5mm grid, and a red margin rule down the left like a real field book */
+body{
+  color:var(--ink);
+  background:
+    linear-gradient(90deg,transparent 0 62px,rgba(194,69,58,.35) 62px 63px,transparent 63px),
+    repeating-linear-gradient(0deg,rgba(47,75,143,.10) 0 1px,transparent 1px 19px),
+    repeating-linear-gradient(90deg,rgba(47,75,143,.10) 0 1px,transparent 1px 19px),
+    linear-gradient(180deg,#FAF8F1 0%,#F5F2E9 45%,#EDE9DD 100%);
+  background-attachment:fixed;
+}
+#sky{display:none}                 /* a notebook has no weather */
+.grain{opacity:.10;mix-blend-mode:multiply}
+::selection{background:var(--ember);color:#FFF}
+
+/* ── written, not typeset ───────────────────────────────────────────────── */
+h1{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(34px,7vw,88px);line-height:1.02;letter-spacing:-.022em;
+}
+h1 .em,h1 em{font-style:italic;color:var(--ember)}
+.lede,.sect-sub,.about-copy p,.card p{color:var(--muted)}
+.kicker{color:var(--ember)}
+.sig{color:var(--ink)} .sig b{color:var(--ember)}
+.sect-head{font-family:var(--serif);font-weight:600;letter-spacing:-.02em}
+.rendition-tag{
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ember);border:1px solid var(--ember);padding:4px 8px;margin-right:12px;
+  align-self:center;white-space:nowrap;transform:rotate(-1.2deg);
+}
+
+/* ── boxes are DRAWN, not filled ────────────────────────────────────────── */
+.card,.cert,.board,.strip,.contact{
+  background:rgba(255,255,255,.42);
+  border:1px solid var(--card-edge);border-radius:2px;
+  box-shadow:1px 1px 0 rgba(35,38,43,.10);
+  backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+.card:hover{border-color:var(--ember);background:rgba(255,255,255,.7);transform:none}
+.tag,.tags span{border-radius:2px;border-color:var(--card-edge);color:var(--muted);background:transparent}
+
+.dot{background:var(--biro);box-shadow:none}
+.live{color:var(--ember)}          /* text, not a pip */
+.held{background:var(--dim);box-shadow:none}
+
+/* ── buttons: circled in pen ────────────────────────────────────────────── */
+.btn,.go{border-radius:2px;box-shadow:none;letter-spacing:.06em}
+/* .btn is the ghost; only .btn.hot is filled. */
+.btn{background:transparent;color:var(--ink);border:1px solid var(--card-edge)}
+.btn:hover{background:rgba(35,38,43,.06);border-color:var(--ink);transform:none}
+.btn.hot{background:var(--ink);color:#F5F2E9;border-color:var(--ink)}
+.btn.hot:hover{background:var(--ember);border-color:var(--ember);color:#FFF}
+.hero-cta .btn+a,.socials a{color:var(--ink);border-color:var(--card-edge);border-radius:2px}
+.socials a:hover{color:var(--ember);border-color:var(--ember)}
+
+.mail{color:var(--ink);border-bottom:2px solid var(--ember)}
+.mail:hover{color:var(--ember)}
+
+.bar{background:rgba(245,242,233,.88);border-color:var(--line);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+nav a{color:var(--muted);border-radius:2px}
+nav a:hover{color:var(--ember);border-color:var(--ember)}
+.foot{border-color:var(--line);color:var(--dim)}
+#clock{color:var(--biro)}

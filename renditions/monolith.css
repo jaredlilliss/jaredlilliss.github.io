@@ -1,0 +1,90 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   MONOLITH — type and nothing else.
+
+   The other three renditions all add something: a sky, a phosphor glow, a grid.
+   This one takes everything away and bets the page on the sentence. Near-black
+   ground, one serif at enormous scale, hairlines instead of boxes, and no scene
+   at all.
+
+   It is the hardest of the four to get right, because with the decoration gone
+   there is nowhere for a weak line of copy to hide. That is also the argument
+   for it: if the page works like this, the writing is doing its job.
+
+   Departures: the sky canvas is dropped, every card loses its fill and keeps a
+   single top rule, the accent appears perhaps three times on the whole page,
+   and the display type runs bigger than anywhere else in the workspace.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root{
+  --rendition:"monolith";
+  --bg:#0B0B0C; --bg2:#0B0B0C;
+  --ink:#F2F1EE;                    /* warm off-white, never #FFF */
+  --muted:rgba(242,241,238,.56); --dim:rgba(242,241,238,.34);
+  --ember:#E4633A; --ember-deep:#B8482A;
+  --aurora:#2A2A2C;
+  --line:rgba(242,241,238,.13);
+  --card:transparent; --card-edge:rgba(242,241,238,.13);
+}
+
+body{background:#0B0B0C;color:var(--ink)}
+#sky{display:none}                  /* no scene: the type is the scene */
+.grain{opacity:.035}
+::selection{background:var(--ember);color:#0B0B0C}
+
+/* ── the display type carries the entire page ───────────────────────────── */
+h1{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(56px,13.5vw,190px);line-height:.86;letter-spacing:-.042em;
+}
+h1 .em,h1 em{font-style:italic;color:var(--ember)}
+.sect-head{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(30px,6vw,74px);line-height:.94;letter-spacing:-.036em;
+}
+.lede{font-size:clamp(17px,2.2vw,21px);line-height:1.6;color:var(--muted);max-width:52ch}
+.sect-sub,.about-copy p,.card p{color:var(--muted)}
+.kicker,.sig,.tag,.st,.num,.fine,.status{letter-spacing:.2em}
+.kicker{color:var(--dim)}
+.sig{color:var(--ink)} .sig b{color:var(--ember)}
+.rendition-tag{
+  font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--dim);border:0;padding:4px 0;margin-right:16px;align-self:center;white-space:nowrap;
+}
+
+/* ── boxes become rules. Nothing is filled. ─────────────────────────────── */
+.card,.cert,.board,.strip,.contact{
+  background:transparent!important;border:0;border-top:1px solid var(--line);
+  border-radius:0!important;box-shadow:none;
+  backdrop-filter:none;-webkit-backdrop-filter:none;
+  padding-top:1.5rem;
+}
+.card:hover{background:transparent!important;border-top-color:var(--ember);transform:none}
+.tag,.tags span{border:0;border-radius:0;color:var(--dim);background:transparent;padding-inline:0;margin-right:1.1rem}
+
+/* status pips: the accent is rationed, so these go quiet */
+.dot{background:var(--ember);box-shadow:none}
+.live{color:var(--muted)}          /* text, not a pip */
+.held{background:var(--dim);box-shadow:none}
+
+/* ── one filled element on the page, and it is the call to action ───────── */
+.btn,.go{border-radius:0;box-shadow:none;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+/* exactly ONE filled element on this page, and it is the primary CTA. */
+.btn{background:transparent;color:var(--ink);border:0;border-bottom:1px solid var(--line);border-radius:0;padding-inline:0;margin-right:1.4rem}
+.btn:hover{background:transparent;border-bottom-color:var(--ember);color:var(--ink)}
+.btn.hot{background:var(--ink);color:#0B0B0C;border:1px solid var(--ink);padding-inline:22px;margin-right:0}
+.btn.hot:hover{background:var(--ember);border-color:var(--ember);color:#0B0B0C}
+.hero-cta .btn+a,.socials a{color:var(--muted);border:0;border-bottom:1px solid var(--line);border-radius:0}
+.socials a:hover{color:var(--ink);border-bottom-color:var(--ember)}
+
+.mail{
+  font-family:var(--serif);font-weight:600;letter-spacing:-.03em;
+  color:var(--ink);border-bottom:2px solid var(--ember);
+}
+.mail:hover{color:var(--ember)}
+
+.bar{background:rgba(11,11,12,.86);border-color:var(--line);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+nav a{color:var(--muted);border:0;border-radius:0}
+nav a:hover{color:var(--ink)}
+.foot{border-color:var(--line);color:var(--dim)}
+#clock{color:var(--dim)}

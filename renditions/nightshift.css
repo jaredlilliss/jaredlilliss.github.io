@@ -1,0 +1,14 @@
+/* NIGHT SHIFT — the live build, and the one Jared has already judged.
+   index.html IS this design, so the override layer is near-empty by design.
+
+   Character: aurora sky over a starfield, a running local clock, projects as an
+   indexed evidence board. Built by the Inbox lane, promoted to the root on
+   Jared's adjudication, and on 24/08 he rated it above the older city-lights
+   root — "better than the building lights one for sure". */
+:root{ --rendition:"nightshift"; }
+
+.rendition-tag{
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dim);border:1px solid var(--line);padding:4px 8px;margin-right:12px;
+  white-space:nowrap;align-self:center;
+}
