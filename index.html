@@ -38,6 +38,16 @@ nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-s
 nav::-webkit-scrollbar{display:none}
 nav a{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:7px 12px;border:1px solid transparent;border-radius:999px;white-space:nowrap}
 nav a:hover{color:var(--ink);border-color:var(--line)}
+/* Narrow phones: the nav was a hidden horizontal scroller with scrollbar-width:none
+   and no fade — at 320px, 173px of 337px sat off-screen, so Contact AND the Lilliss IT
+   link were invisible with nothing to suggest they existed. Measured on the live page,
+   not inferred. Four short links wrap fine; wrapping beats scrolling because it needs
+   no affordance at all. */
+@media (max-width:560px){
+  .bar{flex-wrap:wrap;gap:8px 12px;padding:14px 16px}
+  nav{overflow-x:visible;flex-wrap:wrap;width:100%;gap:4px 2px}
+  nav a{padding:6px 9px;letter-spacing:.11em}
+}
 nav a.biz{color:var(--ember)}
 
 /* hero */
