@@ -115,7 +115,7 @@ h2{font-family:var(--serif);font-weight:600;font-size:clamp(32px,5vw,54px);lette
 .board{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
 .card{position:relative;background:var(--card);border:1px solid var(--card-edge);border-radius:18px;padding:30px 28px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:transform .35s,border-color .35s;overflow:hidden}
 .card:hover{transform:translateY(-5px);border-color:var(--ember-deep)}
-.card .num{position:absolute;top:18px;right:22px;font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--dim)}
+
 .card h3{font-family:var(--serif);font-weight:600;font-size:clamp(24px,3vw,32px);letter-spacing:-.01em;margin:4px 0 14px;line-height:1.1}
 .tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
 .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 10px}
@@ -214,9 +214,7 @@ footer a:hover{color:var(--ember)}
     <div class="sect-head rv"><span class="idx">001&ndash;004</span><h2>Projects with receipts</h2></div>
     <p class="sect-sub rv">Everything here is real, running, and verifiable &mdash; live links where the work is public, honest descriptions where it isn't.</p>
     <div class="board">
-      <article class="card wide rv">
-        <span class="num">001</span>
-        <h3>Aussie Health Utility</h3>
+      <article class="card wide rv"> <h3>Aussie Health Utility</h3>
         <div class="tags"><span class="tag">Python</span><span class="tag">PostgreSQL</span><span class="tag">Linux VPS</span><span class="tag">cron</span><span class="tag">rclone</span></div>
         <p>A privacy-by-design data platform over public Australian health datasets: a polling loop feeding an <strong>append-only PostgreSQL time series</strong> of emergency-department wait times, with the privacy posture set at the schema level &mdash; no personal or health information is ever collected. Runs unattended on a Melbourne VPS with health-checked collection, daily dumps, and <strong>automated offsite backups</strong>. Tens of thousands of readings and growing.</p>
         <div class="foot">
@@ -225,9 +223,7 @@ footer a:hover{color:var(--ember)}
           <span class="fine">Public mirror &mdash; working repo stays private</span>
         </div>
       </article>
-      <article class="card rv">
-        <span class="num">002</span>
-        <h3>Still Wild &mdash; concept rebuild</h3>
+      <article class="card rv"> <h3>Still Wild &mdash; concept rebuild</h3>
         <div class="tags"><span class="tag">Single file</span><span class="tag">Canvas</span><span class="tag">5 languages</span><span class="tag">No frameworks</span></div>
         <p>A modern concept page for a real Brisbane adventure business, built as <strong>one self-contained HTML file</strong>: a live canvas dawn scene, five-language dictionary (EN &middot; &#31616;&#20307; &middot; &#32321;&#39636; &middot; &#26085;&#26412;&#35486; &middot; &#54620;&#44397;&#50612;), and an honesty layer that labels every invented detail &mdash; the placeholder prices and concept copy are tagged as exactly that.</p>
         <div class="foot">
@@ -235,19 +231,15 @@ footer a:hover{color:var(--ember)}
           <a class="go" aria-label="View Still Wild live" href="https://jaredlilliss.github.io/stillwild-concept/">View live &rarr;</a>
         </div>
       </article>
-      <article class="card rv">
-        <span class="num">003</span>
-        <h3>The Ascent &mdash; template test</h3>
+      <article class="card rv"> <h3>The Ascent &mdash; design concept</h3>
         <div class="tags"><span class="tag">Single file</span><span class="tag">Canvas</span><span class="tag">Zero libraries</span></div>
-        <p>A hi-tech design-template evaluation restyling public content from a space-industry initiative: an Earth-to-Mars scroll narrative with mission-phase telemetry, an Earth-limb canvas scene, and outlined-numeral typography &mdash; all vanilla, all offline-capable, clearly labelled as an unofficial template test.</p>
+        <p>A hi-tech design concept restyling public content from a space-industry initiative: an Earth-to-Mars scroll narrative with mission-phase telemetry, an Earth-limb canvas scene, and outlined-numeral typography &mdash; all vanilla, all offline-capable, and labelled on the page itself as an unsolicited concept with no affiliation.</p>
         <div class="foot">
           <span class="status"><span class="dot grn"></span>Live</span>
           <a class="go" aria-label="View The Ascent live" href="https://jaredlilliss.github.io/xperience-hitech-test/">View live &rarr;</a>
         </div>
       </article>
-      <article class="card wide rv">
-        <span class="num">004</span>
-        <h3>Lilliss IT</h3>
+      <article class="card wide rv"> <h3>Lilliss IT</h3>
         <div class="tags"><span class="tag">Business</span><span class="tag">POS/EFTPOS</span><span class="tag">Networks</span><span class="tag">CCTV/AV</span></div>
         <p>My trading identity: small-business IT across Sydney and regional NSW &mdash; point-of-sale and payment terminals, Windows fleets, structured cabling, cameras. One person from fault intake to fix. <strong>Trading since 2019, registered 2026.</strong></p>
         <div class="foot">
