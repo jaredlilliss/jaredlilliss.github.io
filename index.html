@@ -27,9 +27,34 @@
 <meta name="twitter:title" content="Jared Lilliss — builds that keep running">
 <meta name="twitter:description" content="Sydney field technician and builder — data pipelines that survive reboots, single-file sites that work offline, automation with receipts.">
 <meta name="twitter:image" content="https://jaredlilliss.github.io/og.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Self-hosted 26/08/2026. These faces were served by Google Fonts, which meant
+   every visitor's browser made a request to Google and Google saw their IP --
+   a fact the privacy policy had to disclose in two separate passages. The faces
+   are now served from this origin, so the request does not happen and the
+   disclosure comes out. Same five faces, latin-subsetted, 187 KB total.
+   Files and subsetting recipe from central (lilliss.au), already proven
+   rendering there -- taken byte-identical rather than re-subsetted.
+   Fraunces and Inter are VARIABLE: one file each, declared 100 900.
+   IBM Plex Mono is STATIC: one file PER WEIGHT. Declaring a range on a static
+   face gets you synthetic bold. */
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:swap;
+  src:url('/fonts/fraunces.woff2') format('woff2')}
+@font-face{font-family:'Fraunces';font-style:italic;font-weight:100 900;font-display:swap;
+  src:url('/fonts/fraunces-italic.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;
+  src:url('/fonts/inter.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;
+  src:url('/fonts/plexmono-400.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;
+  src:url('/fonts/plexmono-500.woff2') format('woff2')}
+/* Fraunces carries an optical-size axis whose default is 9 -- its smallest,
+   caption design. Stated explicitly rather than left to the initial value:
+   without it a 150px headline renders the caption drawing, which looks
+   almost right and is the easiest way to get self-hosting subtly wrong.
+   (Trap named by central, who hit it first.) */
+html{font-optical-sizing:auto}
+</style>
 <noscript><style>.rv{opacity:1 !important;transform:none !important}</style></noscript>
 <style>
 :root{
