@@ -1,406 +1,59 @@
 <!doctype html>
-<html lang="en-AU">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Lilliss IT — small-business IT support, Sydney</title>
-<meta name="description" content="Lilliss IT — POS/EFTPOS, Windows support, networks, CCTV/AV and small-business IT across Sydney and regional NSW. One person, one point of contact, from fault intake to fix.">
-<meta name="theme-color" content="#0A0E16">
-<!-- Contact email: jaredlilliss@gmail.com is the documented go-live fallback.
-     When the Proton mailbox on lilliss.au exists, find-replace
-     jaredlilliss@gmail.com -> contact@lilliss.au across this file and privacy.html. -->
-<!-- v5, 26/08/2026, Atelier (Seat 2).
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lilliss IT has moved to lilliss.au</title>
+<link rel="canonical" href="https://lilliss.au/">
+<meta http-equiv="refresh" content="0; url=https://lilliss.au/">
+<meta name="robots" content="noindex,follow">
+<meta name="description" content="Lilliss IT now lives at lilliss.au.">
+<!-- Retired 26/08/2026. This path served the Lilliss IT business page until
+     lilliss.au went live. It is a redirect, not a deletion: links to it may
+     already exist and a 404 would strand them.
 
-     THE NIGHT SCENE AND THE CABLE ARE GONE. v4 "The Unbroken Line" drew a canvas
-     city skyline with a cable leaving a lit window and running through diamond
-     "station" nodes down every section to the contact. The idea was that the page
-     IS the claim -- no handoffs, drawn rather than asserted.
-
-     Jared's verdict on the rendered page: "looks like a yr 12 hsc project".
-
-     He is right, and the reason is precise. The portfolio front page -- which he
-     calls "pretty clean and simple" -- uses the SAME typefaces, the SAME palette
-     and the SAME layout system as this page. The difference is one rule the front
-     page keeps and v4 broke: EVERY VISUAL ELEMENT CARRIES INFORMATION. Its eyebrow
-     is live data, its chips are a factual index, "RUNNING NOW / VIEW SOURCE" is a
-     status plus a verifiable link. The only pure decoration is a starfield you can
-     barely see.
-
-     v4 had three pieces of decoration wearing structure's clothes: a pixel-block
-     skyline crude enough to undercut the typography above it; a scroll-lit progress
-     rail down a SERVICES LIST, which is not a sequence and has no progress; and a
-     glow behind the headline italic.
-
-     The rail is the same defect as the section numbering Jared has had removed from
-     three other surfaces, in a different costume.
-
-     So the conceit was cut rather than polished, and NOTHING replaced it -- the
-     reclaimed space is the improvement. What carries the page now is what carries
-     the front page: the type, and copy that is true.
-
-     v4 kept as index.v2-20260823.html's successor in git history; v2 file remains
-     on disk. -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+     Three layers, because each catches a different reader:
+       rel=canonical  -> search engines
+       meta refresh   -> ordinary browsers, immediately
+       a visible link -> JS off, refresh blocked, or a text browser
+     No JavaScript, so nothing here can fail silently. -->
 <style>
-/* ————————————————————————————————————————————————————————————
-   PALETTE — deliberately two colours and an ink.
-   Study note (awwwards SOTD, read 24/08): Revelatio Studio ships on a ONE-colour
-   palette, The Watch on two. v3 here ran an ember plus two blue-greys plus three
-   muted greys. Every "muted" tone below is now the SAME ink at an opacity, so the
-   page cannot drift out of key.
-   ———————————————————————————————————————————————————————————— */
-:root{
-  --night:#0A0E16; --night-2:#070B12;
-  --ink:#FDFAF7;                       /* warm off-white, not #FFF (Mosby's Files) */
-  --ink-70:rgba(253,250,247,.70);
-  --ink-45:rgba(253,250,247,.45);
-  --ink-28:rgba(253,250,247,.28);
-  --ink-14:rgba(253,250,247,.14);
-  --ink-08:rgba(253,250,247,.08);
-  --ember:#F2A65A; --ember-deep:#D9622B; --glow:rgba(242,166,90,.55);
-  --serif:"Fraunces",Georgia,"Times New Roman",serif;
-  --sans:"Inter",ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --mono:ui-monospace,"Cascadia Code","Segoe UI Mono",Consolas,monospace;
-  --gut:24px;
-  --railpad:0px;   /* was 34px, clearing a cable removed 26/08/2026 */
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{
-  background:var(--night);color:var(--ink);min-height:100vh;
-  font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip;
-}
-
-.wrap{max-width:1060px;margin:0 auto;padding:0 var(--gut) 0 calc(var(--gut) + var(--railpad))}
-::selection{background:var(--ember);color:var(--night)}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}
-
-/* skip link — the page is one long run; give keyboards the shortcut */
-.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--ember);color:#160C05;
-  padding:10px 16px;font:600 14px/1 var(--sans);border-radius:0 0 8px 0}
-.skip:focus{left:0}
-
-/* film grain */
-body::after{content:"";position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.045;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-
-/* ———————————————— header ———————————————— */
-header.site{position:sticky;top:0;z-index:40;background:rgba(10,14,22,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--ink-14)}
-.bar{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:18px 0;flex-wrap:wrap}
-.wordmark{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
-.wordmark span{color:var(--ember)}
-nav.top{display:flex;gap:22px;flex-wrap:wrap}
-nav.top a{color:var(--ink-45);text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .2s ease}
-nav.top a:hover,nav.top a[aria-current="true"]{color:var(--ember);border-bottom-color:var(--ember)}
-
-
-.run{position:relative}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ———————————————— hero ———————————————— */
-.hero{position:relative;overflow:hidden;isolation:isolate;padding:clamp(64px,11vw,132px) 0 0}
-
-.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(10,14,22,.25) 0%,rgba(10,14,22,0) 45%,rgba(10,14,22,.66) 88%,var(--night) 100%)}
-.hero .wrap{position:relative}
-.kicker{display:flex;align-items:center;gap:14px;font:600 12.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--ember);margin-bottom:26px}
-.kicker::before{content:"";width:34px;height:2px;background:var(--ember);box-shadow:0 0 10px var(--glow)}
-/* type courage: the lesson RESEARCH-NOTES keeps naming and this page never took.
-   Mosby's Files runs its display at 128px on 0.80 leading. v3 topped out at 92px
-   on 0.98 — a headline that never actually raises its voice. */
-h1{
-  font-family:var(--serif);font-weight:600;
-  font-size:clamp(33px,8.6vw,126px);line-height:.86;letter-spacing:-.035em;
-  max-width:14ch;margin-bottom:30px;text-wrap:balance;overflow-wrap:break-word;
-  text-shadow:0 2px 40px rgba(0,0,0,.6);
-}
-h1 em{font-style:italic;font-weight:500;color:var(--ember);text-shadow:0 0 34px var(--glow)}
-.lede{font-size:clamp(17px,2.3vw,19.5px);color:var(--ink-70);line-height:1.62;max-width:54ch}
-.lede strong{color:var(--ink);font-weight:600}
-.hero-meta{margin-top:34px;display:flex;flex-wrap:wrap;border-block:1px solid var(--ink-28);width:fit-content;max-width:100%;background:rgba(10,14,22,.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
-.chip{font:500 13px/1 var(--mono);letter-spacing:.04em;color:var(--ink-70);padding:12px 18px;white-space:nowrap;border-left:1px solid var(--ink-28)}
-.chip:first-child{border-left:0}
-.cta-row{margin-top:36px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding-bottom:clamp(58px,10vw,104px)}
-.btn{
-  display:inline-block;background:linear-gradient(120deg,var(--ember-deep),var(--ember));color:#160C05;text-decoration:none;
-  font-weight:600;font-size:15.5px;padding:13px 26px;border-radius:999px;
-  box-shadow:0 0 26px rgba(242,166,90,.3);transition:transform .18s ease,box-shadow .18s ease;
-}
-.btn:hover{transform:translateY(-2px);box-shadow:0 6px 38px rgba(242,166,90,.55)}
-@media (prefers-reduced-motion:reduce){.btn:hover{transform:none}}
-.cta-side{font:500 12.5px/1.5 var(--mono);color:var(--ink-45);letter-spacing:.04em}
-
-/* ———————————————— sections ———————————————— */
-section{padding:clamp(50px,7.5vw,92px) 0;border-top:1px solid var(--ink-14);position:relative}
-.sec-head{position:relative;margin-bottom:clamp(26px,4vw,42px)}
-.eyebrow{display:flex;align-items:center;gap:12px;font:600 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ember);margin-bottom:14px}
-.eyebrow::after{content:"";flex:1;max-width:120px;height:1px;background:var(--ink-28)}
-h2{
-  font-family:var(--serif);font-weight:600;font-size:clamp(32px,5.6vw,60px);
-  letter-spacing:-.032em;line-height:.98;margin-bottom:10px;position:relative;z-index:1;
-}
-.sub{color:var(--ink-45);max-width:56ch;position:relative;z-index:1}
-
-/* services */
-.svc{list-style:none}
-.svc li{
-  display:grid;grid-template-columns:minmax(170px,.8fr) 1.6fr;gap:8px 26px;
-  padding:clamp(19px,2.7vw,28px) 0;border-bottom:1px solid var(--ink-14);
-  align-items:baseline;transition:background .25s ease;
-}
-.svc li:first-child{border-top:1px solid var(--ink-14)}
-.svc li:hover{background:rgba(242,166,90,.045)}
-.svc h3{font-family:var(--serif);font-weight:600;font-size:clamp(20px,2.5vw,28px);letter-spacing:-.024em;line-height:1.1}
-.svc p{color:var(--ink-45);font-size:15.5px;line-height:1.62;max-width:58ch}
-@media (max-width:720px){
-  .svc li{grid-template-columns:1fr;gap:4px}
-  .svc p{grid-column:2}
-}
-
-/* about */
-.two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:36px;align-items:start}
-.about p+p{margin-top:14px}
-.about p{color:var(--ink-45)}
-.about p strong{color:var(--ink);font-weight:600}
-
-/* the negative space of the claim: what a handoff looks like, next to what this is.
-   Decorative and aria-hidden — the sentence beside it is the actual claim, and it
-   is the page's own existing copy, unchanged. */
-.handoff{margin-top:26px;border:1px solid var(--ink-14);padding:20px 22px;background:var(--ink-08)}
-.handoff .lbl{font:600 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-45);margin-bottom:14px}
-.handoff .lbl+.lbl{margin-top:22px}
-.handoff svg{display:block;width:100%;height:22px;overflow:visible}
-.handoff .brk{stroke:var(--ink-28);stroke-width:1;stroke-dasharray:34 13}
-.handoff .whole{stroke:var(--ember);stroke-width:1.5;filter:drop-shadow(0 0 6px var(--glow))}
-.handoff .pt{fill:var(--ink-28)}
-.handoff .pt-live{fill:var(--ember)}
-
-.certs{border:1px solid var(--ink-28);padding:22px 24px;height:fit-content;background:var(--ink-08)}
-.certs h3{font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-45);margin-bottom:14px}
-.certs ul{list-style:none}
-.certs li{padding:11px 0;border-top:1px solid var(--ink-14);font-size:15px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.certs li:first-child{border-top:0;padding-top:0}
-.certs .status{font:500 12.5px/1.6 var(--mono);color:var(--ink-28);white-space:nowrap}
-.certs .status.now{color:var(--ember);text-shadow:0 0 16px var(--glow)}
-
-/* contact */
-.contact-box{
-  border:1px solid var(--ink-28);padding:clamp(26px,4.6vw,44px);position:relative;z-index:1;overflow:hidden;background:var(--ink-08);
-}
-.contact-box::before{content:"";position:absolute;inset:-40% 55% 40% -20%;background:radial-gradient(closest-side,rgba(242,166,90,.14),transparent);pointer-events:none}
-.contact-box p{color:var(--ink-45);max-width:54ch;position:relative}
-.contact-box .email{
-  display:inline-block;margin:22px 0 8px;font-family:var(--serif);font-weight:600;
-  font-size:clamp(23px,4.6vw,42px);letter-spacing:-.03em;position:relative;
-  color:var(--ink);text-decoration:none;border-bottom:3px solid var(--ember);padding-bottom:3px;
-  overflow-wrap:anywhere;transition:color .18s ease,text-shadow .18s ease;
-}
-.contact-box .email:hover{color:var(--ember);text-shadow:0 0 30px var(--glow)}
-.contact-links{margin-top:22px;display:flex;gap:26px;flex-wrap:wrap;position:relative}
-.contact-links a{color:var(--ink);text-decoration:none;font:500 13px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--ember);padding-bottom:3px}
-.contact-links a:hover{color:var(--ember)}
-
-/* footer */
-footer{border-top:1px solid var(--ink-14);padding:36px 0 48px;color:var(--ink-28);font:400 13px/1.8 var(--mono)}
-footer .foot-links{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:16px}
-footer a{color:var(--ink-45);text-decoration:none;border-bottom:1px solid var(--ink-14)}
-footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
-
-/* reveals — enhancement only; .no-js and reduced-motion both show everything */
-.js .rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease var(--rvd,0s),transform .6s cubic-bezier(.22,.8,.3,1) var(--rvd,0s)}
-.js .rv.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}}
-
-@media (max-width:720px){
-  :root{--gut:16px;--railpad:0px}
-  /* chips are mono and un-wrappable by design; on a phone they stack instead of
-     forcing a horizontal overflow */
-  .hero-meta{flex-direction:column;width:100%}
-  .chip{border-left:0;border-top:1px solid var(--ink-28);width:100%}
-  .chip:first-child{border-top:0}
-}
+  :root{color-scheme:dark}
+  html,body{height:100%}
+  body{
+    margin:0;display:grid;place-items:center;padding:2rem;
+    background:#0F1216;color:#E8EAED;
+    font:400 16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    text-align:center;
+  }
+  .brand{
+    font:500 12px/1 ui-monospace,"Cascadia Code",Consolas,monospace;
+    letter-spacing:.22em;text-transform:uppercase;color:#8A9099;margin-bottom:1.75rem;
+  }
+  .brand b{color:#F2A65A;font-weight:500}
+  h1{
+    font:600 clamp(1.6rem,1.1rem + 2vw,2.4rem)/1.15 Georgia,"Times New Roman",serif;
+    margin:0 0 1rem;letter-spacing:-.01em;
+  }
+  p{margin:0 0 1.75rem;color:#A8AEB6;max-width:46ch}
+  a.go{
+    display:inline-block;padding:.8rem 1.5rem;border-radius:999px;
+    background:#F2A65A;color:#0F1216;text-decoration:none;font-weight:600;
+    transition:transform .2s ease,background .2s ease;
+  }
+  a.go:hover{background:#F7BC7E;transform:translateY(-1px)}
+  a.go:focus-visible{outline:2px solid #F2A65A;outline-offset:3px}
+  small{display:block;margin-top:1.75rem;color:#6E747C;font-size:13px}
 </style>
 </head>
-<body class="no-js">
-
-<a class="skip" href="#services">Skip to content</a>
-
-<header class="site">
-  <div class="wrap bar">
-    <a class="wordmark" href="./">Lilliss <span>IT</span></a>
-    <nav class="top">
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <a href="/privacy.html">Privacy</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <div class="hero">
-    
-    <div class="wrap">
-      <p class="kicker">Sydney &middot; south-west &amp; beyond</p>
-      <h1>Small-business IT, handled by <em>one person</em> you can actually ring.</h1>
-      <p class="lede">Lilliss IT is Jared Lilliss &mdash; an IT support and field technician based in Bass Hill, working across Sydney and regional NSW. <strong>One point of contact from fault intake to fix:</strong> the person who takes the call is the person who scopes it, installs it, documents it and answers when it breaks.</p>
-      <div class="hero-meta">
-        <span class="chip">Trading since 2019, registered 2026</span>
-        <span class="chip">ABN 78 576 434 613</span>
-      </div>
-      <div class="cta-row">
-        <a class="btn" href="#contact">Get in touch</a>
-        <span class="cta-side">No call centre, no ticket queue.</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- the single run: services, about, contact -->
-  <div class="run">
-
-  <section id="services">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <p class="eyebrow">Services</p>
-        <h2>What I do</h2>
-        <p class="sub">Mostly hospitality venues and small businesses &mdash; often mid-service, when it can't wait until Monday.</p>
-      </div>
-      <ol class="svc">
-        <li class="rv"><h3>POS &amp; EFTPOS</h3>
-          <p>Rollouts, replacements and fault resolution for point-of-sale and payment terminals &mdash; getting the tills taking money again is the job.</p>
-        </li>
-        <li class="rv"><h3>Windows support</h3>
-          <p>Endpoint and hardware support for Windows machines: setup, repair, migration, and the recurring faults nobody has had time to chase down.</p>
-        </li>
-        <li class="rv"><h3>Networks</h3>
-          <p>Structured cabling, switching and Wi-Fi for small sites &mdash; tidy racks, labelled runs, and documentation you can hand to the next person.</p>
-        </li>
-        <li class="rv"><h3>CCTV &amp; AV</h3>
-          <p>Camera and audio-visual installation and troubleshooting for venues and shopfronts, from mounting to configuration.</p>
-        </li>
-        <li class="rv"><h3>Small-business IT</h3>
-          <p>The rest of it: email, printers, backups, vendor wrangling. If it plugs in and the business depends on it, it's in scope.</p>
-        </li>
-        <li class="rv"><h3>How it runs</h3>
-          <p>You deal with one person the whole way through. Faults get written up honestly &mdash; what broke, what fixed it, and what to watch for next time.</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <section id="about">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <p class="eyebrow">About</p>
-        <h2>One-man operation, on purpose</h2>
-      </div>
-      <div class="two-col">
-        <div class="about rv">
-          <p><strong>Lilliss IT is a one-man operation, on purpose.</strong> No handoffs between a sales rep, a dispatcher and a tech who's never seen your site &mdash; the person you first speak to is the person on the ladder.</p>
-          <p>Away from client work I build a privacy-by-design data platform over public Australian health datasets &mdash; a polling loop feeding an append-only PostgreSQL time series, with the privacy posture set at the schema level so no personal or health information is ever collected. Python, PostgreSQL, time-series work.</p>
-          <div class="handoff" aria-hidden="true">
-            <p class="lbl">Handed off</p>
-            <svg viewBox="0 0 600 22" preserveAspectRatio="none" focusable="false">
-              <line class="brk" x1="0" y1="11" x2="600" y2="11"/>
-              <circle class="pt" cx="4" cy="11" r="3.5"/><circle class="pt" cx="200" cy="11" r="3.5"/>
-              <circle class="pt" cx="400" cy="11" r="3.5"/><circle class="pt" cx="596" cy="11" r="3.5"/>
-            </svg>
-            <p class="lbl">Here</p>
-            <svg viewBox="0 0 600 22" preserveAspectRatio="none" focusable="false">
-              <line class="whole" x1="0" y1="11" x2="600" y2="11"/>
-              <circle class="pt-live" cx="4" cy="11" r="3.5"/><circle class="pt-live" cx="596" cy="11" r="3.5"/>
-            </svg>
-          </div>
-        </div>
-        <div class="certs rv">
-          <h3>Certifications</h3>
-          <ul>
-            <li>CompTIA A+ <span class="status">held</span></li>
-            <li>Microsoft Azure Fundamentals (AZ-900) <span class="status">held</span></li>
-            <li>CompTIA Security+ <span class="status now">in progress</span></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <p class="eyebrow">Contact</p>
-        <h2>Email is the reliable way in</h2>
-      </div>
-      <div class="contact-box rv">
-        <p>Available for work across Sydney and regional NSW. Email is the reliable way in &mdash; describe the fault, the gear and the urgency, and you'll get a straight answer about whether I can help and when.</p>
-        <a class="email" href="mailto:jaredlilliss@gmail.com">jaredlilliss@gmail.com</a>
-        <div class="contact-links">
-          <a href="https://www.linkedin.com/in/jaredlilliss/">LinkedIn</a>
-          <a href="https://github.com/jaredlilliss">GitHub</a>
-        </div>
-      </div>
-    </div>
-  </section>
-  </div>
-</main>
-
-<footer>
-  <div class="wrap">
-    <div class="foot-links">
-      <a href="#services">Services</a>
-      <a href="#contact">Contact</a>
-      <a href="/privacy.html">Privacy Policy</a>
-    </div>
-    <p>&copy; 2026 Jared Lilliss, trading as Lilliss IT &middot; ABN 78&nbsp;576&nbsp;434&nbsp;613 &middot; NSW, Australia</p>
-    <p>Trading since 2019, registered 2026 &middot; lilliss.au</p>
-  </div>
-</footer>
-
-<script>
-(function(){
-  var de=document.documentElement;
-  document.body.classList.remove('no-js');document.body.classList.add('js');de.classList.add('js');
-})();
-
-/* ————————————————————————————————————————————————————————————
-   
-
-/* 
-
-/* nav current-section marker */
-(function(){
-  var links=[].slice.call(document.querySelectorAll('nav.top a[href^="#"]'));
-  if(!links.length||!('IntersectionObserver' in window))return;
-  var map={};links.forEach(function(a){var el=document.querySelector(a.getAttribute('href'));if(el)map[el.id]=a});
-  var io=new IntersectionObserver(function(en){
-    en.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(a){a.removeAttribute('aria-current')});
-      if(map[e.target.id])map[e.target.id].setAttribute('aria-current','true'); } });
-  },{rootMargin:'-45% 0px -50% 0px'});
-  Object.keys(map).forEach(function(id){io.observe(document.getElementById(id))});
-})();
-
-/* reveals + ?noreveal capture hatch + force-show backstop */
-(function(){
-  var els=[].slice.call(document.querySelectorAll('.rv'));
-  if(/[?&]noreveal/.test(location.search)){els.forEach(function(e){e.style.transition='none';e.classList.add('in')});return}
-  els.forEach(function(e,i){e.style.setProperty('--rvd',(i%3)*0.08+'s')});
-  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
-  var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
-  els.forEach(function(e){io.observe(e)});
-  setTimeout(function(){els.forEach(function(e){e.classList.add('in')})},2600);
-})();
-</script>
+<body>
+  <main>
+    <p class="brand">Lilliss <b>IT</b></p>
+    <h1>This page has moved.</h1>
+    <p>Lilliss IT now lives at its own address. You should arrive there
+       automatically &mdash; if not, the link below will take you.</p>
+    <a class="go" href="https://lilliss.au/">Go to lilliss.au</a>
+    <small>Previously jaredlilliss.github.io/lilliss-it/</small>
+  </main>
 </body>
 </html>
