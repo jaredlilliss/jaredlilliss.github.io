@@ -72,6 +72,8 @@ section{margin:0 0 34px}
 .chartbox{background:var(--surface);border:1px solid var(--rule);border-radius:3px;
   padding:18px 16px 10px;box-shadow:var(--shadow);overflow-x:auto}
 #hourly{display:block;width:100%;min-width:520px;height:170px}
+#coverage{display:block;width:100%;min-width:560px;height:190px}
+#dow{display:block;width:100%;min-width:460px;height:160px}
 
 /* ---- controls ---- */
 .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
@@ -115,6 +117,23 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);
 footer b{color:var(--ink)}
 footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:10px;
   padding:10px 12px;background:var(--surface-2);border-radius:3px;display:block}
+/* ---- view switch ---- */
+.viewsw{display:flex;gap:0;border:1px solid var(--rule);border-radius:3px;overflow:hidden;
+  background:var(--surface);margin:20px 0 0;width:fit-content;max-width:100%}
+.viewsw button{background:none;border:0;border-right:1px solid var(--rule);padding:9px 16px;
+  font:inherit;font-size:.85rem;font-weight:500;color:var(--muted);cursor:pointer}
+.viewsw button:last-child{border-right:0}
+.viewsw button[aria-pressed=true]{background:var(--accent);color:#fff;font-weight:600}
+:root:not([data-theme="light"]) .viewsw button[aria-pressed=true]{color:#06222a}
+.note{font-size:.8rem;color:var(--faint);margin:9px 2px 0}
+.prose-sm p{max-width:74ch;margin:0 0 12px;font-size:.9rem;color:var(--muted)}
+.prose-sm p:last-child{margin-bottom:0}
+.prose-sm b{color:var(--ink);font-weight:600}
+.cov{display:inline-flex;align-items:center;gap:7px}
+.covbar{width:52px;height:6px;border-radius:3px;background:var(--surface-2);overflow:hidden;flex:none}
+.covbar i{display:block;height:100%;background:var(--accent)}
+.loading{padding:34px 16px;text-align:center;color:var(--muted);font-size:.9rem}
+
 /* ---- small screens: nothing may push the body wider than the viewport ---- */
 @media (max-width: 640px){
   .gen{white-space:normal;text-align:left;line-height:1.7}
@@ -148,6 +167,12 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
   these are the emergency departments that publish live counts. NSW has 176.
 </div>
 
+<div class="viewsw" role="group" aria-label="Choose a view">
+  <button data-view="now" aria-pressed="true">Right now</button>
+  <button data-view="history" aria-pressed="false">Five weeks</button>
+</div>
+
+<div id="view-now">
 <div class="stats" id="stats"></div>
 
 <section>
@@ -185,6 +210,55 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
     <div class="empty" id="empty" hidden>No hospital matches that filter.</div>
   </div>
 </section>
+
+</div>
+
+<!-- ============ FIVE WEEKS ============ -->
+<div id="view-history" hidden>
+
+  <section>
+    <h2>What the collection actually looked like</h2>
+    <p class="sub">Every bar is one day, and its height is how many of the 96 possible readings were captured. This is the honest version: for its first month the collector ran on a Windows laptop, which suspends background processes when it idles, so most days are partial and five have nothing at all. On <b>23 August</b> it moved to an always-on host. <b>Nothing after that is missing.</b></p>
+    <div class="chartbox"><svg id="coverage" viewBox="0 0 720 190" preserveAspectRatio="none" role="img" aria-label="Readings captured per day"></svg></div>
+    <p class="note" id="coverage-note"></p>
+  </section>
+
+  <section>
+    <h2>You can tell which machine took a reading by looking at the clock</h2>
+    <div class="prose-sm">
+      <p>The always-on host runs on a fifteen-minute cron schedule, so its readings land at exactly <code>:00</code>, <code>:15</code>, <code>:30</code> and <code>:45</code> — 24 of each, 96 a day, never drifting. The laptop ran a sleeping loop, so its readings landed wherever it happened to wake: <code>:02</code>, <code>:11</code>, <code>:26</code>, <code>:39</code>.</p>
+      <p><b>The cutover day has 115 readings rather than 96</b> — the 96 clean quarter-hour ones from the new host, plus 19 drifting ones from the laptop still running alongside it. Both collectors were live for a few hours. <b>No reading was ever double-counted:</b> across all 77,000 rows there is not one duplicate of the same hospital at the same instant.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Monday is the busiest day</h2>
+    <p class="sub">Average people waiting by day of the week, across every reading ever taken. This one is robust to the gaps above, because it pools raw readings rather than comparing days to each other — a day with six readings simply contributes six.</p>
+    <div class="chartbox"><svg id="dow" viewBox="0 0 720 160" preserveAspectRatio="none" role="img" aria-label="Average people waiting by day of week"></svg></div>
+  </section>
+
+  <section>
+    <h2>Five weeks, hospital by hospital</h2>
+    <p class="sub">Long-run average, the busiest single reading ever recorded, and how much of the period each hospital was actually observed for. <b>Coverage is shown because it matters</b> — a hospital seen on fewer days has a less reliable average, and hiding that would make this table look more certain than it is.</p>
+    <div class="controls">
+      <input type="search" id="hq" placeholder="Filter by hospital, suburb or health district…" aria-label="Filter hospitals">
+    </div>
+    <div class="tablebox">
+      <table>
+        <thead><tr>
+          <th>Hospital</th>
+          <th class="r">Five-week average</th>
+          <th class="r">Busiest reading</th>
+          <th class="r">Days observed</th>
+          <th>Daily average across the period</th>
+        </tr></thead>
+        <tbody id="hrows"></tbody>
+      </table>
+      <div class="empty" id="hempty" hidden>No hospital matches that filter.</div>
+    </div>
+  </section>
+
+</div>
 
 <footer>
   <b>Where this comes from.</b> A privacy-by-design pipeline: no tables, columns or fields for people,
@@ -314,4 +388,152 @@ document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click'
   sortKey = b.dataset.sort; render();
 }));
 render();
+
+/* ---------- five-week view ---------- */
+const DOWNAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+/* Local date key. toISOString() converts to UTC, which in AEST shifts the date
+   back a day and silently mismatches every lookup - it reported one extra
+   missing day and dropped the last one. */
+const dkey = d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+let HIST = null, histLoaded = false;
+
+function axis(svg, W, H, PL, PR, PT, PB, max, step, fmt){
+  let g = '';
+  for(let t = 0; t <= max; t += step){
+    const y = H-PB - (t/max)*(H-PT-PB);
+    g += `<line x1="${PL}" y1="${y.toFixed(1)}" x2="${W-PR}" y2="${y.toFixed(1)}" stroke="var(--rule)" stroke-width="1"/>`
+      +  `<text x="${PL-7}" y="${(y+3.5).toFixed(1)}" text-anchor="end" font-size="9" font-family="IBM Plex Mono,monospace" fill="var(--faint)">${fmt?fmt(t):t}</text>`;
+  }
+  return g;
+}
+
+function drawCoverage(){
+  const svg = document.getElementById('coverage');
+  const W=720, H=190, PL=34, PR=10, PT=16, PB=30;
+  const rows = HIST.system_daily;
+  const first = new Date(HIST.span.first + 'T00:00:00');
+  const last  = new Date(HIST.span.last  + 'T00:00:00');
+  const days = Math.round((last-first)/86400000) + 1;
+  const byDate = new Map(rows.map(r => [r[0], r]));
+  const max = 120;
+  const bw = (W-PL-PR)/days;
+  let g = axis(svg, W, H, PL, PR, PT, PB, max, 24);
+  const y96 = H-PB - (96/max)*(H-PT-PB);
+  g += `<line x1="${PL}" y1="${y96.toFixed(1)}" x2="${W-PR}" y2="${y96.toFixed(1)}" stroke="var(--cool)" stroke-width="1.5" stroke-dasharray="4 3"/>`
+     + `<text x="${W-PR}" y="${(y96-6).toFixed(1)}" text-anchor="end" font-size="9.5" font-weight="600" font-family="IBM Plex Mono,monospace" fill="var(--cool)">96 = a complete day</text>`;
+  let missing = 0, complete = 0;
+  for(let i=0;i<days;i++){
+    const dt = new Date(first.getTime() + i*86400000);
+    const key = dkey(dt);
+    const r = byDate.get(key);
+    const x = PL + i*bw;
+    if(!r){ missing++;
+      g += `<rect x="${(x+0.6).toFixed(1)}" y="${(H-PB-4).toFixed(1)}" width="${Math.max(1,bw-1.2).toFixed(1)}" height="4" fill="var(--hot)" opacity=".55"><title>${key} — nothing captured</title></rect>`;
+      continue; }
+    const cyc = r[3];
+    if(cyc >= 90) complete++;
+    const h = (cyc/max)*(H-PT-PB);
+    const vps = key >= '2026-08-23';
+    g += `<rect x="${(x+0.6).toFixed(1)}" y="${(H-PB-h).toFixed(1)}" width="${Math.max(1,bw-1.2).toFixed(1)}" height="${h.toFixed(1)}" fill="${vps?'var(--cool)':'var(--accent)'}" opacity="${vps?'.95':'.5'}"><title>${key} — ${cyc} of 96 readings</title></rect>`;
+  }
+  [0, Math.floor(days/2), days-1].forEach(i => {
+    const dt = new Date(first.getTime() + i*86400000);
+    const lbl = dt.toLocaleDateString('en-AU',{day:'numeric',month:'short'});
+    g += `<text x="${(PL+i*bw+bw/2).toFixed(1)}" y="${H-10}" text-anchor="middle" font-size="9" font-family="IBM Plex Mono,monospace" fill="var(--faint)">${lbl}</text>`;
+  });
+  svg.innerHTML = g;
+  document.getElementById('coverage-note').innerHTML =
+    `<b>${complete}</b> of ${days} days captured 90 or more of the 96 possible readings. `
+    + `<b>${missing}</b> days captured nothing at all — every one of them before the move. `
+    + `Faded bars are the laptop; solid green is the always-on host.`;
+}
+
+function drawDow(){
+  const svg = document.getElementById('dow');
+  const W=720, H=160, PL=34, PR=10, PT=18, PB=28;
+  const rows = HIST.dow.slice().sort((a,b)=>a[0]-b[0]);
+  const max = Math.ceil(Math.max(...rows.map(r=>r[1])));
+  const bw = (W-PL-PR)/rows.length;
+  let g = axis(svg, W, H, PL, PR, PT, PB, max, 2);
+  const hi = rows.reduce((a,b)=>b[1]>a[1]?b:a), lo = rows.reduce((a,b)=>b[1]<a[1]?b:a);
+  rows.forEach((r,i) => {
+    const h = (r[1]/max)*(H-PT-PB);
+    const x = PL + i*bw;
+    const peak = r[0]===hi[0];
+    g += `<rect x="${(x+bw*0.18).toFixed(1)}" y="${(H-PB-h).toFixed(1)}" width="${(bw*0.64).toFixed(1)}" height="${h.toFixed(1)}" rx="2" fill="${peak?'var(--hot)':'var(--accent)'}" opacity="${peak?'.95':'.75'}"><title>${DOWNAMES[r[0]-1]} — ${r[1]} average</title></rect>`
+      +  `<text x="${(x+bw/2).toFixed(1)}" y="${(H-PB-h-6).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="600" font-family="IBM Plex Mono,monospace" fill="${peak?'var(--hot)':'var(--ink)'}">${r[1]}</text>`
+      +  `<text x="${(x+bw/2).toFixed(1)}" y="${H-10}" text-anchor="middle" font-size="10" font-family="IBM Plex Sans,sans-serif" fill="var(--faint)">${DOWNAMES[r[0]-1]}</text>`;
+  });
+  svg.innerHTML = g;
+}
+
+function dailyLine(daily, days, first){
+  if(!daily || daily.length < 2) return '<span class="dim">—</span>';
+  const W=150, H=28;
+  const byDate = new Map(daily.map(r=>[r[0],r[1]]));
+  const mx = Math.max(...daily.map(r=>r[1]), 1);
+  let d = '', pen = false, dots = '';
+  for(let i=0;i<days;i++){
+    const key = dkey(new Date(first.getTime()+i*86400000));
+    const v = byDate.get(key);
+    const x = (i/(days-1))*W;
+    if(v === undefined){ pen = false; continue; }
+    const y = H-2 - (v/mx)*(H-5);
+    d += `${pen?'L':'M'}${x.toFixed(1)},${y.toFixed(1)}`;
+    pen = true;
+  }
+  return `<svg class="spark" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true">`
+    + `<path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>${dots}</svg>`;
+}
+
+function renderHistTable(){
+  const q = (document.getElementById('hq').value || '').trim().toLowerCase();
+  const first = new Date(HIST.span.first + 'T00:00:00');
+  const days = HIST.span.days;
+  const rows = HIST.facilities.filter(f => !q
+    || (f.name||'').toLowerCase().includes(q)
+    || (f.suburb||'').toLowerCase().includes(q)
+    || (f.lhd||'').toLowerCase().includes(q));
+  document.getElementById('hempty').hidden = rows.length > 0;
+  document.getElementById('hrows').innerHTML = rows.map(f => {
+    const obs = (f.daily||[]).length;
+    const pct = Math.round((obs/days)*100);
+    return `<tr>
+      <td><div class="nm">${f.name}</div><div class="loc">${[f.suburb,f.lhd].filter(Boolean).join(' · ')}</div></td>
+      <td class="r"><span class="big">${f.avg ?? '—'}</span></td>
+      <td class="r"><span class="dim">${f.max ?? '—'}</span></td>
+      <td class="r"><span class="cov"><span class="covbar"><i style="width:${pct}%"></i></span><span class="dim">${obs}/${days}</span></span></td>
+      <td>${dailyLine(f.daily, days, first)}</td>
+    </tr>`;
+  }).join('');
+}
+
+async function loadHistory(){
+  if(histLoaded) return;
+  const host = document.getElementById('view-history');
+  const holder = document.createElement('div');
+  holder.className = 'loading';
+  holder.textContent = 'Loading five weeks of readings…';
+  host.prepend(holder);
+  try{
+    const r = await fetch('history.json', {cache:'no-store'});
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    HIST = await r.json();
+    holder.remove();
+    drawCoverage(); drawDow(); renderHistTable();
+    document.getElementById('hq').addEventListener('input', renderHistTable);
+    histLoaded = true;
+  }catch(e){
+    holder.textContent = 'Could not load the five-week file (' + e.message + ').';
+  }
+}
+
+document.querySelectorAll('.viewsw button').forEach(b => b.addEventListener('click', () => {
+  const v = b.dataset.view;
+  document.querySelectorAll('.viewsw button').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+  document.getElementById('view-now').hidden = (v !== 'now');
+  document.getElementById('view-history').hidden = (v !== 'history');
+  if(v === 'history') loadHistory();
+}));
+
 </script>
