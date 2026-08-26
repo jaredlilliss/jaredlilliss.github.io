@@ -72,7 +72,7 @@ body{background:var(--bg);color:var(--ink);font:400 16.5px/1.65 var(--sans);-web
 .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.5;
   background-image:radial-gradient(rgba(141,150,170,.13) 1px,transparent 1px);background-size:26px 26px}
 main,header,footer{position:relative;z-index:2}
-.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+.wrap{max-width:clamp(1060px, 68vw, 1500px) /* grows on wide screens, hard ceiling at 1500 - a flat cap made the page look broken at low zoom (26/08/2026) */;margin:0 auto;padding:0 24px}
 a{color:inherit}
 ::selection{background:var(--ember);color:#140a04}
 
