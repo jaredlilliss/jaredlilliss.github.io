@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Queue Board</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -113,6 +115,16 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);
 footer b{color:var(--ink)}
 footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:10px;
   padding:10px 12px;background:var(--surface-2);border-radius:3px;display:block}
+/* ---- small screens: nothing may push the body wider than the viewport ---- */
+@media (max-width: 640px){
+  .gen{white-space:normal;text-align:left;line-height:1.7}
+  .mast{align-items:flex-start}
+  h1{font-size:clamp(1.7rem,8vw,2.2rem)}
+  .wrap{padding-left:14px;padding-right:14px}
+  .controls{flex-direction:column;align-items:stretch}
+  .seg{width:100%}
+  .seg button{flex:1 1 0;padding:9px 6px;font-size:.75rem}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
