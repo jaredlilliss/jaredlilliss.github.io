@@ -341,7 +341,7 @@ const fmt = n => (n === null || n === undefined) ? '—' : n;
 const last = new Date(DATA.meta.last);
 const gen  = new Date(DATA.generated_at);
 const mins = Math.max(0, Math.round((gen - last) / 60000));
-$('#freshness').textContent = mins < 60 ? `Reading ${mins} min old` : `Reading ${Math.round(mins/60)} h old`;
+$('#freshness').textContent = mins < 60 ? `Reading ${mins} min old` : (mins < 1440 ? `Reading ${Math.round(mins/60)} h old` : `Reading ${Math.round(mins/1440)} day(s) old`);
 $('#gen').textContent = gen.toLocaleString('en-AU', {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
 $('#attr').textContent = DATA.attribution + '  Licensed ' + DATA.licence + '.';
 
@@ -352,7 +352,7 @@ const stats = [
   [DATA.meta.cycles.toLocaleString('en-AU'), 'collection cycles'],
   [DATA.meta.facilities_reporting, 'hospitals reporting'],
   [days, 'days of continuous series'],
-  [DATA.facilities.reduce((a,f)=>a+(f.current||0),0), 'people waiting right now'],
+  [DATA.facilities.reduce((a,f)=>a+(f.current||0),0), 'waiting at the latest reading'],
 ];
 $('#stats').innerHTML = stats.map(([n,l]) =>
   `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
