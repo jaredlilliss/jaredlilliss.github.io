@@ -74,6 +74,7 @@ section{margin:0 0 34px}
 #hourly{display:block;width:100%;min-width:520px;height:170px}
 #coverage{display:block;width:100%;min-width:560px;height:190px}
 #dow{display:block;width:100%;min-width:460px;height:160px}
+#scatter{display:block;width:100%;min-width:520px;height:300px}
 
 /* ---- controls ---- */
 .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
@@ -170,6 +171,7 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
 <div class="viewsw" role="group" aria-label="Choose a view">
   <button data-view="now" aria-pressed="true">Right now</button>
   <button data-view="history" aria-pressed="false">Five weeks</button>
+  <button data-view="coupling" aria-pressed="false">Together?</button>
 </div>
 
 <div id="view-now">
@@ -255,6 +257,53 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
         <tbody id="hrows"></tbody>
       </table>
       <div class="empty" id="hempty" hidden>No hospital matches that filter.</div>
+    </div>
+  </section>
+
+</div>
+
+
+<!-- ============ COUPLING ============ -->
+<div id="view-coupling" hidden>
+
+  <section>
+    <h2>When your emergency department is unusually busy, is everyone else's?</h2>
+    <p class="sub">Mostly not. That is the short answer, and it is not the one most people expect.</p>
+    <div class="prose-sm">
+      <p><b>How this is measured, because the naive version would be misleading.</b> Any two hospitals will appear to move together simply because both are quiet at dawn and busy in the evening — correlating the raw counts would mostly rediscover the daily cycle and dress it up as a finding. So each reading first has <b>that hospital's own average for that hour of the day</b> subtracted. What is left is the part that is unusual <em>for that hospital, at that time</em>.</p>
+      <p>Those leftovers are then compared against the same leftovers for <b>the rest of the state, excluding the hospital being measured</b> — otherwise a large hospital partly correlates with itself and scores too high. Every one of the 59 hospitals reported at all <span class="mono" id="cn">—</span> shared moments, so no pair is being compared across a gap.</p>
+    </div>
+    <div class="chartbox"><svg id="scatter" viewBox="0 0 720 300" role="img" aria-label="Correlation with the rest of the state against hospital size"></svg></div>
+    <p class="note" id="scatter-note"></p>
+  </section>
+
+  <section>
+    <h2>What that actually means</h2>
+    <div class="prose-sm">
+      <p><b>The most system-coupled hospital in the state shares about a sixth of its variation with everywhere else.</b> The rest is its own. For the quieter hospitals it is close to nothing at all. So a surge at your local emergency department is overwhelmingly a <em>local</em> event — not a wave passing across New South Wales.</p>
+      <p><b>The one visible pattern is size, and part of it is arithmetic rather than medicine.</b> Busier hospitals score roughly <span class="mono">0.22</span> against roughly <span class="mono">0.14</span> for quieter ones. Some of that may be real. But a small department's count is dominated by whether one or two people happened to arrive, and that randomness dilutes any shared signal — so a low score at a small hospital is partly a measurement effect, and should not be read as that community behaving differently.</p>
+      <p><b>The shaded band on the chart is noise.</b> With this many shared moments, anything inside roughly <span class="mono">&plusmn;0.05</span> cannot be told apart from zero. Values below the band are not evidence that a hospital moves <em>opposite</em> to the state; they are consistent with no relationship at all.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Every hospital, ranked</h2>
+    <p class="sub">Correlation with the rest of the state after each hospital's own daily rhythm is removed. <b>Higher means more of its ups and downs are shared; lower means more of them are its own.</b> Neither is good or bad — this measures how connected the swings are, and nothing about care.</p>
+    <div class="controls">
+      <input type="search" id="cq" placeholder="Filter by hospital or health district…" aria-label="Filter hospitals">
+    </div>
+    <div class="tablebox">
+      <table>
+        <thead><tr>
+          <th>Hospital</th>
+          <th class="r">Shared with the state</th>
+          <th class="r">Typical people waiting</th>
+          <th class="r">Its own swing</th>
+          <th>Relative</th>
+        </tr></thead>
+        <tbody id="crows"></tbody>
+      </table>
+      <div class="empty" id="cempty" hidden>No hospital matches that filter.</div>
     </div>
   </section>
 
@@ -528,12 +577,90 @@ async function loadHistory(){
   }
 }
 
+
+/* ---------- coupling view ---------- */
+let coupLoaded = false;
+const NOISE = 0.054;   /* ~1.96 / sqrt(n-3) at n≈1313 */
+
+function drawScatter(){
+  const svg = document.getElementById('scatter');
+  const rows = HIST.coupling;
+  const W=720, H=300, PL=44, PR=14, PT=18, PB=40;
+  const xs = rows.map(d=>d.avg), ys = rows.map(d=>d.r);
+  const xmax = Math.ceil(Math.max(...xs)+1), ymin = Math.min(-0.2, Math.min(...ys)-0.05), ymax = Math.max(0.5, Math.max(...ys)+0.05);
+  const X = v => PL + (v/xmax)*(W-PL-PR);
+  const Y = v => H-PB - ((v-ymin)/(ymax-ymin))*(H-PT-PB);
+  let g = '';
+  g += `<rect x="${PL}" y="${Y(NOISE).toFixed(1)}" width="${(W-PL-PR).toFixed(1)}" height="${(Y(-NOISE)-Y(NOISE)).toFixed(1)}" fill="var(--muted)" opacity=".13"/>`;
+  for(let t=Math.ceil(ymin*10)/10; t<=ymax; t+=0.1){
+    const y=Y(t);
+    g += `<line x1="${PL}" y1="${y.toFixed(1)}" x2="${W-PR}" y2="${y.toFixed(1)}" stroke="var(--rule)" stroke-width="1"/>`
+      +  `<text x="${PL-8}" y="${(y+3.5).toFixed(1)}" text-anchor="end" font-size="9" font-family="IBM Plex Mono,monospace" fill="var(--faint)">${t.toFixed(1)}</text>`;
+  }
+  g += `<line x1="${PL}" y1="${Y(0).toFixed(1)}" x2="${W-PR}" y2="${Y(0).toFixed(1)}" stroke="var(--muted)" stroke-width="1.5"/>`;
+  for(let v=0; v<=xmax; v+=4){
+    g += `<text x="${X(v).toFixed(1)}" y="${H-18}" text-anchor="middle" font-size="9" font-family="IBM Plex Mono,monospace" fill="var(--faint)">${v}</text>`;
+  }
+  g += `<text x="${((PL+W-PR)/2).toFixed(1)}" y="${H-4}" text-anchor="middle" font-size="10" font-family="IBM Plex Sans,sans-serif" fill="var(--muted)">typical people waiting (hospital size) &rarr;</text>`;
+  rows.forEach(d=>{
+    const inNoise = Math.abs(d.r) <= NOISE;
+    g += `<circle cx="${X(d.avg).toFixed(1)}" cy="${Y(d.r).toFixed(1)}" r="4.5" fill="${inNoise?'var(--muted)':'var(--accent)'}" opacity="${inNoise?'.5':'.85'}"><title>${d.name} — ${d.r} shared, typically ${d.avg} waiting</title></circle>`;
+  });
+  const top = rows[0], bot = rows[rows.length-1];
+  [[top,'var(--accent)'],[bot,'var(--muted)']].forEach(([d,c])=>{
+    const lx = Math.min(X(d.avg)+9, W-PR-150);
+    g += `<text x="${lx.toFixed(1)}" y="${(Y(d.r)+3.5).toFixed(1)}" font-size="9.5" font-weight="600" font-family="IBM Plex Sans,sans-serif" fill="${c}">${d.name.split('(')[0].trim()}</text>`;
+  });
+  g += `<text x="${W-PR}" y="${(Y(-NOISE)+15).toFixed(1)}" text-anchor="end" font-size="9" font-family="IBM Plex Mono,monospace" fill="var(--faint)">shaded band = indistinguishable from zero</text>`;
+  svg.innerHTML = g;
+
+  const sorted = rows.slice().sort((a,b)=>a.avg-b.avg);
+  const half = Math.floor(sorted.length/2);
+  const mean = a => a.reduce((s,d)=>s+d.r,0)/a.length;
+  const quiet = mean(sorted.slice(0,half)), busy = mean(sorted.slice(half));
+  const sig = rows.filter(d=>Math.abs(d.r)>NOISE).length;
+  document.getElementById('scatter-note').innerHTML =
+    `Highest <b>${top.r}</b> (${top.name.split('(')[0].trim()}), lowest <b>${bot.r}</b> (${bot.name.split('(')[0].trim()}). `
+    + `<b>${sig}</b> of ${rows.length} sit outside the noise band. `
+    + `Busier half averages <b>${busy.toFixed(2)}</b>, quieter half <b>${quiet.toFixed(2)}</b>.`;
+  document.getElementById('cn').textContent = (rows[0].n||0).toLocaleString('en-AU');
+}
+
+function renderCoupTable(){
+  const q = (document.getElementById('cq').value||'').trim().toLowerCase();
+  const rows = HIST.coupling.filter(d => !q
+    || (d.name||'').toLowerCase().includes(q) || (d.lhd||'').toLowerCase().includes(q));
+  document.getElementById('cempty').hidden = rows.length>0;
+  const mx = Math.max(...HIST.coupling.map(d=>Math.abs(d.r)));
+  document.getElementById('crows').innerHTML = rows.map(d=>{
+    const inNoise = Math.abs(d.r)<=NOISE;
+    const w = Math.round((Math.abs(d.r)/mx)*100);
+    return `<tr>
+      <td><div class="nm">${d.name}</div><div class="loc">${d.lhd||''}</div></td>
+      <td class="r"><span class="big">${d.r.toFixed(3)}</span>${inNoise?' <span class="chip mid">noise</span>':''}</td>
+      <td class="r"><span class="dim">${d.avg}</span></td>
+      <td class="r"><span class="dim">&plusmn;${d.sd}</span></td>
+      <td><span class="covbar" style="width:76px"><i style="width:${w}%;background:${inNoise?'var(--muted)':'var(--accent)'}"></i></span></td>
+    </tr>`;
+  }).join('');
+}
+
+async function loadCoupling(){
+  await loadHistory();
+  if(coupLoaded || !HIST || !HIST.coupling) return;
+  drawScatter(); renderCoupTable();
+  document.getElementById('cq').addEventListener('input', renderCoupTable);
+  coupLoaded = true;
+}
+
 document.querySelectorAll('.viewsw button').forEach(b => b.addEventListener('click', () => {
   const v = b.dataset.view;
   document.querySelectorAll('.viewsw button').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
   document.getElementById('view-now').hidden = (v !== 'now');
   document.getElementById('view-history').hidden = (v !== 'history');
+  document.getElementById('view-coupling').hidden = (v !== 'coupling');
   if(v === 'history') loadHistory();
+  if(v === 'coupling') loadCoupling();
 }));
 
 </script>
