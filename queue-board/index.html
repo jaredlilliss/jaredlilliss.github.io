@@ -1,0 +1,305 @@
+<title>The Queue Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --bg:#ECEFF0; --surface:#FFFFFF; --surface-2:#E3E9EA; --raise:#F7F9F9;
+  --ink:#0D1417; --muted:#5A6D73; --faint:#86989D; --rule:#CFD9DB;
+  --accent:#0D6675; --accent-soft:#0D66751a;
+  --hot:#A9491A; --hot-soft:#A9491A16;
+  --cool:#256349; --cool-soft:#25634916;
+  --shadow:0 1px 2px rgba(13,20,23,.06), 0 10px 26px -16px rgba(13,20,23,.3);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0A1013; --surface:#111A1D; --surface-2:#172226; --raise:#1B282C;
+    --ink:#E1EAEC; --muted:#83999F; --faint:#5E7278; --rule:#1E2B2F;
+    --accent:#4EC5D8; --accent-soft:#4EC5D81f;
+    --hot:#E39B5F; --hot-soft:#E39B5F1c;
+    --cool:#5CD0A0; --cool-soft:#5CD0A01a;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 12px 32px -18px rgba(0,0,0,.85);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0A1013; --surface:#111A1D; --surface-2:#172226; --raise:#1B282C;
+  --ink:#E1EAEC; --muted:#83999F; --faint:#5E7278; --rule:#1E2B2F;
+  --accent:#4EC5D8; --accent-soft:#4EC5D81f;
+  --hot:#E39B5F; --hot-soft:#E39B5F1c;
+  --cool:#5CD0A0; --cool-soft:#5CD0A01a;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 12px 32px -18px rgba(0,0,0,.85);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(18px,3.5vw,44px) clamp(14px,3.5vw,36px) 80px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+
+/* ---- masthead ---- */
+.mast{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;justify-content:space-between;
+  padding-bottom:16px;border-bottom:2px solid var(--ink)}
+h1{margin:0;font-size:clamp(1.9rem,4.6vw,2.75rem);font-weight:700;letter-spacing:-.028em;line-height:1}
+.mast p{margin:8px 0 0;color:var(--muted);font-size:.92rem;max-width:60ch}
+.gen{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);text-align:right;line-height:1.9;white-space:nowrap}
+.gen b{color:var(--ink);font-weight:600}
+.live{display:inline-flex;align-items:center;gap:6px}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--cool);flex:none}
+
+/* ---- caveat ---- */
+.caveat{margin:18px 0 0;background:var(--surface-2);border-left:3px solid var(--accent);
+  padding:12px 16px;border-radius:0 3px 3px 0;font-size:.88rem;color:var(--muted)}
+.caveat b{color:var(--ink)}
+
+/* ---- stats ---- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:22px 0 30px}
+.stat{background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:12px 14px;box-shadow:var(--shadow)}
+.stat .n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;
+  font-size:1.6rem;font-weight:600;line-height:1;letter-spacing:-.02em}
+.stat .l{font-size:.73rem;color:var(--muted);margin-top:5px;line-height:1.3}
+
+/* ---- section ---- */
+h2{font-size:1.12rem;font-weight:600;letter-spacing:-.01em;margin:0 0 3px}
+.sub{color:var(--muted);font-size:.86rem;margin:0 0 14px;max-width:74ch}
+section{margin:0 0 34px}
+
+/* ---- hourly chart ---- */
+.chartbox{background:var(--surface);border:1px solid var(--rule);border-radius:3px;
+  padding:18px 16px 10px;box-shadow:var(--shadow);overflow-x:auto}
+#hourly{display:block;width:100%;min-width:520px;height:170px}
+
+/* ---- controls ---- */
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+input[type=search]{flex:1 1 200px;min-width:160px;background:var(--surface);color:var(--ink);
+  border:1px solid var(--rule);border-radius:3px;padding:8px 11px;font:inherit;font-size:.88rem}
+input[type=search]::placeholder{color:var(--faint)}
+.seg{display:flex;border:1px solid var(--rule);border-radius:3px;overflow:hidden;background:var(--surface)}
+.seg button{background:none;border:0;padding:8px 12px;font:inherit;font-size:.8rem;font-weight:500;
+  color:var(--muted);cursor:pointer;border-right:1px solid var(--rule)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed=true]{background:var(--accent);color:#fff;font-weight:600}
+:root:not([data-theme="light"]) .seg button[aria-pressed=true]{color:#06222a}
+@media (prefers-color-scheme: light){.seg button[aria-pressed=true]{color:#fff}}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---- table ---- */
+.tablebox{border:1px solid var(--rule);border-radius:3px;background:var(--surface);
+  box-shadow:var(--shadow);overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:660px;font-size:.88rem}
+thead th{position:sticky;top:0;background:var(--surface-2);z-index:1;
+  font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);white-space:nowrap}
+tbody td{padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--raise)}
+.nm{font-weight:500;line-height:1.25}
+.loc{color:var(--faint);font-size:.76rem;margin-top:1px}
+td.r{text-align:right}
+.big{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:1.02rem;font-weight:600}
+.dim{color:var(--muted);font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:.84rem}
+.chip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.7rem;font-weight:600;
+  padding:2px 6px;border-radius:2px;white-space:nowrap;letter-spacing:.02em}
+.chip.up{background:var(--hot-soft);color:var(--hot)}
+.chip.dn{background:var(--cool-soft);color:var(--cool)}
+.chip.mid{background:var(--accent-soft);color:var(--accent)}
+.spark{display:block}
+.empty{padding:26px 16px;text-align:center;color:var(--muted);font-size:.9rem}
+
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);
+  font-size:.79rem;color:var(--muted);line-height:1.75}
+footer b{color:var(--ink)}
+footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:10px;
+  padding:10px 12px;background:var(--surface-2);border-radius:3px;display:block}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div>
+    <h1>The Queue Board</h1>
+    <p>How many people are waiting for treatment in NSW emergency departments that publish live counts — read straight from a collector that has taken a reading every fifteen minutes since July.</p>
+  </div>
+  <div class="gen">
+    <span class="live"><i></i><b id="freshness">—</b></span><br>
+    <span id="gen">—</span><br>
+    59 hospitals · 15-min cadence
+  </div>
+</header>
+
+<div class="caveat">
+  <b>Two things this is not.</b> It is <b>not a waiting time</b> — the feed publishes a count of people
+  waiting for treatment, and there is no minutes field anywhere in it. And it is <b>not statewide</b> —
+  these are the emergency departments that publish live counts. NSW has 176.
+</div>
+
+<div class="stats" id="stats"></div>
+
+<section>
+  <h2>The day has a shape</h2>
+  <p class="sub">Average number of people waiting, by hour, across every reading ever taken. The quietest hour is dawn; the load builds through the afternoon and peaks in the evening. This curve is the strongest evidence the pipeline is capturing something real rather than noise.</p>
+  <div class="chartbox"><svg id="hourly" viewBox="0 0 720 170" preserveAspectRatio="none" role="img" aria-label="Average people waiting by hour of day"></svg></div>
+</section>
+
+<section>
+  <h2>Every reporting hospital</h2>
+  <p class="sub">The <b>vs own average</b> column compares each hospital's latest reading to its own long-run average — because a raw count means nothing across sites of different sizes. Twelve people waiting is quiet at one hospital and busy at another. There is no clinical severity scale here, and inventing one would be a claim this data cannot support. The trace shows that hospital's last 24 hours.</p>
+
+  <div class="controls">
+    <input type="search" id="q" placeholder="Filter by hospital, suburb or health district…" aria-label="Filter hospitals">
+    <div class="seg" role="group" aria-label="Sort order">
+      <button data-sort="current" aria-pressed="true">Waiting now</button>
+      <button data-sort="dev" aria-pressed="false">Vs own average</button>
+      <button data-sort="avg" aria-pressed="false">Busiest overall</button>
+      <button data-sort="name" aria-pressed="false">A–Z</button>
+    </div>
+  </div>
+
+  <div class="tablebox">
+    <table>
+      <thead><tr>
+        <th>Hospital</th>
+        <th class="r">Waiting now</th>
+        <th class="r">Vs own average</th>
+        <th class="r">Own average</th>
+        <th class="r">Peak seen</th>
+        <th>Last 24 hours</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty" hidden>No hospital matches that filter.</div>
+  </div>
+</section>
+
+<footer>
+  <b>Where this comes from.</b> A privacy-by-design pipeline: no tables, columns or fields for people,
+  accounts, sessions or devices exist anywhere in the schema — the privacy posture is structural, not a
+  policy. Readings are collected every fifteen minutes on an always-on host and appended to a
+  PostgreSQL time series that is never rewritten. The upstream feed serves current state only, with no
+  historical endpoint, so a missed reading can never be backfilled — which is why the collector was
+  built before any interface.
+  <span class="attr" id="attr">—</span>
+</footer>
+
+</div>
+
+<script type="module">
+let DATA;
+try {
+  const r = await fetch('ed.json', {cache:'no-store'});
+  if(!r.ok) throw new Error('HTTP ' + r.status);
+  DATA = await r.json();
+} catch (e) {
+  document.querySelector('.wrap').innerHTML =
+    '<h1>The Queue Board</h1><p style="color:var(--muted);max-width:60ch">' +
+    'Could not load the readings file (' + e.message + '). The page is fine; the data file beside it is not reachable.</p>';
+  throw e;
+}
+
+const $ = s => document.querySelector(s);
+const fmt = n => (n === null || n === undefined) ? '—' : n;
+
+/* ---------- freshness + stats ---------- */
+const last = new Date(DATA.meta.last);
+const gen  = new Date(DATA.generated_at);
+const mins = Math.max(0, Math.round((gen - last) / 60000));
+$('#freshness').textContent = mins < 60 ? `Reading ${mins} min old` : `Reading ${Math.round(mins/60)} h old`;
+$('#gen').textContent = gen.toLocaleString('en-AU', {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+$('#attr').textContent = DATA.attribution + '  Licensed ' + DATA.licence + '.';
+
+const first = new Date(DATA.meta.first);
+const days  = Math.max(1, Math.round((last - first) / 86400000));
+const stats = [
+  [DATA.meta.snapshots.toLocaleString('en-AU'), 'readings captured'],
+  [DATA.meta.cycles.toLocaleString('en-AU'), 'collection cycles'],
+  [DATA.meta.facilities_reporting, 'hospitals reporting'],
+  [days, 'days of continuous series'],
+  [DATA.facilities.reduce((a,f)=>a+(f.current||0),0), 'people waiting right now'],
+];
+$('#stats').innerHTML = stats.map(([n,l]) =>
+  `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+
+/* ---------- hourly curve ---------- */
+(function(){
+  const svg = $('#hourly'), W = 720, H = 170, PL = 34, PR = 10, PT = 14, PB = 26;
+  const pts = DATA.hourly.slice().sort((a,b)=>a.h-b.h);
+  const max = Math.max(...pts.map(p=>p.avg)) * 1.15;
+  const x = i => PL + (i/(pts.length-1)) * (W-PL-PR);
+  const y = v => H-PB - (v/max) * (H-PT-PB);
+  let g = '';
+  for(let t=0; t<=Math.ceil(max); t+=2){
+    g += `<line x1="${PL}" y1="${y(t)}" x2="${W-PR}" y2="${y(t)}" stroke="var(--rule)" stroke-width="1"/>`
+      +  `<text x="${PL-7}" y="${y(t)+3.5}" text-anchor="end" font-size="9" font-family="IBM Plex Mono,monospace" fill="var(--faint)">${t}</text>`;
+  }
+  pts.forEach((p,i)=>{ if(p.h%3===0) g += `<text x="${x(i)}" y="${H-9}" text-anchor="middle" font-size="9" font-family="IBM Plex Mono,monospace" fill="var(--faint)">${String(p.h).padStart(2,'0')}</text>`; });
+  const line = pts.map((p,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(p.avg).toFixed(1)}`).join('');
+  const area = line + `L${x(pts.length-1).toFixed(1)},${y(0)}L${x(0).toFixed(1)},${y(0)}Z`;
+  const lo = pts.reduce((a,b)=>b.avg<a.avg?b:a), hi = pts.reduce((a,b)=>b.avg>a.avg?b:a);
+  const mark = (p,lbl)=>{ const i=pts.indexOf(p); return `<circle cx="${x(i)}" cy="${y(p.avg)}" r="3.5" fill="var(--accent)"/>`
+    + `<text x="${x(i)}" y="${y(p.avg)-9}" text-anchor="middle" font-size="9.5" font-weight="600" font-family="IBM Plex Mono,monospace" fill="var(--ink)">${lbl} ${p.avg}</text>`; };
+  svg.innerHTML = g
+    + `<path d="${area}" fill="var(--accent-soft)"/>`
+    + `<path d="${line}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`
+    + mark(lo,'quietest') + mark(hi,'peak');
+})();
+
+/* ---------- sparkline ---------- */
+function spark(series){
+  if(!series || series.length < 2) return '<span class="dim">—</span>';
+  const s = series.slice(), W=124, H=26, mx = Math.max(...s, 1);
+  const x = i => (i/(s.length-1))*W, y = v => H-2 - (v/mx)*(H-5);
+  const d = s.map((v,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join('');
+  const endX = x(s.length-1).toFixed(1), endY = y(s[s.length-1]).toFixed(1);
+  return `<svg class="spark" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true">`
+    + `<path d="${d}L${W},${H}L0,${H}Z" fill="var(--accent-soft)"/>`
+    + `<path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round"/>`
+    + `<circle cx="${endX}" cy="${endY}" r="2.4" fill="var(--accent)"/></svg>`;
+}
+
+/* ---------- table ---------- */
+const F = DATA.facilities.map(f => {
+  const dev = (f.avg && f.current !== null && f.current !== undefined)
+    ? Math.round(((f.current - f.avg) / f.avg) * 100) : null;
+  return {...f, dev};
+});
+let sortKey = 'current', query = '';
+
+function devChip(d){
+  if(d === null) return '<span class="dim">—</span>';
+  if(d >= 25)  return `<span class="chip up">+${d}%</span>`;
+  if(d <= -25) return `<span class="chip dn">${d}%</span>`;
+  return `<span class="chip mid">${d > 0 ? '+' : ''}${d}%</span>`;
+}
+function render(){
+  const q = query.trim().toLowerCase();
+  let rows = F.filter(f => !q
+    || (f.name||'').toLowerCase().includes(q)
+    || (f.suburb||'').toLowerCase().includes(q)
+    || (f.lhd||'').toLowerCase().includes(q));
+  const cmp = {
+    current: (a,b) => (b.current ?? -1) - (a.current ?? -1),
+    dev:     (a,b) => (b.dev ?? -999) - (a.dev ?? -999),
+    avg:     (a,b) => (b.avg ?? -1) - (a.avg ?? -1),
+    name:    (a,b) => (a.name||'').localeCompare(b.name||''),
+  }[sortKey];
+  rows.sort(cmp);
+  $('#empty').hidden = rows.length > 0;
+  $('#rows').innerHTML = rows.map(f => `<tr>
+    <td><div class="nm">${f.name}</div><div class="loc">${[f.suburb, f.lhd].filter(Boolean).join(' · ')}</div></td>
+    <td class="r"><span class="big">${fmt(f.current)}</span></td>
+    <td class="r">${devChip(f.dev)}</td>
+    <td class="r"><span class="dim">${fmt(f.avg)}</span></td>
+    <td class="r"><span class="dim">${fmt(f.max)}</span></td>
+    <td>${spark(f.series)}</td>
+  </tr>`).join('');
+}
+$('#q').addEventListener('input', e => { query = e.target.value; render(); });
+document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.seg button').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+  sortKey = b.dataset.sort; render();
+}));
+render();
+</script>
