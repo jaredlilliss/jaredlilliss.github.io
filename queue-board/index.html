@@ -185,13 +185,13 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
 
 <section>
   <h2>Every reporting hospital</h2>
-  <p class="sub">The <b>vs own average</b> column compares each hospital's latest reading to its own long-run average — because a raw count means nothing across sites of different sizes. Twelve people waiting is quiet at one hospital and busy at another. There is no clinical severity scale here, and inventing one would be a claim this data cannot support. The trace shows that hospital's last 24 hours.</p>
+  <p class="sub">The <b>vs its usual</b> column compares each hospital's latest reading to its own average <b>for that hour of the day</b> — because a raw count means nothing across sites of different sizes. Twelve people waiting is quiet at one hospital and busy at another. Comparing against the hour matters: the state's own curve runs from 1.84 people waiting at 6am to 6.59 at 8pm, so measuring against an all-day average would mostly report <b>what time you loaded the page</b>. Hospitals averaging under two people waiting show an absolute difference instead of a percentage &mdash; at that size a ratio just reports whether one extra person arrived. There is no clinical severity scale here, and inventing one would be a claim this data cannot support. The trace shows that hospital's last 24 hours.</p>
 
   <div class="controls">
     <input type="search" id="q" placeholder="Filter by hospital, suburb or health district…" aria-label="Filter hospitals">
     <div class="seg" role="group" aria-label="Sort order">
       <button data-sort="current" aria-pressed="true">Waiting now</button>
-      <button data-sort="dev" aria-pressed="false">Vs own average</button>
+      <button data-sort="dev" aria-pressed="false">Vs its usual</button>
       <button data-sort="avg" aria-pressed="false">Busiest overall</button>
       <button data-sort="name" aria-pressed="false">A–Z</button>
     </div>
@@ -202,7 +202,7 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
       <thead><tr>
         <th>Hospital</th>
         <th class="r">Waiting now</th>
-        <th class="r">Vs own average</th>
+        <th class="r">Vs its usual</th>
         <th class="r">Own average</th>
         <th class="r">Peak seen</th>
         <th>Last 24 hours</th>
@@ -282,7 +282,7 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
     <div class="prose-sm">
       <p><b>The most system-coupled hospital in the state shares about a sixth of its variation with everywhere else.</b> The rest is its own. For the quieter hospitals it is close to nothing at all. So a surge at your local emergency department is overwhelmingly a <em>local</em> event — not a wave passing across New South Wales.</p>
       <p><b>The one visible pattern is size, and part of it is arithmetic rather than medicine.</b> Busier hospitals score roughly <span class="mono">0.22</span> against roughly <span class="mono">0.14</span> for quieter ones. Some of that may be real. But a small department's count is dominated by whether one or two people happened to arrive, and that randomness dilutes any shared signal — so a low score at a small hospital is partly a measurement effect, and should not be read as that community behaving differently.</p>
-      <p><b>The shaded band on the chart is noise.</b> With this many shared moments, anything inside roughly <span class="mono">&plusmn;0.05</span> cannot be told apart from zero. Values below the band are not evidence that a hospital moves <em>opposite</em> to the state; they are consistent with no relationship at all.</p>
+      <p><b>The shaded band on the chart is noise.</b> Readings fifteen minutes apart are not independent of each other &mdash; consecutive ones correlate at about 0.8 &mdash; so the usual formula would understate this band badly. Widened accordingly: anything inside roughly <span class="mono">&plusmn;0.12</span> cannot be told apart from zero. Values below the band are not evidence that a hospital moves <em>opposite</em> to the state; they are consistent with no relationship at all.</p>
     </div>
   </section>
 
@@ -395,14 +395,38 @@ function spark(series){
 }
 
 /* ---------- table ---------- */
+/* Compare each hospital's latest reading against its own average FOR THAT HOUR,
+   not its all-hours average. The state's own curve runs 1.84 at 06:00 to 6.59
+   at 20:00, so an all-hours denominator makes the column read about -51% at
+   dawn and +48% in the evening for everyone - it measures the clock, not the
+   hospital. Found 27/08/2026: at a 07:00 export, 54 of 59 rows were negative
+   and 23 sat at exactly -100%. The coupling view already removed this baseline
+   and the front page did not.
+   MIN_DENOM: below ~2 the ratio is dominated by whether one person arrived, so
+   it is shown as an absolute difference instead of a meaningless percentage. */
+const MIN_DENOM = 2;
 const F = DATA.facilities.map(f => {
-  const dev = (f.avg && f.current !== null && f.current !== undefined)
-    ? Math.round(((f.current - f.avg) / f.avg) * 100) : null;
-  return {...f, dev};
+  const base = (f.mu_hour !== null && f.mu_hour !== undefined) ? f.mu_hour : f.avg;
+  const usable = base !== null && base !== undefined && base >= MIN_DENOM;
+  const dev = (usable && f.current !== null && f.current !== undefined)
+    ? Math.round(((f.current - base) / base) * 100) : null;
+  const absDiff = (!usable && f.current !== null && f.current !== undefined
+                   && base !== null && base !== undefined)
+    ? Math.round((f.current - base) * 10) / 10 : null;
+  return {...f, dev, absDiff, base};
 });
 let sortKey = 'current', query = '';
 
-function devChip(d){
+function devChip(d, f){
+  /* Sixteen of 59 hospitals average under 2 patients waiting; the smallest is 0.4.
+     A ratio against a denominator that small reports +400% because two people
+     arrived instead of one, and sorting by it becomes a sort by smallness wearing
+     a sort-by-unusualness label. Those rows get an absolute difference instead. */
+  if(d === null && f && f.absDiff !== null && f.absDiff !== undefined){
+    const s = f.absDiff > 0 ? '+' + f.absDiff : String(f.absDiff);
+    const usual = Math.round(f.base * 10) / 10;
+    return `<span class="chip mid" title="too few patients waiting for a percentage to mean anything">${s} vs ${usual} usual</span>`;
+  }
   if(d === null) return '<span class="dim">—</span>';
   if(d >= 25)  return `<span class="chip up">+${d}%</span>`;
   if(d <= -25) return `<span class="chip dn">${d}%</span>`;
@@ -425,7 +449,7 @@ function render(){
   $('#rows').innerHTML = rows.map(f => `<tr>
     <td><div class="nm">${f.name}</div><div class="loc">${[f.suburb, f.lhd].filter(Boolean).join(' · ')}</div></td>
     <td class="r"><span class="big">${fmt(f.current)}</span></td>
-    <td class="r">${devChip(f.dev)}</td>
+    <td class="r">${devChip(f.dev, f)}</td>
     <td class="r"><span class="dim">${fmt(f.avg)}</span></td>
     <td class="r"><span class="dim">${fmt(f.max)}</span></td>
     <td>${spark(f.series)}</td>
@@ -538,7 +562,10 @@ function dailyLine(daily, days, first){
 function renderHistTable(){
   const q = (document.getElementById('hq').value || '').trim().toLowerCase();
   const first = new Date(HIST.span.first + 'T00:00:00');
-  const days = HIST.span.days;
+  /* Days the collector actually RAN, not the calendar span. Using span.days (39)
+     against a ceiling of 34 made every hospital render 85% - zero discriminating
+     power presented as if it had some, under copy promising the opposite. */
+  const days = (HIST.system_daily || []).length || HIST.span.days;
   const rows = HIST.facilities.filter(f => !q
     || (f.name||'').toLowerCase().includes(q)
     || (f.suburb||'').toLowerCase().includes(q)
@@ -580,7 +607,15 @@ async function loadHistory(){
 
 /* ---------- coupling view ---------- */
 let coupLoaded = false;
-const NOISE = 0.054;   /* ~1.96 / sqrt(n-3) at n≈1313 */
+/* 1.96/sqrt(n-3) would give 0.054, but Fisher's interval assumes INDEPENDENT
+   observations and these are readings 15 minutes apart from a slow-moving
+   queue. Measured lag-1 autocorrelation of the hour-baseline-removed residual:
+   median 0.81 across the 59 series. The effective sample is therefore a few
+   hundred, not ~1,300, and the honest band is roughly 0.085-0.12. Using the
+   conservative end deliberately: it can only weaken the "mostly local" reading,
+   never flatter it. Corrected 27/08/2026 - the narrow band had labelled three
+   hospitals as real relationships that sit inside a defensible one. */
+const NOISE = 0.12;
 
 function drawScatter(){
   const svg = document.getElementById('scatter');
