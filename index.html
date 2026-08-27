@@ -311,39 +311,83 @@ footer a:hover{color:var(--ember)}
 
 <script>
 (function(){
+  /* SKY ENGINE - performance-fixed 28/08/2026.
+
+     The version this replaces rebuilt THREE full-screen radial gradients on EVERY
+     animation frame. At this display's device pixel ratio that is roughly
+     3840x1977 x 3 gradients x 60fps - on lilliss.au the identical engine saturated
+     the main thread so completely that Chrome could not inject a script into the
+     page at all. A screenshot and an eval BOTH timing out was the symptom that
+     revealed it; no profiler was involved.
+
+     The aurora fields drift about ONE CYCLE PER EIGHT MINUTES. Regenerating them
+     sixty times a second bought nothing an eye could ever see.
+
+     Four changes, ported from lilliss.au where they shipped 26/08:
+       1. the aurora is cached to an offscreen canvas, refreshed ~2x/second
+       2. device pixel ratio capped at 1.5 (~65% fewer pixels on this display)
+       3. the loop capped to ~30fps
+       4. the loop STOPS while the tab is hidden, instead of holding a core in a
+          background tab for as long as it stays open
+
+     Output is pixel-identical, not merely similar: the three gradients are
+     composited source-over into a TRANSPARENT offscreen canvas and blitted onto a
+     cleared main canvas - same operations, same order, same compositing mode. The
+     stars are untouched and still repaint every frame; they twinkle per-frame and
+     are cheap fillRects. Only the expensive half is cached. */
   var c = document.getElementById('sky'), x = c.getContext('2d');
   var W, H, stars = [], t = 0, lastW = 0, lastH = 0, lastDpr = 0;
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var DPR_CAP = 1.5, FRAME_MS = 1000 / 30, AURORA_MS = 500;
+  function dpr(){ return Math.min(devicePixelRatio || 1, DPR_CAP); }
+
+  /* the offscreen canvas the expensive half lives on */
+  var sky = document.createElement('canvas'), sx = sky.getContext('2d');
+  var auroraAt = -1;                 /* -1 = cache invalid, rebuild on next paint */
+
   function seed(){
     stars = [];
+    var d = dpr();
     var n = Math.min(190, Math.floor(innerWidth / 7));
     for (var i = 0; i < n; i++) stars.push({
       x: Math.random()*W, y: Math.random()*H,
-      r: (Math.random()*1.1 + .3) * devicePixelRatio,
+      r: (Math.random()*1.1 + .3) * d,
       p: Math.random()*Math.PI*2, s: Math.random()*.5 + .2
     });
   }
   function size(){
-    W = c.width = innerWidth * devicePixelRatio;
-    H = c.height = innerHeight * devicePixelRatio;
+    var d = dpr();
+    W = c.width = innerWidth * d;
+    H = c.height = innerHeight * d;
     c.style.width = innerWidth + 'px'; c.style.height = innerHeight + 'px';
-    var widthChanged = innerWidth !== lastW || devicePixelRatio !== lastDpr;
+    sky.width = W; sky.height = H;    /* the cache follows the canvas... */
+    auroraAt = -1;                    /* ...and is invalid at the new size */
+    var widthChanged = innerWidth !== lastW || d !== lastDpr;
     var heightJumped = lastH && Math.abs(innerHeight - lastH) / lastH > .25;
     if (widthChanged || heightJumped || !stars.length) seed();
-    lastW = innerWidth; lastH = innerHeight; lastDpr = devicePixelRatio;
+    lastW = innerWidth; lastH = innerHeight; lastDpr = d;
     paint();
   }
   function aurora(cx, cy, rad, hue, alpha){
-    var g = x.createRadialGradient(cx, cy, 0, cx, cy, rad);
+    var g = sx.createRadialGradient(cx, cy, 0, cx, cy, rad);
     g.addColorStop(0, hue.replace('A', alpha)); g.addColorStop(1, hue.replace('A', 0));
-    x.fillStyle = g; x.fillRect(0, 0, W, H);
+    sx.fillStyle = g; sx.fillRect(0, 0, W, H);
   }
-  function paint(){
-    x.clearRect(0, 0, W, H);
+  function buildAurora(){
     var drift = reduced ? 0 : t;
+    sx.clearRect(0, 0, W, H);
     aurora(W*.72 + Math.sin(drift*.00022)*W*.06, H*.28, Math.max(W,H)*.62, 'rgba(29,92,82,A)', .34);
     aurora(W*.2 + Math.cos(drift*.00017)*W*.05, H*.75, Math.max(W,H)*.5, 'rgba(200,92,34,A)', .17);
     aurora(W*.5, H*.05, Math.max(W,H)*.4, 'rgba(38,52,95,A)', .22);
+    auroraAt = t;
+  }
+  function paint(){
+    /* Rebuild the cache only when it is invalid, or twice a second while drifting.
+       Under reduced motion the drift is frozen, so one build lasts the session. */
+    if (auroraAt < 0 || (!reduced && t - auroraAt >= AURORA_MS)) buildAurora();
+    x.clearRect(0, 0, W, H);
+    x.drawImage(sky, 0, 0);
     for (var i = 0; i < stars.length; i++){
       var s = stars[i];
       var tw = reduced ? .55 : (.35 + .45 * Math.abs(Math.sin(t*.001*s.s + s.p)));
@@ -353,13 +397,35 @@ footer a:hover{color:var(--ember)}
     }
     x.globalAlpha = 1;
   }
+  var running = false, lastFrame = 0;
   function loop(ts){
+    if (!running) return;
     t = ts || 0;
-    paint();
+    if (t - lastFrame >= FRAME_MS){ lastFrame = t; paint(); }
     requestAnimationFrame(loop);
   }
+  function start(){
+    if (running || reduced) return;
+    running = true; lastFrame = 0;
+    requestAnimationFrame(loop);
+  }
+  function stop(){ running = false; }
+  /* A hidden tab is still serviced by rAF in some browsers, and always is again
+     after a restore. Stopping outright is the difference between an idle
+     background tab and one holding a core for as long as it stays open. */
+  addEventListener('visibilitychange', function(){
+    if (document.hidden) { stop(); return; }
+    /* Re-measure on the way back, do not just restart. A page LOADED in a
+       background tab sees innerWidth 0, so size() sets a 0x0 canvas - and no
+       resize event fires when the tab is later brought forward, so the sky
+       stayed blank forever. Observed here 28/08 on the real page. Opening a
+       link in a background tab is the normal way people follow one from
+       LinkedIn or a chat, which is exactly how this page gets opened. */
+    if (!W || !H || innerWidth !== lastW) size();
+    start();
+  });
   size(); addEventListener('resize', size);
-  if (!reduced) requestAnimationFrame(loop);
+  start();
 
   var clock = document.getElementById('clock');
   function tick(){
