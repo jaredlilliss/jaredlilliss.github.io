@@ -1,9 +1,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Queue Board</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<!-- Self-hosted 28/08. This page used to pull IBM Plex Sans and Mono from
+     Google, which made privacy.html FALSE on this very domain - it tells the
+     reader "this site loads no fonts ... from any other domain" and invites
+     them to check the network tab. Inter is a variable face (100-900) in one
+     34.6 KB file, so it covers every weight Plex Sans was fetched for; the
+     numerals keep IBM Plex Mono, because this is a data display and the
+     tabular column alignment is load-bearing. -->
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;
+  src:url('fonts/inter.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;
+  src:url('fonts/plexmono-400.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;
+  src:url('fonts/plexmono-500.woff2') format('woff2')}
+</style>
 
 <style>
 :root{
@@ -35,7 +47,7 @@
 
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
-  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-family:'Inter',ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
 .wrap{max-width:1180px;margin:0 auto;padding:clamp(18px,3.5vw,44px) clamp(14px,3.5vw,36px) 80px}
 .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
@@ -60,7 +72,7 @@ h1{margin:0;font-size:clamp(1.9rem,4.6vw,2.75rem);font-weight:700;letter-spacing
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:22px 0 30px}
 .stat{background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:12px 14px;box-shadow:var(--shadow)}
 .stat .n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;
-  font-size:1.6rem;font-weight:600;line-height:1;letter-spacing:-.02em}
+  font-size:1.6rem;font-weight:500;line-height:1;letter-spacing:-.02em}
 .stat .l{font-size:.73rem;color:var(--muted);margin-top:5px;line-height:1.3}
 
 /* ---- section ---- */
@@ -96,16 +108,16 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 table{border-collapse:collapse;width:100%;min-width:660px;font-size:.88rem}
 thead th{position:sticky;top:0;background:var(--surface-2);z-index:1;
   font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--muted);font-weight:600;text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);white-space:nowrap}
+  color:var(--muted);font-weight:500;text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);white-space:nowrap}
 tbody td{padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:middle}
 tbody tr:last-child td{border-bottom:none}
 tbody tr:hover{background:var(--raise)}
 .nm{font-weight:500;line-height:1.25}
 .loc{color:var(--faint);font-size:.76rem;margin-top:1px}
 td.r{text-align:right}
-.big{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:1.02rem;font-weight:600}
+.big{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:1.02rem;font-weight:500}
 .dim{color:var(--muted);font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:.84rem}
-.chip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.7rem;font-weight:600;
+.chip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.7rem;font-weight:500;
   padding:2px 6px;border-radius:2px;white-space:nowrap;letter-spacing:.02em}
 .chip.up{background:var(--hot-soft);color:var(--hot)}
 .chip.dn{background:var(--cool-soft);color:var(--cool)}
@@ -335,7 +347,13 @@ try {
 }
 
 const $ = s => document.querySelector(s);
-const fmt = n => (n === null || n === undefined) ? '—' : n;
+const fmt = n => (n === null || n === undefined) ? '—'
+      /* Round non-integers to one decimal. This used to pass floats straight
+         through, so an average of people-counts printed as 13.394005847953217 -
+         a precision averaging integers cannot produce, on a page that argues
+         against claiming more than the data supports. Integers stay integers so
+         PEAK SEEN still reads 41, not 41.0. */
+      : (Number.isInteger(n) ? n : Number(n).toFixed(1));
 
 /* ---------- freshness + stats ---------- */
 const last = new Date(DATA.meta.last);
@@ -535,7 +553,7 @@ function drawDow(){
     const peak = r[0]===hi[0];
     g += `<rect x="${(x+bw*0.18).toFixed(1)}" y="${(H-PB-h).toFixed(1)}" width="${(bw*0.64).toFixed(1)}" height="${h.toFixed(1)}" rx="2" fill="${peak?'var(--hot)':'var(--accent)'}" opacity="${peak?'.95':'.75'}"><title>${DOWNAMES[r[0]-1]} — ${r[1]} average</title></rect>`
       +  `<text x="${(x+bw/2).toFixed(1)}" y="${(H-PB-h-6).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="600" font-family="IBM Plex Mono,monospace" fill="${peak?'var(--hot)':'var(--ink)'}">${r[1]}</text>`
-      +  `<text x="${(x+bw/2).toFixed(1)}" y="${H-10}" text-anchor="middle" font-size="10" font-family="IBM Plex Sans,sans-serif" fill="var(--faint)">${DOWNAMES[r[0]-1]}</text>`;
+      +  `<text x="${(x+bw/2).toFixed(1)}" y="${H-10}" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="var(--faint)">${DOWNAMES[r[0]-1]}</text>`;
   });
   svg.innerHTML = g;
 }
@@ -576,7 +594,7 @@ function renderHistTable(){
     const pct = Math.round((obs/days)*100);
     return `<tr>
       <td><div class="nm">${f.name}</div><div class="loc">${[f.suburb,f.lhd].filter(Boolean).join(' · ')}</div></td>
-      <td class="r"><span class="big">${f.avg ?? '—'}</span></td>
+      <td class="r"><span class="big">${fmt(f.avg)}</span></td>
       <td class="r"><span class="dim">${f.max ?? '—'}</span></td>
       <td class="r"><span class="cov"><span class="covbar"><i style="width:${pct}%"></i></span><span class="dim">${obs}/${days}</span></span></td>
       <td>${dailyLine(f.daily, days, first)}</td>
@@ -636,15 +654,15 @@ function drawScatter(){
   for(let v=0; v<=xmax; v+=4){
     g += `<text x="${X(v).toFixed(1)}" y="${H-18}" text-anchor="middle" font-size="9" font-family="IBM Plex Mono,monospace" fill="var(--faint)">${v}</text>`;
   }
-  g += `<text x="${((PL+W-PR)/2).toFixed(1)}" y="${H-4}" text-anchor="middle" font-size="10" font-family="IBM Plex Sans,sans-serif" fill="var(--muted)">typical people waiting (hospital size) &rarr;</text>`;
+  g += `<text x="${((PL+W-PR)/2).toFixed(1)}" y="${H-4}" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="var(--muted)">typical people waiting (hospital size) &rarr;</text>`;
   rows.forEach(d=>{
     const inNoise = Math.abs(d.r) <= NOISE;
-    g += `<circle cx="${X(d.avg).toFixed(1)}" cy="${Y(d.r).toFixed(1)}" r="4.5" fill="${inNoise?'var(--muted)':'var(--accent)'}" opacity="${inNoise?'.5':'.85'}"><title>${d.name} — ${d.r} shared, typically ${d.avg} waiting</title></circle>`;
+    g += `<circle cx="${X(d.avg).toFixed(1)}" cy="${Y(d.r).toFixed(1)}" r="4.5" fill="${inNoise?'var(--muted)':'var(--accent)'}" opacity="${inNoise?'.5':'.85'}"><title>${d.name} — ${d.r} shared, typically ${fmt(d.avg)} waiting</title></circle>`;
   });
   const top = rows[0], bot = rows[rows.length-1];
   [[top,'var(--accent)'],[bot,'var(--muted)']].forEach(([d,c])=>{
     const lx = Math.min(X(d.avg)+9, W-PR-150);
-    g += `<text x="${lx.toFixed(1)}" y="${(Y(d.r)+3.5).toFixed(1)}" font-size="9.5" font-weight="600" font-family="IBM Plex Sans,sans-serif" fill="${c}">${d.name.split('(')[0].trim()}</text>`;
+    g += `<text x="${lx.toFixed(1)}" y="${(Y(d.r)+3.5).toFixed(1)}" font-size="9.5" font-weight="600" font-family="Inter,sans-serif" fill="${c}">${d.name.split('(')[0].trim()}</text>`;
   });
   g += `<text x="${W-PR}" y="${(Y(-NOISE)+15).toFixed(1)}" text-anchor="end" font-size="9" font-family="IBM Plex Mono,monospace" fill="var(--faint)">shaded band = indistinguishable from zero</text>`;
   svg.innerHTML = g;
@@ -673,7 +691,7 @@ function renderCoupTable(){
     return `<tr>
       <td><div class="nm">${d.name}</div><div class="loc">${d.lhd||''}</div></td>
       <td class="r"><span class="big">${d.r.toFixed(3)}</span>${inNoise?' <span class="chip mid">noise</span>':''}</td>
-      <td class="r"><span class="dim">${d.avg}</span></td>
+      <td class="r"><span class="dim">${fmt(d.avg)}</span></td>
       <td class="r"><span class="dim">&plusmn;${d.sd}</span></td>
       <td><span class="covbar" style="width:76px"><i style="width:${w}%;background:${inNoise?'var(--muted)':'var(--accent)'}"></i></span></td>
     </tr>`;
