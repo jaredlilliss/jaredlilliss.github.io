@@ -93,6 +93,22 @@ section{margin:0 0 34px}
 input[type=search]{flex:1 1 200px;min-width:160px;background:var(--surface);color:var(--ink);
   border:1px solid var(--rule);border-radius:3px;padding:8px 11px;font:inherit;font-size:.88rem}
 input[type=search]::placeholder{color:var(--faint)}
+/* ---- closing section ---- */
+.closing{border-top:1px solid var(--rule);margin-top:44px;padding-top:34px}
+.closing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;margin-top:24px}
+.closing-card{background:var(--surface);border:1px solid var(--rule);border-radius:3px;
+  padding:18px 20px}
+.closing-card h3{font-size:.95rem;margin:0 0 8px;letter-spacing:.01em}
+.closing-card p{margin:0;font-size:.92rem;line-height:1.62;color:var(--muted)}
+.closing-foot{margin-top:22px;font-size:.86rem;color:var(--muted)}
+/* The page had NO link rules at all before this section - there were no prose
+   links on it - so these two rendered in default browser blue on a carefully
+   built dark palette. Scoped to .closing rather than added globally: a bare a{}
+   rule here would also repaint anything that later becomes a link elsewhere,
+   which is not a decision this section gets to make for the whole page. */
+.closing a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.closing a:hover,.closing a:focus-visible{color:var(--ink)}
 /* ---- sortable column headers ---- */
 th[data-k]{cursor:pointer;user-select:none;white-space:nowrap}
 th[data-k]:hover{color:var(--ink)}
@@ -330,6 +346,56 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
   </section>
 
 </div>
+
+<!-- ============ WHAT THIS IS FOR ============ -->
+<!-- Added 29/08. The page demonstrated and then stopped at a licence notice: a
+     reader who was convinced had nowhere to land, and nothing stated what the
+     system is for, what it cannot do, or what would come next. Kept in the page's
+     own non-promotional register on purpose - nine sections of refusing to
+     overclaim about the data is what earns the right to be believed here. -->
+<section id="next" class="closing">
+  <h2>What this is for</h2>
+  <p class="sub">An honest read of what the pipeline is, what it is not, and the
+  three things that would make it useful to someone other than its author.</p>
+
+  <div class="closing-grid">
+    <div class="closing-card">
+      <h3>What it is</h3>
+      <p>A collector that has taken a reading every fifteen minutes since July and
+      appended it to a time series that is never rewritten. <b>The upstream feed
+      publishes current state only</b> &mdash; there is no historical endpoint, so a
+      reading not captured at the moment it existed is gone permanently. That single
+      constraint is why the collector was built and proven before any of this
+      interface was written, and why the coverage chart above is shown with its
+      gaps rather than smoothed over.</p>
+    </div>
+
+    <div class="closing-card">
+      <h3>What it is not</h3>
+      <p><b>It is not a clinical instrument</b>, and nothing here should inform a
+      decision about where to seek care. It counts people recorded as waiting,
+      which is not how long anyone waits; it covers the departments that publish a
+      live count, not the state. Nothing in the schema identifies a person, because
+      no such field exists in it to be misused &mdash; the privacy posture is
+      structural rather than promised.</p>
+    </div>
+
+    <div class="closing-card">
+      <h3>What would come next</h3>
+      <p>Three things, in order of value. <b>An alert</b> when a department sits
+      well above its own hour-baseline for several consecutive readings &mdash; the
+      one reading here that could prompt an action rather than an observation.
+      <b>A plain export</b>, CSV or JSON, so the series is usable without this page.
+      <b>Wider coverage</b>, if and when more departments publish live counts; the
+      collector needs no change to take them.</p>
+    </div>
+  </div>
+
+  <p class="closing-foot">Built by <a href="https://lilliss.au/">Jared Lilliss</a>.
+  The working repository stays private; the
+  <a href="https://github.com/jaredlilliss/aussie-health-utility">public mirror</a>
+  carries the code behind this page.</p>
+</section>
 
 <footer>
   <b>Where this comes from.</b> A privacy-by-design pipeline: no tables, columns or fields for people,
