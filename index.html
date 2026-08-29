@@ -313,6 +313,55 @@ footer a:hover{color:var(--ember)}
 
 <script>
 (function(){
+  /* ── REVEALS FIRST, AND DEFENDED ─────────────────────────────────────────
+     Every block below the hero is .rv{opacity:0} and only appears when this
+     runs. It used to be the LAST thing in this IIFE, 4,551 characters
+     downstream of an unguarded canvas init — so one null context hid the entire
+     portfolio while the header and hero stayed put, which looks deliberate
+     rather than broken.
+
+     MEASURED with getContext stubbed to null: 0 of 14 blocks visible, a 119 KB
+     render where a healthy page is 758 KB. Hidden: the live collecting strip,
+     "Work — Projects with receipts", Aussie Health Utility, Still Wild, The
+     Ascent. A portfolio with no work in it.
+
+     The <noscript> override above cannot help: it applies only when scripting is
+     OFF. Here JavaScript runs and then dies. A NOSCRIPT FALLBACK IS NOT A
+     JS-FAILURE FALLBACK.
+
+     So content-showing runs before anything that can throw, in its own try, with
+     a timed backstop if IntersectionObserver never fires. */
+  try {
+    var rvAll = [].slice.call(document.querySelectorAll('.rv'));
+    var rvShow = function(el){ el.classList.add('in'); };
+    if ('IntersectionObserver' in window) {
+      var rvio = new IntersectionObserver(function(es){
+        es.forEach(function(e){ if (e.isIntersecting){ rvShow(e.target); rvio.unobserve(e.target); } });
+      }, {threshold:.12});
+      rvAll.forEach(function(el){ rvio.observe(el); });
+      setTimeout(function(){ rvAll.forEach(rvShow); }, 2600);
+    } else {
+      rvAll.forEach(rvShow);
+    }
+  } catch (e) {
+    [].forEach.call(document.querySelectorAll('.rv'), function(el){ el.classList.add('in'); });
+  }
+
+  /* The clock, also ahead of the sky: nothing a reader needs should sit
+     downstream of a decoration. */
+  try {
+    var clockEl = document.getElementById('clock');
+    var tickClock = function(){
+      try{
+        var now = new Date().toLocaleTimeString('en-AU', {
+          hour:'2-digit', minute:'2-digit',
+          timeZone:'Australia/Sydney', timeZoneName:'shortOffset'});
+        clockEl.textContent = 'Sydney ' + now.replace('GMT', 'UTC');
+      }catch(e){ clockEl.textContent = 'Sydney, Australia'; }
+    };
+    if (clockEl) { tickClock(); setInterval(tickClock, 30000); }
+  } catch (e) {}
+
   /* SKY ENGINE - performance-fixed 28/08/2026.
 
      The version this replaces rebuilt THREE full-screen radial gradients on EVERY
@@ -337,7 +386,13 @@ footer a:hover{color:var(--ember)}
      cleared main canvas - same operations, same order, same compositing mode. The
      stars are untouched and still repaint every frame; they twinkle per-frame and
      are cheap fillRects. Only the expensive half is cached. */
-  var c = document.getElementById('sky'), x = c.getContext('2d');
+  /* getContext RETURNS NULL rather than throwing — Lockdown Mode, memory
+     pressure, a hardened browser — so the failure used to land downstream at
+     x.clearRect and take the whole IIFE with it. Guarded: the sky simply does
+     not start, and the page is untouched. */
+  var c = document.getElementById('sky');
+  var x = (c && c.getContext) ? c.getContext('2d') : null;
+  if (!x) { if (c && c.parentNode) c.parentNode.removeChild(c); return; }
   var W, H, stars = [], t = 0, lastW = 0, lastH = 0, lastDpr = 0;
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -429,21 +484,9 @@ footer a:hover{color:var(--ember)}
   size(); addEventListener('resize', size);
   start();
 
-  var clock = document.getElementById('clock');
-  function tick(){
-    try{
-      var now = new Date().toLocaleTimeString('en-AU', {hour:'2-digit', minute:'2-digit', timeZone:'Australia/Sydney', timeZoneName:'shortOffset'});
-      clock.textContent = 'Sydney ' + now.replace('GMT', 'UTC');
-    }catch(e){
-      clock.textContent = 'Sydney, Australia';
-    }
-  }
-  tick(); setInterval(tick, 30000);
-
-  var io = new IntersectionObserver(function(es){
-    es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:.12});
-  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  /* reveals and the clock now run at the TOP of this IIFE — see the note
+     there. Leaving them here made the whole page depend on every preceding
+     line surviving. */
 })();
 </script>
 </body>
