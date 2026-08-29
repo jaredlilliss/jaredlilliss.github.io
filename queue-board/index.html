@@ -93,6 +93,19 @@ section{margin:0 0 34px}
 input[type=search]{flex:1 1 200px;min-width:160px;background:var(--surface);color:var(--ink);
   border:1px solid var(--rule);border-radius:3px;padding:8px 11px;font:inherit;font-size:.88rem}
 input[type=search]::placeholder{color:var(--faint)}
+/* ---- sortable column headers ---- */
+th[data-k]{cursor:pointer;user-select:none;white-space:nowrap}
+th[data-k]:hover{color:var(--ink)}
+th[data-k]:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+/* A dim caret on EVERY sortable header is the affordance. Without it the only
+   clue a header does anything is hovering one, which nobody does on a table they
+   assume is static - that is why the old buttons existed at all. */
+th[data-k]::after{content:"";display:inline-block;width:0;height:0;margin-left:6px;
+  vertical-align:middle;opacity:.3;border-left:4px solid transparent;
+  border-right:4px solid transparent;border-top:5px solid currentColor}
+th[data-k][aria-sort=descending]::after{opacity:1}
+th[data-k][aria-sort=ascending]::after{opacity:1;border-top:0;
+  border-bottom:5px solid currentColor}
 .seg{display:flex;border:1px solid var(--rule);border-radius:3px;overflow:hidden;background:var(--surface)}
 .seg button{background:none;border:0;padding:8px 12px;font:inherit;font-size:.8rem;font-weight:500;
   color:var(--muted);cursor:pointer;border-right:1px solid var(--rule)}
@@ -201,22 +214,19 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
 
   <div class="controls">
     <input type="search" id="q" placeholder="Filter by hospital, suburb or health district…" aria-label="Filter hospitals">
-    <div class="seg" role="group" aria-label="Sort order">
-      <button data-sort="current" aria-pressed="true">Waiting now</button>
-      <button data-sort="dev" aria-pressed="false">Vs its usual</button>
-      <button data-sort="avg" aria-pressed="false">Busiest overall</button>
-      <button data-sort="name" aria-pressed="false">A–Z</button>
-    </div>
+    <!-- Sort-order buttons removed 29/08: the column headers are the control
+           now. That row said "Busiest overall" and sorted the column headed
+           "Own average" - two names for one thing. -->
   </div>
 
   <div class="tablebox">
-    <table>
+    <table id="t-now">
       <thead><tr>
-        <th>Hospital</th>
-        <th class="r">Waiting now</th>
-        <th class="r">Vs its usual</th>
-        <th class="r">Own average</th>
-        <th class="r">Peak seen</th>
+        <th data-k="name" data-dir="asc">Hospital</th>
+        <th class="r" data-k="current">Waiting now</th>
+        <th class="r" data-k="dev">Vs its usual</th>
+        <th class="r" data-k="avg">Own average</th>
+        <th class="r" data-k="max">Peak seen</th>
         <th>Last 24 hours</th>
       </tr></thead>
       <tbody id="rows"></tbody>
@@ -258,12 +268,12 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
       <input type="search" id="hq" placeholder="Filter by hospital, suburb or health district…" aria-label="Filter hospitals">
     </div>
     <div class="tablebox">
-      <table>
+      <table id="t-hist">
         <thead><tr>
-          <th>Hospital</th>
-          <th class="r">Five-week average</th>
-          <th class="r">Busiest reading</th>
-          <th class="r">Days observed</th>
+          <th data-k="name" data-dir="asc">Hospital</th>
+          <th class="r" data-k="avg">Five-week average</th>
+          <th class="r" data-k="max">Busiest reading</th>
+          <th class="r" data-k="_obs">Days observed</th>
           <th>Daily average across the period</th>
         </tr></thead>
         <tbody id="hrows"></tbody>
@@ -305,12 +315,12 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
       <input type="search" id="cq" placeholder="Filter by hospital or health district…" aria-label="Filter hospitals">
     </div>
     <div class="tablebox">
-      <table>
+      <table id="t-coup">
         <thead><tr>
-          <th>Hospital</th>
-          <th class="r">Shared with the state</th>
-          <th class="r">Typical people waiting</th>
-          <th class="r">Its own swing</th>
+          <th data-k="name" data-dir="asc">Hospital</th>
+          <th class="r" data-k="r">Shared with the state</th>
+          <th class="r" data-k="avg">Typical people waiting</th>
+          <th class="r" data-k="sd">Its own swing</th>
           <th>Relative</th>
         </tr></thead>
         <tbody id="crows"></tbody>
@@ -433,7 +443,7 @@ const F = DATA.facilities.map(f => {
     ? Math.round((f.current - base) * 10) / 10 : null;
   return {...f, dev, absDiff, base};
 });
-let sortKey = 'current', query = '';
+let query = '';
 
 function devChip(d, f){
   /* Sixteen of 59 hospitals average under 2 patients waiting; the smallest is 0.4.
@@ -450,6 +460,45 @@ function devChip(d, f){
   if(d <= -25) return `<span class="chip dn">${d}%</span>`;
   return `<span class="chip mid">${d > 0 ? '+' : ''}${d}%</span>`;
 }
+/* ---------- sortable column headers: one helper, three tables ---------- */
+const SORTVAL = { _obs: f => (f.daily || []).length };  /* computed, not stored */
+function sval(o, k){ return SORTVAL[k] ? SORTVAL[k](o) : o[k]; }
+function sortRows(rows, st){
+  const s = st.dir === 'asc' ? 1 : -1;
+  return rows.slice().sort((a, b) => {
+    const av = sval(a, st.key), bv = sval(b, st.key);
+    if(typeof av === 'string' || typeof bv === 'string')
+      return s * String(av ?? '').localeCompare(String(bv ?? ''));
+    /* Missing sorts LAST in both directions rather than as zero: a hospital with
+       no reading is not a hospital with nobody waiting. */
+    if(av == null && bv == null) return 0;
+    if(av == null) return 1;
+    if(bv == null) return -1;
+    return s * (av - bv);
+  });
+}
+function sortable(tableId, st, rerender){
+  const ths = document.querySelectorAll('#' + tableId + ' thead th[data-k]');
+  const paint = () => ths.forEach(o => o.setAttribute('aria-sort',
+    o.dataset.k === st.key ? (st.dir === 'asc' ? 'ascending' : 'descending') : 'none'));
+  ths.forEach(th => {
+    th.tabIndex = 0;
+    const go = () => {
+      if(st.key === th.dataset.k) st.dir = st.dir === 'desc' ? 'asc' : 'desc';
+      else { st.key = th.dataset.k; st.dir = th.dataset.dir || 'desc'; }
+      paint(); rerender();
+    };
+    th.addEventListener('click', go);
+    th.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(); }
+    });
+  });
+  paint();
+}
+const S_NOW  = { key:'current', dir:'desc' };
+const S_HIST = { key:'avg',     dir:'desc' };
+const S_COUP = { key:'r',       dir:'desc' };
+
 function render(){
   const q = query.trim().toLowerCase();
   let rows = F.filter(f => !q
@@ -461,8 +510,8 @@ function render(){
     dev:     (a,b) => (b.dev ?? -999) - (a.dev ?? -999),
     avg:     (a,b) => (b.avg ?? -1) - (a.avg ?? -1),
     name:    (a,b) => (a.name||'').localeCompare(b.name||''),
-  }[sortKey];
-  rows.sort(cmp);
+  };
+  rows = sortRows(rows, S_NOW);
   $('#empty').hidden = rows.length > 0;
   $('#rows').innerHTML = rows.map(f => `<tr>
     <td><div class="nm">${f.name}</div><div class="loc">${[f.suburb, f.lhd].filter(Boolean).join(' · ')}</div></td>
@@ -474,10 +523,8 @@ function render(){
   </tr>`).join('');
 }
 $('#q').addEventListener('input', e => { query = e.target.value; render(); });
-document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
-  document.querySelectorAll('.seg button').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
-  sortKey = b.dataset.sort; render();
-}));
+
+sortable('t-now', S_NOW, render);
 render();
 
 /* ---------- five-week view ---------- */
@@ -511,7 +558,7 @@ function drawCoverage(){
   let g = axis(svg, W, H, PL, PR, PT, PB, max, 24);
   const y96 = H-PB - (96/max)*(H-PT-PB);
   g += `<line x1="${PL}" y1="${y96.toFixed(1)}" x2="${W-PR}" y2="${y96.toFixed(1)}" stroke="var(--cool)" stroke-width="1.5" stroke-dasharray="4 3"/>`
-     + `<text x="${W-PR}" y="${(y96-6).toFixed(1)}" text-anchor="end" font-size="9.5" font-weight="600" font-family="IBM Plex Mono,monospace" fill="var(--cool)">96 = a complete day</text>`;
+     + `<text x="${(PL+5).toFixed(1)}" y="${(y96-6).toFixed(1)}" text-anchor="start" font-size="9.5" font-weight="600" font-family="IBM Plex Mono,monospace" paint-order="stroke" stroke="var(--bg)" stroke-width="3.5" stroke-linejoin="round" fill="var(--cool)">96 = a complete day</text>`;
   let missing = 0, complete = 0;
   for(let i=0;i<days;i++){
     const dt = new Date(first.getTime() + i*86400000);
@@ -584,11 +631,12 @@ function renderHistTable(){
      against a ceiling of 34 made every hospital render 85% - zero discriminating
      power presented as if it had some, under copy promising the opposite. */
   const days = (HIST.system_daily || []).length || HIST.span.days;
-  const rows = HIST.facilities.filter(f => !q
+  let rows = HIST.facilities.filter(f => !q
     || (f.name||'').toLowerCase().includes(q)
     || (f.suburb||'').toLowerCase().includes(q)
     || (f.lhd||'').toLowerCase().includes(q));
   document.getElementById('hempty').hidden = rows.length > 0;
+  rows = sortRows(rows, S_HIST);
   document.getElementById('hrows').innerHTML = rows.map(f => {
     const obs = (f.daily||[]).length;
     const pct = Math.round((obs/days)*100);
@@ -615,6 +663,7 @@ async function loadHistory(){
     HIST = await r.json();
     holder.remove();
     drawCoverage(); drawDow(); renderHistTable();
+      sortable('t-hist', S_HIST, renderHistTable);
     document.getElementById('hq').addEventListener('input', renderHistTable);
     histLoaded = true;
   }catch(e){
@@ -681,9 +730,10 @@ function drawScatter(){
 
 function renderCoupTable(){
   const q = (document.getElementById('cq').value||'').trim().toLowerCase();
-  const rows = HIST.coupling.filter(d => !q
+  let rows = HIST.coupling.filter(d => !q
     || (d.name||'').toLowerCase().includes(q) || (d.lhd||'').toLowerCase().includes(q));
   document.getElementById('cempty').hidden = rows.length>0;
+  rows = sortRows(rows, S_COUP);
   const mx = Math.max(...HIST.coupling.map(d=>Math.abs(d.r)));
   document.getElementById('crows').innerHTML = rows.map(d=>{
     const inNoise = Math.abs(d.r)<=NOISE;
@@ -702,6 +752,7 @@ async function loadCoupling(){
   await loadHistory();
   if(coupLoaded || !HIST || !HIST.coupling) return;
   drawScatter(); renderCoupTable();
+  sortable('t-coup', S_COUP, renderCoupTable);
   document.getElementById('cq').addEventListener('input', renderCoupTable);
   coupLoaded = true;
 }
