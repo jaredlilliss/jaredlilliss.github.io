@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Record — every reading taken, and every one missed</title>
+<meta name="description" content="103,132 readings of how many people were waiting in 59 NSW emergency departments, taken every fifteen minutes since 20 July 2026. The gaps are drawn as gaps.">
+
+<!-- ============================================================================
+     THE RECORD  ·  concept, 31/08/2026
+     ----------------------------------------------------------------------------
+     ONE STRUCTURAL DECISION: the page has no layout, it has a coordinate system.
+     X is the day (20 Jul -> today). Y is the emergency department (59 of them,
+     ordered by their own long-run average, busiest at top). Every mark is one
+     day of one hospital's collection. Nothing else on the page is placed by
+     taste: the annotations hang off X positions computed from the data, and the
+     gap label counts its own days.
+
+     THE CONSEQUENCE THE PAGE KEEPS: coverage was terrible for the first month.
+     Five days recorded nothing at all; four days recorded a single reading. That
+     is drawn, at full size, as bare paper. Filling it, smoothing it, or plotting
+     a tidy average line over it would be a lie that looked more professional.
+
+     DATA: same-origin history.json, the file the 3-hourly refresh already
+     publishes. No new pipeline. Fields used: span, system_daily, facilities[].
+     ============================================================================ -->
+
+<style>
+/* ---- fonts: self-hosted, no font network. privacy.html promises this. ------ */
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;
+  src:url('/fonts/inter.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;
+  src:url('/fonts/plexmono-400.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;
+  src:url('/fonts/plexmono-500.woff2') format('woff2')}
+
+:root{
+  /* Two ends of the SUBJECT, not two roles in a UI: paper is what nothing
+     recorded looks like; ink is what a reading looks like. */
+  --paper:#F2EFE7;          /* warm off-white. never #fff */
+  --field:#E8E4D9;          /* the plot ground, one step down, so the extent of
+                               the record is visible even where it is empty */
+  --ink:#171A21;
+
+  /* ALPHA LADDER, measured against the WORST ground any of it sits on (--field),
+     not against the first one. AA needs 4.5:1 for body text.
+        1.00 -> 13.71   .86 -> 9.48   .72 -> 6.10   .62 -> 4.47 (FAILS)
+     So .72 is the floor for anything that is TEXT. .40 (2.41) is ornament only
+     and is deliberately NOT promoted to the text rung - it draws hairlines. */
+  --mid:rgba(23,26,33,.72);
+  --rule:rgba(23,26,33,.40);
+  --hair:rgba(23,26,33,.16);
+
+  /* one accent, one meaning: the present, and the reader's own cursor.
+     #B4471F measured 4.28 on --field and failed; #9C3A14 measures 5.46. */
+  --now:#9C3A14;
+
+  --sans:'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font:400 15px/1.5 var(--sans);
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;                    /* one screen. there is nowhere to scroll. */
+  display:grid;grid-template-rows:auto 1fr auto;
+  padding:22px clamp(16px,3vw,34px) max(14px,env(safe-area-inset-bottom,0px));
+  gap:14px;
+}
+
+/* ---------------- header ---------------------------------------------------- */
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+
+.count{display:block;font:500 clamp(46px,min(9vw,15vh),126px)/.86 var(--mono);
+  letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+/* tabular-nums is load-bearing: this number counts up while the record draws, and
+   proportional figures make it jitter sideways on every increment. Verified the
+   feature survives the subset - Inter's tnum works, Plex Mono is tabular by
+   construction and needs no feature at all. */
+.count-l{display:block;margin-top:7px;font:400 10px/1 var(--mono);
+  letter-spacing:.26em;text-transform:uppercase;color:var(--mid)}
+.scope{margin:9px 0 0;font:400 11px/1.5 var(--mono);letter-spacing:.06em;color:var(--mid)}
+
+.rules{margin:0;padding:0;list-style:none;max-width:44ch;text-align:right}
+.rules li{font:400 11px/1.55 var(--mono);letter-spacing:.03em;color:var(--mid);margin-top:5px}
+.rules b{font-weight:500;color:var(--ink)}
+
+/* ---------------- the field ------------------------------------------------- */
+.plot{position:relative;background:var(--field);border-radius:2px;overflow:hidden;
+  touch-action:pinch-zoom}
+/* touch-action: the horizontal drag is ours; pinch-zoom stays the reader's.
+   Taking zoom away from someone to fix a swipe is a bad trade. */
+canvas{display:block;width:100%;height:100%}
+
+/* annotations hang off computed X positions; none of them is a section */
+.note{position:absolute;top:0;bottom:0;width:0;pointer-events:none}
+.note i{position:absolute;top:0;bottom:0;left:0;width:1px;background:var(--rule);display:block}
+.note.gap i{background:transparent;border-left:1px dashed var(--rule)}
+.note.now i{background:var(--now);width:2px}
+.note s{position:absolute;top:8px;left:6px;white-space:nowrap;text-decoration:none;
+  font:400 9.5px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mid)}
+.note.now s{color:var(--now);font-weight:500}
+.note.flip s{left:auto;right:6px}
+
+.cursor{position:absolute;top:0;bottom:0;width:0;pointer-events:none;opacity:0;
+  transition:opacity .18s ease}
+.cursor i{position:absolute;inset:0 auto 0 0;width:1px;background:var(--now);display:block}
+.plot.live .cursor{opacity:1}
+
+.skip{position:absolute;right:8px;bottom:8px;font:400 10px/1 var(--mono);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--mid);
+  background:var(--paper);border:1px solid var(--rule);border-radius:2px;
+  padding:7px 10px;cursor:pointer}
+.skip:hover,.skip:focus-visible{color:var(--ink);border-color:var(--ink)}
+.plot.done .skip{display:none}
+
+/* ---------------- footer ---------------------------------------------------- */
+.foot{display:grid;gap:8px}
+.read{font:500 12.5px/1.5 var(--mono);letter-spacing:.02em;min-height:1.5em}
+.read em{font-style:normal;color:var(--now)}
+.read span{font-weight:400;color:var(--mid)}
+.legend{font:400 10px/1.6 var(--mono);letter-spacing:.05em;color:var(--mid);
+  border-top:1px solid var(--hair);padding-top:8px;
+  display:flex;flex-wrap:wrap;gap:4px 18px}
+.legend b{font-weight:400;color:var(--ink)}
+.cite{font:400 9.5px/1.5 var(--mono);letter-spacing:.04em;color:var(--mid)}
+
+/* ---------------- reduced motion -------------------------------------------
+   The accumulation is decorative; the finished picture is the content. So it is
+   REMOVED, not shortened - the JS branches to a single-frame draw. The cursor's
+   easing goes to 1 (instant), it does not go away: it orients. -------------- */
+@media (prefers-reduced-motion:reduce){
+  .cursor{transition:none}
+}
+
+@media (max-width:720px){
+  body{padding:16px 14px max(12px,env(safe-area-inset-bottom,0px))}
+  .top{align-items:flex-start}
+  .rules{text-align:left;max-width:none}
+  /* MEASURED at 375px: the three annotation labels ran into each other and read
+     as "23 AUG NOW CO". They are not decoration - one of them is the only place
+     the page says the collector moved - so they turn ninety degrees and run down
+     their own hairline rather than being hidden. */
+  .note s{font-size:8.5px;letter-spacing:.1em;writing-mode:vertical-rl;
+    top:6px;left:3px;max-height:calc(100% - 12px);overflow:hidden}
+  .note.flip s{left:auto;right:3px}
+}
+
+/* no-JS: the picture cannot be drawn, so the page states the record in words.
+   Written out literally, NOT generated by the script that is missing. */
+.nojs{display:none;padding:18px;font:400 13px/1.7 var(--sans);color:var(--ink)}
+.nojs b{font-weight:600}
+html.nojs-on .plot canvas,html.nojs-on .skip{display:none}
+html.nojs-on .nojs{display:block}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <strong class="count" id="count">0</strong>
+    <span class="count-l">readings kept</span>
+    <p class="scope" id="scope">20 Jul – 31 Aug 2026 · 59 NSW emergency departments · every 15 minutes</p>
+  </div>
+  <ul class="rules">
+    <li><b>Not a waiting time.</b> The feed publishes how many people are waiting for
+      treatment. There is no minutes field in it.</li>
+    <li><b>Not statewide.</b> 59 emergency departments publish a live count. NSW has 176.</li>
+  </ul>
+</header>
+
+<main class="plot" id="plot">
+  <canvas id="c" aria-hidden="true"></canvas>
+
+  <!-- annotations are injected here, positioned from dates -->
+
+  <div class="cursor" id="cursor" aria-hidden="true"><i></i></div>
+  <button class="skip" id="skip" type="button">Skip &rarr;</button>
+
+  <div class="nojs">
+    <p><b>103,132 readings, 20 July to 31 August 2026.</b> Every fifteen minutes a
+    collector asks NSW Health how many people are waiting for treatment in each of the
+    59 emergency departments that publish a live count, and writes the answer down.
+    Nothing is ever overwritten.</p>
+    <p>The picture on this page is that record, drawn. It needs a canvas, so here it is
+    in words: of the 43 days so far, <b>five recorded nothing at all</b> (26–29 July and
+    1 August) and four more recorded a single reading. Until 23 August the collector ran
+    on a laptop that Windows suspended whenever the machine idled. Since it moved to a
+    Melbourne server on 23 August, every day but the current one has captured 95 or 96
+    of 96 possible readings.</p>
+    <p><b>The gaps are permanent.</b> The upstream feed serves current state only — there
+    is no historical endpoint — so a reading that was missed cannot be recovered, ever.
+    That is why the collector was built before anything you could look at.</p>
+  </div>
+</main>
+
+<footer class="foot">
+  <p class="read" id="read"><span>Drag across the record, or use &larr; &rarr;.</span></p>
+  <p class="legend">
+    <span><b>Column</b> = one day</span>
+    <span><b>Row</b> = one emergency department, busiest at top</span>
+    <span><b>Mark height</b> = readings captured that day, of 96</span>
+    <span><b>Ink</b> = that day against that hospital's own long-run average</span>
+    <span><b>Bare paper</b> = nothing was recorded</span>
+  </p>
+  <p class="cite" id="cite">Source: NSW Health emergency department activity feed, CC BY 4.0.
+    Copyright State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au.</p>
+</footer>
+
+<script>
+(function(){
+'use strict';
+
+/* --------------------------------------------------------------------------
+   BACKSTOPS FIRST. Registered before anything that can throw, because a
+   backstop upstream of a throw is a backstop and downstream of one it is
+   decoration. If the fetch, the canvas or matchMedia fails, the reader gets
+   the written record instead of an empty rectangle.
+   -------------------------------------------------------------------------- */
+function fail(){ document.documentElement.className += ' nojs-on'; }
+window.addEventListener('error', fail);
+var armed = setTimeout(function(){ if(!DRAWN) fail(); }, 6000);
+
+var REDUCED = false;
+try { REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
+
+var DRAWN = false;
+var plot   = document.getElementById('plot');
+var cv     = document.getElementById('c');
+var cx     = cv.getContext('2d', { alpha:false });
+var countEl= document.getElementById('count');
+var readEl = document.getElementById('read');
+var cursor = document.getElementById('cursor');
+var skipBtn= document.getElementById('skip');
+
+/* --------------------------------------------------------------------------
+   DATA. Same-origin, one file, already published on a 3-hourly refresh.
+   -------------------------------------------------------------------------- */
+var DAYS = [];      /* [{date, cycles, mean, cells:[{fi, avg, max, n}]}] one per calendar day, gaps included */
+var FACS = [];      /* sorted busiest-first; index is the row */
+var TOTAL = 0;      /* summed from the marks we will actually draw */
+
+fetch('../queue-board/history.json').then(function(r){ return r.json(); }).then(function(h){
+  build(h); layout(); start();
+}).catch(fail);
+
+function build(h){
+  FACS = h.facilities.slice().sort(function(a,b){ return b.avg - a.avg; });
+
+  var byDate = {};
+  FACS.forEach(function(f, i){
+    (f.daily||[]).forEach(function(r){
+      var d = byDate[r[0]] || (byDate[r[0]] = []);
+      d.push({ fi:i, avg:r[1], max:r[2], n:r[3], own:f.avg });
+    });
+  });
+
+  var sysCycles = {}, sysMean = {};
+  (h.system_daily||[]).forEach(function(r){ sysCycles[r[0]] = r[3]; sysMean[r[0]] = r[2]; });
+
+  /* Walk EVERY calendar day in the span, not only the days that have rows.
+     A day with no rows must exist as an empty column - that absence is the
+     single most important thing on this page and it cannot be produced by
+     iterating over the data. */
+  var d = new Date(h.span.first + 'T00:00:00Z');
+  var end = new Date(h.span.last + 'T00:00:00Z');
+  while (d <= end){
+    var k = d.toISOString().slice(0,10);
+    var cells = byDate[k] || [];
+    DAYS.push({ date:k, cycles:sysCycles[k]||0, mean:sysMean[k]||0, cells:cells });
+    cells.forEach(function(c){ TOTAL += c.n; });
+    d.setUTCDate(d.getUTCDate()+1);
+  }
+
+  document.getElementById('scope').textContent =
+    fmtDay(h.span.first) + ' – ' + fmtDay(h.span.last) + ' · ' +
+    h.facilities.length + ' NSW emergency departments · every 15 minutes';
+
+  annotate();
+}
+
+/* --------------------------------------------------------------------------
+   ANNOTATIONS. Every one of these is POSITIONED from the data. The gap label
+   also COUNTS ITSELF - it returns only when it can name a real run of empty
+   days, so it can never go quietly false the way a hardcoded one does.
+   -------------------------------------------------------------------------- */
+var NOTES = [];
+function annotate(){
+  /* 1. the longest run of days that recorded nothing */
+  var best = null, run = null;
+  DAYS.forEach(function(day, i){
+    if (day.cycles === 0){ run = run || { from:i, to:i }; run.to = i; }
+    else { if (run && (!best || (run.to-run.from) > (best.to-best.from))) best = run; run = null; }
+  });
+  if (run && (!best || (run.to-run.from) > (best.to-best.from))) best = run;
+  if (best){
+    var n = best.to - best.from + 1;
+    NOTES.push({ i:best.from, span:n,
+      text: n + (n===1 ? ' day' : ' days') + ' · nothing captured', cls:'gap' });
+  }
+
+  /* 2. where coverage becomes complete. Position derived; the reason is a
+        sourced fact from the project's own deployment record, not an inference
+        drawn from the shape of the picture. */
+  for (var i=0;i<DAYS.length;i++){
+    if (DAYS[i].cycles >= 90){
+      NOTES.push({ i:i, text: fmtDay(DAYS[i].date) + ' · collector moved to a Melbourne server', cls:'' });
+      break;
+    }
+  }
+
+  /* 3. the present */
+  NOTES.push({ i:DAYS.length-1, text:'now', cls:'now', flip:true });
+}
+
+/* --------------------------------------------------------------------------
+   LAYOUT + RESOLUTION BUDGET
+   Backing store clamped to 1.5x. The marks are flat blocks with no hairlines
+   and no type inside them, so there is nothing for the extra density to keep
+   sharp - and full density on a 2.5x display is ~2.8x the fill work for it.
+   PAD is recomputed on every resize, not baked at load, because a constant
+   frozen at first paint is how a page silently stops working when a window is
+   widened.
+   -------------------------------------------------------------------------- */
+var W=0,H=0,COLW=0,ROWH=0,PAD=1;
+function layout(){
+  var r = plot.getBoundingClientRect();
+  var dpr = Math.max(1, Math.min(1.5, window.devicePixelRatio || 1));
+  W = Math.round(r.width); H = Math.round(r.height);
+  cv.width  = Math.round(W * dpr);
+  cv.height = Math.round(H * dpr);
+  cx.setTransform(dpr,0,0,dpr,0,0);
+
+  COLW = W / DAYS.length;
+  ROWH = H / FACS.length;
+  PAD  = COLW > 6 ? 1 : 0;      /* the 1px day gap disappears rather than eating
+                                   the mark once columns get narrow */
+  placeNotes();
+}
+
+function placeNotes(){
+  var old = plot.querySelectorAll('.note');
+  for (var i=0;i<old.length;i++) old[i].remove();
+  NOTES.forEach(function(n){
+    var el = document.createElement('div');
+    el.className = 'note ' + n.cls + (n.flip ? ' flip' : '');
+    el.style.left = (n.i * COLW) + 'px';
+    el.innerHTML = '<i></i><s></s>';
+    el.querySelector('s').textContent = n.text;
+    plot.appendChild(el);
+  });
+}
+
+/* --------------------------------------------------------------------------
+   THE DRAW. Accumulation: the canvas is never cleared during the run, so each
+   frame costs one day's marks and not the whole record. Paced by elapsed time,
+   never by frame count, so it takes the same 1.9s on a 60Hz panel and a 144Hz
+   one - and a dropped frame catches up instead of slowing the whole thing down.
+   -------------------------------------------------------------------------- */
+var DUR = 1900, t0 = 0, at = 0, drawn = 0;
+
+function ink(cell){
+  /* Deviation from that hospital's OWN long-run average. Never an absolute
+     scale: 6 people waiting is a bad night at Murwillumbah and a quiet one at
+     Gosford, and inventing a shared threshold would fabricate a clinical claim
+     this data cannot support. */
+  var ratio = cell.own > 0 ? cell.avg / cell.own : 1;
+  var t = Math.max(0, Math.min(1, (ratio - 0.6) / 1.2));
+  return 0.16 + 0.74 * t;
+}
+
+function paintDay(i){
+  var day = DAYS[i];
+  var x = i * COLW;
+  var w = Math.max(0.6, COLW - PAD);
+  for (var k=0;k<day.cells.length;k++){
+    var c = day.cells[k];
+    var band = c.fi * ROWH;
+    var h = Math.max(1.4, (ROWH - 1) * Math.min(1, c.n / 96));
+    cx.globalAlpha = ink(c);
+    cx.fillRect(x, band + (ROWH - 1) - h, w, h);   /* anchored to the row's floor */
+    drawn += c.n;
+  }
+  cx.globalAlpha = 1;
+}
+
+function ground(){
+  cx.globalAlpha = 1;
+  cx.fillStyle = '#E8E4D9';
+  cx.fillRect(0,0,W,H);
+  cx.fillStyle = '#171A21';
+}
+
+function start(){
+  ground();
+  /* MEASURED 31/08: loaded into a background tab the page showed an empty
+     rectangle for as long as it stayed there, because requestAnimationFrame is
+     throttled to zero while a document is hidden - and on this page the rAF loop
+     IS the content. Anyone who middle-clicks the link gets that. So: if we are
+     hidden, or if we become hidden mid-run, stop performing and just be the
+     finished picture. The animation is the decoration; the record is the page. */
+  if (REDUCED || document.visibilityState === 'hidden'){ finish(); return; }
+  document.addEventListener('visibilitychange', function(){
+    if (!DRAWN && document.visibilityState === 'hidden') finish();
+  });
+  t0 = performance.now();
+  requestAnimationFrame(step);
+}
+
+function step(now){
+  var p = Math.min(1, (now - t0) / DUR);
+  var want = Math.floor(p * DAYS.length);
+  while (at < want) paintDay(at++);
+  countEl.textContent = drawn.toLocaleString('en-AU');
+  if (p < 1){ requestAnimationFrame(step); } else { finish(); }
+}
+
+function finish(){
+  while (at < DAYS.length) paintDay(at++);
+  drawn = TOTAL;
+  countEl.textContent = TOTAL.toLocaleString('en-AU');
+  /* The headline is summed from the marks that are actually on screen. The
+     published span.readings figure is 46 higher, and a page must not print a
+     total its own picture contradicts - see the note in the handover. */
+  DRAWN = true; clearTimeout(armed);
+  plot.classList.add('done');
+  var q = /[?&]on=(\d{4}-\d{2}-\d{2})/.exec(location.search);
+  if (q){ var i = indexOf(q[1]); if (i >= 0) show(i); }
+}
+skipBtn.addEventListener('click', function(){ if(!DRAWN) finish(); });
+
+function indexOf(date){ for (var i=0;i<DAYS.length;i++) if (DAYS[i].date === date) return i; return -1; }
+
+/* --------------------------------------------------------------------------
+   THE CURSOR. One number - the day index - written by pointer, keyboard and
+   deep link, and read by everything. Every gesture is committed from where it
+   STARTED, never accumulated frame to frame, so a slow drag cannot feed its
+   own motion back into its input.
+   -------------------------------------------------------------------------- */
+var sel = -1;
+function show(i){
+  i = Math.max(0, Math.min(DAYS.length-1, i));
+  sel = i;
+  var day = DAYS[i];
+  cursor.style.left = (i*COLW + COLW/2) + 'px';
+  plot.classList.add('live');
+
+  if (day.cycles === 0){
+    /* The void gets a sentence, not a blank. It claims only what the record can
+       support: nothing was CAPTURED here. Not that nothing happened. */
+    readEl.innerHTML = '<em>' + fmtFull(day.date) + '</em> <span>— no reading captured. ' +
+      'The feed serves current state only, so this cannot be recovered.</span>';
+  } else {
+    readEl.innerHTML = '<em>' + fmtFull(day.date) + '</em> <span>— ' +
+      day.cycles + ' of 96 readings · ' + day.cells.length + ' emergency departments · ' +
+      'mean ' + day.mean.toFixed(1) + ' people waiting per department</span>';
+  }
+}
+function fmtDay(iso){
+  var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return (+iso.slice(8,10)) + ' ' + m[(+iso.slice(5,7))-1];
+}
+function fmtFull(iso){ return fmtDay(iso) + ' ' + iso.slice(0,4); }
+
+plot.addEventListener('pointermove', function(e){
+  if (!DRAWN) return;
+  var r = plot.getBoundingClientRect();
+  show(Math.floor((e.clientX - r.left) / COLW));
+});
+plot.addEventListener('pointerleave', function(){ plot.classList.remove('live'); });
+
+plot.tabIndex = 0;
+plot.setAttribute('role','img');
+plot.setAttribute('aria-label',
+  'A grid of 43 days by 59 emergency departments. Each mark is one day of collection; ' +
+  'its height is how many of 96 possible readings were captured and its darkness is how ' +
+  'busy that department was against its own average. Bare areas recorded nothing.');
+plot.addEventListener('keydown', function(e){
+  if (e.key === 'ArrowRight'){ show(sel < 0 ? 0 : sel+1); e.preventDefault(); }
+  else if (e.key === 'ArrowLeft'){ show(sel < 0 ? DAYS.length-1 : sel-1); e.preventDefault(); }
+  else if (e.key === 'Home'){ show(0); e.preventDefault(); }
+  else if (e.key === 'End'){ show(DAYS.length-1); e.preventDefault(); }
+});
+
+var rt;
+window.addEventListener('resize', function(){
+  clearTimeout(rt);
+  rt = setTimeout(function(){
+    if (!DAYS.length) return;
+    layout(); ground(); at = 0; drawn = 0;
+    while (at < DAYS.length) paintDay(at++);
+    drawn = TOTAL;
+    if (sel >= 0) show(sel);
+  }, 140);
+});
+
+})();
+</script>
+</body>
+</html>
