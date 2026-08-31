@@ -210,6 +210,15 @@ footer a:hover{color:var(--ember)}
   .bar{padding:14px 16px}
   .sig{font-size:11px}
 }
+
+/* ── MEASURE ────────────────────────────────────────────────────────────────
+   Card copy ran 119 characters per line at 1366 and 147 at 1920, against a
+   comfortable 65-75. The container width is deliberate and stays; what was
+   missing is a measure on the text inside it. 68ch is font-relative, so it
+   holds at any size the reader chooses rather than at one pixel value that
+   happens to suit 15px.
+   Measured on lilliss.au for comparison: the same kind of copy runs 57-70. */
+.card p, article p{ max-width:68ch }
 </style>
 </head>
 <body>
