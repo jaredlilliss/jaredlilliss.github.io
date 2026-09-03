@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Queue Board</title>
@@ -176,7 +179,7 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
 .viewsw button:last-child{border-right:0}
 .viewsw button[aria-pressed=true]{background:var(--accent);color:#fff;font-weight:600}
 :root:not([data-theme="light"]) .viewsw button[aria-pressed=true]{color:#06222a}
-.note{font-size:.8rem;color:var(--faint);margin:9px 2px 0}
+.note{font-size:.8rem;color:var(--muted);margin:9px 2px 0}
 .prose-sm p{max-width:74ch;margin:0 0 12px;font-size:.9rem;color:var(--muted)}
 .prose-sm p:last-child{margin-bottom:0}
 .prose-sm b{color:var(--ink);font-weight:600}
@@ -197,6 +200,8 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+</head>
+<body>
 
 <div class="wrap">
 
@@ -220,7 +225,7 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
 
 <div class="viewsw" role="group" aria-label="Choose a view">
   <button data-view="now" aria-pressed="true">Right now</button>
-  <button data-view="history" aria-pressed="false">Five weeks</button>
+  <button data-view="history" aria-pressed="false" id="btn-history">Five weeks</button>
   <button data-view="coupling" aria-pressed="false">Together?</button>
 </div>
 
@@ -274,7 +279,7 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
     <h2>You can tell which machine took a reading by looking at the clock</h2>
     <div class="prose-sm">
       <p>The always-on host runs on a fifteen-minute cron schedule, so its readings land at exactly <code>:00</code>, <code>:15</code>, <code>:30</code> and <code>:45</code> — 24 of each, 96 a day, never drifting. The laptop ran a sleeping loop, so its readings landed wherever it happened to wake: <code>:02</code>, <code>:11</code>, <code>:26</code>, <code>:39</code>.</p>
-      <p><b>The cutover day has 115 readings rather than 96</b> — the 96 clean quarter-hour ones from the new host, plus 19 drifting ones from the laptop still running alongside it. Both collectors were live for a few hours. <b>No reading was ever double-counted:</b> across all 77,000 rows there is not one duplicate of the same hospital at the same instant.</p>
+      <p><b>The cutover day has 115 readings rather than 96</b> — the 96 clean quarter-hour ones from the new host, plus 19 drifting ones from the laptop still running alongside it. Both collectors were live for a few hours. <b>No reading was ever double-counted:</b> across all <span id="totalRows">—</span> rows there is not one duplicate of the same hospital at the same instant.</p>
     </div>
   </section>
 
@@ -285,7 +290,7 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
   </section>
 
   <section>
-    <h2>Five weeks, hospital by hospital</h2>
+    <h2 id="hist-h2">Five weeks, hospital by hospital</h2>
     <p class="sub">Long-run average, the busiest single reading ever recorded, and how much of the period each hospital was actually observed for. <b>Coverage is shown because it matters</b> — a hospital seen on fewer days has a less reliable average, and hiding that would make this table look more certain than it is.</p>
     <div class="controls">
       <input type="search" id="hq" placeholder="Filter by hospital, suburb or health district…" aria-label="Filter hospitals">
@@ -294,7 +299,7 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
       <table id="t-hist">
         <thead><tr>
           <th data-k="name" data-dir="asc">Hospital</th>
-          <th class="r" data-k="avg">Five-week average</th>
+          <th class="r" data-k="avg" id="hist-avg-th">Five-week average</th>
           <th class="r" data-k="max">Busiest reading</th>
           <th class="r" data-k="_obs">Days observed</th>
           <th>Daily average across the period</th>
@@ -316,7 +321,7 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
     <p class="sub">Mostly not. That is the short answer, and it is not the one most people expect.</p>
     <div class="prose-sm">
       <p><b>How this is measured, because the naive version would be misleading.</b> Any two hospitals will appear to move together simply because both are quiet at dawn and busy in the evening — correlating the raw counts would mostly rediscover the daily cycle and dress it up as a finding. So each reading first has <b>that hospital's own average for that hour of the day</b> subtracted. What is left is the part that is unusual <em>for that hospital, at that time</em>.</p>
-      <p>Those leftovers are then compared against the same leftovers for <b>the rest of the state, excluding the hospital being measured</b> — otherwise a large hospital partly correlates with itself and scores too high. Every one of the 59 hospitals reported at all <span class="mono" id="cn">—</span> shared moments, so no pair is being compared across a gap.</p>
+      <p>Those leftovers are then compared against the same leftovers for <b>the rest of the state, excluding the hospital being measured</b> — otherwise a large hospital partly correlates with itself and scores too high. Every one of the 59 hospitals reported at least <span class="mono" id="cn">—</span> shared moments, so no pair is being compared across a gap.</p>
     </div>
     <div class="chartbox"><svg id="scatter" viewBox="0 0 720 300" role="img" aria-label="Correlation with the rest of the state against hospital size"></svg></div>
     <p class="note" id="scatter-note"></p>
@@ -437,7 +442,11 @@ const fmt = n => (n === null || n === undefined) ? '—'
 /* ---------- freshness + stats ---------- */
 const last = new Date(DATA.meta.last);
 const gen  = new Date(DATA.generated_at);
-const mins = Math.max(0, Math.round((gen - last) / 60000));
+/* Measured against the viewer's clock, not generated_at - that timestamp
+   sits seconds after meta.last by construction (the export just ran), so
+   comparing against it could never show real staleness even if the
+   collector stopped. */
+const mins = Math.max(0, Math.round((Date.now() - last) / 60000));
 $('#freshness').textContent = mins < 60 ? `Reading ${mins} min old` : (mins < 1440 ? `Reading ${Math.round(mins/60)} h old` : `Reading ${Math.round(mins/1440)} day(s) old`);
 $('#gen').textContent = gen.toLocaleString('en-AU', {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
 $('#attr').textContent = DATA.attribution + '  Licensed ' + DATA.licence + '.';
@@ -448,11 +457,23 @@ const stats = [
   [DATA.meta.snapshots.toLocaleString('en-AU'), 'readings captured'],
   [DATA.meta.cycles.toLocaleString('en-AU'), 'collection cycles'],
   [DATA.meta.facilities_reporting, 'hospitals reporting'],
-  [days, 'days of continuous series'],
+  [days, 'days since first reading'],
   [DATA.facilities.reduce((a,f)=>a+(f.current||0),0), 'waiting at the latest reading'],
 ];
 $('#stats').innerHTML = stats.map(([n,l]) =>
   `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+
+/* Period phrase for the history view, derived from the same span every
+   time - replaces a hard-coded "Five weeks" that drifted a little further
+   from the truth every day the collector kept running. */
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const weeks = Math.floor(days / 7);
+const periodWords = weeks >= 1 ? `${weeks} week${weeks===1?'':'s'}` : `${days} day${days===1?'':'s'}`;
+const periodAdj   = weeks >= 1 ? `${weeks}-week` : `${days}-day`;
+document.getElementById('btn-history').textContent = cap(periodWords);
+document.getElementById('hist-h2').textContent = `${cap(periodWords)}, hospital by hospital`;
+document.getElementById('hist-avg-th').textContent = `${cap(periodAdj)} average`;
+document.getElementById('totalRows').textContent = DATA.meta.snapshots.toLocaleString('en-AU');
 
 /* ---------- hourly curve ---------- */
 (function(){
@@ -716,7 +737,7 @@ async function loadHistory(){
   const host = document.getElementById('view-history');
   const holder = document.createElement('div');
   holder.className = 'loading';
-  holder.textContent = 'Loading five weeks of readings…';
+  holder.textContent = `Loading ${periodWords} of readings…`;
   host.prepend(holder);
   try{
     const r = await fetch('history.json', {cache:'no-store'});
@@ -728,7 +749,7 @@ async function loadHistory(){
     document.getElementById('hq').addEventListener('input', renderHistTable);
     histLoaded = true;
   }catch(e){
-    holder.textContent = 'Could not load the five-week file (' + e.message + ').';
+    holder.textContent = `Could not load the ${periodAdj} file (` + e.message + ').';
   }
 }
 
@@ -779,7 +800,7 @@ function drawScatter(){
     `Highest <b>${top.r}</b> (${top.name.split('(')[0].trim()}), lowest <b>${bot.r}</b> (${bot.name.split('(')[0].trim()}). `
     + `<b>${sig}</b> of ${rows.length} sit outside the noise band. `
     + `Busier half averages <b>${busy.toFixed(2)}</b>, quieter half <b>${quiet.toFixed(2)}</b>.`;
-  document.getElementById('cn').textContent = (rows[0].n||0).toLocaleString('en-AU');
+  document.getElementById('cn').textContent = Math.min(...rows.map(r=>r.n||0)).toLocaleString('en-AU');
 }
 
 function renderCoupTable(){
@@ -822,3 +843,5 @@ document.querySelectorAll('.viewsw button').forEach(b => b.addEventListener('cli
 }));
 
 </script>
+</body>
+</html>
