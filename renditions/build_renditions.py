@@ -11,7 +11,7 @@
 #                                CSS and builds its own canvas here, so the base
 #                                script (clock, reveals, nav) survives intact.
 #
-# This machinery lives INSIDE the repo rather than under Desktop\cc on purpose:
+# This machinery lives INSIDE the repo rather than in a private folder on purpose:
 # unlike the other two sites the portfolio has no cc-side source of truth, the
 # repo IS the source, and `cc` is not a git repo. Keeping the themes here means
 # they are versioned with the page they style.

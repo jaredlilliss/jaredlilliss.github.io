@@ -2,27 +2,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Queue Board</title>
 
-<!-- FINDABILITY, added 31/08/2026. This page had a charset, a viewport and a
-     title, and nothing else: no description, no canonical, no card tags. It is
-     linked from the front door as portfolio evidence and it is the single
-     strongest piece of it — and pasted into a message or a chat it rendered as
-     a bare URL with no card at all, on a page whose whole job is to be looked
-     at. The front door got these tags on 24/08; the page it points AT never did.
 
-     Deliberately NOT noindexed: this one is meant to be found. The concept
-     pages carry noindex because they restyle other people's material; this is
-     his own work on public data.
-
-     The wording is held to the project's own two disclaimers, which exist
-     because both are easy to get wrong: it is a COUNT OF PEOPLE, never a
-     waiting time — there is no minutes field in the feed — and it is 59 of the
-     176 NSW emergency departments, never "statewide". A card that overstates
-     either would be worse than no card.
-
-     No og:image on purpose rather than by omission: the only image on this
-     domain is the front door's aurora, whose caption is about something else.
-     A summary card with a true title and description beats a large card
-     carrying the wrong picture. -->
 <meta name="description" content="How many people are waiting for treatment in the NSW emergency departments that publish live counts — 59 of 176, read from a public feed every 15 minutes. A count of people, not a waiting time.">
 <meta name="theme-color" content="#ECEFF0">
 <link rel="icon" type="image/svg+xml" href="/icon.svg">
@@ -36,13 +16,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The Queue Board — live NSW emergency department counts">
 <meta name="twitter:description" content="How many people are waiting for treatment in the NSW emergency departments that publish live counts — 59 of 176, read every 15 minutes. A count of people, not a waiting time.">
-<!-- Self-hosted 28/08. This page used to pull IBM Plex Sans and Mono from
-     Google, which made privacy.html FALSE on this very domain - it tells the
-     reader "this site loads no fonts ... from any other domain" and invites
-     them to check the network tab. Inter is a variable face (100-900) in one
-     34.6 KB file, so it covers every weight Plex Sans was fetched for; the
-     numerals keep IBM Plex Mono, because this is a data display and the
-     tabular column alignment is load-bearing. -->
+
 <style>
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;
   src:url('fonts/inter.woff2') format('woff2')}
@@ -265,9 +239,7 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
 
   <div class="controls">
     <input type="search" id="q" placeholder="Filter by hospital, suburb or health district…" aria-label="Filter hospitals">
-    <!-- Sort-order buttons removed 29/08: the column headers are the control
-           now. That row said "Busiest overall" and sorted the column headed
-           "Own average" - two names for one thing. -->
+
   </div>
 
   <div class="tablebox">
@@ -288,7 +260,7 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
 
 </div>
 
-<!-- ============ FIVE WEEKS ============ -->
+
 <div id="view-history" hidden>
 
   <section>
@@ -336,7 +308,7 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
 </div>
 
 
-<!-- ============ COUPLING ============ -->
+
 <div id="view-coupling" hidden>
 
   <section>
@@ -382,12 +354,8 @@ footer .attr{font-family:"IBM Plex Mono",monospace;font-size:.72rem;margin-top:1
 
 </div>
 
-<!-- ============ WHAT THIS IS FOR ============ -->
-<!-- Added 29/08. The page demonstrated and then stopped at a licence notice: a
-     reader who was convinced had nowhere to land, and nothing stated what the
-     system is for, what it cannot do, or what would come next. Kept in the page's
-     own non-promotional register on purpose - nine sections of refusing to
-     overclaim about the data is what earns the right to be believed here. -->
+
+
 <section id="next" class="closing">
   <h2>What this is for</h2>
   <p class="sub">An honest read of what the pipeline is, what it is not, and the
@@ -524,15 +492,7 @@ function spark(series){
 }
 
 /* ---------- table ---------- */
-/* Compare each hospital's latest reading against its own average FOR THAT HOUR,
-   not its all-hours average. The state's own curve runs 1.84 at 06:00 to 6.59
-   at 20:00, so an all-hours denominator makes the column read about -51% at
-   dawn and +48% in the evening for everyone - it measures the clock, not the
-   hospital. Found 27/08/2026: at a 07:00 export, 54 of 59 rows were negative
-   and 23 sat at exactly -100%. The coupling view already removed this baseline
-   and the front page did not.
-   MIN_DENOM: below ~2 the ratio is dominated by whether one person arrived, so
-   it is shown as an absolute difference instead of a meaningless percentage. */
+
 const MIN_DENOM = 2;
 const F = DATA.facilities.map(f => {
   const base = (f.mu_hour !== null && f.mu_hour !== undefined) ? f.mu_hour : f.avg;
@@ -775,14 +735,7 @@ async function loadHistory(){
 
 /* ---------- coupling view ---------- */
 let coupLoaded = false;
-/* 1.96/sqrt(n-3) would give 0.054, but Fisher's interval assumes INDEPENDENT
-   observations and these are readings 15 minutes apart from a slow-moving
-   queue. Measured lag-1 autocorrelation of the hour-baseline-removed residual:
-   median 0.81 across the 59 series. The effective sample is therefore a few
-   hundred, not ~1,300, and the honest band is roughly 0.085-0.12. Using the
-   conservative end deliberately: it can only weaken the "mostly local" reading,
-   never flatter it. Corrected 27/08/2026 - the narrow band had labelled three
-   hospitals as real relationships that sit inside a defensible one. */
+
 const NOISE = 0.12;
 
 function drawScatter(){

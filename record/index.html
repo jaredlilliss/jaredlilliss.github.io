@@ -6,24 +6,7 @@
 <title>The Record — every reading taken, and every one missed</title>
 <meta name="description" content="103,132 readings of how many people were waiting in 59 NSW emergency departments, taken every fifteen minutes since 20 July 2026. The gaps are drawn as gaps.">
 
-<!-- ============================================================================
-     THE RECORD  ·  concept, 31/08/2026
-     ----------------------------------------------------------------------------
-     ONE STRUCTURAL DECISION: the page has no layout, it has a coordinate system.
-     X is the day (20 Jul -> today). Y is the emergency department (59 of them,
-     ordered by their own long-run average, busiest at top). Every mark is one
-     day of one hospital's collection. Nothing else on the page is placed by
-     taste: the annotations hang off X positions computed from the data, and the
-     gap label counts its own days.
 
-     THE CONSEQUENCE THE PAGE KEEPS: coverage was terrible for the first month.
-     Five days recorded nothing at all; four days recorded a single reading. That
-     is drawn, at full size, as bare paper. Filling it, smoothing it, or plotting
-     a tidy average line over it would be a lie that looked more professional.
-
-     DATA: same-origin history.json, the file the 3-hourly refresh already
-     publishes. No new pipeline. Fields used: span, system_daily, facilities[].
-     ============================================================================ -->
 
 <style>
 /* ---- fonts: self-hosted, no font network. privacy.html promises this. ------ */
@@ -175,7 +158,7 @@ html.nojs-on .nojs{display:block}
 <main class="plot" id="plot">
   <canvas id="c" aria-hidden="true"></canvas>
 
-  <!-- annotations are injected here, positioned from dates -->
+
 
   <div class="cursor" id="cursor" aria-hidden="true"><i></i></div>
   <button class="skip" id="skip" type="button">Skip &rarr;</button>
@@ -396,12 +379,7 @@ function ground(){
 
 function start(){
   ground();
-  /* MEASURED 31/08: loaded into a background tab the page showed an empty
-     rectangle for as long as it stayed there, because requestAnimationFrame is
-     throttled to zero while a document is hidden - and on this page the rAF loop
-     IS the content. Anyone who middle-clicks the link gets that. So: if we are
-     hidden, or if we become hidden mid-run, stop performing and just be the
-     finished picture. The animation is the decoration; the record is the page. */
+
   if (REDUCED || document.visibilityState === 'hidden'){ finish(); return; }
   document.addEventListener('visibilitychange', function(){
     if (!DRAWN && document.visibilityState === 'hidden') finish();
