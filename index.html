@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jared Lilliss — builds that keep running</title>
-<meta name="description" content="Jared Lilliss — Sydney field technician and builder. Data pipelines that survive reboots, single-file websites that work offline, automation with receipts.">
+<title>Jared Lilliss</title>
+<meta name="description" content="Jared Lilliss — IT field technician in Sydney. A collector reading NSW emergency department queue counts every fifteen minutes, single-file websites, and the code behind them.">
 
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F5EF">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0E1613">
@@ -12,17 +12,17 @@
 <link rel="canonical" href="https://jaredlilliss.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Jared Lilliss">
-<meta property="og:title" content="Jared Lilliss — builds that keep running">
-<meta property="og:description" content="Sydney field technician and builder — data pipelines that survive reboots, single-file sites that work offline, automation with receipts.">
+<meta property="og:title" content="Jared Lilliss">
+<meta property="og:description" content="IT field technician in Sydney. A collector reading NSW emergency department queue counts every fifteen minutes, and websites that are one file each.">
 <meta property="og:url" content="https://jaredlilliss.github.io/">
 <meta property="og:image" content="https://jaredlilliss.github.io/og.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Night sky over an aurora horizon, with the line: I build things that keep running after I go home.">
+<meta property="og:image:alt" content="A card on a faint grid reading: Jared Lilliss, IT field technician, Sydney.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Jared Lilliss — builds that keep running">
-<meta name="twitter:description" content="Sydney field technician and builder — data pipelines that survive reboots, single-file sites that work offline, automation with receipts.">
+<meta name="twitter:title" content="Jared Lilliss">
+<meta name="twitter:description" content="IT field technician in Sydney. A collector reading NSW emergency department queue counts every fifteen minutes, and websites that are one file each.">
 <meta name="twitter:image" content="https://jaredlilliss.github.io/og.png">
 <style>
 @font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/fraunces.woff2') format('woff2')}
@@ -202,21 +202,16 @@ footer a:hover{color:var(--accent);border-bottom-color:var(--accent)}
       <a href="#contact">Contact</a>
       <a class="biz" href="/lilliss-it/">Lilliss IT</a>
     </nav>
-    <span class="stamp">Builds that keep running</span>
   </div>
 </header>
 
 <main id="main">
   <section class="hero wrap" id="top">
     <div class="card jobcard">
-      <p class="kicker"><span class="live"><span class="dot"></span>Systems running</span><span id="clock">Sydney &middot; Australia</span><span>Field technician &amp; builder</span></p>
+      <p class="kicker"><span class="live"><span class="dot"></span>Collecting since 20 July</span><span id="clock">Sydney &middot; Australia</span><span>IT field technician</span></p>
       <div class="body">
-        <h1>
-          <span class="ln">I build things that</span>
-          <span class="ln"><em>keep running</em></span>
-          <span class="ln">after I go home.</span>
-        </h1>
-        <p class="lede">Data pipelines that survive reboots, single-file websites that work offline, automation with receipts. By day I'm the IT field tech venues ring when the tills stop &mdash; <strong>the rest of the time I build the systems below.</strong></p>
+        <h1><span class="ln">Jared <em>Lilliss</em></span></h1>
+        <p class="lede">IT field technician in Sydney. Point-of-sale and payment terminals, Windows machines, cabling and cameras &mdash; mostly for venues, mostly the same day. <strong>Everything below I built myself.</strong></p>
         <div class="hero-cta">
           <a class="btn hot" href="#work">See the work</a>
           <a class="btn" href="https://github.com/jaredlilliss">GitHub</a>
@@ -228,20 +223,20 @@ footer a:hover{color:var(--accent);border-bottom-color:var(--accent)}
 
   <div class="strip rv">
     <div class="wrap">
-      <div class="stat"><b><span class="ok">&#9679;</span> Collecting now</b>a poll every 15 minutes, unattended, on a Melbourne VPS</div>
-      <div class="stat"><b><span class="em">03:30</span> nightly</b>database dump + automated offsite copy</div>
-      <div class="stat"><b>One file</b>whole websites that render with the network cable pulled</div>
-      <div class="stat"><b>Receipts first</b>what broke, what fixed it, what to watch for next time</div>
+      <div class="stat"><b><span class="ok">&#9679;</span> Collecting now</b>a reading every 15 minutes, unattended, on a Melbourne server</div>
+      <div class="stat"><b><span class="em">03:30</span> Melbourne time</b>a database dump each night, copied off the machine</div>
+      <div class="stat"><b>One file</b>each site here is a single HTML file, with no build step</div>
+      <div class="stat"><b>59 departments</b>every NSW emergency department that publishes a live count</div>
     </div>
   </div>
 
   <section id="work" class="wrap">
-    <div class="sect-head rv"><span class="idx">Work</span><h2>Projects with receipts</h2></div>
-    <p class="sect-sub rv">Everything here is real, running, and verifiable &mdash; live links where the work is public, honest descriptions where it isn't.</p>
+    <div class="sect-head rv"><span class="idx">Work</span><h2>Projects</h2></div>
+    <p class="sect-sub rv">Live links where the work is public, and a plain description where it isn't.</p>
     <div class="board">
       <article class="card wide rv"><h3 id="p-ahu">Aussie Health Utility</h3>
         <div class="tags"><span class="tag">Python</span><span class="tag">PostgreSQL</span><span class="tag">Linux VPS</span><span class="tag">cron</span><span class="tag">rclone</span></div>
-        <p>A privacy-by-design data platform over public Australian health datasets: a polling loop feeding an <strong>append-only PostgreSQL time series</strong> of live patients-waiting counts for NSW emergency departments, with the privacy posture set at the schema level &mdash; no personal or health information is ever collected. Runs unattended on a Melbourne VPS with health-checked collection, daily dumps, and <strong>automated offsite backups</strong>. Tens of thousands of readings and growing.</p>
+        <p>A collector that reads how many people are waiting in each NSW emergency department that publishes a live count, every fifteen minutes, and appends it to a <strong>PostgreSQL series that is never rewritten</strong>. No personal or health information is collected, because the schema has no fields for it. It runs unattended on a Melbourne server, dumps itself nightly and <strong>copies the dump off the machine</strong>. More than a hundred thousand readings so far.</p>
         <div class="foot">
           <span class="status"><span class="dot"></span>Running now</span>
           <a class="go" href="/queue-board/" aria-describedby="p-ahu">View the live board &rarr;</a>
@@ -269,7 +264,7 @@ footer a:hover{color:var(--accent);border-bottom-color:var(--accent)}
       </article>
       <article class="card wide rv"><h3>Lilliss IT</h3>
         <div class="tags"><span class="tag">Business</span><span class="tag">POS/EFTPOS</span><span class="tag">Networks</span><span class="tag">CCTV/AV</span></div>
-        <p>My trading identity: small-business IT across Sydney and regional NSW &mdash; point-of-sale and payment terminals, Windows fleets, structured cabling, cameras. One person from fault intake to fix. <strong>Trading since 2019, registered 2026.</strong></p>
+        <p>My trading name for the same work: small-business IT across Sydney and regional NSW &mdash; point-of-sale and payment terminals, Windows fleets, structured cabling, cameras. <strong>Trading since 2019, registered 2026.</strong></p>
         <div class="foot">
           <a class="go" href="/lilliss-it/">The business page &rarr;</a>
         </div>
@@ -278,12 +273,12 @@ footer a:hover{color:var(--accent);border-bottom-color:var(--accent)}
   </section>
 
   <section id="about" class="wrap">
-    <div class="sect-head rv"><span class="idx">About</span><h2>Field tech hands, systems head</h2></div>
+    <div class="sect-head rv"><span class="idx">About</span><h2>The day job, and the rest</h2></div>
     <div class="about-grid">
       <div class="about-copy rv">
-        <p><strong>The through-line in everything above is durability.</strong></p>
-        <p>A pipeline isn't done when it collects once &mdash; it's done when it survives reboots, sleeps, power loss and a change of host. A website isn't done when it looks good on my machine &mdash; it's done when it's one file that works on a phone, offline, in five languages.</p>
-        <p>Day work keeps that honest: when a venue's tills stop mid-service, the fix has to be real, fast, and documented &mdash; what broke, what fixed it, what to watch for next time. I bring the same receipts-first habit to everything I build.</p>
+        <p>I work as an IT field technician around Sydney. Day to day that is point-of-sale and payment terminals, Windows machines, structured cabling and cameras, for venues and small businesses &mdash; usually the same day, usually on site.</p>
+        <p>The collector below started in July, because the feed it reads publishes only the current moment and keeps no history: a reading not taken at the time is gone for good. It ran on a laptop first, which slept, so the early weeks have gaps. Since 23 August it has run on a small Melbourne server, and nothing after that is missing.</p>
+        <p>The websites here are each a single HTML file. No frameworks, no build step, and they still work with the network cable pulled.</p>
       </div>
       <div class="certs rv">
         <h3>Certifications</h3>
@@ -295,9 +290,9 @@ footer a:hover{color:var(--accent);border-bottom-color:var(--accent)}
   </section>
 
   <section id="contact" class="contact wrap">
-    <div class="cardhead"><span>Jared Lilliss &middot; field technician &amp; builder</span><span>Sydney &middot; Australia</span></div>
-    <div class="sect-head rv"><span class="idx">Contact</span><h2>Email finds me</h2></div>
-    <p class="sect-sub rv">Work, collaboration, or something broken that needs to stay fixed &mdash; describe it and you'll get a straight answer.</p>
+    <div class="cardhead"><span>Jared Lilliss &middot; IT field technician</span><span>Sydney &middot; Australia</span></div>
+    <div class="sect-head rv"><span class="idx">Contact</span><h2>Email</h2></div>
+    <p class="sect-sub rv">Email is the best way to reach me. Tell me what you need and you'll get a straight answer.</p>
     <a class="mail rv" href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a>
     <div class="socials rv">
       <a class="btn" href="https://github.com/jaredlilliss">GitHub</a>
