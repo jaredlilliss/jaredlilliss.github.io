@@ -237,6 +237,9 @@ footer p{margin:14px 0 0;font-size:12.5px;color:var(--ink-2);max-width:62ch}
 .xscroll:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 
 .xlooks{color:inherit;text-decoration:underline;text-underline-offset:3px;font:inherit;white-space:nowrap;display:inline-block;padding:6px 0;margin-inline-start:.9em}
+
+html{overflow-x:clip}
+@supports not (overflow-x:clip){html{overflow-x:hidden}}
 </style>
 </head>
 <body>
@@ -334,8 +337,7 @@ footer p{margin:14px 0 0;font-size:12.5px;color:var(--ink-2);max-width:62ch}
 
     <p class="plateline" id="tablenote" hidden>Every department that publishes a live count, at the reading named above. Now is the count at that reading; Mean and Max are the values published in the reading file; Last 24 h traces the last 96 quarter-hourly counts.</p>
 
-    <div class="tablebox" id="tablewrap" hidden tabindex="0" role="region" aria-label="Departments, scrollable">
-      <div class="xscroll" tabindex="0" role="region" aria-label="Table, scrolls sideways"><table>
+    <div class="tablebox" id="tablewrap" hidden tabindex="0" role="region" aria-label="Departments, scrollable"><table>
         <caption class="sr-only">Every department that publishes a live count, at the reading named above. Now is the count at that reading; Mean and Max are the values published in the reading file; Last 24 h traces the last 96 quarter-hourly counts.</caption>
         <thead>
           <tr>
@@ -350,7 +352,6 @@ footer p{margin:14px 0 0;font-size:12.5px;color:var(--ink-2);max-width:62ch}
         </thead>
         <tbody id="tbody"></tbody>
       </table></div>
-    </div>
 
     <p class="plateline" id="tablestatic">The per-department readings come from /queue-board/ed.json and are not shown here. The live board lists all 59 departments: <a href="/queue-board/">/queue-board/</a>.</p>
   </div>
@@ -609,7 +610,7 @@ footer p{margin:14px 0 0;font-size:12.5px;color:var(--ink-2);max-width:62ch}
       trows += "<tr><th scope=\"row\">" + pad2(pts[i].h) + ":00</th><td>" + grp(pts[i].a) + "</td></tr>";
     }
     document.getElementById("hourtable").innerHTML =
-      "<div class="xscroll" tabindex="0" role="region" aria-label="Table, scrolls sideways"><table><caption>Mean people waiting by hour of day. Lowest at " + pad2(lowHour) + ":00 with " + grp(low) +
+      "<div class='xscroll' tabindex='0' role='region' aria-label='Table, scrolls sideways'><table><caption>Mean people waiting by hour of day. Lowest at " + pad2(lowHour) + ":00 with " + grp(low) +
       ". Highest at " + pad2(peakHour) + ":00 with " + grp(peak) +
       ".</caption><thead><tr><th scope=\"col\">Hour</th><th scope=\"col\">Mean people waiting</th></tr></thead><tbody>" +
       trows + "</tbody></table></div>";
