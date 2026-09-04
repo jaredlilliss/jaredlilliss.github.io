@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Tally — people waiting in NSW emergency departments</title>
+<meta name="description" content="The last published day of NSW emergency-department waiting counts: 59 departments, one stroke per person, a hand you drag back through the night. Read from the same collector file as the Queue Board.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F5EF">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0E1613">
+<link rel="icon" type="image/svg+xml" href="/icon.svg">
+<link rel="canonical" href="https://jaredlilliss.github.io/waits/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Jared Lilliss">
+<meta property="og:title" content="The Tally — people waiting in NSW emergency departments">
+<meta property="og:description" content="59 emergency departments, one stroke per person waiting, a hand you drag back through the night. The last day the collector published.">
+<meta property="og:url" content="https://jaredlilliss.github.io/waits/">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/plexmono-400.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/plexmono-500.woff2') format('woff2')}
+:root{
+  --ground:#F2F5EF;--grid:#DCE6DE;--ink:#0F2E24;--muted:#4E6259;--rule:#C9D6CC;
+  --accent:#1F7A4D;--accent-ink:#FFFFFF;--panel:#FFFFFF;--panel-2:#E9F0E9;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,'Cascadia Mono',monospace;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--ground:#0E1613;--grid:#182520;--ink:#E3EEE7;--muted:#9DB3A8;--rule:#23332C;--accent:#5FC48E;--accent-ink:#0E1613;--panel:#131E19;--panel-2:#172621}
+}
+:root[data-theme="dark"]{--ground:#0E1613;--grid:#182520;--ink:#E3EEE7;--muted:#9DB3A8;--rule:#23332C;--accent:#5FC48E;--accent-ink:#0E1613;--panel:#131E19;--panel-2:#172621}
+:root[data-theme="light"]{--ground:#F2F5EF;--grid:#DCE6DE;--ink:#0F2E24;--muted:#4E6259;--rule:#C9D6CC;--accent:#1F7A4D;--accent-ink:#FFFFFF;--panel:#FFFFFF;--panel-2:#E9F0E9}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;font-optical-sizing:auto}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+body{margin:0;color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;
+  background-color:var(--ground);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.wrap{max-width:72rem;margin-left:auto;margin-right:auto;padding-left:1.2rem;padding-right:1.2rem}
+a{color:inherit}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+p{margin:0 0 1rem;max-width:64ch}
+::selection{background:var(--accent);color:var(--accent-ink)}
+.skip{position:absolute;left:-999px;top:0;z-index:10;background:var(--accent);color:var(--accent-ink);padding:.6rem 1rem;font:500 .85rem var(--mono);text-decoration:none}
+.skip:focus{left:1rem;top:1rem}
+
+header{border-bottom:1px solid var(--rule)}
+.bar{max-width:72rem;margin:0 auto;padding:1.1rem 1.2rem;display:flex;align-items:center;gap:.8rem 1.6rem;flex-wrap:wrap}
+.sig{font:500 1.05rem/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;white-space:nowrap}
+.sig b{font-weight:500;color:var(--accent)}
+nav{display:flex;gap:1.1rem;flex-wrap:wrap}
+nav a{font:500 .82rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:.45rem 0;border-bottom:2px solid transparent;white-space:nowrap}
+nav a:hover{border-bottom-color:var(--accent)}
+.stamp{display:inline-flex;align-items:center;gap:.45rem;font:500 .72rem/1.35 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);border:1.5px solid var(--accent);padding:.35rem .6rem;border-radius:2px;margin-inline-start:auto;max-width:100%}
+
+.card{background:var(--panel);border:1.5px solid var(--ink);border-radius:2px;box-shadow:6px 6px 0 var(--panel-2)}
+.hero{padding-top:2.4rem}
+.kicker{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem 1.4rem;margin:0;max-width:none;padding:.7rem 1.2rem;border-bottom:1.5px solid var(--ink);font:500 .74rem/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
+.live{display:inline-flex;align-items:center;gap:.45rem;color:var(--accent)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.kicker .when{margin-inline-start:auto;color:var(--ink)}
+.body{padding:1.6rem 1.2rem 1.5rem}
+h1{font:500 clamp(2rem,6vw,4.4rem)/1.05 var(--mono);letter-spacing:-.03em;margin:0 0 .9rem}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{font-size:1.12rem;max-width:58ch;margin:0 0 1rem}
+.scope{font-size:1rem;color:var(--muted);max-width:64ch;margin:0}
+.scope strong{color:var(--ink);font-weight:600}
+
+/* the rail */
+.railwrap{position:sticky;top:0;z-index:5;padding-top:.8rem;padding-bottom:.8rem;background:linear-gradient(var(--ground) 82%,transparent)}
+.rail{padding:.8rem 1.2rem 1rem}
+.readout{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem 1.4rem;font:500 .78rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.readout .t{color:var(--ink);font-size:1.05rem;letter-spacing:.06em;text-transform:none;font-variant-numeric:tabular-nums}
+.readout .n{color:var(--ink);font-variant-numeric:tabular-nums}
+.readout .n b{color:var(--accent);font-weight:500;font-size:1.05rem}
+.readout .play{margin-inline-start:auto;font:500 .78rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:transparent;border:1.5px solid var(--accent);border-radius:2px;padding:.45rem .7rem;cursor:pointer}
+.readout .play:hover{background:var(--accent);color:var(--accent-ink)}
+.track{position:relative;height:88px;cursor:ew-resize;touch-action:none;user-select:none;-webkit-user-select:none}
+.track svg.area{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.track .fill{fill:var(--panel-2);stroke:none}
+.track .line{fill:none;stroke:var(--muted);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.track .base{stroke:var(--ink);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.hl{position:absolute;bottom:-1.35rem;transform:translateX(-50%);font:500 .68rem/1 var(--mono);letter-spacing:.08em;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.hl.mid{color:var(--ink)}
+.hl.mid::after{content:attr(data-day);display:block;margin-top:.25rem;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase}
+.tick{position:absolute;bottom:0;width:1px;height:6px;background:var(--rule);transform:translateX(-50%)}
+.tick.mid{height:100%;background:transparent;border-left:1px dashed var(--rule)}
+.hand{position:absolute;top:-6px;bottom:0;width:0;border-left:2px solid var(--accent);transform:translateX(-1px)}
+.hand::before{content:"";position:absolute;left:-7px;top:-8px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--ground)}
+.hand .v{position:absolute;left:-5px;width:8px;height:8px;border-radius:50%;background:var(--ink);border:1.5px solid var(--ground);transform:translateY(-50%)}
+.track:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+.ends{display:flex;justify-content:space-between;margin-top:1.9rem;font:400 .72rem/1.4 var(--mono);color:var(--muted);letter-spacing:.06em}
+.status{font:400 .9rem/1.5 var(--sans);color:var(--muted);margin:.2rem 0 0;max-width:72ch}
+
+/* the tiles */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.9rem;margin-top:2.2rem;counter-reset:none}
+.tile{background:var(--panel);border:1px solid var(--rule);border-left:4px solid var(--accent);padding:.75rem .85rem .7rem;display:flex;flex-direction:column;gap:.45rem;min-width:0}
+.tile h3{font:500 .92rem/1.25 var(--mono);margin:0;letter-spacing:-.01em;overflow-wrap:anywhere}
+.tile .lhd{font:500 .66rem/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);overflow-wrap:anywhere}
+.tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:.6rem;margin-top:.2rem}
+.tile svg{display:block;max-width:100%;height:auto;flex:1 1 auto}
+.tile svg line{stroke:var(--rule);stroke-width:2;stroke-linecap:round}
+.tile svg line.on{stroke:var(--ink)}
+.tile svg line.x{stroke-width:2.2}
+.tile svg line.x.on{stroke:var(--accent)}
+.tile .cnt{font:500 1.5rem/1 var(--mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;flex:0 0 auto}
+.tile .cnt small{display:block;font:500 .6rem/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tile.zero .cnt{color:var(--muted)}
+.tile.peak .cnt{color:var(--accent)}
+.legend{display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;margin:1.2rem 0 0;font:500 .72rem/1.6 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:.5rem}
+.legend i{display:inline-block;width:14px;height:2px;background:var(--ink);border-radius:1px}
+.legend i.g{background:var(--rule)}
+.legend i.a{background:var(--accent);transform:rotate(-35deg)}
+
+/* notes */
+section.notes{padding-top:3rem}
+.sect-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:.3rem 1rem;margin:0 0 .5rem;font:500 1.35rem/1.2 var(--mono);letter-spacing:-.01em}
+.idx{font:500 .72rem/1.9 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h2{font:inherit;margin:0}
+h2::before{content:'// ' / '';color:var(--accent)}
+.notes p{color:var(--ink)}
+.notes .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem 2.4rem}
+.notes .cols > div > p:last-child{margin-bottom:0}
+.notes a{text-decoration:none;border-bottom:1.5px solid var(--accent);padding-bottom:1px}
+.notes a:hover{color:var(--accent)}
+kbd{font:500 .8em var(--mono);border:1px solid var(--rule);border-bottom-width:2px;border-radius:2px;padding:0 .35em;background:var(--panel)}
+blockquote{margin:0;padding:.8rem 1rem;border-left:4px solid var(--accent);background:var(--panel);font-size:.95rem;color:var(--muted);max-width:64ch}
+
+/* the no-script table (hidden once the live file loads) */
+.snap{margin-top:2.2rem}
+.snap caption{text-align:left;font:500 .78rem/1.6 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 0 .6rem}
+.snap table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--rule);font-size:.92rem}
+.snap th,.snap td{text-align:left;padding:.45rem .7rem;border-top:1px dashed var(--rule);vertical-align:top}
+.snap thead th{font:500 .68rem/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-top:0}
+.snap tbody th{font-weight:500}
+.snap td:nth-child(3),.snap td:nth-child(4){font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.snap small{color:var(--muted)}
+.snapwrap{overflow-x:auto}
+.js .snap{display:none}
+.js .snap.show{display:block}
+
+footer{margin-top:3.5rem;border-top:1px solid var(--rule);padding:1.4rem 0 3rem;font:500 .74rem/1.8 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;justify-content:space-between}
+footer a{text-decoration:none;border-bottom:1px solid var(--rule)}
+footer a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+@media (max-width:640px){
+  .wrap{padding-left:1rem;padding-right:1rem}
+  .bar{padding:.9rem 1rem;gap:.6rem 1rem}
+  nav{gap:.8rem}
+  .stamp{font-size:.66rem;letter-spacing:.1em}
+  .kicker{padding:.6rem 1rem;gap:.3rem 1rem}
+  .kicker .when{margin-inline-start:0}
+  .body{padding:1.3rem 1rem}
+  .rail{padding:.7rem .9rem .9rem}
+  .track{height:72px}
+  .hl.q{display:none}
+  .ends{display:none}
+  .readout{gap:.2rem .9rem}
+  .readout .t{font-size:.95rem}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;margin-top:1.6rem}
+  .tile{padding:.6rem .6rem .55rem}
+  .tile .cnt{font-size:1.25rem}
+  .readout .play{margin-inline-start:0}
+}
+@media (max-width:360px){.grid{grid-template-columns:1fr}}
+@media print{.railwrap{position:static}.hand,.play{display:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <div class="bar">
+    <a class="sig" href="/">Jared <b>Lilliss</b></a>
+    <nav aria-label="Primary">
+      <a href="/queue-board/">Queue Board</a>
+      <a href="/record/">The record</a>
+      <a href="/#work">Work</a>
+    </nav>
+    <span class="stamp">One stroke, one person</span>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero wrap">
+    <div class="card">
+      <p class="kicker"><span class="live"><span class="dot"></span>A reading every 15 minutes</span><span id="nfac">59 emergency departments</span><span class="when" id="when">Readings to Fri 4 Sep 09:00 AEST</span></p>
+      <div class="body">
+        <h1>The <em>Tally</em></h1>
+        <p class="lede">How many people were waiting for treatment in the NSW emergency departments that publish a live count &mdash; the last day of it, one stroke for each person, and a hand you can drag back through the night.</p>
+        <p class="scope"><strong>A count, not a wait.</strong> The feed publishes how many people are recorded as waiting for treatment; it has no minutes field, so nothing here is a waiting time. <strong>And 59 departments, not the state:</strong> NSW has 176 emergency departments, and these are the ones that publish a live count.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="railwrap wrap">
+    <div class="card rail">
+      <div class="readout">
+        <span class="t" id="rt">Fri 4 Sep 09:00 AEST</span>
+        <span class="n" id="rn">&mdash;</span>
+        <button class="play" id="play" type="button" aria-pressed="false" hidden>Play the day</button>
+      </div>
+      <div class="track" id="track" tabindex="0" role="slider" aria-label="Time of reading" aria-valuemin="0" aria-valuemax="95" aria-valuenow="95" aria-valuetext="Fri 4 Sep 09:00 AEST">
+        <svg class="area" viewBox="0 0 95 100" preserveAspectRatio="none" aria-hidden="true"><path class="fill" id="fill" d=""></path><path class="line" id="curve" d=""></path><line class="base" x1="0" y1="100" x2="95" y2="100"></line></svg>
+        <div id="hours"></div>
+        <div class="hand" id="hand" style="left:100%"><span class="v" id="hv"></span></div>
+      </div>
+      <div class="ends"><span id="e0"></span><span id="e1"></span></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <p class="status" id="status">Without scripting this page holds the snapshot below, from when it was built.</p>
+    <div class="grid" id="grid" aria-label="Departments, north to south"></div>
+    <p class="legend" id="legend" hidden><span><i></i> one person waiting</span><span><i class="a"></i> every fifth stroke crosses four</span><span><i class="g"></i> the department&rsquo;s busiest reading of the day</span></p>
+
+    <div class="snap" id="snap">
+      <div class="snapwrap">
+      <table>
+        <caption>Snapshot embedded when this page was built &mdash; readings to Fri 4 Sep 09:00 AEST. With scripting on, the page reads the collector&rsquo;s current file instead.</caption>
+        <thead><tr><th scope="col">Department, north to south</th><th scope="col">Local health district</th><th scope="col">Waiting at the last reading</th><th scope="col">Busiest reading of the day</th></tr></thead>
+        <tbody>
+<tr><th scope="row">Tweed Valley Hospital</th><td>Northern NSW LHD</td><td>0</td><td>6 <small>at 13:15</small></td></tr>
+<tr><th scope="row">Murwillumbah District Hospital</th><td>Northern NSW LHD</td><td>2</td><td>3 <small>at 12:30</small></td></tr>
+<tr><th scope="row">Lismore Base Hospital</th><td>Northern NSW LHD</td><td>0</td><td>10 <small>at 23:15</small></td></tr>
+<tr><th scope="row">Moree District Hospital</th><td>Hunter New England LHD</td><td>0</td><td>4 <small>at 20:45</small></td></tr>
+<tr><th scope="row">Grafton Base Hospital</th><td>Northern NSW LHD</td><td>3</td><td>8 <small>at 14:45</small></td></tr>
+<tr><th scope="row">Inverell District Hospital</th><td>Hunter New England LHD</td><td>1</td><td>6 <small>at 13:30</small></td></tr>
+<tr><th scope="row">Coffs Harbour Base Hospital</th><td>Mid North Coast LHD</td><td>6</td><td>19 <small>at 19:15</small></td></tr>
+<tr><th scope="row">Narrabri District Hospital</th><td>Hunter New England LHD</td><td>0</td><td>2 <small>at 12:15</small></td></tr>
+<tr><th scope="row">Armidale Rural Referral Hospital</th><td>Hunter New England LHD</td><td>0</td><td>6 <small>at 14:30</small></td></tr>
+<tr><th scope="row">Gunnedah District Hospital</th><td>Hunter New England LHD</td><td>1</td><td>5 <small>at 15:15</small></td></tr>
+<tr><th scope="row">Kempsey District Hospital</th><td>Mid North Coast LHD</td><td>1</td><td>10 <small>at 22:45</small></td></tr>
+<tr><th scope="row">Tamworth Rural Referral Hospital</th><td>Hunter New England LHD</td><td>2</td><td>14 <small>at 20:15</small></td></tr>
+<tr><th scope="row">Port Macquarie Base Hospital</th><td>Mid North Coast LHD</td><td>4</td><td>12 <small>at 09:15</small></td></tr>
+<tr><th scope="row">Manning Rural Referral Hospital</th><td>Hunter New England LHD</td><td>0</td><td>14 <small>at 22:45</small></td></tr>
+<tr><th scope="row">Broken Hill Base Hospital</th><td>Far West LHD</td><td>3</td><td>3 <small>at 15:15</small></td></tr>
+<tr><th scope="row">Dubbo Base Hospital</th><td>Western NSW LHD</td><td>1</td><td>15 <small>at 17:45</small></td></tr>
+<tr><th scope="row">Muswellbrook Hospital</th><td>Hunter New England LHD</td><td>1</td><td>7 <small>at 20:15</small></td></tr>
+<tr><th scope="row">Singleton District Hospital</th><td>Hunter New England LHD</td><td>2</td><td>5 <small>at 19:45</small></td></tr>
+<tr><th scope="row">Cessnock District Hospital</th><td>Hunter New England LHD</td><td>1</td><td>9 <small>at 17:45</small></td></tr>
+<tr><th scope="row">Calvary Mater Newcastle</th><td>Hunter New England LHD</td><td>2</td><td>9 <small>at 21:45</small></td></tr>
+<tr><th scope="row">John Hunter Hospital</th><td>Hunter New England LHD</td><td>9</td><td>20 <small>at 17:45</small></td></tr>
+<tr><th scope="row">Belmont Hospital</th><td>Hunter New England LHD</td><td>1</td><td>7 <small>at 19:45</small></td></tr>
+<tr><th scope="row">Wyong Public Hospital</th><td>Central Coast LHD</td><td>8</td><td>25 <small>at 13:45</small></td></tr>
+<tr><th scope="row">Orange Health Service</th><td>Western NSW LHD</td><td>4</td><td>7 <small>at 20:45</small></td></tr>
+<tr><th scope="row">Bathurst Base Hospital</th><td>Western NSW LHD</td><td>3</td><td>4 <small>at 08:15</small></td></tr>
+<tr><th scope="row">Gosford Hospital</th><td>Central Coast LHD</td><td>10</td><td>25 <small>at 19:15</small></td></tr>
+<tr><th scope="row">Lithgow Integrated Health Service</th><td>Nepean Blue Mountains LHD</td><td>0</td><td>3 <small>at 09:45</small></td></tr>
+<tr><th scope="row">Hornsby Ku-ring-gai Hospital</th><td>Northern Sydney LHD</td><td>4</td><td>9 <small>at 13:15</small></td></tr>
+<tr><th scope="row">Blue Mountains District ANZAC Memorial Hospital</th><td>Nepean Blue Mountains LHD</td><td>0</td><td>6 <small>at 10:15</small></td></tr>
+<tr><th scope="row">Northern Beaches Hospital</th><td>Northern Sydney LHD</td><td>9</td><td>30 <small>at 21:15</small></td></tr>
+<tr><th scope="row">Nepean Hospital</th><td>Nepean Blue Mountains LHD</td><td>7</td><td>17 <small>at 00:30</small></td></tr>
+<tr><th scope="row">Mount Druitt Hospital</th><td>Western Sydney LHD</td><td>1</td><td>15 <small>at 23:15</small></td></tr>
+<tr><th scope="row">Blacktown Hospital</th><td>Western Sydney LHD</td><td>2</td><td>22 <small>at 21:45</small></td></tr>
+<tr><th scope="row">Ryde Hospital</th><td>Northern Sydney LHD</td><td>0</td><td>5 <small>at 19:45</small></td></tr>
+<tr><th scope="row">The Children&#x27;s Hospital at Westmead</th><td>Sydney Children&#x27;s Hospitals Specialty Network</td><td>2</td><td>18 <small>at 13:15</small></td></tr>
+<tr><th scope="row">Westmead Hospital</th><td>Western Sydney LHD</td><td>7</td><td>19 <small>at 19:15</small></td></tr>
+<tr><th scope="row">Royal North Shore Hospital</th><td>Northern Sydney LHD</td><td>9</td><td>20 <small>at 18:45</small></td></tr>
+<tr><th scope="row">Concord Repatriation General Hospital</th><td>Sydney LHD</td><td>2</td><td>7 <small>at 13:15</small></td></tr>
+<tr><th scope="row">Fairfield Hospital</th><td>South Western Sydney LHD</td><td>0</td><td>27 <small>at 13:30</small></td></tr>
+<tr><th scope="row">Auburn Hospital</th><td>Western Sydney LHD</td><td>3</td><td>10 <small>at 19:45</small></td></tr>
+<tr><th scope="row">Sydney Hospital &amp; Sydney Eye Hospital</th><td>South Eastern Sydney LHD</td><td>2</td><td>11 <small>at 12:45</small></td></tr>
+<tr><th scope="row">St Vincent&#x27;s Hospital</th><td>St Vincent&#x27;s Health Network</td><td>4</td><td>17 <small>at 19:15</small></td></tr>
+<tr><th scope="row">Royal Prince Alfred Hospital</th><td>Sydney LHD</td><td>9</td><td>22 <small>at 20:45</small></td></tr>
+<tr><th scope="row">Sydney Children&#x27;s Hospital</th><td>Sydney Children&#x27;s Hospitals Specialty Network</td><td>2</td><td>11 <small>at 19:15</small></td></tr>
+<tr><th scope="row">Prince of Wales Hospital</th><td>South Eastern Sydney LHD</td><td>1</td><td>22 <small>at 22:15</small></td></tr>
+<tr><th scope="row">Canterbury Hospital</th><td>Sydney LHD</td><td>2</td><td>18 <small>at 22:45</small></td></tr>
+<tr><th scope="row">Liverpool Hospital</th><td>South Western Sydney LHD</td><td>5</td><td>20 <small>at 13:45</small></td></tr>
+<tr><th scope="row">Bankstown Lidcombe Hospital</th><td>South Western Sydney LHD</td><td>1</td><td>19 <small>at 23:45</small></td></tr>
+<tr><th scope="row">St George Hospital</th><td>South Eastern Sydney LHD</td><td>1</td><td>9 <small>at 20:15</small></td></tr>
+<tr><th scope="row">Sutherland Hospital</th><td>South Eastern Sydney LHD</td><td>1</td><td>11 <small>at 13:15</small></td></tr>
+<tr><th scope="row">Campbelltown Hospital</th><td>South Western Sydney LHD</td><td>8</td><td>22 <small>at 17:30</small></td></tr>
+<tr><th scope="row">Griffith Base Hospital</th><td>Murrumbidgee LHD</td><td>0</td><td>3 <small>at 13:30</small></td></tr>
+<tr><th scope="row">Wollongong Hospital</th><td>Illawarra Shoalhaven LHD</td><td>4</td><td>13 <small>at 18:15</small></td></tr>
+<tr><th scope="row">Bowral Hospital</th><td>South Western Sydney LHD</td><td>1</td><td>9 <small>at 19:30</small></td></tr>
+<tr><th scope="row">Shellharbour Hospital</th><td>Illawarra Shoalhaven LHD</td><td>3</td><td>14 <small>at 22:45</small></td></tr>
+<tr><th scope="row">Goulburn Base Hospital</th><td>Southern NSW LHD</td><td>0</td><td>5 <small>at 10:15</small></td></tr>
+<tr><th scope="row">Shoalhaven Hospital</th><td>Illawarra Shoalhaven LHD</td><td>2</td><td>8 <small>at 13:30</small></td></tr>
+<tr><th scope="row">Wagga Wagga Base Hospital</th><td>Murrumbidgee LHD</td><td>6</td><td>15 <small>at 11:30</small></td></tr>
+<tr><th scope="row">Milton Ulladulla Hospital</th><td>Illawarra Shoalhaven LHD</td><td>0</td><td>6 <small>at 18:45</small></td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <section class="notes wrap">
+    <div class="cols">
+      <div>
+        <div class="sect-head"><span class="idx">Reading it</span><h2>One stroke is one person</h2></div>
+        <p>One stroke is one person recorded as waiting for treatment at that department, at that quarter-hour. Every fifth stroke crosses the four before it, so a gate is five. The faint strokes behind are the department&rsquo;s busiest reading of the day; a tile that is mostly faint is a department well below its own peak.</p>
+        <p>Drag the hand, or put the rail in focus and use the keys: <kbd>&larr;</kbd> <kbd>&rarr;</kbd> move a quarter-hour, with <kbd>Shift</kbd> an hour; <kbd>Home</kbd> and <kbd>End</kbd> go to the ends; <kbd>Space</kbd> plays the day through. The address follows the hand, so a link to a moment stays a link to that moment for as long as its day is the day published.</p>
+      </div>
+      <div>
+        <div class="sect-head"><span class="idx">Provenance</span><h2>Where the strokes come from</h2></div>
+        <p>A collector on an always-on host takes a reading every fifteen minutes and appends it to a time series that is never rewritten. Once a day, around nine in the morning, it publishes the last twenty-four hours as a file the <a href="/queue-board/">Queue Board</a> also reads; this page reads that file when it opens, and the strip above names the day it holds. The collection&rsquo;s own history, gaps included, is in <a href="/record/">the record</a>; the code is in the <a href="https://github.com/jaredlilliss/aussie-health-utility">public mirror</a>.</p>
+        <blockquote>Copyright State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au. Licensed CC BY 4.0.</blockquote>
+      </div>
+      <div>
+        <div class="sect-head"><span class="idx">Limits</span><h2>What it is not</h2></div>
+        <p>Not a clinical instrument: nothing here should inform a decision about where to seek care. Not a waiting time, because the feed has none. Not the whole state, because most emergency departments do not publish a live count. And not live to the minute: the file is published once a day, so the right-hand end of the rail is the last reading published, not the reading being taken now.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Jared Lilliss &middot; NSW, Australia</span>
+    <span><a href="/">Home</a> &middot; <a href="/queue-board/">Queue Board</a> &middot; <a href="/privacy.html">Privacy</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var doc=document, root=doc.documentElement; root.classList.add('js');
+  var $=function(id){return doc.getElementById(id)};
+  var grid=$('grid'), track=$('track'), hand=$('hand'), hv=$('hv'), rt=$('rt'), rn=$('rn'), status=$('status'),
+      play=$('play'), snap=$('snap'), hours=$('hours'), fill=$('fill'), curve=$('curve'), when=$('when'), legend=$('legend');
+  var reduced=false; try{reduced=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+  status.textContent='Reading the collector’s file…';
+  var DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], MONS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var TS=6, TH=22, GW=34, RH=30, PER_ROW=5;   /* tick spacing, tick height, gate width, row height, gates per row */
+
+  function fail(msg){
+    status.textContent=msg;
+    snap.classList.add('show');
+  }
+  function pad(n){return (n<10?'0':'')+n}
+  /* wall-clock arithmetic on the published local time; never the viewer's zone */
+  function wallParse(iso){
+    var m=/^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)/.exec(iso); if(!m) return null;
+    return Date.UTC(+m[1],m[2]-1,+m[3],+m[4],+m[5]);
+  }
+  function zoneOf(iso){ var m=/([+-]\d\d:\d\d)$/.exec(iso); if(!m) return ''; return m[1]==='+10:00'?'AEST':m[1]==='+11:00'?'AEDT':('UTC'+m[1]); }
+  function fmtT(ms){ var d=new Date(ms); return pad(d.getUTCHours())+':'+pad(d.getUTCMinutes()); }
+  function fmtD(ms){ var d=new Date(ms); return DAYS[d.getUTCDay()]+' '+d.getUTCDate()+' '+MONS[d.getUTCMonth()]; }
+  function fmtISO(ms){ var d=new Date(ms); return d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate())+'T'+pad(d.getUTCHours())+':'+pad(d.getUTCMinutes()); }
+  function shortName(n){ n=n.split(' (')[0]; return n.replace(' & Community Health Services','').replace(' & Community Health Service',''); }
+  function lhdShort(l){ return l.replace(' Local Health District',' LHD'); }
+
+  var F=[], N=0, times=[], sums=[], zone='', idx=0, tiles=[], timer=null, dragging=false;
+
+  function build(e){
+    if(!e||!e.facilities||!e.facilities.length) throw new Error('empty');
+    F=e.facilities.slice().sort(function(a,b){return b.lat-a.lat});
+    N=F[0].series.length;
+    for(var i=0;i<F.length;i++){ if(F[i].series.length!==N) throw new Error('ragged'); }
+    var last=wallParse(F[0].at); if(last===null) throw new Error('time');
+    zone=zoneOf(F[0].at);
+    times=[]; sums=[];
+    for(var k=0;k<N;k++){ times.push(last-(N-1-k)*15*60000); var s=0; for(var j=0;j<F.length;j++) s+=(F[j].series[k]||0); sums.push(s); }
+    var mx=Math.max.apply(null,sums), pk=sums.indexOf(mx);
+    when.textContent='Readings to '+fmtD(last)+' '+fmtT(last)+' '+zone;
+    $('e0').textContent=fmtD(times[0])+' '+fmtT(times[0]);
+    $('e1').textContent=fmtD(last)+' '+fmtT(last)+' '+zone;
+    /* the day's own load curve under the rail */
+    var pts=[]; for(k=0;k<N;k++) pts.push(k+' '+(100-sums[k]/mx*100).toFixed(2));
+    curve.setAttribute('d','M'+pts.join('L'));
+    fill.setAttribute('d','M0 100L'+pts.join('L')+'L'+(N-1)+' 100Z');
+    /* hour marks and labels */
+    var h=''; for(k=0;k<N;k++){ var d=new Date(times[k]); if(d.getUTCMinutes()!==0) continue; var hh=d.getUTCHours(); var x=(k/(N-1)*100).toFixed(3);
+      var mid=(hh===0); var cls='hl'+(mid?' mid':'')+((hh%4)?' q':'');
+      h+='<span class="tick'+(mid?' mid':'')+'" style="left:'+x+'%"></span>';
+      if(hh%2===0||mid) h+='<span class="'+cls+'" style="left:'+x+'%"'+(mid?' data-day="'+fmtD(times[k])+'"':'')+'>'+pad(hh)+'</span>'; }
+    hours.innerHTML=h;
+    /* tiles: one per department, north to south */
+    var frag=doc.createDocumentFragment(); tiles=[];
+    for(j=0;j<F.length;j++){
+      var f=F[j], ser=f.series, top=0; for(k=0;k<N;k++) if(ser[k]>top) top=ser[k];
+      var gates=Math.ceil(top/5), rows=Math.max(1,Math.ceil(gates/PER_ROW)), cols=Math.min(gates,PER_ROW)||1;
+      var W=cols*GW, H=rows*RH-8;
+      var art=doc.createElement('article'); art.className='tile'; art.setAttribute('data-i',j);
+      var nm=shortName(f.name);
+      art.innerHTML='<h3 title="'+f.name.replace(/"/g,'&quot;')+'">'+nm+'</h3><div class="lhd">'+lhdShort(f.lhd)+'</div>'+
+        '<div class="row"><svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" aria-hidden="true"></svg><div class="cnt"><span class="num">0</span><small>waiting</small></div></div>';
+      var svg=art.querySelector('svg'), lines=[];
+      for(k=0;k<top;k++){
+        var g=Math.floor(k/5), p=k%5, gr=Math.floor(g/PER_ROW), gc=g%PER_ROW, x0=gc*GW, y0=gr*RH, ln=doc.createElementNS('http://www.w3.org/2000/svg','line');
+        if(p<4){ ln.setAttribute('x1',x0+3+p*TS); ln.setAttribute('x2',x0+3+p*TS); ln.setAttribute('y1',y0+2); ln.setAttribute('y2',y0+TH-2); }
+        else { ln.setAttribute('class','x'); ln.setAttribute('x1',x0+1); ln.setAttribute('y1',y0+TH-3); ln.setAttribute('x2',x0+3+3*TS+2); ln.setAttribute('y2',y0+3); }
+        svg.appendChild(ln); lines.push(ln);
+      }
+      tiles.push({el:art,lines:lines,num:art.querySelector('.num'),top:top,ser:ser,name:nm});
+      frag.appendChild(art);
+    }
+    grid.innerHTML=''; grid.appendChild(frag);
+    legend.hidden=false; play.hidden=false;
+    status.textContent='The day peaked at '+fmtT(times[pk])+' with '+mx+' people waiting across the '+F.length+' departments; its quietest quarter-hour had '+Math.min.apply(null,sums)+'.';
+    /* start at the moment the link names, else at the last reading */
+    $('nfac').textContent=F.length+' emergency departments';
+    /* open on the day at its fullest; a link to a moment overrides */
+    var want=fromHash(); setIdx(want===null?pk:want, false);
+    addEventListener('hashchange', function(){ var w=fromHash(); if(w!==null && w!==idx) setIdx(w,false); });
+  }
+  function fromHash(){
+    var m=/[#&]at=(\d{4}-\d\d-\d\dT\d\d:\d\d)/.exec(location.hash); if(!m) return null;
+    var ms=wallParse(m[1]); if(ms===null) return null;
+    if(ms<times[0]||ms>times[N-1]) return null;
+    var best=0, bd=Infinity; for(var k=0;k<N;k++){ var dd=Math.abs(times[k]-ms); if(dd<bd){bd=dd;best=k;} }
+    return best;
+  }
+  var hashTimer=null;
+  function setIdx(i, writeHash){
+    i=Math.max(0,Math.min(N-1,Math.round(i))); idx=i;
+    var x=(i/(N-1)*100);
+    hand.style.left=x+'%';
+    var mx=Math.max.apply(null,sums); hv.style.top=(100-sums[i]/mx*100)+'%';
+    rt.textContent=fmtD(times[i])+' \u00b7 '+fmtT(times[i])+' '+zone;
+    rn.innerHTML='<b>'+sums[i]+'</b> people waiting across '+F.length+' departments';
+    track.setAttribute('aria-valuenow',i); track.setAttribute('aria-valuetext',fmtT(times[i])+', '+sums[i]+' people waiting');
+    for(var j=0;j<tiles.length;j++){
+      var t=tiles[j], n=t.ser[i]||0;
+      for(var k=0;k<t.lines.length;k++){ var on=k<n; if(t.lines[k].classList.contains('on')!==on) t.lines[k].classList.toggle('on',on); }
+      t.num.textContent=n;
+      t.el.classList.toggle('zero',n===0); t.el.classList.toggle('peak',n>0&&n===t.top);
+      t.el.setAttribute('aria-label',t.name+': '+n+' waiting at '+fmtT(times[i])+'; busiest today '+t.top);
+    }
+    if(writeHash!==false){ clearTimeout(hashTimer); hashTimer=setTimeout(function(){ try{ history.replaceState(null,'','#at='+fmtISO(times[idx])); }catch(e){} },150); }
+  }
+  /* pointer: the whole track is the control */
+  function fromPointer(ev){ var r=track.getBoundingClientRect(); var x=(ev.clientX-r.left)/r.width; setIdx(x*(N-1), true); }
+  track.addEventListener('pointerdown', function(ev){ if(!N) return; stop(); dragging=true; try{track.setPointerCapture(ev.pointerId)}catch(e){} fromPointer(ev); ev.preventDefault(); });
+  track.addEventListener('pointermove', function(ev){ if(dragging) fromPointer(ev); });
+  track.addEventListener('pointerup', function(){ dragging=false; });
+  track.addEventListener('pointercancel', function(){ dragging=false; });
+  track.addEventListener('keydown', function(ev){
+    if(!N) return; var step=ev.shiftKey?4:1, k=ev.key;
+    if(k==='ArrowLeft'||k==='ArrowDown'){ stop(); setIdx(idx-step,true); }
+    else if(k==='ArrowRight'||k==='ArrowUp'){ stop(); setIdx(idx+step,true); }
+    else if(k==='Home'){ stop(); setIdx(0,true); }
+    else if(k==='End'){ stop(); setIdx(N-1,true); }
+    else if(k===' '||k==='Enter'){ toggle(); }
+    else return;
+    ev.preventDefault();
+  });
+  function toggle(){ if(timer) stop(); else start(); }
+  function start(){
+    if(!N) return; if(idx>=N-1) setIdx(0,false);
+    timer=setInterval(function(){ if(idx>=N-1){ stop(); return; } setIdx(idx+1,false); }, reduced?320:110);
+    play.textContent='Pause'; play.setAttribute('aria-pressed','true');
+  }
+  function stop(){ if(timer){ clearInterval(timer); timer=null; try{ history.replaceState(null,'','#at='+fmtISO(times[idx])); }catch(e){} } play.textContent='Play the day'; play.setAttribute('aria-pressed','false'); }
+  play.addEventListener('click', toggle);
+  addEventListener('visibilitychange', function(){ if(doc.hidden) stop(); });
+
+  var req=null;
+  try{ req=fetch('../queue-board/ed.json',{cache:'no-cache'}); }catch(e){ fail('This browser could not read the collector\u2019s file, so the table below stands.'); return; }
+  req.then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+     .then(function(e){ try{ build(e); }catch(err){ fail('The collector\u2019s file did not read as expected, so the table below stands.'); } })
+     .catch(function(){ fail('The collector\u2019s file could not be read just now, so the table below stands.'); });
+})();
+</script>
+</body>
+</html>
