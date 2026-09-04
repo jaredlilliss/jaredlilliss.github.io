@@ -81,7 +81,14 @@ main{padding:2.2rem 1.4rem 4rem;max-width:44rem;margin:0 auto}
 .stop{margin:0 0 1.1rem;padding:1.15rem 1.25rem 1.25rem;
   background:var(--surface);border:1px solid var(--line);border-radius:3px;
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.head{display:flex;align-items:flex-start;gap:.85rem;margin-bottom:.45rem}
+.mark{flex:0 0 auto;width:34px;height:34px;margin-top:-2px;color:var(--ink-2);
+  transition:color .5s ease,transform .6s cubic-bezier(.2,.7,.3,1);transform-origin:50% 60%}
+.mark svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.4;
+  stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.rail-on .stop.near .mark{color:var(--ember);transform:scale(1.18)}
 .when{display:block;font:500 .72rem/1.6 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ember);margin-bottom:.35rem}
+.head .when{margin-bottom:.2rem}
 .stop h2{font:500 1.45rem/1.16 var(--sans);letter-spacing:-.022em;margin:0 0 .5rem;font-weight:600}
 .stop p{font-size:.98rem;color:var(--ink-2);margin:0 0 .7rem}
 .stop p strong{color:var(--ink);font-weight:600}
@@ -121,8 +128,7 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
   opacity:.34;transform:scale(.94);transform-origin:50% 60%;
 }
 .rail-on .stop.near{opacity:1;transform:scale(1);background:var(--surface-2)}
-.rail-on .stop:first-child{margin-left:clamp(2rem,14vw,12rem)}
-.rail-on .stop:last-child{margin-right:clamp(2rem,14vw,12rem)}
+.rail-on #track{padding-left:calc(50vw - min(15rem,31vw));padding-right:calc(50vw - min(15rem,31vw))}
 .rail-on .hint{display:inline-flex;align-items:center;gap:.5rem;
   font:500 .72rem/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
 .rail-on footer{position:fixed;bottom:0;left:0;right:0;padding:.9rem 1.4rem;max-width:none;
@@ -130,7 +136,8 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 .rail-on .scrub{display:block}
 .scrub{display:none;position:fixed;left:1.4rem;right:1.4rem;bottom:3.4rem;z-index:5;height:2px;background:var(--line-2)}
 .scrub i{position:absolute;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--ember);
-  transform:translateX(-50%);will-change:left}
+  transform:translateX(-50%);will-change:left;z-index:2}
+.scrub b{position:absolute;top:-2px;width:1px;height:6px;background:var(--line-2);transform:translateX(-50%)}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
@@ -156,56 +163,49 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 <div id="track">
 
   <article class="stop" data-at="2019">
-    <span class="when">2019</span>
-    <h2>The trade starts</h2>
+    <div class="head"><span class="mark" aria-hidden="true"><svg viewBox="0 0 44 44"><path d="M7 30h30M7 30V16a2 2 0 0 1 2-2h26a2 2 0 0 1 2 2v14M12 19h20M12 23h13M31 35v3M13 35v3"/></svg></span><div><span class="when">2019</span><h2>The trade starts</h2></div></div>
     <p>Point-of-sale and payment terminals, Windows machines, structured cabling, cameras. For venues and small businesses around Sydney &mdash; usually the same day, usually on site.</p>
     <p><strong>Trading since 2019, registered 2026.</strong></p>
     <a class="go" href="/lilliss-it/">Lilliss IT</a>
   </article>
 
   <article class="stop" data-at="2026.45">
-    <span class="when">2026</span>
-    <h2>Still Wild</h2>
+    <div class="head"><span class="mark" aria-hidden="true"><svg viewBox="0 0 44 44"><path d="M4 32l7-9 5 6 6-11 6 9 5-6 7 11"/><circle cx="31" cy="12" r="4"/></svg></span><div><span class="when">2026</span><h2>Still Wild</h2></div></div>
     <p>A concept rebuild for a real Brisbane adventure business, built as one self-contained file: a live canvas dawn over layered ridges, five languages, and an honesty layer that labels every invented detail as invented.</p>
     <a class="go" href="https://lilliss.au/stillwild-concept/">See the concept</a>
     <span class="fine">Photographs used with the business&rsquo;s permission, for prototyping. Not affiliated.</span>
   </article>
 
   <article class="stop" data-at="2026.55">
-    <span class="when">20 July 2026</span>
-    <h2>The first reading</h2>
+    <div class="head"><span class="mark" aria-hidden="true"><svg viewBox="0 0 44 44"><path d="M6 34h32"/><path d="M13 34v-6"/><circle cx="13" cy="25" r="2.2"/></svg></span><div><span class="when">20 July 2026</span><h2>The first reading</h2></div></div>
     <p>A collector starts counting how many people are waiting in each NSW emergency department that publishes a live count, every fifteen minutes, and appends each reading to a series that is never rewritten.</p>
     <p>The feed publishes the current moment only and keeps no history, so <strong>a reading not taken at the time is gone for good.</strong></p>
     <a class="go" href="/queue-board/">The live board</a>
   </article>
 
   <article class="stop" data-at="2026.62">
-    <span class="when">August 2026</span>
-    <h2>The Span</h2>
+    <div class="head"><span class="mark" aria-hidden="true"><svg viewBox="0 0 44 44"><path d="M5 22h34"/><path d="M9 18v8M18 19v6M27 19v6M36 18v8"/></svg></span><div><span class="when">August 2026</span><h2>The Span</h2></div></div>
     <p>One screen holding 1975 to 2117: fifteen milestones, each a drawn line that means its own event rather than an icon off a shelf. Every one names the source that establishes it, and thirteen link straight to the government page it came from. Nothing is estimated.</p>
     <a class="go" href="https://lilliss.au/xperience-concept/spine.html">Travel the span</a>
     <span class="fine">An unsolicited concept. No affiliation.</span>
   </article>
 
   <article class="stop" data-at="2026.65">
-    <span class="when">23 August 2026</span>
-    <h2>The gaps end</h2>
+    <div class="head"><span class="mark" aria-hidden="true"><svg viewBox="0 0 44 44"><path d="M5 22h4M13 22h3M20 22h2" stroke-dasharray="0" opacity=".55"/><path d="M25 22h14"/><path d="M25 16v12"/></svg></span><div><span class="when">23 August 2026</span><h2>The gaps end</h2></div></div>
     <p>It ran on a laptop first, which slept, so the early weeks have gaps and the record shows them rather than smoothing them over.</p>
     <p>Since 23 August it has run on a small Melbourne server, and <strong>nothing after that is missing.</strong> A database dump is taken at 03:30 Melbourne time each night and copied off the machine.</p>
     <a class="go" href="/record/">The collection record</a>
   </article>
 
   <article class="stop near" data-at="2026.68">
-    <span class="when">Now</span>
-    <h2>Still counting</h2>
+    <div class="head"><span class="mark" aria-hidden="true"><svg viewBox="0 0 44 44"><path d="M5 28h6l3-9 3 14 3-9 3 5 3-7 3 6h8"/></svg></span><div><span class="when">Now</span><h2>Still counting</h2></div></div>
     <p class="figs"><span><b>59</b> departments</span><span><b>15</b> min</span><span><b>120,000+</b> readings</span></p>
     <p>NSW has 176 emergency departments; these are the ones that publish a live count. The figure is <strong>people waiting</strong>, never a waiting time &mdash; the feed has no minutes field. No personal or health information is collected, because the schema has no fields for it.</p>
     <a class="go" href="/waits/">The Tally</a>
   </article>
 
   <article class="stop" data-at="2026.70">
-    <span class="when">Contact</span>
-    <h2>Email is best</h2>
+    <div class="head"><span class="mark" aria-hidden="true"><svg viewBox="0 0 44 44"><path d="M6 30V16l16 9 16-9v14"/><path d="M6 16h32"/></svg></span><div><span class="when">Contact</span><h2>Email is best</h2></div></div>
     <p>Tell me what you need and you&rsquo;ll get a straight answer.</p>
     <a class="go" href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a>
     <ul class="certs">
@@ -219,7 +219,7 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 </div>
 </main>
 
-<div class="scrub" aria-hidden="true"><i id="thumb"></i></div>
+<div class="scrub" aria-hidden="true"><span id="ticks"></span><i id="thumb"></i></div>
 
 <footer>
   <span>&copy; 2026 Jared Lilliss &middot; Sydney, Australia &middot; <a href="/lilliss-it/">Lilliss IT</a> &middot; <a href="/privacy.html">Privacy</a></span>
@@ -239,7 +239,8 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
   var x = 0, target = 0, stops = [].slice.call(doc.querySelectorAll('.stop'));
   var track = doc.getElementById('track'), main = doc.getElementById('main');
   var yearEl = doc.getElementById('year'), thumb = doc.getElementById('thumb');
-  var hazeEl = doc.getElementById('haze');
+  var hazeEl = doc.getElementById('haze'), ticksEl = doc.getElementById('ticks');
+  var vigEl = doc.getElementById('vig');
   var railOn = false, span = 1, focusIdx = -1, navIdx = 0;
 
   var LABELS = stops.map(function (s) {
@@ -253,6 +254,18 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
              matchMedia('(pointer: fine)').matches &&
              !!track && stops.length > 1;
     } catch (e) { return false; }
+  }
+
+  /* one tick per stop, at its true position along the span — the traverse gets a map */
+  function drawTicks() {
+    if (!ticksEl || !span) return;
+    var html = '';
+    for (var i = 0; i < stops.length; i++) {
+      var r = stops[i].getBoundingClientRect();
+      var at = (x + r.left + r.width / 2 - innerWidth / 2) / span;
+      html += '<b style="left:' + Math.max(0, Math.min(100, at * 100)).toFixed(2) + '%"></b>';
+    }
+    ticksEl.innerHTML = html;
   }
 
   function measure() {
@@ -290,6 +303,8 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
       var g = doc.getElementById('ground');
       if (g) g.style.backgroundPosition = (p * 100).toFixed(2) + '% 50%';
       if (hazeEl) hazeEl.style.setProperty('--hx', (10 + p * 52).toFixed(1) + '%');
+      /* three rates, one scalar: the ground barely moves, the haze drifts, the dust runs */
+      if (vigEl) vigEl.style.transform = 'translate3d(' + (-p * 26).toFixed(1) + 'px,0,0)';
       if (thumb) thumb.style.left = (p * 100).toFixed(2) + '%';
       focusFromCentre();
       dust(p);
@@ -329,7 +344,7 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     cx.clearRect(0, 0, W, H);
     for (var i = 0; i < motes.length; i++) {
       var m = motes[i];
-      var drift = reduced ? 0 : (p * 0.30 * m.s);
+      var drift = reduced ? 0 : (p * 0.62 * m.s);
       var px = ((m.x + drift) % 1) * W;
       var py = m.y * H;
       /* the field warms as you travel: cool ash at 2019, ember dust at now */
@@ -385,15 +400,15 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
       var k = e.key;
       if (k === 'ArrowRight' || k === 'ArrowDown') { navIdx = Math.min(stops.length - 1, navIdx + 1); stepTo(navIdx); }
       else if (k === 'ArrowLeft' || k === 'ArrowUp') { navIdx = Math.max(0, navIdx - 1); stepTo(navIdx); }
-      else if (k === 'Home') { navIdx = 0; target = 0; }
-      else if (k === 'End') { navIdx = stops.length - 1; target = span; }
+      else if (k === 'Home') { navIdx = 0; stepTo(navIdx); }
+      else if (k === 'End') { navIdx = stops.length - 1; stepTo(navIdx); }
       else return;
       keyDriving = true; clearTimeout(keyTimer);
       keyTimer = setTimeout(function () { keyDriving = false; }, 700);
       clampTarget(); e.preventDefault();
     });
 
-    addEventListener('resize', function () { sizeCanvas(); measure(); clampTarget(); });
+    addEventListener('resize', function () { sizeCanvas(); measure(); drawTicks(); clampTarget(); });
     addEventListener('visibilitychange', function () {
       if (doc.hidden) { if (raf) cancelAnimationFrame(raf); raf = 0; }
       else if (!raf) raf = requestAnimationFrame(paint);
@@ -425,6 +440,7 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
       main.setAttribute('tabindex', '0');
       main.setAttribute('aria-label', 'The work, along one line from 2019 to now');
       measure();
+      drawTicks();
       var q = fromQuery();
       setFocus(-1);
       if (q >= 0) { stepTo(q); x = target; }
