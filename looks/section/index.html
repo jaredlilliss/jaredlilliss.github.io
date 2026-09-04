@@ -106,7 +106,12 @@ h1.sig em{font-style:normal;color:var(--ember)}
 #scale li.on a{opacity:1;color:var(--ember)}
 #scale li.on i{width:26px;background:var(--ember)}
 #scale li.on em{opacity:1}
-@media (min-width:1000px){#scale{display:flex}}
+/* Two widths, because between 860 and 1140 there is room for the instrument but not for its
+   labels — and vanishing entirely below 1000px left a desktop window with no way to move
+   between levels at all. Thresholds are where the strip stops colliding with the 44rem column. */
+@media (min-width:900px){#scale{display:flex;width:3.4rem}#scale .lbl{display:none}
+  #scale a{gap:.4rem;justify-content:flex-start}}
+@media (min-width:1020px){#scale{width:7.6rem}#scale .lbl{display:inline}}
 
 /* ── the section itself ─────────────────────────────────────────────────────
    A plumb shaft down the page with the rooms hanging off it. The shaft passes
@@ -185,14 +190,14 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 </header>
 
 <nav id="scale" aria-label="Levels"><ol>
-  <li><a href="#l1"><i></i><em>1</em>Counter</a></li>
-  <li><a href="#l2"><i></i><em>2</em>Wall</a></li>
-  <li><a href="#l3"><i></i><em>3</em>Rack</a></li>
-  <li><a href="#l4"><i></i><em>4</em>Wire out</a></li>
-  <li><a href="#l5"><i></i><em>5</em>Server</a></li>
-  <li><a href="#l6"><i></i><em>6</em>Row</a></li>
-  <li><a href="#l7"><i></i><em>7</em>Board</a></li>
-  <li><a href="#l8"><i></i><em>8</em>Contact</a></li>
+  <li><a href="#l1"><i></i><em>1</em><span class="lbl">Counter</span></a></li>
+  <li><a href="#l2"><i></i><em>2</em><span class="lbl">Wall</span></a></li>
+  <li><a href="#l3"><i></i><em>3</em><span class="lbl">Rack</span></a></li>
+  <li><a href="#l4"><i></i><em>4</em><span class="lbl">Wire out</span></a></li>
+  <li><a href="#l5"><i></i><em>5</em><span class="lbl">Server</span></a></li>
+  <li><a href="#l6"><i></i><em>6</em><span class="lbl">Row</span></a></li>
+  <li><a href="#l7"><i></i><em>7</em><span class="lbl">Board</span></a></li>
+  <li><a href="#l8"><i></i><em>8</em><span class="lbl">Contact</span></a></li>
 </ol></nav>
 
 <main id="main">
