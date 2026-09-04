@@ -6,7 +6,7 @@
 <title>Jared Lilliss</title>
 <meta name="description" content="Jared Lilliss — IT field technician in Sydney. A section through the work, from the terminal on the counter down to the row in the database and back up to the page anyone can read.">
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#EEF1F3">
+<meta name="theme-color" content="#DFE5EA">
 <link rel="icon" type="image/svg+xml" href="/icon.svg">
 <style>
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter.woff2') format('woff2')}
@@ -19,14 +19,18 @@
    a surface at every depth, and a page that flips its ink halfway is two palettes wearing
    one name. Surfaces are white at low alpha, so they read as the same material lit more. */
 :root{
-  --day:#EFF2F4;              /* the counter, in daylight */
-  --deep:#B9C2CB;             /* the plant room, in shadow */
+  /* The ground has to be a real tint, not near-white. A translucent white surface only
+     reads as LIT if there is something for it to be lit against — the same alpha that
+     glows on a dark page is just a white box on a white one. That is the whole reason
+     the first cut of this page still read as cards. */
+  --day:#DFE5EA;              /* the counter, in daylight */
+  --deep:#A3AFBB;             /* the plant room, in shadow */
   --ink:#16202A;
   --ink-2:#46535F;
   --line:rgba(22,32,42,.16);
   --line-2:rgba(22,32,42,.30);
-  --surface:rgba(255,255,255,.72);
-  --surface-2:rgba(255,255,255,.88);
+  --surface:rgba(255,255,255,.60);
+  --surface-2:rgba(255,255,255,.80);
   --ember:#A83914;            /* STATE ONLY, and only ever on a surface */
   --cool:#2E6B78;
   --mono:'IBM Plex Mono',ui-monospace,Consolas,'Cascadia Mono',monospace;
@@ -46,47 +50,88 @@ p{margin:0 0 1rem;max-width:58ch}
    Fixed to the viewport but sized to the document, its position driven by depth,
    so the room actually darkens as you go down instead of repeating each screen. */
 #ground{position:fixed;inset:0;z-index:0;
-  background:linear-gradient(180deg,var(--day) 0%,#E4E8EC 22%,#D6DCE2 48%,#C7CFD7 74%,var(--deep) 100%);
+  background:linear-gradient(180deg,var(--day) 0%,#D4DBE2 24%,#C4CDD6 50%,#B3BEC8 76%,var(--deep) 100%);
   background-size:100% 340%;background-position:50% 0%}
-#grit{position:fixed;inset:0;z-index:1;display:block;width:100%;height:100%;pointer-events:none}
-#shade{position:fixed;inset:0;z-index:2;pointer-events:none;
-  background:linear-gradient(180deg,transparent 30%,rgba(22,32,42,.10) 100%);opacity:var(--sh,0)}
-header,main,footer,#scale{position:relative;z-index:3}
 
-/* ── masthead ─────────────────────────────────────────────────────────────── */
+/* ── the light: it comes from the surface, so it dies as you descend ──────────
+   Its strength is the depth scalar. Its position is the only thing on the page
+   that answers the pointer, and it carries no state — move it or don't, the
+   document says exactly the same thing. Touch devices never get it. */
+#light{position:fixed;left:0;right:0;top:0;height:78vh;z-index:1;pointer-events:none;
+  background:radial-gradient(130% 100% at var(--lx,50%) -20%,rgba(255,255,255,.92),rgba(255,255,255,0) 68%);
+  opacity:.6;will-change:opacity}
+#grit{position:fixed;inset:0;z-index:2;display:block;width:100%;height:100%;pointer-events:none}
+#shade{position:fixed;inset:0;z-index:3;pointer-events:none;
+  background:linear-gradient(180deg,transparent 26%,rgba(22,32,42,.13) 100%);opacity:var(--sh,0)}
+header,main,footer,#scale{position:relative;z-index:4}
+
+/* ── masthead ───────────────────────────────────────────────────────────────
+   Tinted with low-alpha WHITE, never with the colour of the top of the page —
+   a masthead painted `--day` stops matching the ground the moment the ground moves. */
 header{position:sticky;top:0;z-index:6;padding:1rem 1.4rem;display:flex;align-items:baseline;
   gap:.6rem 1.4rem;flex-wrap:wrap;
-  background:linear-gradient(rgba(239,242,244,.92),rgba(239,242,244,0));
-  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  background:linear-gradient(rgba(255,255,255,.62),rgba(255,255,255,0));
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 h1.sig{margin:0;font:500 1rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
-h1.sig a{text-decoration:none}
+h1.sig a{text-decoration:none;display:inline-block;padding:.25rem 0}
 h1.sig em{font-style:normal;color:var(--ember)}
 .role{font:500 .72rem/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
 .depth{margin-inline-start:auto;font:500 .72rem/1.5 var(--mono);letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ink-2)}
+  text-transform:uppercase;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
 .depth b{font-weight:500;color:var(--ember)}
+.depth i{font-style:normal;color:var(--ink)}
 
-/* ── the measure: a depth scale down the left, not a decorative rail ────────── */
-#scale{position:fixed;left:max(1rem,calc(50vw - 33rem));top:0;bottom:0;width:6.4rem;
+/* ── the measure: a depth scale down the left, and it NAVIGATES ──────────────
+   It was decoration and `aria-hidden` until now, which is a nice way of saying
+   the best instrument on the page did nothing and could not be reached. */
+#scale{position:fixed;left:max(1rem,calc(50vw - 33rem));top:0;bottom:0;width:7.6rem;
   display:none;align-items:stretch;pointer-events:none}
-#scale ol{list-style:none;margin:auto 0;padding:0;width:100%}
-#scale li{display:flex;align-items:center;gap:.55rem;height:2.15rem;
-  font:500 .64rem/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;
-  color:var(--ink-2);opacity:.5;transition:opacity .35s ease,color .35s ease}
-#scale li i{display:block;width:14px;height:1px;background:var(--line-2);flex:0 0 auto;transition:width .35s ease,background .35s ease}
-#scale li.on{opacity:1;color:var(--ember)}
+/* The scale needs its own surface. It is the one element that floats directly on a ground
+   that TRAVELS, so without one its contrast is a function of depth — measured at 2.20:1 at
+   the surface and 2.32:1 for the ember marker at the bottom, against a 4.5:1 requirement.
+   Low-alpha white fixes every depth at once and obeys the same material law as the rooms. */
+#scale ol{list-style:none;margin:auto 0;padding:.7rem .7rem .7rem .55rem;width:100%;
+  background:rgba(255,255,255,.70);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+/* stretch, not center: with `center` the anchor collapsed to its 10px line box, so the
+   whole nav was eight 10px-tall targets sitting inside 35px-tall rows of empty space. */
+#scale li{height:2.2rem;display:flex;align-items:stretch}
+#scale a{pointer-events:auto;display:flex;align-items:center;gap:.5rem;width:100%;
+  text-decoration:none;font:500 .64rem/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink);opacity:.82;transition:opacity .35s ease,color .35s ease}
+#scale a:hover{opacity:1}
+#scale i{display:block;width:14px;height:1px;background:var(--line-2);flex:0 0 auto;
+  transition:width .35s ease,background .35s ease}
+#scale em{font-style:normal;font-variant-numeric:tabular-nums;opacity:.6;flex:0 0 auto}
+#scale li.on a{opacity:1;color:var(--ember)}
 #scale li.on i{width:26px;background:var(--ember)}
-@media (min-width:1080px){#scale{display:flex}}
+#scale li.on em{opacity:1}
+@media (min-width:1000px){#scale{display:flex}}
 
-/* ── the layers ───────────────────────────────────────────────────────────── */
+/* ── the section itself ─────────────────────────────────────────────────────
+   A plumb shaft down the page with the rooms hanging off it. The shaft passes
+   BEHIND the frosted surfaces, so it is crisp between floors and soft through
+   glass — which is the whole reason the surfaces are translucent. The ember
+   segment is the only accent that moves: it reaches down to the floor you are on. */
 main{max-width:44rem;margin:0 auto;padding:1.5rem 1.4rem 3rem}
 .lead{max-width:40ch;margin:0 0 2.6rem;font-size:1.15rem}
 .lead strong{font-weight:600}
-.layer{position:relative;margin:0 0 1.15rem;padding:1.2rem 1.3rem 1.3rem;
-  background:var(--surface);border:1px solid var(--line);border-radius:3px;
+.stack{position:relative}
+#riser{position:absolute;left:calc(1.3rem + 16px);top:0;bottom:0;width:1px;z-index:0;
+  transform:translateX(-.5px);background:var(--line-2);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 1.6rem,#000 calc(100% - 2.4rem),transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 1.6rem,#000 calc(100% - 2.4rem),transparent 100%)}
+#riser i{display:block;width:2px;margin-left:-.5px;height:0;background:var(--ember);
+  transition:height .55s cubic-bezier(.2,.7,.3,1)}
+
+/* A room, not a card: one hairline floor across the top, a frosted body, no box. */
+/* 26vh, not a fixed rem: a jumped-to room has to land ACROSS the reading line at 34vh,
+   or the scale navigates you somewhere and then highlights nothing. */
+.layer{position:relative;margin:0 0 1.6rem;padding:1.15rem 1.3rem 1.35rem;scroll-margin-top:26vh;
+  background:var(--surface);border:0;border-top:1px solid var(--line);
   -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
-  transition:background .45s ease,border-color .45s ease}
-.layer.on{background:var(--surface-2);border-color:var(--line-2)}
+  transition:background .45s ease,border-top-color .45s ease}
+.layer.on{background:var(--surface-2);border-top-color:var(--line-2)}
 .top{display:flex;align-items:flex-start;gap:.8rem;margin-bottom:.4rem}
 .mk{flex:0 0 auto;width:32px;height:32px;color:var(--ink-2);margin-top:-1px;
   transition:color .45s ease,transform .55s cubic-bezier(.2,.7,.3,1);transform-origin:50% 60%}
@@ -97,8 +142,11 @@ main{max-width:44rem;margin:0 auto;padding:1.5rem 1.4rem 3rem}
 .layer h2{font:600 1.35rem/1.18 var(--sans);letter-spacing:-.022em;margin:.1rem 0 0}
 .layer p{font-size:.97rem;color:var(--ink-2);margin:.55rem 0 0}
 .layer p strong{color:var(--ink);font-weight:600}
-.go{display:inline-block;margin-top:.7rem;font:500 .82rem/1.5 var(--mono);letter-spacing:.05em;
-  text-decoration:none;border-bottom:1.5px solid var(--ember);padding-bottom:1px}
+/* padding-top instead of margin-top: same place on the page, but a hit box that clears
+   24px. These sit on their own line, so the "inline in a sentence" exemption does not
+   cover them — 20 of 21 focusable targets were under 24px before this. */
+.go{display:inline-block;margin-top:.35rem;padding:.35rem 0 1px;font:500 .82rem/1.5 var(--mono);
+  letter-spacing:.05em;text-decoration:none;border-bottom:1.5px solid var(--ember)}
 .go:hover{color:var(--ember)}
 .fine{display:block;margin-top:.5rem;font:400 .76rem/1.6 var(--mono);color:var(--ink-2)}
 .nums{display:flex;flex-wrap:wrap;gap:.3rem 1.5rem;margin:.6rem 0 0;
@@ -109,7 +157,10 @@ main{max-width:44rem;margin:0 auto;padding:1.5rem 1.4rem 3rem}
 .certs li{font:500 .68rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink-2);border:1px solid var(--line-2);border-radius:2px;padding:.26rem .48rem}
 .certs li.held{color:var(--cool);border-color:rgba(46,107,120,.45)}
-footer{max-width:44rem;margin:0 auto;padding:0 1.4rem 3.5rem;
+/* Runway below the last floor. Without it the bottom room can never climb to the reading
+   line — the same end-stop geometry that made the Rail's last card unreachable, rotated 90°.
+   It also reads right: below the last floor there is only ground, at its darkest. */
+footer{max-width:44rem;margin:0 auto;padding:0 1.4rem clamp(3.5rem,12vh,8rem);
   font:500 .72rem/1.9 var(--mono);letter-spacing:.08em;color:var(--ink-2)}
 footer a{text-decoration:none;border-bottom:1px solid var(--line-2)}
 footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
@@ -123,43 +174,53 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div id="ground" aria-hidden="true"></div>
+<div id="light" aria-hidden="true"></div>
 <canvas id="grit" aria-hidden="true"></canvas>
 <div id="shade" aria-hidden="true"></div>
 
 <header>
   <h1 class="sig"><a href="/">Jared <em>Lilliss</em></a></h1>
   <span class="role">IT field technician &middot; Sydney</span>
-  <span class="depth">Depth <b id="tier">the counter</b></span>
+  <span class="depth">Level <b id="lv">1</b>/8 &middot; <i id="tier">the counter</i></span>
 </header>
 
-<nav id="scale" aria-hidden="true"><ol>
-  <li><i></i>Counter</li><li><i></i>Wall</li><li><i></i>Rack</li><li><i></i>Wire out</li>
-  <li><i></i>Server</li><li><i></i>Row</li><li><i></i>Board</li><li><i></i>Contact</li>
+<nav id="scale" aria-label="Levels"><ol>
+  <li><a href="#l1"><i></i><em>1</em>Counter</a></li>
+  <li><a href="#l2"><i></i><em>2</em>Wall</a></li>
+  <li><a href="#l3"><i></i><em>3</em>Rack</a></li>
+  <li><a href="#l4"><i></i><em>4</em>Wire out</a></li>
+  <li><a href="#l5"><i></i><em>5</em>Server</a></li>
+  <li><a href="#l6"><i></i><em>6</em>Row</a></li>
+  <li><a href="#l7"><i></i><em>7</em>Board</a></li>
+  <li><a href="#l8"><i></i><em>8</em>Contact</a></li>
 </ol></nav>
 
 <main id="main">
   <p class="lead">A section through the work, from the terminal a customer touches down to the row in a database &mdash; and back up to a page anyone can read. <strong>Every layer is one I actually work at.</strong></p>
 
-  <article class="layer" data-tier="the counter">
+  <div class="stack">
+  <div id="riser" aria-hidden="true"><i></i></div>
+
+  <article class="layer" id="l1" data-tier="the counter">
     <div class="top"><span class="mk" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M5 27h30M5 27V14a2 2 0 0 1 2-2h26a2 2 0 0 1 2 2v13M10 17h20M10 21h12M29 31v3M11 31v3"/></svg></span>
       <div><span class="tier">Level 1</span><h2>The counter</h2></div></div>
     <p>A payment terminal stops taking money in the middle of service. <strong>The person who takes the call is the person who turns up.</strong> Point-of-sale and EFTPOS, Windows machines, cameras &mdash; for venues and small businesses around Sydney, usually the same day.</p>
     <a class="go" href="/lilliss-it/">Lilliss IT</a>
   </article>
 
-  <article class="layer" data-tier="the wall">
+  <article class="layer" id="l2" data-tier="the wall">
     <div class="top"><span class="mk" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M8 6v28M14 6v28M20 6v28M26 6v28M32 6v28"/><path d="M4 19h32" stroke-dasharray="3 4"/></svg></span>
       <div><span class="tier">Level 2</span><h2>The wall</h2></div></div>
     <p>Structured cabling. Tidy runs, labelled both ends, and documentation the next person can actually use &mdash; which is the difference between a job finished and a job left for someone else.</p>
   </article>
 
-  <article class="layer" data-tier="the rack">
+  <article class="layer" id="l3" data-tier="the rack">
     <div class="top"><span class="mk" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="7" y="8" width="26" height="24" rx="1.5"/><path d="M7 16h26M7 24h26M11 12h4M11 20h4M11 28h4"/></svg></span>
       <div><span class="tier">Level 3</span><h2>The rack</h2></div></div>
     <p>Switching and Wi-Fi for a small site. The part nobody sees until it stops, and the part that decides whether the tills come back in two minutes or two hours.</p>
   </article>
 
-  <article class="layer" data-tier="the wire out">
+  <article class="layer" id="l4" data-tier="the wire out">
     <div class="top"><span class="mk" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M6 30c6 0 6-20 14-20s8 20 14 20"/><circle cx="6" cy="30" r="2.2"/><circle cx="34" cy="30" r="2.2"/></svg></span>
       <div><span class="tier">Level 4</span><h2>The wire out</h2></div></div>
     <p>Past the building, the same habits apply to work nobody is paying for. Two of them are concept sites built as one self-contained file each &mdash; a canvas dawn in five languages, and a span of 1975 to 2117 where every date names the source that establishes it.</p>
@@ -168,7 +229,7 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     <span class="fine">Concepts. Still Wild uses the business&rsquo;s photographs with permission; neither is affiliated.</span>
   </article>
 
-  <article class="layer" data-tier="the server">
+  <article class="layer" id="l5" data-tier="the server">
     <div class="top"><span class="mk" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="6" y="11" width="28" height="8" rx="1.5"/><rect x="6" y="23" width="28" height="8" rx="1.5"/><path d="M11 15h.01M11 27h.01M16 15h8M16 27h8"/></svg></span>
       <div><span class="tier">Level 5</span><h2>The server</h2></div></div>
     <p>A small Melbourne machine that has been awake since 23 August. It takes a reading every fifteen minutes, dumps its database at <strong>03:30 Melbourne time</strong> and copies the dump off itself.</p>
@@ -176,14 +237,14 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     <a class="go" href="/record/">The collection record</a>
   </article>
 
-  <article class="layer" data-tier="the row">
+  <article class="layer" id="l6" data-tier="the row">
     <div class="top"><span class="mk" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M5 31h30"/><path d="M9 31v-5M14 31v-9M19 31v-4M24 31v-13M29 31v-7"/><path d="M5 12h6" stroke-dasharray="2 3"/></svg></span>
       <div><span class="tier">Level 6</span><h2>The row</h2></div></div>
     <p class="nums"><span><b>59</b> departments</span><span><b>15</b> min</span><span><b>120,000+</b> readings</span></p>
     <p>Each reading is appended to a series that is <strong>never rewritten</strong>. The feed publishes the current moment only and keeps no history, so a reading not taken at the time is gone for good. The figure is <strong>people waiting</strong>, never a waiting time &mdash; there is no minutes field. No personal or health information is collected, because the schema has no fields for it.</p>
   </article>
 
-  <article class="layer" data-tier="the board">
+  <article class="layer" id="l7" data-tier="the board">
     <div class="top"><span class="mk" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="5" y="9" width="30" height="21" rx="1.5"/><path d="M5 15h30M10 21h9M10 25h14M24 21h6"/></svg></span>
       <div><span class="tier">Level 7</span><h2>The board</h2></div></div>
     <p>Back at the surface: the same readings, drawn so anyone can read them. NSW has 176 emergency departments; these are the 59 that publish a live count.</p>
@@ -191,7 +252,7 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     <a class="go" href="/waits/" style="margin-left:1.1rem">The Tally</a>
   </article>
 
-  <article class="layer" data-tier="contact">
+  <article class="layer" id="l8" data-tier="contact">
     <div class="top"><span class="mk" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M6 29V13l14 8 14-8v16"/><path d="M6 13h28"/></svg></span>
       <div><span class="tier">Level 8</span><h2>Email is best</h2></div></div>
     <p>Tell me what you need and you&rsquo;ll get a straight answer.</p>
@@ -203,6 +264,7 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     </ul>
     <span class="fine"><a class="go" href="https://github.com/jaredlilliss">GitHub</a><a class="go" href="https://www.linkedin.com/in/jaredlilliss/" style="margin-left:1.1rem">LinkedIn</a></span>
   </article>
+  </div>
 </main>
 
 <footer>
@@ -212,17 +274,22 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 <script>
 (function(){
   "use strict";
-  var doc = document, root = doc.documentElement;
+  var doc = document;
   var reduced = false; try { reduced = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  var fine = false; try { fine = matchMedia('(pointer: fine)').matches; } catch (e) {}
 
   /* ONE scalar again, but a different one and a native one: DEPTH, read straight from the
      document scroll. That choice is why this page works on a phone where the horizontal
      traverse cannot — the reader's own scroll gesture is the input, so nothing has to be
      intercepted, and with script off the page is already the whole document in order. */
   var layers = [].slice.call(doc.querySelectorAll('.layer'));
+  var marks  = [].slice.call(doc.querySelectorAll('.mk'));
   var scaleItems = [].slice.call(doc.querySelectorAll('#scale li'));
+  var scaleLinks = [].slice.call(doc.querySelectorAll('#scale a'));
   var groundEl = doc.getElementById('ground'), shadeEl = doc.getElementById('shade');
-  var tierEl = doc.getElementById('tier');
+  var lightEl = doc.getElementById('light'), stackEl = doc.querySelector('.stack');
+  var riserEl = doc.getElementById('riser'), fillEl = doc.querySelector('#riser i');
+  var tierEl = doc.getElementById('tier'), lvEl = doc.getElementById('lv');
   var depth = 0, cur = -1, ticking = false;
 
   function readDepth() {
@@ -230,41 +297,103 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     return h > 0 ? Math.min(1, Math.max(0, (window.scrollY || doc.documentElement.scrollTop) / h)) : 0;
   }
 
-  /* Which layer the reader is AT: the one whose box straddles the reading line, a third of
-     the way down. Falling back to the nearest keeps the readout from ever being empty, so
-     the header can never name nothing while a layer is plainly on screen. */
+  /* Which floor the reader is ON: the room whose box straddles the reading line, a third of
+     the way down. Between two rooms NOTHING straddles it — and that gap is where a
+     nearest-box answer flickers, because the winner flips at the exact midpoint. So in the
+     gap we HOLD the floor we were on. Same hysteresis lesson as the Rail: the threshold to
+     leave has to be wider than the threshold to arrive. */
   function currentLayer() {
-    var line = innerHeight * 0.34, best = 0, bestD = Infinity;
+    /* At the floor of the document you are on the last floor of the section — say so
+       outright rather than trusting the geometry to deliver it. Runway makes this
+       transition happen a little early and gracefully; this line makes it CERTAIN,
+       at every viewport height, which runway alone cannot promise. */
+    var span = doc.documentElement.scrollHeight - innerHeight;
+    var y = window.scrollY || doc.documentElement.scrollTop;
+    if (span > 0 && span - y <= innerHeight * 0.10) return layers.length - 1;
+    var line = innerHeight * 0.34, nearest = 0, nd = Infinity;
     for (var i = 0; i < layers.length; i++) {
       var r = layers[i].getBoundingClientRect();
       if (r.top <= line && r.bottom >= line) return i;
       var d = Math.min(Math.abs(r.top - line), Math.abs(r.bottom - line));
-      if (d < bestD) { bestD = d; best = i; }
+      if (d < nd) { nd = d; nearest = i; }
     }
-    return best;
+    return cur >= 0 ? cur : nearest;
+  }
+
+  /* The shaft runs node to node, not edge to edge of the stack. Measured rather than
+     guessed in CSS: the first cut faded the top 2.4rem of the line, which is exactly
+     where the level-1 segment lives, so the plumb line was invisible on arrival. */
+  /* The last room has to be able to CLIMB to the reading line, and how far it must climb
+     is 66% of the viewport — a number CSS cannot subtract the page's own tail from. So
+     measure the tail and add only the shortfall: usually a little, sometimes nothing.
+     Guessing a constant here is what left level 8 unreachable on the first cut, and what
+     left the Rail's last card unreachable before that. */
+  function runway() {
+    var last = layers[layers.length - 1];
+    if (!last) return;
+    doc.body.style.paddingBottom = '0px';
+    var topAbs = last.getBoundingClientRect().top + (window.scrollY || doc.documentElement.scrollTop);
+    var have = doc.documentElement.scrollHeight - topAbs;
+    var extra = Math.max(0, Math.ceil(innerHeight * 0.72 - have));
+    doc.body.style.paddingBottom = extra + 'px';
+  }
+
+  var STUB = 18;
+  function placeRiser() {
+    if (!riserEl || !stackEl || !marks.length) return;
+    var sr = stackEl.getBoundingClientRect();
+    var a = marks[0].getBoundingClientRect(), z = marks[marks.length - 1].getBoundingClientRect();
+    var top = (a.top + a.height / 2) - sr.top - STUB;
+    var bot = (z.top + z.height / 2) - sr.top + STUB;
+    if (!(bot > top)) return;
+    riserEl.style.top = top.toFixed(1) + 'px';
+    riserEl.style.bottom = 'auto';
+    riserEl.style.height = (bot - top).toFixed(1) + 'px';
+    riserEl.style.webkitMaskImage = 'none';
+    riserEl.style.maskImage = 'none';
+  }
+
+  /* The plumb line reaches down to the node you are on, and stops there. */
+  function fillTo(i) {
+    if (!fillEl || !riserEl || !marks[i]) return;
+    var rr = riserEl.getBoundingClientRect(), mr = marks[i].getBoundingClientRect();
+    fillEl.style.height = Math.max(0, (mr.top + mr.height / 2) - rr.top).toFixed(1) + 'px';
   }
 
   function apply() {
     depth = readDepth();
     if (groundEl) groundEl.style.backgroundPosition = '50% ' + (depth * 100).toFixed(2) + '%';
     if (shadeEl) shadeEl.style.setProperty('--sh', depth.toFixed(3));
+    /* the light comes from the surface, so it goes out on the way down */
+    if (lightEl) lightEl.style.opacity = (0.62 - depth * 0.56).toFixed(3);
     var i = currentLayer();
     if (i !== cur) {
       cur = i;
       for (var k = 0; k < layers.length; k++) layers[k].classList.toggle('on', k === i);
-      for (var j = 0; j < scaleItems.length; j++) scaleItems[j].classList.toggle('on', j === i);
+      for (var j = 0; j < scaleItems.length; j++) {
+        scaleItems[j].classList.toggle('on', j === i);
+        if (scaleLinks[j]) {
+          if (j === i) scaleLinks[j].setAttribute('aria-current', 'true');
+          else scaleLinks[j].removeAttribute('aria-current');
+        }
+      }
       var t = layers[i].getAttribute('data-tier');
       if (tierEl && t) tierEl.textContent = t;
+      if (lvEl) lvEl.textContent = String(i + 1);
+      fillTo(i);
     }
-    grit();
+    if (reduced) paint();
   }
 
-  /* ── grit ────────────────────────────────────────────────────────────────
+  /* ── the air ──────────────────────────────────────────────────────────────
      Dust in a plant room: seeded so the composition is authored, sparse at the
-     surface and thicker as you descend. DPR capped, ~30fps, and it does not run
-     at all when the tab is hidden or when the reader has asked for less motion. */
+     surface and thicker as you descend. It drifts on TIME, not on scroll — the
+     previous version derived drift from depth alone, so it was a still picture
+     that jumped when you moved, which is not weather. DPR capped, ~30fps, and it
+     does not run at all when the tab is hidden or motion has been declined. */
   var cv = doc.getElementById('grit'), cx = cv && cv.getContext ? cv.getContext('2d') : null;
-  var bits = [], W = 0, H = 0, last = 0, seed = 11;
+  var bits = [], W = 0, H = 0, seed = 11, raf = 0, tPrev = 0, acc = 0, drift = 0;
+  var lxNow = 50, lxAim = 50;
   function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
   function sow() {
     bits = [];
@@ -280,18 +409,14 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px';
     if (!bits.length) sow();
   }
-  function grit() {
+  function paint() {
     if (!cx || !(W > 0 && H > 0)) return;
-    var now = Date.now();
-    if (now - last < 33) return;
-    last = now;
     cx.clearRect(0, 0, W, H);
     var d = Math.min(devicePixelRatio || 1, 1.5);
     for (var i = 0; i < bits.length; i++) {
       var b = bits[i];
-      var drift = reduced ? 0 : depth * 0.5 * b.s;
-      var py = ((b.y + drift) % 1) * H;
-      cx.globalAlpha = (0.05 + b.s * 0.10) + depth * 0.13;
+      var py = ((b.y + drift * b.s) % 1) * H;
+      cx.globalAlpha = (0.05 + b.s * 0.10) + depth * 0.15;
       cx.fillStyle = 'rgb(' + Math.round(84 - depth * 26) + ',' + Math.round(96 - depth * 28) + ',' + Math.round(110 - depth * 30) + ')';
       cx.beginPath();
       cx.arc(b.x * W, py, b.r * d, 0, 6.2832);
@@ -299,6 +424,23 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     }
     cx.globalAlpha = 1;
   }
+  function tick(ts) {
+    raf = requestAnimationFrame(tick);
+    if (doc.hidden) return;
+    if (!tPrev) tPrev = ts;
+    var dt = Math.min(64, ts - tPrev); tPrev = ts;
+    /* deeper air moves more; the shaft is where a building's draught lives */
+    drift += dt * 0.0000115 * (0.4 + depth * 1.1);
+    if (drift > 1000) drift -= 1000;
+    if (lightEl && Math.abs(lxAim - lxNow) > 0.05) {
+      lxNow += (lxAim - lxNow) * 0.075;
+      lightEl.style.setProperty('--lx', lxNow.toFixed(2) + '%');
+    }
+    acc += dt; if (acc < 33) return; acc = 0;
+    paint();
+  }
+  function start() { if (!raf && !reduced) { tPrev = 0; raf = requestAnimationFrame(tick); } }
+  function stop() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
 
   function onScroll() {
     if (ticking) return;
@@ -306,12 +448,55 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     requestAnimationFrame(function () { apply(); ticking = false; });
   }
 
+  /* Each mark draws itself once, the first time its floor comes into view. Marks that
+     carry a deliberate dash pattern are skipped — a draw-on would overwrite the very
+     thing they are saying (the wall's dashed datum, the gap in the row's series). */
+  function drawMark(m) {
+    var els = m.querySelectorAll('path,rect,circle'), n = 0;
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.getAttribute('stroke-dasharray')) continue;
+      var L = 0; try { L = el.getTotalLength(); } catch (e) { continue; }
+      if (!L || L > 4000) continue;
+      el.style.transition = 'none';
+      el.style.strokeDasharray = L + ' ' + L;
+      el.style.strokeDashoffset = L;
+      el.getBoundingClientRect();
+      el.style.transition = 'stroke-dashoffset .85s cubic-bezier(.2,.7,.3,1) ' + (n * 0.06).toFixed(2) + 's';
+      el.style.strokeDashoffset = '0';
+      n++;
+    }
+  }
+
   try {
     sizeCanvas();
+    runway();
+    placeRiser();
     apply();
+    fillTo(cur < 0 ? 0 : cur);
     addEventListener('scroll', onScroll, { passive: true });
-    addEventListener('resize', function () { sizeCanvas(); apply(); }, { passive: true });
-    addEventListener('visibilitychange', function () { if (!doc.hidden) apply(); });
+    addEventListener('resize', function () {
+      sizeCanvas(); runway(); placeRiser(); apply(); fillTo(cur < 0 ? 0 : cur);
+    }, { passive: true });
+    addEventListener('visibilitychange', function () {
+      if (doc.hidden) { stop(); } else { apply(); start(); }
+    });
+    if (fine && !reduced) {
+      /* zero DOM work in the handler: it stores a number and nothing else */
+      addEventListener('pointermove', function (e) {
+        if (e.pointerType === 'touch') return;
+        lxAim = (e.clientX / (innerWidth || 1)) * 100;
+      }, { passive: true });
+    }
+    if (!reduced && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        for (var i = 0; i < es.length; i++) {
+          if (es[i].isIntersecting) { drawMark(es[i].target); io.unobserve(es[i].target); }
+        }
+      }, { rootMargin: '0px 0px -10% 0px' });
+      for (var q = 0; q < marks.length; q++) io.observe(marks[q]);
+    }
+    start();
   } catch (e) { /* the document is already complete without any of this */ }
 })();
 </script>
