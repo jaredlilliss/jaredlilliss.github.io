@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ma</title>
+<meta name="description" content="間 — a study in the space between. Jared Lilliss, IT field technician, Sydney.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#EDE9E1">
+<link rel="icon" type="image/svg+xml" href="/icon.svg">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/plexmono-400.woff2') format('woff2')}
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/fraunces.woff2') format('woff2')}
+/* The real italic, because the one <em> on this page is set at 4.6rem and a
+   synthesised slant at that size is visible as a slant rather than as a face. */
+@font-face{font-family:'Fraunces';font-style:italic;font-weight:100 900;font-display:swap;src:url('/fonts/fraunces-italic.woff2') format('woff2')}
+
+/* ═══ 間  MA ═══════════════════════════════════════════════════════════════════
+   A study, 05/09/2026, and a deliberate break from everything else in this folder.
+
+   WHAT THE MEASUREMENT SAID. Pointed the same census at an Awwwards Developer
+   Award winner and at my own pages. The winner: type scale ratio 63x — 570px
+   against 9px — three ink colours, one typeface, no canvas, no WebGL, 184 KB.
+   Mine: ratio 5 to 8, everything between 10px and 50px. I had no dynamic range.
+   Every page I had built was mezzo-forte throughout; the good one is silence with
+   a single fortissimo.
+
+   SO THIS PAGE HAS NO GROUND CANVAS, no low-alpha panels, no tracked mono labels,
+   no thin line marks — the four habits that had become my house style and were
+   getting applied rather than chosen. What carries it instead is scale, emptiness
+   and timing.
+
+   MA (間) is the interval: negative space as an active element rather than a
+   leftover. The composition is asymmetric, most of the page is empty on purpose,
+   and there is exactly ONE vermilion mark, which is the seal. Restraint is the
+   register — not cherry blossoms, not borrowed character art, and not a webfont
+   fetched from someone else's server. */
+:root{
+  --paper:#EDE9E1;      /* warm, never white — white is a screen, paper is a surface */
+  --paper-2:#E4DFD5;
+  --sumi:#14120F;       /* ink, never pure black */
+  --sumi-2:#4A453D;
+  /* #8A8377 measured 3.1:1 on this paper and failed on twenty elements — every
+     quiet label on the page. The register wants them to whisper, but restraint is
+     a goal and contrast is a gate, and ranking a goal above a gate is a type
+     error. #665F55 measures 5.2:1 and still reads as the quiet voice. */
+  --sumi-3:#665F55;
+  --seal:#B7392B;       /* ONE mark, ONCE. It is the seal, not an accent colour. */
+  --rule:rgba(20,18,15,.14);
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--sumi);
+  font:400 17px/1.75 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--seal);outline-offset:4px}
+.skip{position:absolute;left:-9999px;top:0;z-index:60;background:var(--sumi);color:var(--paper);
+  padding:.7rem 1rem;font:400 .85rem var(--mono);text-decoration:none}
+.skip:focus{left:1rem;top:1rem}
+
+/* ── the scroll surface ─────────────────────────────────────────────────────
+   Hand-written easing rather than a library: the whole estate law is zero
+   external requests, and Lenis is 30 KB of someone else's uptime for one lerp.
+   The body is given the content's height and the content is translated, so the
+   native scrollbar, the keyboard, and find-in-page all keep working. Switched
+   off entirely under prefers-reduced-motion and on coarse pointers, where the
+   platform's own inertia is already better than anything I would write. */
+/* Opt IN, never opt out. Written the other way round — fixed by default, reverted
+   by a class the script adds — scripting off left the surface pinned to the
+   viewport with the rest of the document clipped out of reach: a perfect first
+   screen and no way to read the other twelve hundred characters. The enhanced
+   state has to be the thing that gets switched on. */
+#surface{position:relative;z-index:1}
+body.glide #surface{position:fixed;top:0;left:0;width:100%;will-change:transform}
+
+/* ── the seal, and the only place --seal appears ─────────────────────────── */
+/* ── every "before" state below is gated on .js ────────────────────────────
+   The hidden state must be conditional on the thing that can un-hide it. Written
+   unconditionally, an entrance animation IS a blank page for anyone whose script
+   never runs — which is the exact failure this folder has been criticising
+   webtactics.org for all night. Caught here by accident: the Browser pane
+   suspends requestAnimationFrame, so the entrance never fired and the page
+   rendered as three fragments on empty paper. With no JS it is now simply
+   finished on arrival. */
+#seal{position:fixed;z-index:5;right:clamp(1.2rem,4vw,3.4rem);top:clamp(1.2rem,4vw,3.4rem);
+  width:clamp(46px,5.2vw,74px);height:clamp(46px,5.2vw,74px);pointer-events:none;
+  transform:rotate(-6deg)}
+.js #seal{opacity:0;transform:rotate(-6deg) scale(.86);
+  transition:opacity 1.1s cubic-bezier(.2,.7,.25,1) .9s,transform 1.1s cubic-bezier(.2,.7,.25,1) .9s}
+.js body.lit #seal,body.lit #seal{opacity:1;transform:rotate(-6deg) scale(1)}
+#seal svg{display:block;width:100%;height:100%}
+
+/* ── the hero: one idea at maximum scale, and nothing else ─────────────────
+   22vw is not a decorative choice. It is the difference between a page that
+   states its subject and a page that lists it. */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:0 clamp(1.2rem,6vw,7rem)}
+.name{margin:0;font:300 clamp(3.4rem,17.5vw,15rem)/.86 var(--serif);letter-spacing:-.045em;
+  color:var(--sumi)}
+.name .ln{display:block;overflow:hidden}
+.name .ln i{display:block;font-style:normal}
+.js .name .ln i{transform:translateY(102%);
+  transition:transform 1.25s cubic-bezier(.16,.84,.28,1)}
+.js .name .ln:nth-child(2) i{transition-delay:.09s}
+body.lit .name .ln i{transform:translateY(0)}
+/* the given name in a lighter weight so the surname lands — one voice, two breaths */
+.name .soft{font-weight:200;color:var(--sumi-2)}
+
+.under{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem 2.2rem;
+  margin-top:clamp(1.6rem,4vw,3rem)}
+.js .under{opacity:0;transform:translateY(14px);
+  transition:opacity .9s ease .55s,transform .9s cubic-bezier(.2,.7,.3,1) .55s}
+body.lit .under{opacity:1;transform:none}
+.trade{font:400 clamp(.95rem,1.5vw,1.15rem)/1.5 var(--sans);color:var(--sumi-2)}
+.meta{font:400 .68rem/1.6 var(--mono);letter-spacing:.02em;color:var(--sumi-3)}
+
+/* ── the vertical rule of text: a real Japanese setting, not an ornament ──── */
+.vert{position:fixed;left:clamp(.9rem,3vw,2.4rem);top:50%;transform:translateY(-50%);z-index:4;
+  writing-mode:vertical-rl;text-orientation:mixed;
+  font:400 .66rem/1 var(--mono);letter-spacing:.42em;color:var(--sumi-3);
+  pointer-events:none;display:none}
+.js .vert{opacity:0;transition:opacity 1s ease 1.3s}
+body.lit .vert{opacity:1}
+@media (min-width:900px){.vert{display:block}}
+
+/* ── the intervals ─────────────────────────────────────────────────────────
+   Ma is the point of the page, so the empty space is sized deliberately rather
+   than left over. Each panel is one thought with a screen of quiet after it. */
+.beat{min-height:78svh;display:flex;align-items:center;
+  padding:0 clamp(1.2rem,6vw,7rem)}
+.beat .in{max-width:34rem}
+.beat.right{justify-content:flex-end}
+.beat.right .in{text-align:end}
+
+/* clip-path reveal: the line is uncovered rather than faded, which reads as
+   something being drawn instead of something appearing */
+.js .rise{clip-path:inset(0 100% 0 0);transition:clip-path 1.15s cubic-bezier(.16,.84,.28,1)}
+.js .beat.right .rise{clip-path:inset(0 0 0 100%)}
+.js .lift{opacity:0;transform:translateY(18px);
+  transition:opacity .95s ease .18s,transform .95s cubic-bezier(.2,.7,.3,1) .18s}
+/* The revealing rules must OUTRANK the hiding rules, not merely follow them.
+   Gating the hidden states on .js raised their specificity, and `.js .beat.right
+   .rise` (three classes) silently beat `.seen .rise` (two) — so a revealed line
+   stayed clipped away with the class correctly applied. It was not the class that
+   failed; it was the argument. */
+.js .seen .rise,
+.js .beat.right .seen .rise{clip-path:inset(0 0 0 0)}
+.js .seen .lift{opacity:1;transform:none}
+
+.big{margin:0;font:300 clamp(2rem,6.2vw,4.6rem)/1.06 var(--serif);letter-spacing:-.032em}
+.big em{font-style:italic;font-weight:300}
+.say{margin:1.5rem 0 0;font-size:1.06rem;color:var(--sumi-2);max-width:32rem}
+.beat.right .say{margin-inline-start:auto}
+.note{margin:1.1rem 0 0;font:400 .74rem/1.7 var(--mono);color:var(--sumi-3);max-width:30rem}
+.beat.right .note{margin-inline-start:auto}
+
+/* ── the ledger: the only dense thing on the page, and it earns it by being
+   the only dense thing on the page ─────────────────────────────────────── */
+.ledger{padding:0 clamp(1.2rem,6vw,7rem);margin:0 auto 12rem;max-width:64rem}
+.ledger h2{margin:0 0 2.4rem;font:400 .7rem/1 var(--mono);letter-spacing:.32em;
+  text-transform:uppercase;color:var(--sumi-3)}
+.ledger dl{margin:0;border-top:1px solid var(--rule)}
+.ledger .row{display:grid;grid-template-columns:minmax(6rem,10rem) minmax(0,1fr);gap:.4rem 2rem;
+  padding:1.5rem 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.ledger dt{font:400 .72rem/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--sumi-3)}
+.ledger dd{margin:0;font-size:1.02rem}
+.ledger dd a{text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:1px}
+.ledger dd a:hover{border-bottom-color:var(--seal)}
+.ledger dd .and{color:var(--sumi-3);margin:0 .5rem}
+
+/* ── the close ─────────────────────────────────────────────────────────────
+   mix-blend-mode: difference — the one place two layers are allowed to
+   interfere. The word inverts wherever it crosses the ink block, which is a
+   thing paper cannot do and a screen can. */
+.close{position:relative;min-height:96svh;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;background:var(--sumi);isolation:isolate}
+.close .slab{position:absolute;inset:auto 0 0 0;height:52%;background:var(--paper)}
+.js .close .slab{clip-path:inset(100% 0 0 0);transition:clip-path 1.3s cubic-bezier(.16,.84,.28,1)}
+.js .close.seen .slab{clip-path:inset(0 0 0 0)}
+.close .word{position:relative;z-index:2;margin:0;text-align:center;
+  font:300 clamp(2.6rem,13vw,11rem)/.94 var(--serif);letter-spacing:-.04em;
+  color:var(--paper);mix-blend-mode:difference}
+/* The contact block lives INSIDE the slab, not merely on top of it. As a sibling
+   it was only readable by painting order, so before the reveal — or if the reveal
+   never fired — the one block whose whole job is to be legible was ink on ink at
+   1:1. Painting order is not ancestry, and the page should not need an animation
+   to have completed before an address can be read. */
+.close .sub{position:absolute;left:50%;transform:translateX(-50%);bottom:clamp(1.4rem,5vw,3.4rem);
+  z-index:3;font:400 .72rem/1.7 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--sumi-3);text-align:center;width:max-content;max-width:92vw}
+.close .sub a{color:var(--sumi);text-decoration:none;border-bottom:1px solid rgba(20,18,15,.3)}
+.close .sub a:hover{border-bottom-color:var(--seal)}
+
+footer{padding:3.5rem clamp(1.2rem,6vw,7rem) 4rem;
+  font:400 .7rem/1.9 var(--mono);color:var(--sumi-3)}
+footer a{text-decoration:none;border-bottom:1px solid var(--rule)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .name .ln i{transform:none}
+  .under,.vert,#seal{opacity:1;transform:none}
+  #seal{transform:rotate(-6deg)}
+  .rise{clip-path:none}
+  .lift{opacity:1;transform:none}
+  .close .slab{clip-path:inset(0 0 0 0)}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.className+=' js';</script>
+<a class="skip" href="#main">Skip to content</a>
+
+<div id="seal" aria-hidden="true">
+  <svg viewBox="0 0 100 100"><rect x="4" y="4" width="92" height="92" rx="7" fill="none" stroke="#B7392B" stroke-width="7"/><path d="M28 28h44M50 28v44M32 50h36M28 72h44" stroke="#B7392B" stroke-width="7" stroke-linecap="square" fill="none"/></svg>
+</div>
+
+<div class="vert" aria-hidden="true">SYDNEY · NSW · AUSTRALIA</div>
+
+<div id="surface">
+<main id="main">
+
+  <section class="hero">
+    <h1 class="name">
+      <span class="ln"><i class="soft">Jared</i></span>
+      <span class="ln"><i>Lilliss</i></span>
+    </h1>
+    <div class="under">
+      <span class="trade">IT field technician &mdash; point of sale, networks, and the things behind them.</span>
+      <span class="meta">Sydney &middot; available</span>
+    </div>
+  </section>
+
+  <section class="beat">
+    <div class="in">
+      <p class="big rise">The call comes in<br>at the worst hour.</p>
+      <p class="say lift">A payment terminal stops taking money in the middle of service. The person who takes that call is the person who turns up.</p>
+    </div>
+  </section>
+
+  <section class="beat right">
+    <div class="in">
+      <p class="big rise">Then it is <em>quiet</em>,<br>which is the point.</p>
+      <p class="say lift">Structured cabling, switching, Wi&#8209;Fi for a small site. Labelled both ends, documented for whoever comes next. The part nobody sees until it stops.</p>
+    </div>
+  </section>
+
+  <section class="beat">
+    <div class="in">
+      <p class="big rise">Some of it runs<br>whether or not<br>anyone is paying.</p>
+      <p class="say lift">A small machine in Melbourne has been awake since 23 August, taking a reading every fifteen minutes from every NSW emergency department that publishes a live count.</p>
+      <p class="note lift">126,000+ readings &middot; 59 departments &middot; the record shows its own gaps</p>
+    </div>
+  </section>
+
+  <section class="ledger" aria-label="Details">
+    <h2>The particulars</h2>
+    <dl>
+      <div class="row"><dt>Trade</dt><dd>Point&#8209;of&#8209;sale and EFTPOS, Windows machines, cameras, structured cabling. Venues and small businesses around Sydney, usually the same day.</dd></div>
+      <div class="row"><dt>Since</dt><dd>Trading since 2019, registered 2026.</dd></div>
+      <div class="row"><dt>Held</dt><dd>CompTIA A+ <span class="and">&middot;</span> AZ&#8209;900 <span class="and">&middot;</span> CompTIA Security+ in progress</dd></div>
+      <div class="row"><dt>Built</dt><dd><a href="/queue-board/">The live board</a> <span class="and">&middot;</span> <a href="/waits/">The Tally</a> <span class="and">&middot;</span> <a href="/record/">The collection record</a></dd></div>
+      <div class="row"><dt>Elsewhere</dt><dd><a href="/lilliss-it/">Lilliss IT</a> <span class="and">&middot;</span> <a href="https://github.com/jaredlilliss">GitHub</a> <span class="and">&middot;</span> <a href="https://www.linkedin.com/in/jaredlilliss/">LinkedIn</a></dd></div>
+    </dl>
+  </section>
+
+  <section class="close">
+    <div class="slab">
+      <p class="sub"><a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a><br>Tell me what you need and you&rsquo;ll get a straight answer.</p>
+    </div>
+    <p class="word">Email is best</p>
+  </section>
+
+  <footer>
+    <span>&copy; 2026 Jared Lilliss &middot; Sydney, Australia &middot; <a href="/">the site</a> &middot; <a href="/privacy.html">Privacy</a></span>
+  </footer>
+
+</main>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var doc = document, body = doc.body;
+  var reduced = false; try { reduced = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  var coarse = false; try { coarse = matchMedia('(pointer: coarse)').matches; } catch (e) {}
+
+  /* The entrance, with a backstop. requestAnimationFrame does not fire in a
+     background or throttled tab, and an entrance that never starts is a page that
+     never appears — so a timer lands it regardless. Adding the class twice is
+     harmless; not adding it at all is not. */
+  function lightUp() { body.classList.add('lit'); }
+  requestAnimationFrame(function () { requestAnimationFrame(lightUp); });
+  setTimeout(lightUp, 400);
+
+  /* ── the reveals ───────────────────────────────────────────────────────────
+     One observer, unobserved after firing, so a line is uncovered once and then
+     stays uncovered. Nothing re-animates on the way back up: a page that replays
+     itself every scroll is a page that will not let you read it. */
+  var marks = [].slice.call(doc.querySelectorAll('.beat .in, .close'));
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      for (var i = 0; i < es.length; i++) {
+        if (es[i].isIntersecting) { es[i].target.classList.add('seen'); io.unobserve(es[i].target); }
+      }
+    }, { rootMargin: '0px 0px -18% 0px', threshold: 0.15 });
+    for (var m = 0; m < marks.length; m++) io.observe(marks[m]);
+  } else {
+    for (var k = 0; k < marks.length; k++) marks[k].classList.add('seen');
+  }
+
+  /* ── the glide ─────────────────────────────────────────────────────────────
+     Hand-written rather than a 30 KB dependency: this site makes zero external
+     requests, and this is one lerp. The body carries the real height so the
+     native scrollbar, the keyboard, find-in-page and anchor links all behave
+     exactly as they would without it — the surface is only translated.
+
+     Off on coarse pointers, where the platform's own inertia is better than
+     anything written here, and off entirely under reduced-motion. Both fall back
+     to plain native scrolling, which is why body.native exists. */
+  var surface = doc.getElementById('surface');
+  var glide = !reduced && !coarse && !!surface;
+  var cur = 0, aim = 0, raf = 0, h = 0;
+
+  function measure() {
+    h = surface ? surface.getBoundingClientRect().height : 0;
+    body.style.height = h ? Math.round(h) + 'px' : '';
+  }
+
+  function frame() {
+    raf = requestAnimationFrame(frame);
+    if (doc.hidden) return;
+    aim = window.scrollY || doc.documentElement.scrollTop || 0;
+    var d = aim - cur;
+    /* snap when the gap stops mattering, so it settles instead of creeping */
+    cur = Math.abs(d) < 0.12 ? aim : cur + d * 0.11;
+    surface.style.transform = 'translate3d(0,' + (-cur).toFixed(2) + 'px,0)';
+  }
+
+  function start() { if (!raf) raf = requestAnimationFrame(frame); }
+  function stop() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+
+  try {
+    if (glide) {
+      /* the class goes on FIRST, so the surface is only ever pinned once there is
+         something running to translate it and a body height to scroll against */
+      body.classList.add('glide');
+      measure();
+      start();
+      addEventListener('resize', measure, { passive: true });
+      if ('ResizeObserver' in window) { new ResizeObserver(measure).observe(surface); }
+      addEventListener('visibilitychange', function () { if (doc.hidden) stop(); else start(); });
+    }
+  } catch (e) {
+    /* whatever went wrong, the page must still scroll: hand it back to the browser */
+    stop();
+    body.classList.remove('glide');
+    body.style.height = '';
+    if (surface) surface.style.transform = '';
+  }
+})();
+</script>
+</body>
+</html>
