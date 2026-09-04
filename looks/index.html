@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Looks</title>
+<title>Everything</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101010">
@@ -11,53 +11,105 @@
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter.woff2') format('woff2')}
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/plexmono-400.woff2') format('woff2')}
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/plexmono-500.woff2') format('woff2')}
-:root{--bg:#FFFFFF;--ink:#131313;--muted:#606060;--rule:#DDDDDD;--link:#0F5FA6;color-scheme:light dark}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101010;--ink:#EDEDED;--muted:#A0A0A0;--rule:#2A2A2A;--link:#79B8F0}}
-:root[data-theme="dark"]{--bg:#101010;--ink:#EDEDED;--muted:#A0A0A0;--rule:#2A2A2A;--link:#79B8F0}
-:root[data-theme="light"]{--bg:#FFFFFF;--ink:#131313;--muted:#606060;--rule:#DDDDDD;--link:#0F5FA6}
+:root{--bg:#FFFFFF;--ink:#141414;--muted:#5B5B5B;--rule:#DCDCDC;--link:#0E5C9E;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101010;--ink:#EDEDED;--muted:#A2A2A2;--rule:#2B2B2B;--link:#7CBAF2}}
+:root[data-theme="dark"]{--bg:#101010;--ink:#EDEDED;--muted:#A2A2A2;--rule:#2B2B2B;--link:#7CBAF2}
+:root[data-theme="light"]{--bg:#FFFFFF;--ink:#141414;--muted:#5B5B5B;--rule:#DCDCDC;--link:#0E5C9E}
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased}
-.wrap{max-width:44rem;margin:0 auto;padding:0 1.3rem}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.3rem}
 a{color:var(--link)}
 a:focus-visible{outline:2px solid var(--link);outline-offset:3px}
-header{padding:3.4rem 0 0}
+.skip{position:absolute;left:-999px;top:0;background:var(--link);color:var(--bg);padding:.7rem 1rem;text-decoration:none}
+.skip:focus{left:1rem;top:1rem}
+header{padding:3.2rem 0 0}
 .kicker{font:500 .78rem/1.6 'IBM Plex Mono',ui-monospace,Consolas,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 .8rem}
-h1{font:600 clamp(1.9rem,4.4vw,2.6rem)/1.15 'Inter',system-ui,sans-serif;letter-spacing:-.025em;margin:0 0 1rem}
-p{margin:0 0 1rem;max-width:60ch}
+h1{font:600 clamp(2rem,4.6vw,2.8rem)/1.12 'Inter',system-ui,sans-serif;letter-spacing:-.03em;margin:0 0 1rem}
+h2{font:600 1.25rem/1.2 'Inter',system-ui,sans-serif;letter-spacing:-.02em;margin:0}
+p{margin:0 0 1rem;max-width:62ch}
 .lede{font-size:1.1rem}
 .muted{color:var(--muted)}
-ol{list-style:none;margin:2.6rem 0 0;padding:0;counter-reset:none}
-.look{border-top:1px solid var(--rule);padding:1.4rem 0 1.5rem}
+.m{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:.94em}
+section{margin-top:3rem}
+.head{display:flex;align-items:baseline;gap:.9rem;border-bottom:1px solid var(--rule);padding-bottom:.6rem;margin-bottom:.4rem}
+.head .c{font:500 .78rem/1.6 'IBM Plex Mono',ui-monospace,Consolas,monospace;color:var(--muted);margin-left:auto;white-space:nowrap}
+ol,ul{list-style:none;margin:0;padding:0}
+li{border-bottom:1px solid var(--rule);padding:1.15rem 0}
+li:last-child{border-bottom:0}
 .go{display:flex;align-items:baseline;gap:.9rem;text-decoration:none;color:var(--ink)}
-.go:hover .nm{text-decoration:underline;text-decoration-color:var(--link);text-underline-offset:4px}
-.n{font:500 .8rem/1.6 'IBM Plex Mono',ui-monospace,Consolas,monospace;color:var(--muted);font-variant-numeric:tabular-nums}
-.nm{font:600 1.35rem/1.2 'Inter',system-ui,sans-serif;letter-spacing:-.02em}
-.note{margin:.5rem 0 0 2.6rem;color:var(--ink)}
-.meta{margin:.45rem 0 0 2.6rem;font:500 .78rem/1.6 'IBM Plex Mono',ui-monospace,Consolas,monospace;letter-spacing:.06em;color:var(--muted)}
-.meta a{color:var(--link)}
-footer{border-top:1px solid var(--rule);margin-top:2.6rem;padding:1.4rem 0 4rem;font:500 .78rem/1.8 'IBM Plex Mono',ui-monospace,Consolas,monospace;letter-spacing:.06em;color:var(--muted)}
+.go .nm{font:600 1.3rem/1.2 'Inter',system-ui,sans-serif;letter-spacing:-.02em;text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:5px}
+.go:hover .nm,.go:focus-visible .nm{text-decoration-color:var(--link)}
+.go.small .nm{font-size:1.08rem}
+.n{font:500 .82rem/1.7 'IBM Plex Mono',ui-monospace,Consolas,monospace;color:var(--muted);font-variant-numeric:tabular-nums}
+.note{margin:.45rem 0 0 2.55rem;color:var(--muted)}
+.go.small + .note{margin-left:0}
+.k{font:500 .74rem/1.6 'IBM Plex Mono',ui-monospace,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin:0}
+#waiting li{padding-left:2.55rem;position:relative;color:var(--ink)}
+#waiting li::before{content:attr(data-n);position:absolute;left:0;font:500 .82rem/1.9 'IBM Plex Mono',ui-monospace,Consolas,monospace;color:var(--link)}
+footer{border-top:1px solid var(--rule);margin-top:3rem;padding:1.3rem 0 4rem;font:500 .78rem/1.9 'IBM Plex Mono',ui-monospace,Consolas,monospace;color:var(--muted)}
 footer a{color:var(--link)}
-@media (max-width:520px){.note,.meta{margin-left:0}}
+@media (max-width:520px){.note{margin-left:0}#waiting li{padding-left:1.9rem}}
 </style>
 </head>
 <body>
-<main class="wrap">
+<a class="skip" href="#main">Skip to content</a>
+<main class="wrap" id="main">
   <header>
     <p class="kicker">Unlisted &middot; 4 September 2026</p>
-    <h1>Looks</h1>
-    <p class="lede">Each of these is the same site &mdash; the same facts, the same links, the same single file &mdash; wearing a different register. Open them, and say which one is least wrong.</p>
-    <p class="muted">Nothing here is live. <a href="/">The current site</a> is unchanged. This page is deliberately plain so it isn&rsquo;t competing with the things it lists.</p>
+    <h1>Everything</h1>
+    <p class="lede">Eight looks to choose from, what changed on the live sites today, and the three things only you can decide.</p>
+    <p class="muted">Nothing here is live on your site. <a href="/">The current site</a> is unchanged until you say otherwise.</p>
   </header>
-  <ol>
-    <li class="look"><a class="go" href="/looks/readout/"><span class="n">01</span><span class="nm">The Readout</span></a><p class="note">An instrument panel. Opens with what the collector is reading right now, not with a headline about him.</p><p class="meta">41 KB &middot; one file &middot; <a href="/looks/readout/">open</a></p></li>
-    <li class="look"><a class="go" href="/looks/ticket/"><span class="n">02</span><span class="nm">The Ticket Queue</span></a><p class="note">The interface of his own trade. Every project is a ticket with a status, a priority and a last update.</p><p class="meta">43 KB &middot; one file &middot; <a href="/looks/ticket/">open</a></p></li>
-    <li class="look"><a class="go" href="/looks/signal/"><span class="n">03</span><span class="nm">The Signal</span></a><p class="note">One drawn line runs the height of the page: the real 24-hour curve, with the content hung off it.</p><p class="meta">24 KB &middot; one file &middot; <a href="/looks/signal/">open</a></p></li>
-    <li class="look"><a class="go" href="/looks/datasheet/"><span class="n">04</span><span class="nm">The Datasheet</span></a><p class="note">A component datasheet for the collector. Ratings, characteristics, block diagram, ordering information.</p><p class="meta">46 KB &middot; one file &middot; <a href="/looks/datasheet/">open</a></p></li>
-    <li class="look"><a class="go" href="/looks/departures/"><span class="n">05</span><span class="nm">The Departures Board</span></a><p class="note">A transport board. Time, destination, status, gate — the projects as services.</p><p class="meta">22 KB &middot; one file &middot; <a href="/looks/departures/">open</a></p></li>
-  </ol>
+
+  <section>
+    <div class="head"><h2>Eight looks</h2><span class="c">8 built</span></div>
+    <p class="muted">Same facts, same links, same single file. Only the register changes. Open two or three and say which is least wrong.</p>
+    <ol>
+      <li><a class="go" href="/looks/readout/"><span class="n">01</span><span class="nm">The Readout</span></a><p class="note">Opens with the live count, not with you. An instrument panel: the current reading, the hour curve, every department a row.</p></li>
+      <li><a class="go" href="/looks/departures/"><span class="n">02</span><span class="nm">The Departures Board</span></a><p class="note">Time, service, status, gate. The projects as services, running or closed.</p></li>
+      <li><a class="go" href="/looks/signal/"><span class="n">03</span><span class="nm">The Signal</span></a><p class="note">One drawn line down the page — the real day&#x27;s curve — with everything hung off it.</p></li>
+      <li><a class="go" href="/looks/datasheet/"><span class="n">04</span><span class="nm">The Datasheet</span></a><p class="note">A component datasheet for the collector. Ratings, characteristics, block diagram. Deadpan.</p></li>
+      <li><a class="go" href="/looks/ticket/"><span class="n">05</span><span class="nm">The Ticket Queue</span></a><p class="note">Your own trade&#x27;s software. Every project is a ticket with a status and a last update.</p></li>
+      <li><a class="go" href="/looks/plate/"><span class="n">06</span><span class="nm">The Plate</span></a><p class="note">An engineering drawing sheet. Title block, zone letters, dimension lines that measure the real figures.</p></li>
+      <li><a class="go" href="/looks/catalogue/"><span class="n">07</span><span class="nm">The Card Catalogue</span></a><p class="note">Index cards in a drawer. Call numbers, ruled records, one red stamp.</p></li>
+      <li><a class="go" href="/looks/plaintext/"><span class="n">08</span><span class="nm">The Plain Document</span></a><p class="note">Anti-design done properly. One measured column, one link colour, the type doing all the work.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="head"><h2>Changed today</h2><span class="c">live now</span></div>
+    <ul>
+      <li><p class="k">Fixed on the business site</p><p class="note"><a href="https://lilliss.au/">lilliss.au/</a> &mdash; The Contact link sat 38px below its own row at every width, since launch. The header link and the hero buttons shared a class name, so a margin meant for the buttons landed on the link.</p></li>
+      <li><p class="k">Rewritten here</p><p class="note"><a href="https://jaredlilliss.github.io/">jaredlilliss.github.io/</a> &mdash; The manifesto copy is gone. Name, job, place, then what is actually running. The share card was rebuilt too: the old one had the slogan drawn into the image, so every link you posted carried it.</p></li>
+      <li><p class="k">Corrected</p><p class="note"><a href="https://lilliss.au/xperience-concept/brochure.html">lilliss.au/xperience-concept/brochure.html</a> &mdash; The page claimed its wording came from the initiative&#x27;s own pages in both languages. Of 24 Arabic sentences, 14 appear nowhere on their site. The disclosure now says the Arabic is a translation prepared for the concept.</p></li>
+      <li><p class="k">New</p><p class="note"><a href="/waits/">/waits/</a> &mdash; The Tally: the last published day of emergency department queues, one stroke per person, a hand you drag back through the night.</p></li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="head"><h2>Already running</h2></div>
+    <ul>
+      <li><a class="go small" href="/queue-board/"><span class="nm">The Queue Board</span></a><p class="note">The live board. Five weeks of readings, the method written on the page.</p></li>
+      <li><a class="go small" href="/record/"><span class="nm">The Record</span></a><p class="note">What the collection actually looked like, gaps and all.</p></li>
+      <li><a class="go small" href="/waits/"><span class="nm">The Tally</span></a><p class="note">One stroke per person waiting, across 59 departments.</p></li>
+      <li><a class="go small" href="https://lilliss.au/xperience-concept/spine.html"><span class="nm">The Span</span></a><p class="note">1975 to 2117, every date traced to a named source.</p></li>
+      <li><a class="go small" href="https://lilliss.au/stillwild-concept/"><span class="nm">Still Wild</span></a><p class="note">A concept rebuild in five languages, one file.</p></li>
+      <li><a class="go small" href="https://lilliss.au/"><span class="nm">Lilliss IT</span></a><p class="note">The business site.</p></li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="head"><h2>Waiting on you</h2></div>
+    <ul id="waiting">
+      <li>Which look is least wrong. Open two or three and say <em>this one, but&hellip;</em></li>
+      <li>Whether the brochure gets a real Arabic edition. That needs a human translator, not a machine.</li>
+      <li>Creating <span class="m">jared@lilliss.au</span> in Proton. The DNS is ready; the mailbox is your click.</li>
+    </ul>
+  </section>
 </main>
-<footer class="wrap">
-  <span>5 looks &middot; built 4 September 2026 &middot; <a href="/">back to the site</a></span>
-</footer>
+<footer class="wrap"><span>4 September 2026 &middot; <a href="/">back to the site</a></span></footer>
+<script>
+(function(){try{var i=1;[].forEach.call(document.querySelectorAll('#waiting li'),function(el){el.setAttribute('data-n',(i++<10?'0':'')+(i-1));});}catch(e){}})();
+</script>
 </body>
 </html>

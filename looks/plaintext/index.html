@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="light dark">
+<title>The Plain Document — Jared Lilliss</title>
+<meta name="description" content="Jared Lilliss, IT field technician, Sydney. Point-of-sale and payment terminals, Windows machines, structured cabling, cameras. Set as a plain document.">
+<style>
+@font-face{
+  font-family:"Inter";
+  src:url("/fonts/inter.woff2") format("woff2");
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+}
+
+:root{
+  color-scheme:light;
+
+  --paper:#f4f4f1;
+  --paper-2:#ecece8;
+  --ink:#191a1c;
+  --ink-2:#55565b;
+  --rule:#84847d;
+  --link:#3a3d95;
+  --focus:#191a1c;
+
+  --print-paper:#ffffff;
+  --print-ink:#000000;
+
+  --u:13px;
+  --measure:36rem;
+
+  --t-1:12.8px;
+  --t0:16px;
+  --t1:20px;
+  --t2:25px;
+  --t3:31.25px;
+
+  --sans:"Inter","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#16171a;
+    --paper-2:#1d1e21;
+    --ink:#e8e8e3;
+    --ink-2:#a3a49f;
+    --rule:#6a6b66;
+    --link:#a9abee;
+    --focus:#e8e8e3;
+  }
+}
+
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#16171a;
+  --paper-2:#1d1e21;
+  --ink:#e8e8e3;
+  --ink-2:#a3a49f;
+  --rule:#6a6b66;
+  --link:#a9abee;
+  --focus:#e8e8e3;
+}
+
+:root[data-theme="light"]{
+  color-scheme:light;
+  --paper:#f4f4f1;
+  --paper-2:#ecece8;
+  --ink:#191a1c;
+  --ink-2:#55565b;
+  --rule:#84847d;
+  --link:#3a3d95;
+  --focus:#191a1c;
+}
+
+*{box-sizing:border-box}
+
+html{
+  background:var(--paper);
+  -webkit-text-size-adjust:100%;
+}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:var(--t0);
+  line-height:26px;
+  font-weight:400;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1,"kern" 1,"liga" 1;
+  text-rendering:optimizeLegibility;
+}
+
+:where(a):focus-visible,
+:where(button):focus-visible,
+:where(div[tabindex]):focus-visible{
+  outline:2px solid var(--focus);
+  outline-offset:2px;
+}
+
+a{
+  color:var(--link);
+  text-decoration:underline;
+  text-underline-offset:2px;
+  text-decoration-thickness:1px;
+}
+a:hover{text-decoration-thickness:2px}
+
+.skip{
+  position:absolute;
+  left:-9999px;
+  top:0;
+  background:var(--paper);
+  color:var(--ink);
+  padding:var(--u);
+  border:1px solid var(--rule);
+  z-index:5;
+}
+.skip:focus{left:0}
+
+.preview{
+  background:var(--paper-2);
+  border-bottom:1px solid var(--rule);
+  color:var(--ink);
+  font-size:var(--t-1);
+  line-height:26px;
+  padding:var(--u) 20px;
+}
+.preview .inner{
+  max-width:var(--measure);
+  margin:0 auto;
+}
+.preview a{
+  color:var(--link);
+  display:inline-block;
+  min-height:44px;
+  padding:9px 0;
+}
+
+.page{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:calc(var(--u)*4) 20px calc(var(--u)*8);
+}
+
+.masthead{margin:0 0 calc(var(--u)*3)}
+
+h1{
+  font-size:var(--t3);
+  line-height:39px;
+  font-weight:600;
+  letter-spacing:-0.012em;
+  margin:0 0 var(--u);
+}
+
+.lede{
+  font-size:var(--t1);
+  line-height:26px;
+  font-weight:400;
+  color:var(--ink);
+  margin:0 0 calc(var(--u)*2);
+  max-width:30rem;
+}
+
+.sc{
+  font-size:var(--t-1);
+  line-height:26px;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--ink-2);
+}
+
+.meta{
+  display:grid;
+  grid-template-columns:9rem 1fr;
+  column-gap:var(--u);
+  margin:0;
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  padding:var(--u) 0;
+}
+.meta dt{
+  font-size:var(--t-1);
+  line-height:26px;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--ink-2);
+}
+.meta dd{
+  margin:0;
+  line-height:26px;
+  overflow-wrap:anywhere;
+}
+
+@media (max-width:32rem){
+  .meta{grid-template-columns:1fr}
+  .meta dd{margin:0 0 var(--u)}
+  .meta dd:last-child{margin-bottom:0}
+}
+
+nav.toc{margin:calc(var(--u)*3) 0 0}
+nav.toc h2{
+  font-size:var(--t-1);
+  line-height:26px;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--ink-2);
+  margin:0;
+  padding:0;
+  text-indent:0;
+  border:0;
+}
+nav.toc ol{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+nav.toc a{
+  display:flex;
+  align-items:baseline;
+  gap:0.6em;
+  padding:9px 0;
+  text-decoration:none;
+  color:var(--ink);
+  min-height:44px;
+}
+nav.toc a:hover .t{text-decoration:underline;text-underline-offset:2px}
+nav.toc .n{
+  flex:0 0 2.2em;
+  color:var(--ink-2);
+  font-size:var(--t-1);
+}
+nav.toc .leader{
+  flex:1 1 auto;
+  border-bottom:1px dotted var(--rule);
+  position:relative;
+  top:-0.3em;
+  min-width:1.5em;
+}
+nav.toc .go{
+  flex:0 0 auto;
+  color:var(--link);
+  font-size:var(--t-1);
+}
+
+.sec{
+  border-top:1px solid var(--rule);
+  margin-top:calc(var(--u)*4);
+  padding-top:calc(var(--u)*2);
+}
+
+h2{
+  font-size:var(--t2);
+  line-height:26px;
+  font-weight:600;
+  letter-spacing:-0.008em;
+  margin:0 0 var(--u);
+  padding-left:2.4rem;
+  text-indent:-2.4rem;
+}
+h2 .n{
+  display:inline-block;
+  width:2.4rem;
+  font-weight:400;
+  font-size:var(--t1);
+  color:var(--ink-2);
+}
+
+h3{
+  font-size:var(--t1);
+  line-height:26px;
+  font-weight:600;
+  margin:calc(var(--u)*3) 0 var(--u);
+  padding-left:2.4rem;
+  text-indent:-2.4rem;
+}
+h3 .n{
+  display:inline-block;
+  width:2.4rem;
+  font-weight:400;
+  font-size:var(--t-1);
+  color:var(--ink-2);
+}
+
+p{margin:0 0 calc(var(--u)*2)}
+p:last-child{margin-bottom:0}
+
+.standfirst{color:var(--ink-2)}
+
+.run-in{
+  font-size:var(--t-1);
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--ink-2);
+  margin:0 0 var(--u);
+}
+
+ul.plain{
+  list-style:none;
+  margin:0 0 calc(var(--u)*2);
+  padding:0;
+}
+ul.plain li{
+  padding-left:1.4em;
+  text-indent:-1.4em;
+  margin:0 0 var(--u);
+}
+ul.plain li:last-child{margin-bottom:0}
+ul.plain li::before{
+  content:"—";
+  display:inline-block;
+  width:1.4em;
+  text-indent:0;
+  color:var(--ink-2);
+}
+
+.scroll{
+  overflow-x:auto;
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  margin:0 0 var(--u);
+  padding:0;
+}
+
+table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:26rem;
+  font-size:var(--t-1);
+}
+caption{
+  caption-side:top;
+  text-align:left;
+  font-size:var(--t-1);
+  line-height:26px;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--ink-2);
+  padding:0 0 var(--u);
+}
+th,td{
+  text-align:left;
+  vertical-align:top;
+  padding:6.5px 20px 6.5px 0;
+  line-height:26px;
+  border-bottom:1px solid var(--rule);
+}
+th{
+  font-weight:500;
+  color:var(--ink-2);
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  white-space:nowrap;
+}
+tbody tr:last-child th,
+tbody tr:last-child td{border-bottom:0}
+td:last-child,th:last-child{padding-right:0}
+
+.note-line{
+  font-size:var(--t-1);
+  line-height:19.5px;
+  color:var(--ink-2);
+  margin:0 0 calc(var(--u)*2);
+}
+
+blockquote.attrib{
+  margin:0 0 calc(var(--u)*2);
+  padding:0 0 0 var(--u);
+  border-left:2px solid var(--rule);
+  font-size:var(--t-1);
+  line-height:19.5px;
+  color:var(--ink);
+}
+blockquote.attrib p{margin:0 0 var(--u)}
+blockquote.attrib p:last-child{margin:0;color:var(--ink-2)}
+
+sup.ref{
+  font-size:var(--t-1);
+  line-height:0;
+  vertical-align:super;
+}
+sup.ref a{
+  text-decoration:none;
+  padding:0.35em 0.4em;
+  margin:0 -0.25em;
+}
+sup.ref a:hover{text-decoration:underline}
+
+ol.notes{
+  list-style:none;
+  margin:0;
+  padding:0;
+  font-size:var(--t-1);
+  line-height:19.5px;
+}
+ol.notes li{
+  padding-left:2.2em;
+  text-indent:-2.2em;
+  margin:0 0 var(--u);
+}
+ol.notes li:last-child{margin-bottom:0}
+ol.notes .fn{
+  display:inline-block;
+  width:2.2em;
+  text-indent:0;
+  color:var(--ink-2);
+}
+ol.notes .back{
+  text-decoration:none;
+  padding:0 0.35em;
+}
+ol.notes .back:hover{text-decoration:underline}
+:target{background:var(--paper-2)}
+
+dl.links{
+  margin:0;
+  font-size:var(--t-1);
+  line-height:19.5px;
+}
+dl.links dt{
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--ink-2);
+  margin:0;
+}
+dl.links dd{
+  margin:0 0 var(--u);
+  padding-left:1.6em;
+  text-indent:-1.6em;
+  overflow-wrap:anywhere;
+}
+dl.links dd:last-child{margin-bottom:0}
+
+.appearance{
+  margin:calc(var(--u)*2) 0 0;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:var(--u);
+}
+.appearance .lbl{
+  font-size:var(--t-1);
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--ink-2);
+}
+.appearance button{
+  font:inherit;
+  font-size:var(--t-1);
+  line-height:26px;
+  color:var(--ink);
+  background:transparent;
+  border:1px solid var(--rule);
+  border-radius:0;
+  padding:8px 14px;
+  min-height:44px;
+  min-width:44px;
+  cursor:pointer;
+}
+.appearance button[aria-pressed="true"]{
+  background:var(--paper-2);
+  border-color:var(--ink);
+  font-weight:500;
+}
+
+footer.colophon{
+  border-top:1px solid var(--rule);
+  margin-top:calc(var(--u)*4);
+  padding-top:calc(var(--u)*2);
+  font-size:var(--t-1);
+  line-height:19.5px;
+  color:var(--ink-2);
+}
+footer.colophon p{margin:0 0 var(--u)}
+footer.colophon p:last-child{margin:0}
+footer.colophon a{color:var(--link)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:0.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.001ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+
+@media print{
+  .preview,.appearance,.skip{display:none}
+  body{background:var(--print-paper);color:var(--print-ink)}
+  .page{max-width:none}
+  a{color:var(--print-ink)}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#doc">Skip to the document</a>
+
+<div class="preview" role="complementary" aria-label="Preview notice">
+  <div class="inner">An alternative look for this site. Not the live page. <a href="/looks/">All looks</a></div>
+</div>
+
+<div class="page">
+
+<header class="masthead">
+  <p class="sc">Jared Lilliss</p>
+  <h1>IT field technician, Sydney</h1>
+  <p class="lede">Point-of-sale and payment terminals, Windows machines, structured cabling, cameras. For venues and small businesses around Sydney. Usually the same day, usually on site.</p>
+  <dl class="meta">
+    <dt>Contact</dt>
+    <dd><a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></dd>
+    <dt>Trading name</dt>
+    <dd>Lilliss IT — small-business IT across Sydney and regional NSW. Trading since 2019, registered 2026.</dd>
+    <dt>Code</dt>
+    <dd><a href="https://github.com/jaredlilliss">github.com/jaredlilliss</a></dd>
+    <dt>Profile</dt>
+    <dd><a href="https://www.linkedin.com/in/jaredlilliss/">linkedin.com/in/jaredlilliss</a></dd>
+  </dl>
+
+  <nav class="toc" aria-labelledby="toc-h">
+    <h2 id="toc-h">Contents</h2>
+    <ol>
+      <li><a href="#s1"><span class="n">1</span><span class="t">The work</span><span class="leader" aria-hidden="true"></span><span class="go" aria-hidden="true">#s1</span></a></li>
+      <li><a href="#s2"><span class="n">2</span><span class="t">Certifications</span><span class="leader" aria-hidden="true"></span><span class="go" aria-hidden="true">#s2</span></a></li>
+      <li><a href="#s3"><span class="n">3</span><span class="t">What is running</span><span class="leader" aria-hidden="true"></span><span class="go" aria-hidden="true">#s3</span></a></li>
+      <li><a href="#s4"><span class="n">4</span><span class="t">Figures from the collector</span><span class="leader" aria-hidden="true"></span><span class="go" aria-hidden="true">#s4</span></a></li>
+      <li><a href="#s5"><span class="n">5</span><span class="t">How these pages are built</span><span class="leader" aria-hidden="true"></span><span class="go" aria-hidden="true">#s5</span></a></li>
+      <li><a href="#s6"><span class="n">6</span><span class="t">Notes</span><span class="leader" aria-hidden="true"></span><span class="go" aria-hidden="true">#s6</span></a></li>
+      <li><a href="#s7"><span class="n">7</span><span class="t">Index of links</span><span class="leader" aria-hidden="true"></span><span class="go" aria-hidden="true">#s7</span></a></li>
+    </ol>
+  </nav>
+</header>
+
+<main id="doc" tabindex="-1">
+
+<section class="sec" id="s1" aria-labelledby="h1-1">
+  <h2 id="h1-1"><span class="n">1</span>The work</h2>
+  <p>Point-of-sale and payment terminals, and around them the rest of a small site — Windows machines, structured cabling, cameras.</p>
+  <p>The customers are venues and small businesses around Sydney. Most calls are answered the same day and most of the work is done on site.</p>
+  <p>Under the trading name Lilliss IT the same work covers Sydney and regional NSW. The trading page is <a href="/lilliss-it/">/lilliss-it/</a>; the business site is <a href="https://lilliss.au/">lilliss.au</a>.</p>
+</section>
+
+<section class="sec" id="s2" aria-labelledby="h1-2">
+  <h2 id="h1-2"><span class="n">2</span>Certifications</h2>
+  <p>Three, and nothing else. The third is in progress and is written that way until it is not.</p>
+  <div class="scroll" tabindex="0" role="region" aria-labelledby="cap-certs">
+    <table>
+      <caption id="cap-certs">Table 1 — Certifications held and in progress</caption>
+      <thead>
+        <tr><th scope="col">Certification</th><th scope="col">Issuer</th><th scope="col">Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">A+</th><td>CompTIA</td><td>Held</td></tr>
+        <tr><th scope="row">Azure Fundamentals AZ-900</th><td>Microsoft</td><td>Held</td></tr>
+        <tr><th scope="row">Security+</th><td>CompTIA</td><td>In progress</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="sec" id="s3" aria-labelledby="h1-3">
+  <h2 id="h1-3"><span class="n">3</span>What is running</h2>
+  <p class="standfirst">Four things. One collects data every quarter hour, two are design concepts built to be looked at, and the fourth is the name the paid work goes out under.</p>
+
+  <h3 id="s3-1"><span class="n">3.1</span>Aussie Health Utility</h3>
+  <p>A collector that reads how many people are waiting in each NSW emergency department that publishes a live count<sup class="ref" id="r1"><a href="#n1" aria-describedby="notes-h">1</a></sup>, every fifteen minutes, and appends the reading to a PostgreSQL series that is never rewritten. Fifty-nine departments publish such a count<sup class="ref" id="r2"><a href="#n2" aria-describedby="notes-h">2</a></sup>. It has been collecting since 20 July 2026 and holds more than 120,000 readings.</p>
+  <p>The interval is not a preference. The upstream feed publishes the current moment only and keeps no history, so a reading not taken at the time is gone for good<sup class="ref" id="r3"><a href="#n3" aria-describedby="notes-h">3</a></sup>. That is also why the early weeks have gaps and the later ones do not<sup class="ref" id="r4"><a href="#n4" aria-describedby="notes-h">4</a></sup>. A dump of the database is taken at 03:30 Melbourne time each night and copied off the machine<sup class="ref" id="r5"><a href="#n5" aria-describedby="notes-h">5</a></sup>.</p>
+  <p>No personal or health information is collected, because the schema has no fields for it<sup class="ref" id="r6"><a href="#n6" aria-describedby="notes-h">6</a></sup>.</p>
+  <div class="scroll" tabindex="0" role="region" aria-labelledby="cap-ahu">
+    <table>
+      <caption id="cap-ahu">Table 2 — Aussie Health Utility, public pages and source</caption>
+      <thead>
+        <tr><th scope="col">Page</th><th scope="col">What it holds</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row"><a href="/queue-board/">/queue-board/</a></th><td>The live board</td></tr>
+        <tr><th scope="row"><a href="/record/">/record/</a></th><td>The collection record</td></tr>
+        <tr><th scope="row"><a href="/waits/">/waits/</a></th><td>The Tally</td></tr>
+        <tr><th scope="row"><a href="https://github.com/jaredlilliss/aussie-health-utility">aussie-health-utility</a></th><td>Source, public mirror<sup class="ref" id="r7"><a href="#n7" aria-describedby="notes-h">7</a></sup></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="s3-2"><span class="n">3.2</span>Still Wild</h3>
+  <p>A concept rebuild for a real Brisbane adventure business, written as one self-contained HTML file. It holds a live canvas dawn scene, a dictionary in five languages — English, Simplified Chinese, Traditional Chinese, Japanese and Korean — and an honesty layer that labels every invented detail as invented, on the page, where a reader will see it.</p>
+  <p>Photographs are used with the business's permission, for prototyping. The concept is not affiliated with them<sup class="ref" id="r8"><a href="#n8" aria-describedby="notes-h">8</a></sup>. It is live at <a href="https://lilliss.au/stillwild-concept/">lilliss.au/stillwild-concept/</a>.</p>
+
+  <h3 id="s3-3"><span class="n">3.3</span>The Span</h3>
+  <p>A design concept: one screen holding 1975 to 2117, with the space programme of the United Arab Emirates drawn as a single span you travel by dragging. Fifteen milestones sit on it. Each is a drawn line that means its own event rather than an icon taken off a shelf, and each names the source that establishes it; thirteen link straight to the government page they came from. Nothing on it is estimated<sup class="ref" id="r9"><a href="#n9" aria-describedby="notes-h">9</a></sup>.</p>
+  <p>It is deep-linkable to any year, navigable by keyboard, and with scripting switched off it reads as a plain sourced list. It is live at <a href="https://lilliss.au/xperience-concept/spine.html">lilliss.au/xperience-concept/spine.html</a>.</p>
+
+  <h3 id="s3-4"><span class="n">3.4</span>Lilliss IT</h3>
+  <p>The trading name for the work in section one: small-business IT across Sydney and regional NSW. Trading since 2019, registered 2026. The page here is <a href="/lilliss-it/">/lilliss-it/</a> and the business site is <a href="https://lilliss.au/">lilliss.au</a>.</p>
+</section>
+
+<section class="sec" id="s4" aria-labelledby="h1-4">
+  <h2 id="h1-4"><span class="n">4</span>Figures from the collector</h2>
+  <p>The figures below are read from <a href="/queue-board/ed.json">/queue-board/ed.json</a> on this site when the page loads. They are counts of people waiting at the reading named beside them. They are not waiting times; the feed has no minutes field.</p>
+  <p class="note-line" id="feed-status">Not loaded. With scripting off, or if the file is unavailable, this section stays empty rather than filling with an estimate.</p>
+
+  <div class="scroll" tabindex="0" role="region" aria-labelledby="cap-meta">
+    <table>
+      <caption id="cap-meta">Table 3 — The series as the file describes it</caption>
+      <tbody>
+        <tr><th scope="row">Readings</th><td id="m-snap">—</td></tr>
+        <tr><th scope="row">Departments reporting</th><td id="m-fac">—</td></tr>
+        <tr><th scope="row">First reading</th><td id="m-first">—</td></tr>
+        <tr><th scope="row">Last reading</th><td id="m-last">—</td></tr>
+        <tr><th scope="row">File generated</th><td id="m-gen">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="scroll" tabindex="0" role="region" aria-labelledby="cap-live">
+    <table>
+      <caption id="cap-live">Table 4 — People waiting, ten departments, ordered by the count at the last reading</caption>
+      <thead>
+        <tr><th scope="col">Department</th><th scope="col">Suburb</th><th scope="col">People waiting</th><th scope="col">Reading taken</th></tr>
+      </thead>
+      <tbody id="feed-rows">
+        <tr><td colspan="4">No reading loaded.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <blockquote class="attrib">
+    <p>Copyright State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au.</p>
+    <p>Licence: CC BY 4.0.</p>
+  </blockquote>
+</section>
+
+<section class="sec" id="s5" aria-labelledby="h1-5">
+  <h2 id="h1-5"><span class="n">5</span>How these pages are built</h2>
+  <p>Every page on this site is a single HTML file. There is no build step and no framework. There are zero external requests: the fonts are self-hosted and nothing is loaded from another host, so a page keeps working with the network cable pulled once it has loaded.</p>
+  <ul class="plain">
+    <li>One file per page, served as it was written.</li>
+    <li>One typeface on this page, Inter, in one weight range, at five sizes.</li>
+    <li>One accent, used only for links.</li>
+    <li>Data fetched from this origin only, and only where the page still reads correctly without it.</li>
+  </ul>
+</section>
+
+<section class="sec" id="s6" aria-labelledby="notes-h">
+  <h2 id="notes-h"><span class="n">6</span>Notes</h2>
+  <ol class="notes">
+    <li id="n1"><span class="fn">1.</span>The feed counts people waiting. It has no minutes field anywhere in it, so nothing here is a waiting time, and nothing derived from it can be. <a class="back" href="#r1" aria-label="Back to note 1 in the text">Back</a></li>
+    <li id="n2"><span class="fn">2.</span>Fifty-nine is the number of departments that publish a live count. New South Wales has 176 emergency departments in total; the others do not publish one, so they are absent from the series rather than recorded as zero. <a class="back" href="#r2" aria-label="Back to note 2 in the text">Back</a></li>
+    <li id="n3"><span class="fn">3.</span>The upstream feed publishes the current moment only and keeps no history. A reading not taken at the time is gone for good, which is the whole argument for a fixed interval rather than fetching on demand. <a class="back" href="#r3" aria-label="Back to note 3 in the text">Back</a></li>
+    <li id="n4"><span class="fn">4.</span>It ran on a laptop first, which slept, so the early weeks have gaps. Since 23 August 2026 it has run on a small Melbourne server and nothing after that date is missing. <a class="back" href="#r4" aria-label="Back to note 4 in the text">Back</a></li>
+    <li id="n5"><span class="fn">5.</span>A database dump is taken at 03:30 Melbourne time each night and copied off the machine. <a class="back" href="#r5" aria-label="Back to note 5 in the text">Back</a></li>
+    <li id="n6"><span class="fn">6.</span>No personal or health information is collected, because the schema has no fields for it. Privacy statement: <a href="/privacy.html">/privacy.html</a>. <a class="back" href="#r6" aria-label="Back to note 6 in the text">Back</a></li>
+    <li id="n7"><span class="fn">7.</span>The repository linked here is a public mirror. The working repository stays private. <a class="back" href="#r7" aria-label="Back to note 7 in the text">Back</a></li>
+    <li id="n8"><span class="fn">8.</span>Photographs are used with the business's permission, for prototyping. The concept is not affiliated with the business, and every invented detail on it is labelled as invented. <a class="back" href="#r8" aria-label="Back to note 8 in the text">Back</a></li>
+    <li id="n9"><span class="fn">9.</span>An unsolicited concept, with no affiliation. All fifteen milestones name the source that establishes them; thirteen link straight to the government page they came from. <a class="back" href="#r9" aria-label="Back to note 9 in the text">Back</a></li>
+  </ol>
+</section>
+
+<section class="sec" id="s7" aria-labelledby="h1-7">
+  <h2 id="h1-7"><span class="n">7</span>Index of links</h2>
+  <dl class="links">
+    <dt>This site</dt>
+    <dd><a href="/">/</a> — home</dd>
+    <dd><a href="/queue-board/">/queue-board/</a> — the live board</dd>
+    <dd><a href="/record/">/record/</a> — the collection record</dd>
+    <dd><a href="/waits/">/waits/</a> — The Tally</dd>
+    <dd><a href="/lilliss-it/">/lilliss-it/</a> — the trading page</dd>
+    <dd><a href="/privacy.html">/privacy.html</a> — privacy statement</dd>
+    <dd><a href="/looks/">/looks/</a> — the alternative looks, including this one</dd>
+    <dt>Elsewhere</dt>
+    <dd><a href="https://lilliss.au/">lilliss.au</a> — the business site</dd>
+    <dd><a href="https://lilliss.au/stillwild-concept/">lilliss.au/stillwild-concept/</a> — Still Wild</dd>
+    <dd><a href="https://lilliss.au/xperience-concept/spine.html">lilliss.au/xperience-concept/spine.html</a> — The Span</dd>
+    <dd><a href="https://github.com/jaredlilliss">github.com/jaredlilliss</a> — code</dd>
+    <dd><a href="https://github.com/jaredlilliss/aussie-health-utility">github.com/jaredlilliss/aussie-health-utility</a> — collector source, public mirror</dd>
+    <dd><a href="https://www.linkedin.com/in/jaredlilliss/">linkedin.com/in/jaredlilliss</a> — profile</dd>
+    <dt>Contact</dt>
+    <dd><a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></dd>
+  </dl>
+</section>
+
+</main>
+
+<footer class="colophon">
+  <p>Set in Inter, self-hosted, one file. Five sizes: 12.8, 16, 20, 25 and 31.25 pixels, each a quarter larger than the one below it. Footnote markers are set at the smallest of the five and raised, rather than scaled to a sixth size. Small capitals are synthesised from Inter at 500 weight with the tracking opened by a tenth of an em, and are used only for labels.</p>
+  <p>The measure is 36 rem. Body text is set 16 on 26. Every leading and every gap between blocks is 13 pixels or a plain multiple of it, down to a half: 19.5 is a unit and a half, and a single-line table row measures 39, which is three. Where a control needs a 44-pixel target, its padding leaves the grid to reach it. A section heading carries six units of space above it — four before the rule and two after it — and one unit below, which is why a section reads as belonging to its heading rather than to the paragraph before. Section and note numbers hang in the left margin so the text edge never breaks. Figures are lining and tabular, so a column of numbers aligns on the left instead of being right-aligned to fake it.</p>
+  <p>Two colours of text on two grounds, one link colour, and nothing else. Contrast on the light ground: body 15.8:1, secondary 6.6:1, links 8.4:1. On the dark ground: body 14.6:1, secondary 7.1:1, links 8.3:1. Rules are drawn at no less than 3.1:1, in either theme and on either ground.</p>
+  <div class="appearance">
+    <span class="lbl" id="appearance-label">Appearance</span>
+    <button type="button" data-mode="auto" aria-pressed="true" aria-describedby="appearance-label">Auto</button>
+    <button type="button" data-mode="light" aria-pressed="false" aria-describedby="appearance-label">Light</button>
+    <button type="button" data-mode="dark" aria-pressed="false" aria-describedby="appearance-label">Dark</button>
+  </div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var buttons=document.querySelectorAll(".appearance button");
+  function apply(mode){
+    if(mode==="auto"){root.removeAttribute("data-theme");}
+    else{root.setAttribute("data-theme",mode);}
+    for(var i=0;i<buttons.length;i++){
+      buttons[i].setAttribute("aria-pressed", buttons[i].getAttribute("data-mode")===mode ? "true" : "false");
+    }
+    try{window.localStorage.setItem("look-plaintext-appearance",mode);}catch(e){}
+  }
+  for(var i=0;i<buttons.length;i++){
+    buttons[i].addEventListener("click",function(){apply(this.getAttribute("data-mode"));});
+  }
+  var saved=null;
+  try{saved=window.localStorage.getItem("look-plaintext-appearance");}catch(e){}
+  if(saved==="light"||saved==="dark"||saved==="auto"){apply(saved);}
+})();
+
+(function(){
+  var status=document.getElementById("feed-status");
+  var rows=document.getElementById("feed-rows");
+  function set(id,v){var e=document.getElementById(id); if(e){e.textContent=v;}}
+  function esc(s){
+    return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+  function num(n){
+    return (typeof n==="number"&&isFinite(n)) ? n.toLocaleString("en-AU") : "—";
+  }
+  function when(s){
+    if(typeof s!=="string"||!s){return "—";}
+    return s.replace("T"," ").slice(0,16);
+  }
+  if(!window.fetch){
+    status.textContent="Not loaded: this browser cannot fetch the file. Nothing here is estimated.";
+    return;
+  }
+  fetch("/queue-board/ed.json",{cache:"no-store"}).then(function(r){
+    if(!r.ok){throw new Error("status");}
+    return r.json();
+  }).then(function(d){
+    var m=(d&&d.meta)||{};
+    set("m-snap",num(m.snapshots));
+    set("m-fac",num(m.facilities_reporting));
+    set("m-first",when(m.first));
+    set("m-last",when(m.last));
+    set("m-gen",when(d&&d.generated_at));
+    var list=(d&&d.facilities)||[];
+    var top=list.filter(function(x){return x&&typeof x.current==="number"&&isFinite(x.current);})
+                .sort(function(a,b){return b.current-a.current;})
+                .slice(0,10);
+    if(!top.length){
+      status.textContent="Loaded, but no department reported a count at the last reading.";
+      return;
+    }
+    var html="";
+    for(var i=0;i<top.length;i++){
+      html+="<tr><th scope=\"row\">"+esc(top[i].name)+"</th><td>"+esc(top[i].suburb)+"</td><td>"+num(top[i].current)+"</td><td>"+when(top[i].at)+"</td></tr>";
+    }
+    rows.innerHTML=html;
+    status.textContent="Loaded from /queue-board/ed.json. Counts of people waiting, not waiting times.";
+  }).catch(function(){
+    status.textContent="Not loaded: the file was unavailable. The tables stay empty rather than filling with an estimate.";
+  });
+})();
+</script>
+
+</body>
+</html>

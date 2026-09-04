@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Lilliss, Jared — card catalogue</title>
+<meta name="description" content="A catalogue of what Jared Lilliss has running: an emergency department collector, two design concepts, and a small IT trade in Sydney.">
+<style>
+@font-face{font-family:"Plex Mono Local";src:url("/fonts/plexmono-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Plex Mono Local";src:url("/fonts/plexmono-500.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Inter Local";src:url("/fonts/inter.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+
+:root{
+  --ground:#DED8C8;
+  --card:#F7F4EC;
+  --card-2:#EFEAE0;
+  --ink:#1B1A16;
+  --ink-2:#4A4740;
+  --rule:#8A8272;
+  --rule-strong:#6E6857;
+  --rule-faint:#CFC7B4;
+  --stamp:#B3261E;
+  --mono:"Plex Mono Local","IBM Plex Mono","DejaVu Sans Mono",ui-monospace,Consolas,monospace;
+  --sans:"Inter Local",Inter,"Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+  --pitch:28px;
+}
+:root:not([data-theme="light"]){
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#14120E;
+    --card:#1E1B15;
+    --card-2:#26221A;
+    --ink:#EDE7D8;
+    --ink-2:#B6AF9C;
+    --rule:#7A7362;
+    --rule-strong:#8E8672;
+    --rule-faint:#3B3527;
+    --stamp:#F2564A;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14120E;
+  --card:#1E1B15;
+  --card-2:#26221A;
+  --ink:#EDE7D8;
+  --ink-2:#B6AF9C;
+  --rule:#7A7362;
+  --rule-strong:#8E8672;
+  --rule-faint:#3B3527;
+  --stamp:#F2564A;
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --ground:#DED8C8;
+  --card:#F7F4EC;
+  --card-2:#EFEAE0;
+  --ink:#1B1A16;
+  --ink-2:#4A4740;
+  --rule:#8A8272;
+  --rule-strong:#6E6857;
+  --rule-faint:#CFC7B4;
+  --stamp:#B3261E;
+  color-scheme:light;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.55;
+}
+a{color:var(--stamp)}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
+  outline:2px solid var(--stamp);
+  outline-offset:2px;
+}
+#main:focus,#main:focus-visible{outline:none}
+
+.skip{
+  position:absolute;left:-9999px;top:0;
+  background:var(--card);color:var(--ink);
+  border:1px solid var(--rule-strong);
+  padding:12px 16px;font-family:var(--mono);font-size:14px;z-index:20;
+}
+.skip:focus{left:8px;top:8px}
+
+.preview{
+  background:var(--card);
+  border-bottom:1px solid var(--rule-strong);
+  color:var(--ink-2);
+  font-size:14px;
+  letter-spacing:.01em;
+  padding:0 16px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;
+  min-height:48px;
+}
+.preview a{
+  color:var(--stamp);
+  font-weight:600;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  display:inline-flex;align-items:center;
+  min-height:44px;padding:0 2px;
+}
+
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px 72px}
+
+.plate{
+  margin:32px 0 0;
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+}
+h1{
+  font-family:var(--mono);
+  font-weight:500;
+  font-size:clamp(30px,7vw,46px);
+  line-height:1.1;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  margin:8px 0 0;
+}
+.standfirst{
+  font-family:var(--mono);
+  font-size:15px;
+  line-height:1.6;
+  color:var(--ink-2);
+  margin:14px 0 0;
+  max-width:60ch;
+}
+.headrule{
+  border:0;border-top:1px solid var(--rule-strong);
+  margin:26px 0 0;
+}
+
+.tabs{
+  display:flex;flex-wrap:wrap;gap:0 6px;
+  margin:22px 0 0;padding:0;
+  align-items:flex-end;
+}
+.tab{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink);
+  text-decoration:none;
+  background:var(--card);
+  border:1px solid var(--rule-strong);
+  border-bottom:0;
+  padding:14px 12px 12px;
+  min-height:44px;
+  display:flex;align-items:center;
+  position:relative;top:1px;
+}
+.tab:nth-child(even){margin-bottom:0;padding-top:20px}
+.tab:hover{background:var(--card-2)}
+
+.drawer{
+  border:1px solid var(--rule-strong);
+  background:transparent;
+  padding:18px;
+  display:flex;flex-direction:column;gap:18px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--rule-strong);
+  padding:20px 20px 40px;
+  position:relative;
+  scroll-margin-top:16px;
+}
+.card::after{
+  content:"";
+  position:absolute;left:50%;bottom:14px;
+  width:13px;height:13px;margin-left:-7px;
+  border:1px solid var(--rule);
+  border-radius:50%;
+}
+
+.card-head{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:0 18px;
+  align-items:start;
+  border-bottom:1px solid var(--rule);
+  padding-bottom:14px;
+}
+.call{
+  background:var(--card-2);
+  border:1px solid var(--rule);
+  padding:8px 10px;
+  font-family:var(--mono);
+  font-size:14px;
+  line-height:1.35;
+  letter-spacing:.04em;
+  color:var(--ink);
+  min-width:9ch;
+}
+.call span{display:block}
+.call .lab{
+  font-size:10px;letter-spacing:.2em;
+  color:var(--ink-2);
+  margin-bottom:4px;
+}
+.entry{
+  font-family:var(--mono);
+  font-weight:500;
+  font-size:clamp(20px,3.4vw,26px);
+  line-height:1.25;
+  letter-spacing:.01em;
+  margin:0;
+}
+.imprint{
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--ink-2);
+  margin:6px 0 0;
+  letter-spacing:.02em;
+}
+.stamp{
+  font-family:var(--mono);
+  font-weight:500;
+  font-size:11px;
+  line-height:1.35;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--stamp);
+  border:2px solid var(--stamp);
+  padding:7px 9px;
+  margin:2px 0 0;
+  text-align:center;
+  transform:rotate(-3deg);
+  white-space:nowrap;
+}
+
+.rec{
+  font-family:var(--mono);
+  font-size:15px;
+  line-height:var(--pitch);
+  margin:18px 0 0;
+  padding:0 0 1px 2ch;
+  background-image:repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--pitch) - 1px),
+    var(--rule-faint) calc(var(--pitch) - 1px),
+    var(--rule-faint) var(--pitch));
+}
+.rec p{margin:0 0 var(--pitch);max-width:74ch}
+.rec p:last-child{margin-bottom:0}
+.rec p:first-child{text-indent:4ch}
+.rec strong{font-weight:500}
+
+.fields{
+  margin:22px 0 0;
+  display:grid;
+  grid-template-columns:12ch 1fr;
+  gap:0;
+  border-top:1px solid var(--rule);
+  font-family:var(--mono);
+  font-size:13.5px;
+  line-height:1.6;
+}
+.fields dt{
+  padding:9px 12px 9px 0;
+  border-bottom:1px solid var(--rule);
+  font-size:10.5px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+}
+.fields dd{
+  margin:0;
+  padding:9px 0;
+  border-bottom:1px solid var(--rule);
+  color:var(--ink);
+  overflow-wrap:anywhere;
+  line-height:2.2;
+}
+.fields dd a{
+  display:inline-block;
+  line-height:1.6;
+  padding:12px 0;
+  min-height:44px;
+  text-underline-offset:3px;
+}
+
+.tracings{
+  margin:20px 0 0;
+  font-family:var(--mono);
+  font-size:12.5px;
+  line-height:1.75;
+  color:var(--ink-2);
+  border-top:1px solid var(--rule);
+  padding-top:12px;
+}
+.tracings b{
+  display:block;
+  font-weight:500;
+  font-size:10.5px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  margin-bottom:6px;
+}
+
+h3{
+  font-family:var(--mono);
+  font-weight:500;
+  font-size:12px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  margin:24px 0 8px;
+}
+
+.scroll{
+  overflow-x:auto;
+  border:1px solid var(--rule);
+  background:var(--card-2);
+}
+table{
+  border-collapse:collapse;
+  width:100%;
+  font-family:var(--mono);
+  font-size:13.5px;
+}
+caption{
+  text-align:left;
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.06em;
+  color:var(--ink-2);
+  padding:10px 12px;
+  border-bottom:1px solid var(--rule);
+  line-height:1.5;
+}
+th,td{
+  padding:9px 12px;
+  border-bottom:1px solid var(--rule);
+  text-align:left;
+  white-space:nowrap;
+  color:var(--ink);
+}
+thead th{
+  font-weight:500;
+  font-size:10.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  border-bottom:1px solid var(--rule);
+}
+tbody th{font-weight:500}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+
+.slipnote{
+  font-family:var(--mono);
+  font-size:13px;
+  line-height:1.65;
+  color:var(--ink-2);
+  margin:12px 0 0;
+}
+.attrib{
+  font-family:var(--mono);
+  font-size:12px;
+  line-height:1.7;
+  color:var(--ink-2);
+  margin:14px 0 0;
+  border-left:2px solid var(--rule);
+  padding-left:12px;
+  max-width:70ch;
+}
+
+footer{
+  border-top:1px solid var(--rule-strong);
+  margin:34px 0 0;
+  padding:20px 0 0;
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--ink-2);
+}
+footer ul{
+  list-style:none;margin:0 0 12px;padding:0;
+  display:flex;flex-wrap:wrap;gap:0 20px;
+}
+footer ul a{display:inline-flex;align-items:center;min-height:44px}
+footer a{text-underline-offset:3px}
+footer p{margin:0 0 8px;max-width:70ch}
+
+@media (max-width:720px){
+  .card-head{grid-template-columns:auto 1fr;gap:0 14px}
+  .stamp{grid-column:1 / -1;justify-self:start;margin-top:14px}
+  .fields{grid-template-columns:1fr}
+  .fields dt{border-bottom:0;padding-bottom:0}
+  .fields dd{padding-top:2px}
+  .drawer{padding:12px}
+  .card{padding:16px 16px 40px}
+  .rec{padding-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the catalogue</a>
+
+<aside class="preview" aria-label="Preview notice">
+  <span>An alternative look for this site. Not the live page.</span>
+  <a href="/looks/">All looks</a>
+</aside>
+
+<div class="wrap">
+  <header>
+    <p class="plate">Card catalogue · seven cards</p>
+    <h1>Lilliss, Jared</h1>
+    <p class="standfirst">IT field technician. Sydney, Australia. Seven cards below: one for the person, four for the things that are running, one live slip drawn from the collector, and a colophon for the drawer itself.</p>
+    <hr class="headrule">
+  </header>
+
+  <nav class="tabs" aria-label="Catalogue dividers">
+    <a class="tab" href="#person">Person</a>
+    <a class="tab" href="#health">Aussie Health</a>
+    <a class="tab" href="#slip">Live slip</a>
+    <a class="tab" href="#stillwild">Still Wild</a>
+    <a class="tab" href="#span">The Span</a>
+    <a class="tab" href="#lillissit">Lilliss IT</a>
+    <a class="tab" href="#colophon">Colophon</a>
+  </nav>
+
+  <main id="main" class="drawer" tabindex="-1">
+
+    <article class="card" id="person">
+      <div class="card-head">
+        <p class="call"><span class="lab">Card</span><span>1</span><span>of 7</span></p>
+        <div>
+          <h2 class="entry">Lilliss, Jared</h2>
+          <p class="imprint">Authority record · Sydney, Australia · IT field technician</p>
+        </div>
+        <p class="stamp">Main<br>entry</p>
+      </div>
+      <div class="rec">
+        <p>Point-of-sale and payment terminals, Windows machines, structured cabling, cameras. The work is for venues and small businesses around Sydney. Usually the same day, usually on site.</p>
+        <p>The cards that follow cover a collector running since July, two design concepts, the trading name the field work is done under, a live slip and a colophon.</p>
+      </div>
+      <dl class="fields">
+        <dt>Held</dt>
+        <dd>CompTIA A+ · Microsoft Azure Fundamentals AZ-900</dd>
+        <dt>In progress</dt>
+        <dd>CompTIA Security+</dd>
+        <dt>Contact</dt>
+        <dd><a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></dd>
+        <dt>Elsewhere</dt>
+        <dd><a href="https://github.com/jaredlilliss">github.com/jaredlilliss</a> · <a href="https://www.linkedin.com/in/jaredlilliss/">linkedin.com/in/jaredlilliss</a></dd>
+      </dl>
+      <p class="tracings"><b>Subject headings</b>1. Information technology — field service — New South Wales. 2. Point-of-sale systems — maintenance. 3. Small business — computer support.</p>
+    </article>
+
+    <article class="card" id="health">
+      <div class="card-head">
+        <p class="call"><span class="lab">Card</span><span>2</span><span>of 7</span></p>
+        <div>
+          <h2 class="entry">Aussie Health Utility</h2>
+          <p class="imprint">Collector and public record · New South Wales · 2026–</p>
+        </div>
+        <p class="stamp">Collecting<br>since<br>20 Jul 2026</p>
+      </div>
+      <div class="rec">
+        <p>A collector reads how many people are waiting in each New South Wales emergency department that publishes a live count. It reads every fifteen minutes and appends the reading to a PostgreSQL series that is never rewritten.</p>
+        <p>Fifty-nine departments publish a live count. New South Wales has 176 in total, so this is not every department.</p>
+        <p>No personal or health information is collected. That is not a policy on top of the schema; the schema has no fields for it.</p>
+        <p>The upstream feed publishes the current moment only and keeps no history. A reading not taken at the time is gone for good.</p>
+        <p>It ran on a laptop first, and the laptop slept, so the early weeks have gaps. Since 23 August 2026 it has run on a small Melbourne server and nothing after that is missing. A database dump is taken at 03:30 Melbourne time each night and copied off the machine.</p>
+      </div>
+      <dl class="fields">
+        <dt>Collation</dt>
+        <dd>59 departments · one reading every 15 minutes · more than 120,000 readings</dd>
+        <dt>Held since</dt>
+        <dd>20 July 2026. Gaps before 23 August 2026; none after.</dd>
+        <dt>Pages</dt>
+        <dd><a href="/queue-board/">/queue-board/</a> the live board · <a href="/record/">/record/</a> the collection record · <a href="/waits/">/waits/</a> The Tally</dd>
+        <dt>Source</dt>
+        <dd><a href="https://github.com/jaredlilliss/aussie-health-utility">github.com/jaredlilliss/aussie-health-utility</a> — public mirror; the working repository stays private</dd>
+      </dl>
+      <p class="tracings"><b>Subject headings</b>1. Emergency departments — New South Wales — statistics. 2. Time series — collection and retention. 3. Open data — attribution and licensing. 4. Data collection — scheduled.</p>
+    </article>
+
+    <article class="card" id="slip">
+      <div class="card-head">
+        <p class="call"><span class="lab">Card</span><span>3</span><span>of 7</span></p>
+        <div>
+          <h2 class="entry">Live slip</h2>
+          <p class="imprint">Drawn from the collector when this page loads</p>
+        </div>
+        <p class="stamp">Read at<br><span id="slip-when">load</span></p>
+      </div>
+      <div class="rec">
+        <p>This slip is filled in from the same file the live board reads. The numbers are counts of people waiting. There is no minutes field anywhere in the feed, so nothing here is a waiting time.</p>
+        <p id="slip-status" aria-live="polite">Reading the slip.</p>
+      </div>
+
+      <dl class="fields">
+        <dt>Reporting</dt>
+        <dd><span id="m-fac">—</span> departments in the last read</dd>
+        <dt>Readings</dt>
+        <dd><span id="m-snap">—</span> stored · <span id="m-cyc">—</span> collection cycles</dd>
+        <dt>Span</dt>
+        <dd><span id="m-first">—</span> to <span id="m-last">—</span></dd>
+      </dl>
+
+      <h3>Departments with the most people waiting</h3>
+      <div class="scroll" tabindex="0" role="region" aria-label="Departments with the most people waiting, scrollable table">
+        <table>
+          <caption>Ten departments, ordered by people waiting at the last reading</caption>
+          <thead>
+            <tr>
+              <th scope="col">Department</th>
+              <th scope="col">Suburb</th>
+              <th scope="col" class="num">Waiting</th>
+              <th scope="col">Reading taken</th>
+            </tr>
+          </thead>
+          <tbody id="fac-body">
+            <tr><td colspan="4">Not loaded. The card above stands without it.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Average people waiting, by hour of day</h3>
+      <div class="scroll" tabindex="0" role="region" aria-label="Average people waiting by hour of day, table">
+        <table>
+          <caption>Across the departments that publish a live count. When the slip loads, the full day runs sideways.</caption>
+          <thead>
+            <tr id="hour-head">
+              <th scope="col">Hour</th>
+              <th scope="col" class="num">—</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="hour-body">
+              <th scope="row">Average</th>
+              <td class="num">Not loaded</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="slipnote">If the file cannot be read, or scripting is off, the two tables above stay empty and everything else on this page is still true.</p>
+      <p class="attrib">Copyright State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au.<br>Licence: CC BY 4.0.</p>
+      <p class="tracings"><b>Subject headings</b>1. Emergency departments — New South Wales — current counts. 2. Public data — reuse under licence.</p>
+    </article>
+
+    <article class="card" id="stillwild">
+      <div class="card-head">
+        <p class="call"><span class="lab">Card</span><span>4</span><span>of 7</span></p>
+        <div>
+          <h2 class="entry">Still Wild</h2>
+          <p class="imprint">Concept rebuild · a real Brisbane adventure business</p>
+        </div>
+        <p class="stamp">Concept<br>only</p>
+      </div>
+      <div class="rec">
+        <p>One self-contained HTML file. A dawn scene drawn live on a canvas, a dictionary in five languages — English, Simplified Chinese, Traditional Chinese, Japanese, Korean — and an honesty layer that labels every invented detail as invented.</p>
+        <p>The photographs are used with the business's permission, for prototyping. There is no affiliation with them.</p>
+      </div>
+      <dl class="fields">
+        <dt>Form</dt>
+        <dd>Single HTML file · live canvas · five-language dictionary</dd>
+        <dt>Standing</dt>
+        <dd>Concept. Not affiliated with the business.</dd>
+        <dt>Live at</dt>
+        <dd><a href="https://lilliss.au/stillwild-concept/">lilliss.au/stillwild-concept/</a></dd>
+      </dl>
+      <p class="tracings"><b>Subject headings</b>1. Web design — concept work. 2. Multilingual interfaces. 3. Disclosure — invented content, labelling of.</p>
+    </article>
+
+    <article class="card" id="span">
+      <div class="card-head">
+        <p class="call"><span class="lab">Card</span><span>5</span><span>of 7</span></p>
+        <div>
+          <h2 class="entry">The Span</h2>
+          <p class="imprint">Design concept · 1975 to 2117 on one screen</p>
+        </div>
+        <p class="stamp">Every<br>line<br>sourced</p>
+      </div>
+      <div class="rec">
+        <p>One screen holds 1975 to 2117: the space programme of the United Arab Emirates drawn as a single span you travel by dragging.</p>
+        <p>Fifteen milestones. Each one is a drawn line that means its own event rather than an icon off a shelf, and each names the source that establishes it. Thirteen link straight to the government page they came from. Nothing on it is estimated.</p>
+        <p>It is deep-linkable to any year, it can be worked from the keyboard, and with scripting switched off it reads as a plain sourced list. Unsolicited, and no affiliation.</p>
+      </div>
+      <dl class="fields">
+        <dt>Form</dt>
+        <dd>Single screen · draggable span · deep links by year · keyboard-navigable</dd>
+        <dt>Sourcing</dt>
+        <dd>15 milestones, each with a named source; 13 link to the government page</dd>
+        <dt>Live at</dt>
+        <dd><a href="https://lilliss.au/xperience-concept/spine.html">lilliss.au/xperience-concept/spine.html</a></dd>
+      </dl>
+      <p class="tracings"><b>Subject headings</b>1. Astronautics — United Arab Emirates — chronology. 2. Information design — timelines. 3. Sources — citation in interfaces.</p>
+    </article>
+
+    <article class="card" id="lillissit">
+      <div class="card-head">
+        <p class="call"><span class="lab">Card</span><span>6</span><span>of 7</span></p>
+        <div>
+          <h2 class="entry">Lilliss IT</h2>
+          <p class="imprint">Trading name · Sydney and regional New South Wales</p>
+        </div>
+        <p class="stamp">Trading<br>since<br>2019</p>
+      </div>
+      <div class="rec">
+        <p>The trading name for the same field work: small-business IT across Sydney and regional New South Wales. Trading since 2019, registered 2026.</p>
+        <p>Point-of-sale and payment terminals, Windows machines, structured cabling and cameras: the same work, listed here under the trading name.</p>
+      </div>
+      <dl class="fields">
+        <dt>Coverage</dt>
+        <dd>Sydney and regional New South Wales</dd>
+        <dt>Pages</dt>
+        <dd><a href="/lilliss-it/">/lilliss-it/</a> here · <a href="https://lilliss.au/">lilliss.au</a> the business site</dd>
+        <dt>Enquiries</dt>
+        <dd><a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></dd>
+      </dl>
+      <p class="tracings"><b>Subject headings</b>1. Computer service industry — New South Wales. 2. Sole traders — information technology.</p>
+    </article>
+
+    <article class="card" id="colophon">
+      <div class="card-head">
+        <p class="call"><span class="lab">Card</span><span>7</span><span>of 7</span></p>
+        <div>
+          <h2 class="entry">The drawer itself</h2>
+          <p class="imprint">Physical description of the site</p>
+        </div>
+        <p class="stamp">No<br>external<br>requests</p>
+      </div>
+      <div class="rec">
+        <p>Every page on this site is a single HTML file. No build step and no framework.</p>
+        <p>Zero external requests. The fonts are held here and nothing is loaded from another host, so a page keeps working with the network cable pulled once it has loaded. The one exception on this card is the live slip above, which reads a file from this same site and is written to be complete without it.</p>
+        <p>This drawer is one of several looks for the same content. The band at the top of the page leads back to the rest.</p>
+      </div>
+      <dl class="fields">
+        <dt>Type</dt>
+        <dd>IBM Plex Mono for the typed record. Inter for everything added later.</dd>
+        <dt>Colour</dt>
+        <dd>Paper, ink and one stamp red. The stamp is the only saturated colour here.</dd>
+        <dt>Themes</dt>
+        <dd>Light and dark, both from the same tokens; the page follows the setting on the device.</dd>
+      </dl>
+      <p class="tracings"><b>Subject headings</b>1. Web pages — single-file construction. 2. Typography — monospaced faces in interfaces.</p>
+    </article>
+
+  </main>
+
+  <footer>
+    <ul>
+      <li><a href="/">Front of the site</a></li>
+      <li><a href="/looks/">All looks</a></li>
+      <li><a href="/queue-board/">Live board</a></li>
+      <li><a href="/record/">Collection record</a></li>
+      <li><a href="/waits/">The Tally</a></li>
+      <li><a href="/lilliss-it/">Lilliss IT</a></li>
+      <li><a href="/privacy.html">Privacy</a></li>
+    </ul>
+    <p>Jared Lilliss · Sydney, Australia · <a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></p>
+    <p>An unlisted look. The live pages are the ones linked above.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  function pad(n){return n<10?"0"+n:""+n;}
+  function el(id){return document.getElementById(id);}
+  function text(id,v){var n=el(id);if(n){n.textContent=v;}}
+  function fmtStamp(s){
+    if(!s){return "—";}
+    var d=new Date(s);
+    if(isNaN(d.getTime())){return String(s);}
+    return pad(d.getHours())+":"+pad(d.getMinutes())+" · "+d.getDate()+" "+months[d.getMonth()];
+  }
+  function fmtDay(s){
+    if(!s){return "—";}
+    var d=new Date(s);
+    if(isNaN(d.getTime())){return String(s);}
+    return d.getDate()+" "+months[d.getMonth()]+" "+d.getFullYear();
+  }
+  function num(n){
+    if(typeof n!=="number"||!isFinite(n)){return "—";}
+    return n.toLocaleString("en-AU");
+  }
+  function fail(msg){
+    text("slip-status",msg);
+    text("slip-when","not read");
+  }
+
+  if(!window.fetch){
+    fail("Scripting cannot read the slip in this browser, so the two tables below stay empty.");
+    return;
+  }
+
+  fetch("/queue-board/ed.json",{cache:"no-store"}).then(function(r){
+    if(!r.ok){throw new Error("status");}
+    return r.json();
+  }).then(function(d){
+    if(!d||typeof d!=="object"){throw new Error("shape");}
+    var meta=d.meta||{};
+
+    text("m-fac",num(meta.facilities_reporting));
+    text("m-snap",num(meta.snapshots));
+    text("m-cyc",num(meta.cycles));
+    text("m-first",fmtDay(meta.first));
+    text("m-last",fmtDay(meta.last));
+    text("slip-when",fmtStamp(d.generated_at||meta.last));
+    text("slip-status","The slip was read when this page loaded. It shows counts of people waiting, taken at the times named beside them.");
+
+    var facs=Array.isArray(d.facilities)?d.facilities.slice():[];
+    var live=facs.filter(function(f){return f&&typeof f.current==="number"&&isFinite(f.current);});
+    live.sort(function(a,b){return b.current-a.current;});
+    var top=live.slice(0,10);
+    var tb=el("fac-body");
+    if(tb&&top.length){
+      var rows="";
+      for(var i=0;i<top.length;i++){
+        var f=top[i];
+        var nm=String(f.name||"Unnamed").replace(/[<>&]/g,"");
+        var sb=String(f.suburb||"—").replace(/[<>&]/g,"");
+        rows+="<tr><th scope=\"row\">"+nm+"</th><td>"+sb+"</td><td class=\"num\">"+num(f.current)+"</td><td>"+fmtStamp(f.at)+"</td></tr>";
+      }
+      tb.innerHTML=rows;
+    }
+
+    var hourly=Array.isArray(d.hourly)?d.hourly:[];
+    var hh=el("hour-head"),hb=el("hour-body");
+    if(hh&&hb&&hourly.length){
+      var head="<th scope=\"col\">Hour</th>";
+      var body="<th scope=\"row\">Average</th>";
+      for(var j=0;j<hourly.length;j++){
+        var e=hourly[j]||{};
+        var hlab=(typeof e.h==="number")?pad(e.h):String(e.h||"—");
+        var avg=(typeof e.avg==="number"&&isFinite(e.avg))?e.avg.toFixed(1):"—";
+        head+="<th scope=\"col\" class=\"num\">"+hlab+"</th>";
+        body+="<td class=\"num\">"+avg+"</td>";
+      }
+      hh.innerHTML=head;
+      hb.innerHTML=body;
+    }
+  }).catch(function(){
+    fail("The slip did not load this time, so the two tables below are empty. Everything else on this card is unchanged.");
+  });
+})();
+</script>
+</body>
+</html>

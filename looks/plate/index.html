@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Jared Lilliss — drawing sheet</title>
+<meta name="description" content="Jared Lilliss, IT field technician, Sydney. Work and projects set out as an engineering drawing sheet.">
+<style>
+@font-face{
+  font-family:"Inter var";
+  src:url("/fonts/inter.woff2") format("woff2");
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"IBM Plex Mono";
+  src:url("/fonts/plexmono-400.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"IBM Plex Mono";
+  src:url("/fonts/plexmono-500.woff2") format("woff2");
+  font-weight:500;
+  font-style:normal;
+  font-display:swap;
+}
+
+:root{
+  color-scheme:light;
+  --sans:"Inter var",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,"Cascadia Mono",Consolas,"Liberation Mono",monospace;
+  --desk:#E4E6E0;
+  --sheet:#FBFBF9;
+  --band:#ECEFEA;
+  --ink:#16191C;
+  --ink-2:#4A5158;
+  --line-strong:#3D444B;
+  --rule:#838B92;
+  --accent:#14507A;
+  --dim-ink:#14507A;
+  --mark:#A32B1E;
+  --focus:#14507A;
+  --hatch-op:0.85;
+}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --desk:#071B2E;
+    --sheet:#0B2A45;
+    --band:#0F3556;
+    --ink:#EAF2FA;
+    --ink-2:#A9C4DC;
+    --line-strong:#A9C4DC;
+    --rule:#4E7FA8;
+    --accent:#7FD3F0;
+    --dim-ink:#7FD3F0;
+    --mark:#F0A6A0;
+    --focus:#7FD3F0;
+    --hatch-op:0.75;
+  }
+}
+
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --desk:#071B2E;
+  --sheet:#0B2A45;
+  --band:#0F3556;
+  --ink:#EAF2FA;
+  --ink-2:#A9C4DC;
+  --line-strong:#A9C4DC;
+  --rule:#4E7FA8;
+  --accent:#7FD3F0;
+  --dim-ink:#7FD3F0;
+  --mark:#F0A6A0;
+  --focus:#7FD3F0;
+  --hatch-op:0.75;
+}
+
+:root[data-theme="light"]{
+  color-scheme:light;
+  --desk:#E4E6E0;
+  --sheet:#FBFBF9;
+  --band:#ECEFEA;
+  --ink:#16191C;
+  --ink-2:#4A5158;
+  --line-strong:#3D444B;
+  --rule:#838B92;
+  --accent:#14507A;
+  --dim-ink:#14507A;
+  --mark:#A32B1E;
+  --focus:#14507A;
+  --hatch-op:0.85;
+}
+
+*{box-sizing:border-box}
+
+html{-webkit-text-size-adjust:100%}
+
+body{
+  margin:0;
+  background:var(--desk);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+}
+
+:focus-visible{
+  outline:2px solid var(--focus);
+  outline-offset:2px;
+}
+
+a{color:var(--accent)}
+a:hover{text-decoration-thickness:2px}
+
+.skip{
+  position:absolute;
+  left:-9999px;
+  top:0;
+  z-index:60;
+  background:var(--ink);
+  color:var(--sheet);
+  font-family:var(--mono);
+  font-size:13px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:14px 18px;
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  text-decoration:none;
+}
+.skip:focus{left:8px;top:8px}
+
+.band{
+  background:var(--band);
+  border-bottom:1px solid var(--rule);
+  padding:10px 16px;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px 14px;
+  font-family:var(--mono);
+  font-size:12.5px;
+  letter-spacing:.03em;
+  color:var(--ink);
+}
+.band p{margin:0}
+.band a{
+  color:var(--accent);
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  text-underline-offset:3px;
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  padding:0 2px;
+}
+
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+.defs .ahead{fill:var(--dim-ink)}
+.defs .hline{stroke:var(--accent);stroke-width:1.5;opacity:var(--hatch-op)}
+
+.wrap{
+  position:relative;
+  max-width:1080px;
+  margin:0 auto;
+  padding:22px 10px 30px;
+}
+
+.zone{
+  position:absolute;
+  top:22px;
+  bottom:30px;
+  width:22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  align-items:center;
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.1em;
+  color:var(--ink-2);
+  padding:26px 0;
+}
+.zone-l{left:10px}
+.zone-r{right:10px}
+.zone span{display:block}
+
+.sheet{
+  margin:0 24px;
+  background:var(--sheet);
+  border:2px solid var(--line-strong);
+  box-shadow:0 0 0 1px var(--rule) inset;
+  padding:0;
+}
+
+.topstrip{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px 18px;
+  border-bottom:1.5px solid var(--line-strong);
+  padding:10px 16px;
+  font-family:var(--mono);
+  font-size:11.5px;
+  font-weight:500;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.topstrip .drg{display:flex;flex-wrap:wrap;gap:4px 16px;margin:0}
+.topstrip .drg b{font-weight:500;color:var(--ink-2)}
+
+.tbtn{
+  font-family:var(--mono);
+  font-size:11.5px;
+  font-weight:500;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ink);
+  background:transparent;
+  border:1.5px solid var(--line-strong);
+  padding:0 14px;
+  min-height:44px;
+  min-width:44px;
+  cursor:pointer;
+}
+.tbtn:hover{background:var(--band)}
+
+main{padding:26px 16px 8px}
+
+h1{
+  font-family:var(--mono);
+  font-weight:500;
+  font-size:clamp(27px,5.4vw,42px);
+  line-height:1.12;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  margin:0 0 10px;
+  color:var(--ink);
+}
+.subhead{
+  font-family:var(--mono);
+  font-size:13px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  margin:0 0 14px;
+}
+.headrule{border:0;border-top:2px solid var(--line-strong);margin:16px 0 0}
+
+.idlinks{
+  list-style:none;
+  margin:14px 0 0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 22px;
+  font-family:var(--mono);
+  font-size:12.5px;
+  letter-spacing:.04em;
+}
+.idlinks a{
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  overflow-wrap:anywhere;
+}
+
+section{margin:34px 0 0}
+
+h2{
+  font-family:var(--mono);
+  font-weight:500;
+  font-size:15px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  margin:0;
+  padding:0 0 8px;
+  border-bottom:1.5px solid var(--line-strong);
+  color:var(--ink);
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px 14px;
+  align-items:baseline;
+}
+h2 .no{color:var(--ink-2);font-size:13px;letter-spacing:.1em}
+
+h3{
+  font-family:var(--mono);
+  font-weight:500;
+  font-size:12.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  margin:26px 0 8px;
+}
+
+p{margin:14px 0;max-width:66ch}
+.lead{font-size:17px}
+
+.scroll{
+  overflow-x:auto;
+  border:1px solid var(--rule);
+  background:var(--sheet);
+  margin:16px 0 0;
+}
+.scroll:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+
+.fig{margin:22px 0 0}
+.fig-inner{min-width:700px;padding:12px 10px}
+.fig svg{display:block;width:100%;height:auto}
+figcaption{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  margin:8px 0 0;
+}
+
+svg .ln{stroke:var(--line-strong);stroke-width:1.6;fill:none;stroke-linecap:square}
+svg .lnh{stroke:var(--line-strong);stroke-width:3;fill:none;stroke-linecap:butt}
+svg .hair{stroke:var(--rule);stroke-width:1;fill:none}
+svg .dim{stroke:var(--dim-ink);stroke-width:1.2;fill:none}
+svg .ext{stroke:var(--dim-ink);stroke-width:1;fill:none}
+svg .fillsheet{fill:var(--sheet)}
+svg .fillink{fill:var(--line-strong)}
+svg .lbl{fill:var(--ink);font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.06em}
+svg .lbls{fill:var(--ink-2);font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.06em}
+svg .lbld{fill:var(--dim-ink);font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.08em}
+svg .bal{fill:var(--ink);font-family:var(--mono);font-size:13px;font-weight:500}
+
+.keylist{
+  list-style:none;
+  margin:14px 0 0;
+  padding:0;
+  font-family:var(--mono);
+  font-size:12.5px;
+  letter-spacing:.02em;
+  color:var(--ink);
+}
+.keylist li{
+  display:flex;
+  gap:12px;
+  padding:7px 0;
+  border-bottom:1px solid var(--rule);
+  align-items:flex-start;
+}
+.keylist li:last-child{border-bottom:0}
+.keylist .n{
+  flex:0 0 26px;
+  height:26px;
+  border:1.4px solid var(--line-strong);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:500;
+  font-size:12px;
+}
+
+table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:560px;
+  font-family:var(--mono);
+  font-size:12.5px;
+  letter-spacing:.02em;
+}
+caption{
+  text-align:left;
+  font-family:var(--mono);
+  font-size:11.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  padding:10px 12px;
+  border-bottom:1px solid var(--rule);
+}
+th,td{
+  text-align:left;
+  padding:10px 12px;
+  border-bottom:1px solid var(--rule);
+  border-right:1px solid var(--rule);
+  vertical-align:top;
+}
+th:last-child,td:last-child{border-right:0}
+thead th{
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-size:11px;
+  color:var(--ink);
+  border-bottom:1.5px solid var(--line-strong);
+  white-space:nowrap;
+}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+td.ref,th.ref{font-weight:500;white-space:nowrap;color:var(--ink)}
+td a{display:inline-block;padding:6px 2px;margin:-6px 0;overflow-wrap:anywhere}
+.state{
+  display:inline-block;
+  border:1.2px solid var(--line-strong);
+  padding:1px 8px;
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.state-p{border-color:var(--mark);color:var(--mark)}
+
+.notes{
+  list-style:none;
+  counter-reset:n;
+  margin:16px 0 0;
+  padding:0;
+  max-width:74ch;
+}
+.notes li{
+  counter-increment:n;
+  display:flex;
+  gap:14px;
+  padding:10px 0;
+  border-bottom:1px solid var(--rule);
+  font-size:15px;
+}
+.notes li:last-child{border-bottom:0}
+.notes li::before{
+  content:"N" counter(n);
+  flex:0 0 34px;
+  font-family:var(--mono);
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:.06em;
+  color:var(--ink-2);
+  padding-top:3px;
+}
+
+.annexe{
+  border:1.5px solid var(--line-strong);
+  margin:18px 0 0;
+}
+.annexe-head{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:6px 16px;
+  padding:10px 14px;
+  border-bottom:1px solid var(--rule);
+  font-family:var(--mono);
+  font-size:11.5px;
+  font-weight:500;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.annexe-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+}
+.annexe-grid div{
+  padding:12px 14px;
+  border-right:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+}
+.annexe-grid dt{
+  font-family:var(--mono);
+  font-size:10.5px;
+  font-weight:500;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  margin:0 0 4px;
+}
+.annexe-grid dd{
+  margin:0;
+  font-family:var(--mono);
+  font-size:15px;
+  font-weight:500;
+  color:var(--ink);
+  overflow-wrap:anywhere;
+}
+.annexe-foot{
+  padding:11px 14px;
+  font-family:var(--mono);
+  font-size:11.5px;
+  line-height:1.6;
+  letter-spacing:.02em;
+  color:var(--ink-2);
+}
+.annexe-foot span{display:block}
+
+.tb{
+  margin:34px 16px 20px auto;
+  width:min(430px,100%);
+  border:2px solid var(--line-strong);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:var(--sheet);
+}
+.tbf{
+  padding:9px 12px;
+  border-right:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+}
+.tbf-date,.tbf-status,.tbf.wide{border-right:0}
+.tbf.wide{grid-column:1 / -1}
+.tbf .k{
+  display:block;
+  font-family:var(--mono);
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  margin:0 0 3px;
+}
+.tbf .v{
+  display:block;
+  font-family:var(--mono);
+  font-size:13.5px;
+  font-weight:500;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.tbf.wide .v{font-size:15px;letter-spacing:.1em}
+.tbf:nth-last-child(1),.tbf:nth-last-child(2){border-bottom:0}
+
+footer{
+  max-width:1080px;
+  margin:0 auto;
+  padding:6px 34px 44px;
+  font-family:var(--mono);
+  font-size:12.5px;
+  letter-spacing:.03em;
+  color:var(--ink-2);
+}
+footer p{max-width:none;margin:8px 0}
+footer ul{
+  list-style:none;
+  margin:10px 0 0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 22px;
+}
+footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:anywhere}
+
+@media (max-width:719px){
+  .zone{display:none}
+  .wrap{padding:16px 8px 20px}
+  .sheet{margin:0}
+  main{padding:20px 12px 6px}
+  body{padding-bottom:82px}
+  .tb{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    top:auto;
+    z-index:30;
+    width:auto;
+    margin:0;
+    border:0;
+    border-top:2px solid var(--line-strong);
+    background:var(--sheet);
+    grid-template-columns:1fr auto auto;
+    grid-template-rows:auto auto;
+  }
+  .tbf{border-right:0;border-bottom:0;padding:6px 10px}
+  .tbf .k{display:none}
+  .tbf .v{font-size:11.5px;letter-spacing:.04em;white-space:nowrap}
+  .tbf.wide{grid-area:1 / 1 / 2 / 3}
+  .tbf.wide .v{font-size:11.5px;letter-spacing:.04em}
+  .tbf-sheet{grid-area:1 / 3 / 2 / 4;text-align:right}
+  .tbf-drawn{grid-area:2 / 1 / 3 / 2}
+  .tbf-date{grid-area:2 / 2 / 3 / 3}
+  .tbf-status{grid-area:2 / 3 / 3 / 4;text-align:right}
+  footer{padding:6px 14px 30px}
+  h1{letter-spacing:0}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#sheet">Skip to the drawing</a>
+
+<div class="band">
+  <p>An alternative look for this site. Not the live page.</p>
+  <a href="/looks/">All looks</a>
+</div>
+
+<svg class="defs" aria-hidden="true" focusable="false" width="0" height="0">
+  <defs>
+    <marker id="ah" viewBox="0 0 11 8" refX="10.4" refY="4" markerWidth="11" markerHeight="8" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path class="ahead" d="M0.6 0.7 L10.4 4 L0.6 7.3 Z"></path>
+    </marker>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hline" x1="0" y1="0" x2="0" y2="7"></line>
+    </pattern>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <div class="zone zone-l" aria-hidden="true"><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span><span>J</span><span>K</span></div>
+  <div class="zone zone-r" aria-hidden="true"><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span><span>J</span><span>K</span></div>
+
+  <div class="sheet">
+    <header class="topstrip">
+      <p class="drg"><span><b>DRG</b> LIL-2026-01</span><span><b>REV</b> C</span><span><b>SCALE</b> NOT TO SCALE</span><span><b>UNITS</b> AS ANNOTATED</span></p>
+      <button class="tbtn" type="button" id="themebtn" aria-pressed="false">Blueprint</button>
+    </header>
+
+    <main id="sheet">
+      <h1>Jared Lilliss</h1>
+      <p class="subhead">IT field technician · Sydney, Australia</p>
+      <hr class="headrule">
+      <ul class="idlinks">
+        <li><a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/jaredlilliss/">LinkedIn</a></li>
+        <li><a href="https://github.com/jaredlilliss">GitHub</a></li>
+        <li><a href="https://lilliss.au/">lilliss.au</a></li>
+      </ul>
+
+      <section aria-labelledby="v1">
+        <h2 id="v1"><span class="no">View 01</span> General arrangement</h2>
+        <p class="lead">Point-of-sale and payment terminals, Windows machines, structured cabling, cameras. For venues and small businesses around Sydney. Usually the same day, usually on site.</p>
+
+        <figure class="fig">
+          <div class="scroll" tabindex="0" role="group" aria-label="Figure 1, a site plan with four numbered balloons on the items worked on: terminals, Windows machines, cabling and cameras. Scrollable sideways.">
+            <div class="fig-inner">
+              <svg viewBox="0 0 680 200" role="img" aria-label="A rectangle marked as one site, holding four drawn items: a payment terminal, a Windows machine, a cable run and a camera. Each is tagged by a leader line to a numbered balloon above.">
+                <rect class="ln fillsheet" x="40" y="110" width="600" height="70"></rect>
+                <text class="lbls" x="52" y="128">ONE SITE</text>
+                <text class="lbls" x="628" y="172" text-anchor="end">USUALLY THE SAME DAY, USUALLY ON SITE</text>
+
+                <circle class="ln fillsheet" cx="110" cy="40" r="15"></circle>
+                <text class="bal" x="110" y="44.5" text-anchor="middle">1</text>
+                <path class="hair" d="M110 55 L110 128"></path>
+                <circle class="fillink" cx="110" cy="128" r="2.6"></circle>
+                <rect class="ln" x="96" y="134" width="28" height="26"></rect>
+                <path class="hair" d="M101 141 L119 141 M101 148 L113 148"></path>
+
+                <circle class="ln fillsheet" cx="260" cy="40" r="15"></circle>
+                <text class="bal" x="260" y="44.5" text-anchor="middle">2</text>
+                <path class="hair" d="M260 55 L260 128"></path>
+                <circle class="fillink" cx="260" cy="128" r="2.6"></circle>
+                <rect class="ln" x="242" y="132" width="36" height="24"></rect>
+                <path class="ln" d="M260 156 L260 164 M246 164 L274 164"></path>
+
+                <circle class="ln fillsheet" cx="410" cy="40" r="15"></circle>
+                <text class="bal" x="410" y="44.5" text-anchor="middle">3</text>
+                <path class="hair" d="M410 55 L410 128"></path>
+                <circle class="fillink" cx="410" cy="128" r="2.6"></circle>
+                <path class="ln" d="M386 152 L398 138 L410 152 L422 138 L434 152"></path>
+
+                <circle class="ln fillsheet" cx="560" cy="40" r="15"></circle>
+                <text class="bal" x="560" y="44.5" text-anchor="middle">4</text>
+                <path class="hair" d="M560 55 L560 128"></path>
+                <circle class="fillink" cx="560" cy="128" r="2.6"></circle>
+                <path class="ln" d="M542 136 L574 136 L574 150 L542 150 Z"></path>
+                <path class="ln" d="M574 140 L584 134 L584 152 L574 146 Z"></path>
+              </svg>
+            </div>
+          </div>
+          <figcaption>Fig. 1 — Site plan. Items tagged 1 to 4, keyed below.</figcaption>
+        </figure>
+
+        <ol class="keylist">
+          <li><span class="n" aria-hidden="true">1</span><span>Point-of-sale and payment terminals.</span></li>
+          <li><span class="n" aria-hidden="true">2</span><span>Windows machines.</span></li>
+          <li><span class="n" aria-hidden="true">3</span><span>Structured cabling.</span></li>
+          <li><span class="n" aria-hidden="true">4</span><span>Cameras.</span></li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="v2">
+        <h2 id="v2"><span class="no">View 02 · Detail A</span> Aussie Health Utility</h2>
+        <p class="lead">A collector that reads how many people are waiting in each NSW emergency department that publishes a live count, every fifteen minutes, and appends the reading to a PostgreSQL series that is never rewritten.</p>
+        <p>It has been collecting since 20 July 2026 and holds more than 120,000 readings. No personal or health information is collected, because the schema has no fields for it.</p>
+
+        <figure class="fig">
+          <div class="scroll" tabindex="0" role="group" aria-label="Figure 2, a bar dimensioned to show 59 departments publishing a live count out of 176 in New South Wales. Scrollable sideways.">
+            <div class="fig-inner">
+              <svg viewBox="0 0 680 175" role="img" aria-label="A bar representing all 176 emergency departments in New South Wales. A hatched portion at the left, dimensioned above, is the 59 that publish a live count. The remaining 117 are unhatched.">
+                <path class="ext" d="M60 74 L60 44 M248 74 L248 44"></path>
+                <path class="dim" d="M60 50 L248 50" marker-start="url(#ah)" marker-end="url(#ah)"></path>
+                <text class="lbld" x="154" y="38" text-anchor="middle">59 PUBLISH A LIVE COUNT</text>
+
+                <rect x="60" y="78" width="188" height="30" fill="url(#hatch)"></rect>
+                <rect class="ln" x="60" y="78" width="188" height="30" fill="none"></rect>
+                <rect class="ln" x="248" y="78" width="372" height="30" fill="none"></rect>
+                <text class="lbls" x="434" y="98" text-anchor="middle">117 DO NOT PUBLISH A LIVE COUNT</text>
+
+                <path class="ext" d="M60 112 L60 150 M620 112 L620 150"></path>
+                <path class="dim" d="M60 144 L620 144" marker-start="url(#ah)" marker-end="url(#ah)"></path>
+                <text class="lbld" x="340" y="166" text-anchor="middle">176 EMERGENCY DEPARTMENTS IN NSW</text>
+              </svg>
+            </div>
+          </div>
+          <figcaption>Fig. 2 — Scope of reporting. The collector reads the hatched portion only.</figcaption>
+        </figure>
+
+        <figure class="fig">
+          <div class="scroll" tabindex="0" role="group" aria-label="Figure 3, a comb of tick marks dimensioned at fifteen minutes apart, with an overall dimension of 96 readings across 24 hours. Scrollable sideways.">
+            <div class="fig-inner">
+              <svg viewBox="0 0 680 165" role="img" aria-label="A row of tick marks along an axis. The gap between two adjacent ticks is dimensioned as fifteen minutes. The whole row is dimensioned as 96 readings, which is 24 hours.">
+                <path class="ln" d="M45 95 L205 95 M232 95 L645 95"></path>
+                <path class="hair" d="M206 108 L218 82 M220 108 L232 82"></path>
+
+                <path class="ln" d="M60 85 L60 105 M84 85 L84 105 M108 85 L108 105 M132 85 L132 105 M156 85 L156 105 M180 85 L180 105"></path>
+                <path class="ln" d="M250 85 L250 105 M274 85 L274 105 M298 85 L298 105 M322 85 L322 105 M346 85 L346 105 M370 85 L370 105 M394 85 L394 105 M418 85 L418 105 M442 85 L442 105 M466 85 L466 105 M490 85 L490 105 M514 85 L514 105 M538 85 L538 105 M562 85 L562 105 M586 85 L586 105 M610 85 L610 105"></path>
+
+                <path class="ext" d="M60 83 L60 58 M84 83 L84 58"></path>
+                <path class="dim" d="M60 64 L84 64" marker-start="url(#ah)" marker-end="url(#ah)"></path>
+                <text class="lbld" x="72" y="50" text-anchor="middle">15 MIN</text>
+
+                <path class="ext" d="M60 107 L60 138 M610 107 L610 138"></path>
+                <path class="dim" d="M60 132 L206 132 M232 132 L610 132" marker-start="url(#ah)" marker-end="url(#ah)"></path>
+                <path class="hair" d="M206 142 L218 120 M220 142 L232 120"></path>
+                <text class="lbld" x="335" y="156" text-anchor="middle">96 READINGS · 24 HOURS</text>
+              </svg>
+            </div>
+          </div>
+          <figcaption>Fig. 3 — Sampling cadence. Ticks abridged; the break sign marks the omission.</figcaption>
+        </figure>
+
+        <figure class="fig">
+          <div class="scroll" tabindex="0" role="group" aria-label="Figure 4, a timeline dimensioned from 20 July 2026 to 23 August 2026 as 34 days on a laptop, then a continuous run on a Melbourne server. Scrollable sideways.">
+            <div class="fig-inner">
+              <svg viewBox="0 0 680 190" role="img" aria-label="A timeline. The first segment, drawn broken, runs from 20 July 2026 to 23 August 2026 and is dimensioned as 34 days on a laptop. The second segment, drawn solid, runs from 23 August 2026 onward and is marked continuous with nothing missing.">
+                <path class="ext" d="M110 104 L110 74 M330 104 L330 74"></path>
+                <path class="dim" d="M110 80 L330 80" marker-start="url(#ah)" marker-end="url(#ah)"></path>
+                <text class="lbld" x="220" y="68" text-anchor="middle">34 DAYS ON A LAPTOP</text>
+
+                <path class="ln" d="M110 110 L330 110" stroke-dasharray="24 10"></path>
+                <path class="lnh" d="M330 110 L632 110"></path>
+                <path class="hair" d="M634 98 L642 122 M641 98 L649 122"></path>
+
+                <circle class="ln fillsheet" cx="110" cy="110" r="5.5"></circle>
+                <circle class="ln fillsheet" cx="330" cy="110" r="5.5"></circle>
+
+                <text class="lbl" x="110" y="136" text-anchor="middle">2026-07-20</text>
+                <text class="lbls" x="110" y="151" text-anchor="middle">FIRST READING</text>
+                <text class="lbl" x="330" y="136" text-anchor="middle">2026-08-23</text>
+                <text class="lbls" x="330" y="151" text-anchor="middle">MELBOURNE SERVER</text>
+                <text class="lbls" x="648" y="136" text-anchor="end">ONGOING</text>
+
+                <path class="ext" d="M330 116 L330 176"></path>
+                <path class="dim" d="M330 170 L628 170" marker-start="url(#ah)"></path>
+                <text class="lbld" x="482" y="163" text-anchor="middle">CONTINUOUS. NOTHING MISSING.</text>
+              </svg>
+            </div>
+          </div>
+          <figcaption>Fig. 4 — Collection history. The broken line is the laptop, which slept.</figcaption>
+        </figure>
+
+        <p>It ran on a laptop first, which slept, so the early weeks have gaps. Since 23 August 2026 it has run on a small Melbourne server and nothing after that is missing. A database dump is taken at 03:30 Melbourne time each night and copied off the machine.</p>
+
+        <h3>Annexe — as measured</h3>
+        <div class="annexe">
+          <div class="annexe-head">
+            <span>Measured from /queue-board/ed.json</span>
+            <span id="anx-state">Not measured</span>
+          </div>
+          <dl class="annexe-grid">
+            <div><dt>Snapshots</dt><dd id="anx-snapshots">Not measured</dd></div>
+            <div><dt>Cycles</dt><dd id="anx-cycles">Not measured</dd></div>
+            <div><dt>Departments reporting</dt><dd id="anx-facilities">Not measured</dd></div>
+            <div><dt>First reading</dt><dd id="anx-first">Not measured</dd></div>
+            <div><dt>Latest reading</dt><dd id="anx-last">Not measured</dd></div>
+          </dl>
+          <p class="annexe-foot">
+            <span>Copyright State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au.</span>
+            <span>Licence: CC BY 4.0.</span>
+          </p>
+        </div>
+        <p>The annexe reads the same file the live board reads. With scripting off, or if the file cannot be read, it stays empty and the figures printed on this sheet still stand.</p>
+
+        <div class="scroll" tabindex="0" role="group" aria-label="Schedule of pages for the Aussie Health Utility. Scrollable sideways.">
+          <table>
+            <caption>Schedule A — pages and source</caption>
+            <thead><tr><th class="ref" scope="col">Ref</th><th scope="col">Page</th><th scope="col">Address</th></tr></thead>
+            <tbody>
+              <tr><td class="ref">A1</td><td>The live board</td><td><a href="/queue-board/">/queue-board/</a></td></tr>
+              <tr><td class="ref">A2</td><td>The collection record</td><td><a href="/record/">/record/</a></td></tr>
+              <tr><td class="ref">A3</td><td>The Tally</td><td><a href="/waits/">/waits/</a></td></tr>
+              <tr><td class="ref">A4</td><td>Source, public mirror</td><td><a href="https://github.com/jaredlilliss/aussie-health-utility">github.com/jaredlilliss/aussie-health-utility</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The working repository stays private.</p>
+      </section>
+
+      <section aria-labelledby="v3">
+        <h2 id="v3"><span class="no">View 03 · Detail B</span> Still Wild</h2>
+        <p class="lead">A concept rebuild for a real Brisbane adventure business. One self-contained HTML file.</p>
+
+        <figure class="fig">
+          <div class="scroll" tabindex="0" role="group" aria-label="Figure 5, one HTML file drawn as an outer box holding three parts, each tagged by a leader line to a numbered balloon, with a dimension marking five languages. Scrollable sideways.">
+            <div class="fig-inner">
+              <svg viewBox="0 0 680 215" role="img" aria-label="An outer rectangle marked as one self-contained HTML file, holding three inner blocks: a live canvas dawn scene, a dictionary in five languages, and an honesty layer. Each block is tagged to a numbered balloon. Below the dictionary block, five ticks are dimensioned as five languages.">
+                <text class="lbls" x="340" y="70" text-anchor="middle">ONE SELF-CONTAINED HTML FILE</text>
+                <rect class="ln" x="60" y="80" width="560" height="90" fill="none"></rect>
+
+                <rect class="ln fillsheet" x="80" y="96" width="160" height="54"></rect>
+                <text class="lbl" x="160" y="118" text-anchor="middle">CANVAS DAWN</text>
+                <text class="lbls" x="160" y="134" text-anchor="middle">SCENE, LIVE</text>
+
+                <rect class="ln fillsheet" x="260" y="96" width="160" height="54"></rect>
+                <text class="lbl" x="340" y="118" text-anchor="middle">DICTIONARY</text>
+                <text class="lbls" x="340" y="134" text-anchor="middle">FIVE LANGUAGES</text>
+
+                <rect class="ln fillsheet" x="440" y="96" width="160" height="54"></rect>
+                <text class="lbl" x="520" y="118" text-anchor="middle">HONESTY LAYER</text>
+                <text class="lbls" x="520" y="134" text-anchor="middle">INVENTED LABELLED</text>
+
+                <circle class="ln fillsheet" cx="160" cy="36" r="15"></circle>
+                <text class="bal" x="160" y="40.5" text-anchor="middle">1</text>
+                <path class="hair" d="M160 51 L160 96"></path>
+
+                <circle class="ln fillsheet" cx="340" cy="36" r="15"></circle>
+                <text class="bal" x="340" y="40.5" text-anchor="middle">2</text>
+                <path class="hair" d="M340 51 L340 96"></path>
+
+                <circle class="ln fillsheet" cx="520" cy="36" r="15"></circle>
+                <text class="bal" x="520" y="40.5" text-anchor="middle">3</text>
+                <path class="hair" d="M520 51 L520 96"></path>
+
+                <path class="hair" d="M340 150 L340 180 M300 180 L380 180"></path>
+                <path class="ln" d="M300 180 L300 192 M320 180 L320 192 M340 180 L340 192 M360 180 L360 192 M380 180 L380 192"></path>
+                <path class="ext" d="M300 194 L300 208 M380 194 L380 208"></path>
+                <path class="dim" d="M300 202 L380 202" marker-start="url(#ah)" marker-end="url(#ah)"></path>
+                <text class="lbld" x="394" y="206">5 LANGUAGES</text>
+              </svg>
+            </div>
+          </div>
+          <figcaption>Fig. 5 — Parts of the file. Parts tagged 1 to 3, keyed below.</figcaption>
+        </figure>
+
+        <ol class="keylist">
+          <li><span class="n" aria-hidden="true">1</span><span>A live canvas dawn scene.</span></li>
+          <li><span class="n" aria-hidden="true">2</span><span>A dictionary in five languages: English, Simplified Chinese, Traditional Chinese, Japanese, Korean.</span></li>
+          <li><span class="n" aria-hidden="true">3</span><span>An honesty layer that labels every invented detail as invented.</span></li>
+        </ol>
+
+        <p>Photographs are used with the business's permission, for prototyping. Not affiliated with them. Live at <a href="https://lilliss.au/stillwild-concept/">lilliss.au/stillwild-concept/</a>.</p>
+      </section>
+
+      <section aria-labelledby="v4">
+        <h2 id="v4"><span class="no">View 04 · Detail C</span> The Span</h2>
+        <p class="lead">A design concept. One screen holding 1975 to 2117: the space programme of the United Arab Emirates drawn as a single span you travel by dragging.</p>
+
+        <figure class="fig">
+          <div class="scroll" tabindex="0" role="group" aria-label="Figure 6, a span dimensioned from 1975 to 2117, 142 years, carrying fifteen milestone markers of which thirteen link straight to a government page. Scrollable sideways.">
+            <div class="fig-inner">
+              <svg viewBox="0 0 680 165" role="img" aria-label="A single horizontal span dimensioned as 1975 to 2117, 142 years. It carries fifteen square markers. Thirteen are filled, meaning they link straight to a government page; two are open, meaning the source is named without a direct link.">
+                <path class="ext" d="M60 94 L60 62 M640 94 L640 62"></path>
+                <path class="dim" d="M60 68 L640 68" marker-start="url(#ah)" marker-end="url(#ah)"></path>
+                <text class="lbld" x="350" y="56" text-anchor="middle">1975 TO 2117 · 142 YEARS</text>
+
+                <path class="lnh" d="M60 100 L640 100"></path>
+
+                <rect class="fillink" x="56" y="96" width="8" height="8"></rect>
+                <rect class="fillink" x="97" y="96" width="8" height="8"></rect>
+                <rect class="fillink" x="139" y="96" width="8" height="8"></rect>
+                <rect class="fillink" x="180" y="96" width="8" height="8"></rect>
+                <rect class="ln fillsheet" x="222" y="96" width="8" height="8"></rect>
+                <rect class="fillink" x="263" y="96" width="8" height="8"></rect>
+                <rect class="fillink" x="305" y="96" width="8" height="8"></rect>
+                <rect class="fillink" x="346" y="96" width="8" height="8"></rect>
+                <rect class="fillink" x="387" y="96" width="8" height="8"></rect>
+                <rect class="fillink" x="429" y="96" width="8" height="8"></rect>
+                <rect class="ln fillsheet" x="470" y="96" width="8" height="8"></rect>
+                <rect class="fillink" x="512" y="96" width="8" height="8"></rect>
+                <rect class="fillink" x="553" y="96" width="8" height="8"></rect>
+                <rect class="fillink" x="595" y="96" width="8" height="8"></rect>
+                <rect class="fillink" x="636" y="96" width="8" height="8"></rect>
+
+                <text class="lbl" x="60" y="124" text-anchor="middle">1975</text>
+                <text class="lbl" x="640" y="124" text-anchor="middle">2117</text>
+
+                <rect class="fillink" x="66" y="140" width="8" height="8"></rect>
+                <text class="lbls" x="84" y="148">LINKS TO A GOVERNMENT PAGE (13)</text>
+                <rect class="ln fillsheet" x="396" y="140" width="8" height="8"></rect>
+                <text class="lbls" x="414" y="148">SOURCE NAMED, NO DIRECT LINK (2)</text>
+              </svg>
+            </div>
+          </div>
+          <figcaption>Fig. 6 — The span. Marker positions indicate count, not date.</figcaption>
+        </figure>
+
+        <p>Fifteen milestones, each a drawn line that means its own event rather than an icon off a shelf, and every one names the source that establishes it, thirteen linking straight to the government page it came from. Nothing is estimated.</p>
+        <p>It is deep-linkable to any year, keyboard-navigable, and readable as a plain sourced list with scripting switched off. An unsolicited concept, no affiliation. Live at <a href="https://lilliss.au/xperience-concept/spine.html">lilliss.au/xperience-concept/spine.html</a>.</p>
+      </section>
+
+      <section aria-labelledby="v5">
+        <h2 id="v5"><span class="no">View 05 · Detail D</span> Lilliss IT</h2>
+        <p class="lead">The trading name for the same work: small-business IT across Sydney and regional NSW. Trading since 2019, registered 2026.</p>
+        <p>There is a page for it at <a href="/lilliss-it/">/lilliss-it/</a>, and the business site is <a href="https://lilliss.au/">lilliss.au</a>.</p>
+      </section>
+
+      <section aria-labelledby="sch">
+        <h2 id="sch"><span class="no">Schedules</span> Qualifications and pages</h2>
+
+        <div class="scroll" tabindex="0" role="group" aria-label="Schedule of qualifications. Scrollable sideways.">
+          <table>
+            <caption>Schedule B — qualifications</caption>
+            <thead><tr><th class="ref" scope="col">Item</th><th scope="col">Qualification</th><th scope="col">State</th></tr></thead>
+            <tbody>
+              <tr><td class="ref">Q1</td><td>CompTIA A plus</td><td><span class="state">Held</span></td></tr>
+              <tr><td class="ref">Q2</td><td>Microsoft Azure Fundamentals AZ-900</td><td><span class="state">Held</span></td></tr>
+              <tr><td class="ref">Q3</td><td>CompTIA Security plus</td><td><span class="state state-p">In progress</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Nothing else is listed, because nothing else is held.</p>
+
+        <nav aria-label="Sheet index">
+          <div class="scroll" tabindex="0" role="group" aria-label="Sheet index, a list of every page and address on this site. Scrollable sideways.">
+            <table>
+              <caption>Schedule C — sheet index</caption>
+              <thead><tr><th class="ref" scope="col">Ref</th><th scope="col">Page</th><th scope="col">Address</th></tr></thead>
+              <tbody>
+                <tr><td class="ref">S1</td><td>Front page</td><td><a href="/">/</a></td></tr>
+                <tr><td class="ref">S2</td><td>The live board</td><td><a href="/queue-board/">/queue-board/</a></td></tr>
+                <tr><td class="ref">S3</td><td>The collection record</td><td><a href="/record/">/record/</a></td></tr>
+                <tr><td class="ref">S4</td><td>The Tally</td><td><a href="/waits/">/waits/</a></td></tr>
+                <tr><td class="ref">S5</td><td>Lilliss IT</td><td><a href="/lilliss-it/">/lilliss-it/</a></td></tr>
+                <tr><td class="ref">S6</td><td>Privacy</td><td><a href="/privacy.html">/privacy.html</a></td></tr>
+                <tr><td class="ref">S7</td><td>All looks</td><td><a href="/looks/">/looks/</a></td></tr>
+                <tr><td class="ref">S8</td><td>Business site</td><td><a href="https://lilliss.au/">lilliss.au</a></td></tr>
+                <tr><td class="ref">S9</td><td>Still Wild</td><td><a href="https://lilliss.au/stillwild-concept/">lilliss.au/stillwild-concept/</a></td></tr>
+                <tr><td class="ref">S10</td><td>The Span</td><td><a href="https://lilliss.au/xperience-concept/spine.html">lilliss.au/xperience-concept/spine.html</a></td></tr>
+                <tr><td class="ref">S11</td><td>Source, public mirror</td><td><a href="https://github.com/jaredlilliss/aussie-health-utility">github.com/jaredlilliss/aussie-health-utility</a></td></tr>
+                <tr><td class="ref">S12</td><td>GitHub</td><td><a href="https://github.com/jaredlilliss">github.com/jaredlilliss</a></td></tr>
+                <tr><td class="ref">S13</td><td>LinkedIn</td><td><a href="https://www.linkedin.com/in/jaredlilliss/">linkedin.com/in/jaredlilliss/</a></td></tr>
+                <tr><td class="ref">S14</td><td>Email</td><td><a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </nav>
+
+        <div class="scroll" tabindex="0" role="group" aria-label="Schedule of how the pages are built. Scrollable sideways.">
+          <table>
+            <caption>Schedule D — how the pages are built</caption>
+            <thead><tr><th class="ref" scope="col">Item</th><th scope="col">Property</th><th scope="col">Value</th></tr></thead>
+            <tbody>
+              <tr><td class="ref">B1</td><td>Page structure</td><td>One HTML file per page</td></tr>
+              <tr><td class="ref">B2</td><td>Build step</td><td>None</td></tr>
+              <tr><td class="ref">B3</td><td>Framework</td><td>None</td></tr>
+              <tr><td class="ref">B4</td><td>External requests</td><td>Zero</td></tr>
+              <tr><td class="ref">B5</td><td>Fonts</td><td>Self-hosted</td></tr>
+              <tr><td class="ref">B6</td><td>Offline</td><td>Works with the network cable pulled once loaded</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="rev">
+        <h2 id="rev"><span class="no">Revisions</span> What changed and when</h2>
+        <div class="scroll" tabindex="0" role="group" aria-label="Revision table. Scrollable sideways.">
+          <table>
+            <caption>Revision table</caption>
+            <thead><tr><th class="ref" scope="col">Rev</th><th scope="col">Date</th><th scope="col">Description</th><th scope="col">By</th></tr></thead>
+            <tbody>
+              <tr><td class="ref">A</td><td>2019</td><td>Trading begins. Small-business IT across Sydney and regional NSW.</td><td>JL</td></tr>
+              <tr><td class="ref">B</td><td>2026-07-20</td><td>Collection starts. A reading appended every fifteen minutes to a series that is never rewritten.</td><td>JL</td></tr>
+              <tr><td class="ref">C</td><td>2026-08-23</td><td>Collector moved from a laptop to a small Melbourne server. Nothing missing after this date.</td><td>JL</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="gn">
+        <h2 id="gn"><span class="no">General notes</span> Read with the drawing</h2>
+        <ol class="notes">
+          <li>The feed counts people waiting. It has no minutes field, so no figure on this sheet is a waiting time.</li>
+          <li>Fifty-nine departments publish a live count. New South Wales has 176 emergency departments in total. Nothing here describes all of them.</li>
+          <li>No personal or health information is collected, because the schema has no fields for it.</li>
+          <li>The upstream feed publishes the current moment only and keeps no history. A reading not taken at the time is gone for good.</li>
+          <li>Still Wild is a concept rebuild. Photographs are used with the business's permission, for prototyping. Not affiliated with them.</li>
+          <li>The Span is an unsolicited concept, with no affiliation. Nothing on it is estimated.</li>
+          <li>Every page on this site is a single HTML file with no build step and no framework, and makes zero external requests.</li>
+          <li>Lilliss IT has been trading since 2019 and was registered in 2026.</li>
+        </ol>
+      </section>
+    </main>
+
+    <div class="tb">
+      <div class="tbf wide"><span class="k">Title</span><span class="v">Capability and works</span></div>
+      <div class="tbf tbf-drawn"><span class="k">Drawn by</span><span class="v">J. Lilliss</span></div>
+      <div class="tbf tbf-date"><span class="k">Date</span><span class="v">2026-09-04</span></div>
+      <div class="tbf tbf-sheet"><span class="k">Sheet</span><span class="v">1 of 1 · Rev C</span></div>
+      <div class="tbf tbf-status"><span class="k">Status</span><span class="v">In service</span></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Jared Lilliss · IT field technician · Sydney, Australia · <a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></p>
+  <ul>
+    <li><a href="/">Front page</a></li>
+    <li><a href="/lilliss-it/">Lilliss IT</a></li>
+    <li><a href="/privacy.html">Privacy</a></li>
+    <li><a href="/looks/">All looks</a></li>
+  </ul>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var btn=document.getElementById("themebtn");
+  var stored=null;
+  try{stored=window.localStorage.getItem("plate-theme");}catch(e){stored=null;}
+  function paint(mode){
+    if(mode==="dark"||mode==="light"){root.setAttribute("data-theme",mode);}
+    else{root.removeAttribute("data-theme");}
+    var dark=mode==="dark";
+    if(!mode){
+      try{dark=window.matchMedia("(prefers-color-scheme: dark)").matches;}catch(e){dark=false;}
+    }
+    if(btn){
+      btn.setAttribute("aria-pressed",dark?"true":"false");
+      btn.textContent=dark?"Sheet":"Blueprint";
+    }
+  }
+  paint(stored);
+  if(btn){
+    btn.addEventListener("click",function(){
+      var now=root.getAttribute("data-theme");
+      var dark;
+      if(now==="dark"){dark=true;}
+      else if(now==="light"){dark=false;}
+      else{
+        try{dark=window.matchMedia("(prefers-color-scheme: dark)").matches;}catch(e){dark=false;}
+      }
+      var next=dark?"light":"dark";
+      paint(next);
+      try{window.localStorage.setItem("plate-theme",next);}catch(e){}
+    });
+  }
+})();
+
+(function(){
+  if(!window.fetch){return;}
+  var set=function(id,val){
+    var el=document.getElementById(id);
+    if(el&&val!==null&&val!==undefined&&val!==""){el.textContent=String(val);}
+  };
+  var num=function(v){
+    if(typeof v!=="number"||!isFinite(v)){return null;}
+    try{return v.toLocaleString("en-AU");}catch(e){return String(v);}
+  };
+  fetch("/queue-board/ed.json",{cache:"no-store"}).then(function(r){
+    if(!r.ok){throw new Error("unavailable");}
+    return r.json();
+  }).then(function(d){
+    var m=(d&&d.meta)||{};
+    var got=false;
+    if(num(m.snapshots)!==null){set("anx-snapshots",num(m.snapshots));got=true;}
+    if(num(m.cycles)!==null){set("anx-cycles",num(m.cycles));got=true;}
+    if(num(m.facilities_reporting)!==null){set("anx-facilities",num(m.facilities_reporting));got=true;}
+    if(m.first){set("anx-first",m.first);got=true;}
+    if(m.last){set("anx-last",m.last);got=true;}
+    if(got){set("anx-state","Measured on load");}
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>
