@@ -79,7 +79,7 @@ h1 em{font-style:normal;color:var(--ember)}
 #legend{right:1.2rem;bottom:1.1rem;text-align:right;line-height:1.9;color:var(--ink-2)}
 #ramp{display:block;width:11rem;height:7px;margin:.35rem 0 .3rem auto;
   background:linear-gradient(90deg,#101A2A,#1E3350,#7A3524,#C4562A,#F4CB8C)}
-#legend .ends{display:flex;justify-content:space-between;width:11rem;margin-left:auto;color:var(--ink-2)}
+#legend .ends{display:block;width:11rem;margin-left:auto;color:var(--ink-2);white-space:nowrap;font-size:.6rem}
 #legend .attr{display:block;margin-top:.55rem;padding-top:.5rem;border-top:1px solid var(--line);
   font-size:.58rem;letter-spacing:.08em;line-height:1.7;color:var(--ink-2);
   max-width:15rem;margin-left:auto;text-transform:none}
@@ -142,7 +142,7 @@ noscript a{color:var(--ink)}
 <div class="panel plate" id="legend">
   <span>quiet for it &nbsp;&rarr;&nbsp; busy for it</span>
   <span id="ramp" aria-hidden="true"></span>
-  <span class="ends"><span>thin&nbsp;=&nbsp;few readings</span><span>solid</span></span>
+  <span class="ends">thin&nbsp;=&nbsp;few readings, solid&nbsp;=&nbsp;all 96</span>
   <span class="attr">59 of the 176 emergency departments in NSW &mdash; those publishing a live count of people waiting. Copyright State of New South Wales NSW Ministry of Health. CC BY 4.0.</span>
 </div>
 
