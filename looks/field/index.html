@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Every Reading</title>
+<meta name="description" content="Every reading the collector has taken: 59 NSW emergency departments down, every day across, drawn as one surface. Where the collector was not running, the material is not there.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#07090C">
+<link rel="icon" type="image/svg+xml" href="/icon.svg">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/plexmono-400.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/plexmono-500.woff2') format('woff2')}
+
+/* One committed palette, dark, no switch. This is the showpiece: it is allowed to cost
+   the visitor battery, and it is not allowed to cost them trust or the ability to get in. */
+:root{
+  --void:#07090C;
+  --ink:#E8EDF2;
+  --ink-2:#94A3B0;
+  --ink-3:#5C6B78;
+  --ember:#E2703A;
+  --line:rgba(232,237,242,.14);
+  --surface:rgba(232,237,242,.055);
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,'Cascadia Mono',monospace;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--void);color:var(--ink);font:400 16px/1.6 var(--sans);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+a{color:inherit}
+a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+.skip{position:absolute;left:-999px;top:0;z-index:60;background:var(--ember);color:#0B0D10;
+  padding:.7rem 1rem;font:500 .85rem var(--mono);text-decoration:none}
+.skip:focus{left:1rem;top:1rem}
+
+#stage{position:fixed;inset:0;z-index:0}
+#gl,#flat{position:absolute;inset:0;width:100%;height:100%;display:block}
+#flat{display:none}
+
+/* ── the instrument panel ─────────────────────────────────────────────────── */
+.panel{position:fixed;z-index:3;font:500 .68rem/1.6 var(--mono);letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-2)}
+/* The scrim HOLDS across the whole text band and only fades below it. A gradient that starts
+   fading at the top gives the header a contrast ratio that depends on where the line happens
+   to sit — measured 1.31:1 for the title over the hottest cells — and a wrapped second line
+   lands exactly where the protection has run out. */
+#head{top:0;left:0;right:0;display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;align-items:baseline;
+  padding:1rem 1.2rem 1.6rem;
+  background:linear-gradient(rgba(7,9,12,.93) 0,rgba(7,9,12,.93) 74%,rgba(7,9,12,0) 100%)}
+h1{margin:0;font:500 .78rem/1.6 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
+h1 em{font-style:normal;color:var(--ember)}
+#span{margin-inline-start:auto;font-variant-numeric:tabular-nums;white-space:nowrap}
+#span b{font-weight:500;color:var(--ink)}
+
+/* the readout names the real thing under the cursor, and nothing else */
+#read{left:1.2rem;bottom:1.1rem;max-width:min(28rem,calc(100vw - 2.4rem));
+  background:rgba(7,9,12,.88);border-left:2px solid var(--ember);padding:.7rem .9rem;
+  -webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);
+  opacity:0;transition:opacity .3s ease}
+#read.on{opacity:1}
+#read .who{display:block;font:500 .82rem/1.35 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink)}
+#read .lhd{display:block;font-size:.62rem;color:var(--ink-2);margin-top:.15rem}
+#read dl{display:flex;flex-wrap:wrap;gap:.15rem 1.2rem;margin:.55rem 0 0;
+  font-variant-numeric:tabular-nums}
+#read dt{color:var(--ink-2)}
+#read dd{margin:0 0 0 .4rem;color:var(--ink)}
+#read .pair{display:flex}
+#read .miss{color:var(--ember);text-transform:none;letter-spacing:.02em;font-size:.66rem}
+
+/* Every panel gets its own surface. The "ground" here is a data field that swings from
+   near-black to hot white, so text laid straight on it has no contrast ratio at all — it
+   has a different one per pixel. Same defect the Section's depth scale had, and the same
+   fix. This matters most for the attribution, which is a licence obligation, not decoration. */
+.panel.plate{background:rgba(7,9,12,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  padding:.7rem .9rem}
+#legend{right:1.2rem;bottom:1.1rem;text-align:right;line-height:1.9;color:var(--ink-2)}
+#ramp{display:block;width:11rem;height:7px;margin:.35rem 0 .3rem auto;
+  background:linear-gradient(90deg,#101A2A,#1E3350,#7A3524,#C4562A,#F4CB8C)}
+#legend .ends{display:flex;justify-content:space-between;width:11rem;margin-left:auto;color:var(--ink-2)}
+#legend .attr{display:block;margin-top:.55rem;padding-top:.5rem;border-top:1px solid var(--line);
+  font-size:.58rem;letter-spacing:.08em;line-height:1.7;color:var(--ink-2);
+  max-width:15rem;margin-left:auto;text-transform:none}
+
+#note{left:1.2rem;top:3.9rem;max-width:min(22rem,calc(100vw - 2.4rem));
+  font:400 .72rem/1.65 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink-2)}
+#note b{color:var(--ink);font-weight:600}
+#note .cite{display:block;margin-top:.5rem;font-size:.64rem;color:var(--ink-2)}
+#note .cite a{border-bottom:1px solid var(--line)}
+
+#door{position:fixed;z-index:4;left:1.2rem;right:1.2rem;bottom:5.4rem;margin:0 auto;max-width:34rem;
+  display:none;background:rgba(7,9,12,.88);border-left:2px solid var(--ember);padding:.75rem .95rem;
+  font:400 .78rem/1.55 var(--sans);color:var(--ink-2);
+  -webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px)}
+#door.on{display:block}
+#door b{color:var(--ink);font-weight:600}
+
+noscript .ns{position:fixed;inset:0;z-index:20;background:var(--void);padding:2rem 1.4rem;
+  overflow:auto;font:400 16px/1.7 var(--sans);color:var(--ink)}
+noscript h2{font:500 .8rem/1.6 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ember)}
+noscript p{max-width:52ch;color:var(--ink-2)}
+noscript a{color:var(--ink)}
+
+@media (max-width:720px){
+  #note{display:none}
+  #legend{font-size:.6rem}
+  #ramp,#legend .ends{width:8rem}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#read">Skip to the readout</a>
+
+<div id="stage">
+  <canvas id="gl" aria-label="Every reading taken by the collector, drawn as a field: 59 emergency departments down, each day across. Brightness is how a department's day compared with its own usual; where few readings were captured the surface is thin and unresolved." role="img"></canvas>
+  <canvas id="flat" aria-hidden="true"></canvas>
+</div>
+
+<div class="panel" id="head">
+  <h1>Every <em>reading</em></h1>
+  <span id="span">loading the record&hellip;</span>
+</div>
+
+<div class="panel plate" id="note">
+  <b>59 emergency departments down, every day across.</b> Brightness is each department against
+  <b>its own usual</b> &mdash; a raw count means nothing across hospitals of different size.
+  Where the collector was not running, the material is not there.
+  <span class="cite">Rows are continuous along time and discrete across departments, because two
+  hospitals have nothing in between them. The ripple and the warp are a lens on the image, never
+  on the numbers. <a href="/record/">The collection record</a> &middot; <a href="/queue-board/">the live board</a></span>
+</div>
+
+<div class="panel plate" id="read" tabindex="-1">
+  <span class="who" id="rWho">&nbsp;</span>
+  <span class="lhd" id="rLhd">&nbsp;</span>
+  <dl id="rStats"></dl>
+</div>
+
+<div class="panel plate" id="legend">
+  <span>quiet for it &nbsp;&rarr;&nbsp; busy for it</span>
+  <span id="ramp" aria-hidden="true"></span>
+  <span class="ends"><span>thin&nbsp;=&nbsp;few readings</span><span>solid</span></span>
+  <span class="attr">59 of the 176 emergency departments in NSW &mdash; those publishing a live count of people waiting. Copyright State of New South Wales NSW Ministry of Health. CC BY 4.0.</span>
+</div>
+
+<div id="door" role="status"></div>
+
+<noscript><div class="ns">
+  <h2>Every reading</h2>
+  <p>This page draws the collector&rsquo;s whole record as one surface, which needs JavaScript.
+  Nothing is hidden behind it: the same readings are published as a table on
+  <a href="/queue-board/">the live board</a>, and how they were collected &mdash; including the
+  weeks with gaps &mdash; is written out on <a href="/record/">the collection record</a>.</p>
+  <p>Data: NSW Health emergency department activity, 59 of the 176 emergency departments in New
+  South Wales &mdash; those that publish a live count of <em>people waiting</em>. There is no
+  waiting-time figure in the source.</p>
+  <p>Copyright State of New South Wales NSW Ministry of Health. For current information go to
+  <a href="https://www.health.nsw.gov.au">www.health.nsw.gov.au</a>. Licensed CC BY 4.0.</p>
+</div></noscript>
+
+<script>
+(function () {
+  "use strict";
+  var doc = document;
+  var reduced = false; try { reduced = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  var coarse = false; try { coarse = matchMedia('(pointer: coarse)').matches; } catch (e) {}
+
+  var glc = doc.getElementById('gl'), flat = doc.getElementById('flat');
+  var doorEl = doc.getElementById('door'), spanEl = doc.getElementById('span');
+  var readEl = doc.getElementById('read'), rWho = doc.getElementById('rWho');
+  var rLhd = doc.getElementById('rLhd'), rStats = doc.getElementById('rStats');
+
+  /* An honest door: never a black screen, and it says which version you are looking at. */
+  function door(html) { doorEl.innerHTML = html; doorEl.classList.add('on'); }
+
+  /* ── the record ─────────────────────────────────────────────────────────────
+     Read from the live file on this origin. Nothing here is hardcoded, so nothing
+     here can go stale — the numbers on screen are whatever the collector last wrote. */
+  var G = { days: 0, rows: 0, dates: [], facs: [], tex: null, ready: false };
+
+  function dayIndex(first, iso) {
+    var a = Date.UTC(+first.slice(0, 4), +first.slice(5, 7) - 1, +first.slice(8, 10));
+    var b = Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10));
+    return Math.round((b - a) / 86400000);
+  }
+
+  function build(h) {
+    var first = h.span.first, days = h.span.days;
+    G.days = days; G.rows = h.facilities.length;
+
+    /* dates, so the readout can name a real day */
+    var base = Date.UTC(+first.slice(0, 4), +first.slice(5, 7) - 1, +first.slice(8, 10));
+    for (var d = 0; d < days; d++) {
+      var t = new Date(base + d * 86400000);
+      G.dates.push(t.toISOString().slice(0, 10));
+    }
+
+    /* grouped by Local Health District, then by their own average inside it — a real
+       organising fact, so neighbouring rows are genuinely related hospitals */
+    var facs = h.facilities.slice().sort(function (a, b) {
+      if (a.lhd !== b.lhd) return a.lhd < b.lhd ? -1 : 1;
+      return (b.avg || 0) - (a.avg || 0);
+    });
+    G.facs = facs;
+
+    /* R = its day against its own usual · G = completeness · B = spare · A = 1 */
+    var px = new Uint8Array(days * facs.length * 4);
+    for (var r = 0; r < facs.length; r++) {
+      var f = facs[r], own = f.avg || 1, cells = {};
+      for (var i = 0; i < f.daily.length; i++) {
+        var row = f.daily[i], x = dayIndex(first, row[0]);
+        if (x < 0 || x >= days) continue;
+        cells[x] = row;
+      }
+      for (var x2 = 0; x2 < days; x2++) {
+        var o = (r * days + x2) * 4, c = cells[x2];
+        if (!c) { px[o] = 0; px[o + 1] = 0; px[o + 2] = 0; px[o + 3] = 255; continue; }
+        var ratio = own > 0 ? c[1] / own : 0;              /* 1.0 = its own usual */
+        var v = Math.max(0, Math.min(1, ratio / 2));        /* 0.5 = usual, 1.0 = twice it */
+        var n = Math.max(0, Math.min(1, c[3] / 96));        /* 96 quarter-hours in a day */
+        px[o] = Math.round(v * 255);
+        px[o + 1] = Math.round(n * 255);
+        px[o + 2] = 0;
+        px[o + 3] = 255;
+      }
+    }
+    G.tex = px; G.ready = true;
+
+    spanEl.innerHTML = '<b>' + h.span.readings.toLocaleString('en-AU') + '</b> readings &middot; <b>' +
+      facs.length + '</b> departments &middot; <b>' + h.span.days + '</b> days';
+    G.h = h;
+  }
+
+  /* ── the lens ───────────────────────────────────────────────────────────────
+     One fragment shader over one fullscreen quad. It warps, ripples and splits the
+     RENDERED IMAGE. It never interpolates between two departments: y snaps to a row
+     centre, x stays continuous, because adjacent days are continuous and adjacent
+     hospitals are not. A display effect is not a claim about the data. */
+  var VERT = 'attribute vec2 p;varying vec2 vUv;void main(){vUv=p*0.5+0.5;gl_Position=vec4(p,0.,1.);}';
+  var FRAG = [
+    'precision highp float;',
+    'varying vec2 vUv;',
+    'uniform sampler2D uData;',
+    'uniform vec2 uGrid;',      /* days, rows */
+    'uniform vec2 uRes;',
+    'uniform vec2 uPtr;',
+    'uniform float uT;',
+    'uniform float uMotion;',
+    'uniform float uQ;',
+    'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+    'vec3 ramp(float t){',
+    '  t=clamp(t,0.,1.);',
+    '  vec3 a=vec3(0.063,0.102,0.165);',
+    '  vec3 b=vec3(0.118,0.200,0.314);',
+    '  vec3 c=vec3(0.478,0.208,0.141);',
+    '  vec3 d=vec3(0.769,0.337,0.165);',
+    '  vec3 e=vec3(0.957,0.796,0.549);',
+    '  if(t<0.25)return mix(a,b,t/0.25);',
+    '  if(t<0.50)return mix(b,c,(t-0.25)/0.25);',
+    '  if(t<0.75)return mix(c,d,(t-0.50)/0.25);',
+    '  return mix(d,e,(t-0.75)/0.25);',
+    '}',
+    'float sampleAt(vec2 uv,float off){',
+    /* y snaps to the row centre — never between two hospitals */
+    '  float row=floor(clamp(uv.y,0.,0.9999)*uGrid.y)+0.5;',
+    '  float x=clamp(uv.x+off,0.,1.);',
+    '  return texture2D(uData,vec2(x,row/uGrid.y)).r;',
+    '}',
+    'void main(){',
+    '  vec2 uv=vUv;',
+    '  vec2 c=uv-0.5;',
+    /* barrel warp — gentle, and it scales with the quality governor */
+    '  float r2=dot(c,c);',
+    '  uv=0.5+c*(1.0+0.16*r2*uQ);',
+    /* ripple from the pointer, decaying with distance and time */
+    '  vec2 dv=uv-uPtr;',
+    '  float dist=length(dv*vec2(uRes.x/uRes.y,1.0));',
+    '  float w=sin(dist*34.0-uT*3.4)*exp(-dist*6.5)*0.010*uMotion*uQ;',
+    '  uv+=normalize(dv+1e-6)*w;',
+    '  if(uv.x<0.0||uv.x>1.0||uv.y<0.0||uv.y>1.0){gl_FragColor=vec4(0.027,0.035,0.047,1.0);return;}',
+    /* chromatic split, strongest at the edges */
+    '  float split=0.0016*uQ*(0.25+r2*3.0);',
+    '  float vr=sampleAt(uv,split);',
+    '  float vg=sampleAt(uv,0.0);',
+    '  float vb=sampleAt(uv,-split);',
+    '  float row=floor(clamp(uv.y,0.,0.9999)*uGrid.y)+0.5;',
+    '  float nn=texture2D(uData,vec2(clamp(uv.x,0.,1.),row/uGrid.y)).g;',
+    '  vec3 col=vec3(ramp(vr).r,ramp(vg).g,ramp(vb).b);',
+    /* completeness IS the material: few readings -> thin, dark, grainy, unresolved */
+    '  float grain=hash(floor(uv*uRes*0.5)+floor(uT*8.0*uMotion));',
+    '  float thin=smoothstep(0.0,0.55,nn);',
+    '  col*=mix(0.10,1.0,thin);',
+    '  col+=(grain-0.5)*0.075*(1.0-thin);',
+    /* a hairline between departments, so the rows stay legibly discrete */
+    '  float fy=fract(uv.y*uGrid.y);',
+    '  col*=smoothstep(0.0,0.045,fy)*smoothstep(0.0,0.045,1.0-fy)*0.35+0.65;',
+    /* vignette */
+    '  col*=1.0-0.55*r2;',
+    '  gl_FragColor=vec4(col,1.0);',
+    '}'
+  ].join('\n');
+
+  var gl = null, prog = null, uni = {}, tex = null, dpr = 1;
+  var ptr = [0.5, 0.42], ptrAim = [0.5, 0.42], quality = 1, t0 = 0, raf = 0;
+  var frames = 0, fpsMark = 0;
+
+  function compile(type, src) {
+    var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      window.__shaderLog = gl.getShaderInfoLog(s); return null;
+    }
+    return s;
+  }
+
+  function initGL() {
+    try {
+      gl = glc.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'high-performance' })
+        || glc.getContext('experimental-webgl', { antialias: false, alpha: false });
+    } catch (e) { gl = null; }
+    if (!gl) return false;
+    var vs = compile(gl.VERTEX_SHADER, VERT), fs = compile(gl.FRAGMENT_SHADER, FRAG);
+    if (!vs || !fs) return false;
+    prog = gl.createProgram(); gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { window.__linkLog = gl.getProgramInfoLog(prog); return false; }
+    gl.useProgram(prog);
+    var buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    var loc = gl.getAttribLocation(prog, 'p');
+    gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    ['uData', 'uGrid', 'uRes', 'uPtr', 'uT', 'uMotion', 'uQ'].forEach(function (k) {
+      uni[k] = gl.getUniformLocation(prog, k);
+    });
+    tex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    /* LINEAR along x is honest (adjacent days are continuous); the shader snaps y itself */
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.uniform1i(uni.uData, 0);
+    return gl.getError() === 0;
+  }
+
+  function upload() {
+    if (!gl || !G.ready) return;
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, G.days, G.rows, 0, gl.RGBA, gl.UNSIGNED_BYTE, G.tex);
+    gl.uniform2f(uni.uGrid, G.days, G.rows);
+  }
+
+  function size() {
+    dpr = Math.min(devicePixelRatio || 1, quality < 0.7 ? 1 : 1.5);
+    var w = Math.max(1, Math.round(innerWidth * dpr)), h = Math.max(1, Math.round(innerHeight * dpr));
+    glc.width = w; glc.height = h; flat.width = w; flat.height = h;
+    if (gl) { gl.viewport(0, 0, w, h); gl.uniform2f(uni.uRes, w, h); }
+  }
+
+  function draw(tms) {
+    if (!gl) return;
+    gl.uniform1f(uni.uT, tms / 1000);
+    gl.uniform2f(uni.uPtr, ptr[0], ptr[1]);
+    gl.uniform1f(uni.uMotion, reduced ? 0 : 1);
+    gl.uniform1f(uni.uQ, quality);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+
+  function loop(ts) {
+    raf = requestAnimationFrame(loop);
+    if (doc.hidden) return;
+    if (!t0) { t0 = ts; fpsMark = ts; }
+    ptr[0] += (ptrAim[0] - ptr[0]) * 0.09;
+    ptr[1] += (ptrAim[1] - ptr[1]) * 0.09;
+    draw(ts);
+    /* quality governor: measured frame rate, not a device guess */
+    frames++;
+    if (ts - fpsMark > 1200) {
+      var fps = frames * 1000 / (ts - fpsMark);
+      frames = 0; fpsMark = ts;
+      if (fps < 26 && quality > 0.35) { quality = Math.max(0.3, quality - 0.25); size(); }
+      else if (fps > 52 && quality < 1) { quality = Math.min(1, quality + 0.15); }
+    }
+  }
+
+  /* ── the flat door: same data, no lens, and it says so ─────────────────────── */
+  function drawFlat() {
+    var cx = flat.getContext('2d'); if (!cx || !G.ready) return;
+    glc.style.display = 'none'; flat.style.display = 'block';
+    var w = flat.width, h = flat.height;
+    cx.fillStyle = '#07090C'; cx.fillRect(0, 0, w, h);
+    var cw = w / G.days, ch = h / G.rows;
+    var stops = [[16, 26, 42], [30, 51, 80], [122, 53, 36], [196, 86, 42], [244, 203, 140]];
+    for (var r = 0; r < G.rows; r++) {
+      for (var d = 0; d < G.days; d++) {
+        var o = (r * G.days + d) * 4;
+        var v = G.tex[o] / 255, n = G.tex[o + 1] / 255;
+        var t = Math.max(0, Math.min(0.9999, v)) * 4, i = Math.floor(t), f = t - i;
+        var a = stops[i], b = stops[Math.min(4, i + 1)];
+        var thin = Math.max(0, Math.min(1, n / 0.55));
+        var m = 0.10 + 0.90 * thin;
+        cx.fillStyle = 'rgb(' + Math.round((a[0] + (b[0] - a[0]) * f) * m) + ',' +
+          Math.round((a[1] + (b[1] - a[1]) * f) * m) + ',' +
+          Math.round((a[2] + (b[2] - a[2]) * f) * m) + ')';
+        cx.fillRect(d * cw, r * ch, Math.ceil(cw), Math.ceil(ch) - (ch > 6 ? 1 : 0));
+      }
+    }
+  }
+
+  /* ── the readout: it names the real thing, or says plainly that nothing was taken ── */
+  function nameAt(cx, cy) {
+    if (!G.ready) return;
+    var d = Math.floor(cx * G.days), r = Math.floor(cy * G.rows);
+    if (d < 0 || d >= G.days || r < 0 || r >= G.rows) { readEl.classList.remove('on'); return; }
+    var f = G.facs[r], date = G.dates[d], o = (r * G.days + d) * 4;
+    var n = Math.round(G.tex[o + 1] / 255 * 96);
+    rWho.textContent = f.name;
+    rLhd.textContent = f.lhd;
+    var cell = null;
+    for (var i = 0; i < f.daily.length; i++) if (f.daily[i][0] === date) { cell = f.daily[i]; break; }
+    var pretty = new Date(date + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
+    var html = '<div class="pair"><dt>' + pretty + '</dt></div>';
+    if (cell) {
+      html += '<div class="pair"><dt>people waiting, avg</dt><dd>' + cell[1] + '</dd></div>' +
+              '<div class="pair"><dt>peak seen</dt><dd>' + cell[2] + '</dd></div>' +
+              '<div class="pair"><dt>readings</dt><dd>' + cell[3] + ' of 96</dd></div>' +
+              '<div class="pair"><dt>its own usual</dt><dd>' + f.avg + '</dd></div>';
+      if (cell[3] > 96) html += '<div class="miss">More than a day holds &mdash; 23 August, when the collection moved and both machines ran.</div>';
+    } else {
+      html += '<div class="miss">Nothing was collected here. The record shows the gap rather than filling it.</div>';
+    }
+    rStats.innerHTML = html;
+    readEl.classList.add('on');
+    void n;
+  }
+
+  function onMove(e) {
+    var x = e.clientX / (innerWidth || 1), y = e.clientY / (innerHeight || 1);
+    ptrAim[0] = x; ptrAim[1] = 1 - y;   /* zero DOM work here beyond the readout text */
+    nameAt(x, y);
+  }
+
+  /* ── go ─────────────────────────────────────────────────────────────────────── */
+  fetch('/queue-board/history.json', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (h) {
+      build(h);
+      var ok = initGL();
+      size();
+      if (ok) {
+        upload();
+        draw(0);
+        if (!reduced) { raf = requestAnimationFrame(loop); }
+        if (coarse) door('<b>Built for a mouse.</b> There is no ripple to chase on a touch screen, ' +
+          'so tap anywhere to read a department and a day. Everything on screen is real.');
+      } else {
+        drawFlat();
+        door('<b>This is the flat version.</b> Your browser or graphics hardware did not give this ' +
+          'page WebGL, so the lens is off. <b>The data is identical</b> &mdash; every reading is here, ' +
+          'and the gaps are the collector&rsquo;s real gaps.');
+      }
+      addEventListener('resize', function () { size(); if (gl) { draw(performance.now()); } else { drawFlat(); } }, { passive: true });
+      addEventListener('pointermove', onMove, { passive: true });
+      addEventListener('pointerdown', onMove, { passive: true });
+      addEventListener('visibilitychange', function () {
+        if (doc.hidden) { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+        else if (gl && !reduced && !raf) { t0 = 0; raf = requestAnimationFrame(loop); }
+      });
+      window.__field = { days: G.days, rows: G.rows, gl: !!gl, quality: function () { return quality; } };
+    })
+    .catch(function (err) {
+      door('<b>The record did not load.</b> ' + String(err.message || err) + '. The same readings ' +
+        'are on <a href="/queue-board/">the live board</a>, and how they were collected is on ' +
+        '<a href="/record/">the collection record</a>.');
+    });
+})();
+</script>
+
+</body>
+</html>
