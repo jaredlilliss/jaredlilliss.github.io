@@ -136,8 +136,19 @@ h1.sig em{font-style:normal;color:var(--ember)}
    glass — which is the whole reason the surfaces are translucent. The ember
    segment is the only accent that moves: it reaches down to the floor you are on. */
 main{max-width:44rem;margin:0 auto;padding:1.5rem 1.4rem 3rem}
-.lead{max-width:40ch;margin:0 0 2.6rem;font-size:1.15rem}
-.lead strong{font-weight:600}
+
+/* ── the page's one loud thing ──────────────────────────────────────────────
+   Measured against three award winners on 05/09: their type runs 22x to 63x from
+   largest to smallest. This page ran about 5x, with everything between 10px and
+   50px — the same volume from top to bottom, which is why it read as competent
+   rather than as anything. The thesis was set at 18px and announced nothing.
+
+   It is now the fortissimo, and everything else stays quiet so it can be one.
+   No new screen and no new words: the same sentence, given its actual size. */
+.lead{max-width:13ch;margin:.7rem 0 1rem;
+  font:600 clamp(2.6rem,8.6vw,6.2rem)/1 var(--sans);letter-spacing:-.045em;color:var(--ink)}
+.lead-2{max-width:44ch;margin:0 0 3.2rem;font-size:1.02rem;color:var(--ink-2)}
+.lead-2 strong{font-weight:600;color:var(--ink)}
 .stack{position:relative}
 #riser{position:absolute;left:calc(1.3rem + 16px);top:0;bottom:0;width:1px;z-index:0;
   transform:translateX(-.5px);background:var(--line-2);
@@ -227,7 +238,8 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 </ol></nav>
 
 <main id="main">
-  <p class="lead">A section through the work, from the terminal a customer touches down to the row in a database &mdash; and back up to a page anyone can read. <strong>Every layer is one I actually work at.</strong></p>
+  <p class="lead">A section through the work.</p>
+  <p class="lead-2">From the terminal a customer touches, down to the row in a database &mdash; and back up to a page anyone can read. <strong>Every layer is one I actually work at.</strong></p>
 
   <div class="stack">
   <div id="riser" aria-hidden="true"><i></i></div>
