@@ -77,7 +77,17 @@ a{color:inherit}
 #surface{position:relative;z-index:1}
 body.glide #surface{position:fixed;top:0;left:0;width:100%;will-change:transform}
 
-/* ── the seal, and the only place --seal appears ─────────────────────────── */
+/* ── the seal, and the only place --seal appears ───────────────────────────
+   It carries his initials rather than an abstract mark. A seal carries its
+   owner's name — that is the whole point of the form — so a shape with nothing
+   in it is decoration wearing the costume of a signature. Initials rather than a
+   borrowed character: using a script I cannot read as a graphic is the same error
+   this project already had to correct once elsewhere.
+
+   It stays hidden from assistive technology on purpose. The name is already the
+   headline at 240px, so announcing the seal straight afterwards is redundant
+   noise — and an aria-label under an aria-hidden parent is inert anyway, which is
+   worse than none: it reads like the job was done. */
 /* ── every "before" state below is gated on .js ────────────────────────────
    The hidden state must be conditional on the thing that can un-hide it. Written
    unconditionally, an entrance animation IS a blank page for anyone whose script
@@ -215,7 +225,11 @@ footer a{text-decoration:none;border-bottom:1px solid var(--rule)}
 <a class="skip" href="#main">Skip to content</a>
 
 <div id="seal" aria-hidden="true">
-  <svg viewBox="0 0 100 100"><rect x="4" y="4" width="92" height="92" rx="7" fill="none" stroke="#B7392B" stroke-width="7"/><path d="M28 28h44M50 28v44M32 50h36M28 72h44" stroke="#B7392B" stroke-width="7" stroke-linecap="square" fill="none"/></svg>
+  <svg viewBox="0 0 100 100">
+    <rect x="4" y="4" width="92" height="92" rx="6" fill="none" stroke="#B7392B" stroke-width="7"/>
+    <path d="M40 24v36a10 10 0 0 1-20 0" fill="none" stroke="#B7392B" stroke-width="8" stroke-linecap="square"/>
+    <path d="M60 24v52h22" fill="none" stroke="#B7392B" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter"/>
+  </svg>
 </div>
 
 <div class="vert" aria-hidden="true">SYDNEY · NSW · AUSTRALIA</div>
