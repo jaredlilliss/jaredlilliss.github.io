@@ -117,7 +117,13 @@ h1.sig em{font-style:normal;color:var(--ember)}
   text-decoration:none;font:500 .64rem/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;
   color:var(--ink);opacity:.82;transition:opacity .35s ease,color .35s ease}
 #scale a:hover{opacity:1}
-#scale i{display:block;width:14px;height:1px;background:var(--line-2);flex:0 0 auto;
+/* `#scale li i` — scoped to the LIST, not to every <i> under #scale. Unscoped, this
+   tick rule also claimed the floor indicator's "/8", which is an <i> too: an id
+   selector outranks `.lvbig i`, so that text was being drawn as a 14px x 1px block
+   with a dark translucent background behind its glyphs. It looked fine and measured
+   3.89:1. The contrast probe caught it; my hand-check "disproving" the probe examined
+   the plate and the body and never the element's own background. */
+#scale li i{display:block;width:14px;height:1px;background:var(--line-2);flex:0 0 auto;
   transition:width .35s ease,background .35s ease}
 #scale em{font-style:normal;font-variant-numeric:tabular-nums;opacity:.6;flex:0 0 auto}
 #scale li.on a{opacity:1;color:var(--ember)}
