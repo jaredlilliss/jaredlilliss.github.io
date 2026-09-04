@@ -101,8 +101,13 @@ header{padding:1.6rem 1.4rem 0;display:flex;align-items:baseline;gap:.7rem 1.6re
 
 /* ── the stops, as an ordinary document by default ────────────────────────── */
 main{padding:2.2rem 1.4rem 4rem;max-width:44rem;margin:0 auto}
+/* A stop is not a card. Put beside the spine, the thing dominating this page was
+   a white box with a paragraph in it — border, radius, the full printed-matter
+   tell — which is the idiom he rejected eight times. It keeps the frosted surface,
+   because that is what makes it material, and loses the box: one hairline across
+   the top, which is the floor it stands on. Same correction the Section had. */
 .stop{margin:0 0 1.1rem;padding:1.15rem 1.25rem 1.25rem;
-  background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  background:var(--surface);border:0;border-top:1px solid var(--line);border-radius:0;
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .head{display:flex;align-items:flex-start;gap:.85rem;margin-bottom:.45rem}
 .mark{flex:0 0 auto;width:34px;height:34px;margin-top:-2px;color:var(--ink-2);
@@ -146,11 +151,14 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
 }
 .rail-on .stop{
   flex:0 0 auto;width:min(30rem,62vw);margin:0 clamp(2rem,5vw,5.5rem) 0 0;
-  background:var(--surface);border:1px solid var(--line);
-  transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.3,1);
-  opacity:.34;transform:scale(.94);transform-origin:50% 60%;
+  background:var(--surface);border:0;border-top:1px solid var(--line);
+  transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.3,1),border-top-color .5s ease;
+  /* dimmed harder than .34: the whole point of a rail is that ONE stop is in
+     focus, and the neighbours were still legible enough to compete with it */
+  opacity:.24;transform:scale(.94);transform-origin:50% 60%;
 }
-.rail-on .stop.near{opacity:1;transform:scale(1);background:var(--surface-2)}
+.rail-on .stop.near{opacity:1;transform:scale(1);background:var(--surface-2);
+  border-top-color:var(--ember)}
 .rail-on #track{padding-left:calc(50vw - min(15rem,31vw));padding-right:calc(50vw - min(15rem,31vw))}
 .rail-on .hint{display:inline-flex;align-items:center;gap:.5rem;
   font:500 .72rem/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
