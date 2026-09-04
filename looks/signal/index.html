@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Jared Lilliss</title>
+<style>
+@font-face{font-family:Inter;src:url(/fonts/inter.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(/fonts/plexmono-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(/fonts/plexmono-500.woff2) format("woff2");font-weight:500;font-style:normal;font-display:swap}
+
+:root{
+  color-scheme:light;
+  --ground:#E4E8EA;
+  --ground-2:#D4DADE;
+  --ink:#14181B;
+  --ink-2:#4A5359;
+  --line:#9E1B32;
+  --rule:#B6BEC3;
+  --focus:#9E1B32;
+  --sans:Inter,"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",Consolas,"DejaVu Sans Mono",monospace;
+  --conn-gap:48px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#16202B;
+    --ground-2:#101922;
+    --ink:#E6EDF3;
+    --ink-2:#9FB0BF;
+    --line:#EE5C6E;
+    --rule:#33414F;
+    --focus:#EE5C6E;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#16202B;
+  --ground-2:#101922;
+  --ink:#E6EDF3;
+  --ink-2:#9FB0BF;
+  --line:#EE5C6E;
+  --rule:#33414F;
+  --focus:#EE5C6E;
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --ground:#E4E8EA;
+  --ground-2:#D4DADE;
+  --ink:#14181B;
+  --ink-2:#4A5359;
+  --line:#9E1B32;
+  --rule:#B6BEC3;
+  --focus:#9E1B32;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.62;
+  font-weight:400;
+}
+
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover,a:focus-visible{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+main:focus{outline:none}
+
+.skip{position:absolute;left:-9999px;top:0;z-index:9;background:var(--ground-2);color:var(--ink);padding:10px 16px;font-family:var(--mono);font-size:12.5px;text-decoration:none}
+.skip:focus{left:4px;top:4px}
+
+.chrome{
+  display:flex;flex-wrap:wrap;gap:0 24px;align-items:center;justify-content:space-between;
+  background:var(--ground-2);color:var(--ink-2);
+  font-family:var(--mono);font-size:12.5px;line-height:1.5;
+  padding:3px 40px;
+}
+.chrome a{color:var(--ink-2);display:inline-block;padding:6px 0;min-height:24px}
+.chrome span{display:inline-block;padding:6px 0}
+
+.masthead{max-width:1120px;margin:0 auto;padding:36px 40px 24px}
+h1{margin:0;font-weight:500;font-size:clamp(30px,5vw,44px);line-height:1.08;letter-spacing:-.015em;color:var(--ink)}
+.role{margin:10px 0 0;font-size:17px;color:var(--ink)}
+.addr{margin:4px 0 0;font-size:17px}
+
+main{
+  position:relative;
+  max-width:1120px;margin:0 auto;padding:0 40px;
+  display:grid;
+  grid-template-columns:[gutter] 56px [spine] 132px [gap] 48px [text] minmax(0,62ch) 1fr;
+  grid-template-rows:repeat(23,minmax(84px,1fr)) auto;
+}
+
+.gutter{grid-column:gutter;grid-row:1 / 24;position:relative}
+.hourno{
+  position:absolute;right:14px;top:calc(var(--h) / 23 * 100%);
+  transform:translateY(-50%);
+  font-family:var(--mono);font-weight:400;font-size:10.5px;letter-spacing:.06em;
+  color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+
+.spine{grid-column:spine;grid-row:1 / 24;position:relative}
+.spine svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.spine .svg-h{display:none}
+.trace{fill:none;stroke:var(--line);stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+.wall{stroke:var(--rule);stroke-width:1;opacity:.7}
+.spine-fallback{display:none;position:absolute;top:0;bottom:0;left:50%;width:1px;background:var(--ink-2);opacity:.8}
+.spine[data-mode="rule"] svg{display:none}
+.spine[data-mode="rule"] .spine-fallback{display:block}
+
+.mark{
+  position:absolute;height:0;
+  top:calc(var(--h) / 23 * 100%);
+  left:calc(var(--x) * 1%);
+  right:calc(-1 * var(--conn-gap));
+}
+.mark::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--rule)}
+.mark::after{
+  content:"";position:absolute;left:0;top:0;
+  width:7px;height:7px;margin:-5.5px 0 0 -5.5px;
+  border-radius:50%;background:var(--line);
+  border:2px solid var(--ground);box-sizing:content-box;
+}
+.tick{
+  position:absolute;
+  top:calc(var(--h) / 23 * 100%);
+  left:calc(var(--x) * 1%);
+  width:3px;height:3px;margin:-1.5px 0 0 -1.5px;
+  border-radius:50%;background:var(--line);opacity:.75;
+}
+.spine[data-anim="pre"] .tick,.spine[data-anim="pre"] .mark::after{opacity:0}
+.spine[data-anim="run"] .tick{opacity:.75;transition:opacity 400ms linear;transition-delay:calc(var(--h) * 108ms)}
+.spine[data-anim="run"] .mark::after{opacity:1;transition:opacity 400ms linear;transition-delay:calc(var(--h) * 108ms)}
+
+.block{grid-column:text;align-self:start;margin-top:-7px;padding-bottom:16px}
+.stamp{
+  display:block;margin:0 0 6px;
+  font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.08em;
+  color:var(--line);font-variant-numeric:tabular-nums;
+}
+h2{margin:0 0 8px;font-weight:600;font-size:20px;line-height:1.25;letter-spacing:-.005em;color:var(--ink)}
+p{margin:0 0 10px;max-width:62ch;overflow-wrap:anywhere}
+p:last-child{margin-bottom:0}
+.note{font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+.meta{margin:0 0 4px;font-family:var(--mono);font-size:11.5px;line-height:1.6;color:var(--ink-2);font-variant-numeric:tabular-nums}
+
+dl{margin:0}
+.cert{display:flex;flex-wrap:wrap;gap:0 10px;margin:0 0 6px}
+dt{margin:0;font-weight:500;font-size:17px;color:var(--ink)}
+dd{margin:0;font-size:17px;color:var(--ink-2)}
+
+.links{margin:2px 0 0}
+.links ul{list-style:none;display:flex;flex-wrap:wrap;gap:2px 20px;margin:0;padding:0;font-size:14.5px}
+.links li{margin:0}
+.links li a{display:inline-block;padding:11px 0;min-height:44px;line-height:1.55}
+
+.b0{grid-row:1 / 5}
+.b7{grid-row:8 / 10}
+.b9{grid-row:10 / 13}
+.b14{grid-row:15 / 19}
+.b18{grid-row:19 / 21}
+.b20{grid-row:21 / 24}
+.b23{grid-row:24 / 25}
+
+footer{max-width:1120px;margin:0 auto;padding:44px 40px 72px}
+footer .inner{max-width:62ch;margin-left:236px}
+.attrib{margin:24px 0 0;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ink-2)}
+
+@media (max-width:899px){
+  body{font-size:16px;line-height:1.55}
+  .chrome{padding:3px 14px}
+  .masthead{padding:24px 14px 18px}
+  .role,.addr{font-size:16px}
+  main{display:flex;flex-direction:column;padding:0 14px}
+  .spine{order:1;height:clamp(124px,22vw,220px);margin:2px 0 0}
+  .gutter{order:2;height:20px;margin:0 0 20px}
+  .block{order:3;align-self:stretch;margin-top:0;padding-bottom:22px}
+  .spine .svg-v{display:none}
+  .spine .svg-h{display:block}
+  .dots{display:none}
+  .spine-fallback{top:50%;bottom:auto;left:0;right:0;width:auto;height:1px}
+  .hourno{
+    top:auto;bottom:0;right:auto;
+    left:calc(3.333% + var(--h) / 23 * 93.333%);
+    transform:translateX(-50%);
+    font-size:10px;
+  }
+  .hourno .mm{display:none}
+  .hourno:not([data-major]){display:none}
+  p{margin:0 0 8px}
+  dt,dd{font-size:16px}
+  footer{padding:36px 14px 52px}
+  footer .inner{margin-left:0;max-width:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+
+.xlooks{color:inherit;text-decoration:underline;text-underline-offset:3px;font:inherit;white-space:nowrap;display:inline-block;padding:6px 0;margin-inline-start:.9em}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="chrome">
+  <span>An alternative look for this site. Not the live page.</span><a class="xlooks" href="/looks/">All looks</a>
+</div>
+
+<header class="masthead">
+  <h1>Jared Lilliss</h1>
+  <p class="role">IT field technician. Sydney, Australia.</p>
+  <p class="addr"><a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></p>
+</header>
+
+<main id="main" tabindex="-1">
+  <div class="gutter" aria-hidden="true">
+    <span class="hourno" data-major="1" style="--h:0"><span class="hh">00</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:1"><span class="hh">01</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:2"><span class="hh">02</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:3"><span class="hh">03</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:4"><span class="hh">04</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:5"><span class="hh">05</span><span class="mm">:00</span></span>
+    <span class="hourno" data-major="1" style="--h:6"><span class="hh">06</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:7"><span class="hh">07</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:8"><span class="hh">08</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:9"><span class="hh">09</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:10"><span class="hh">10</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:11"><span class="hh">11</span><span class="mm">:00</span></span>
+    <span class="hourno" data-major="1" style="--h:12"><span class="hh">12</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:13"><span class="hh">13</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:14"><span class="hh">14</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:15"><span class="hh">15</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:16"><span class="hh">16</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:17"><span class="hh">17</span><span class="mm">:00</span></span>
+    <span class="hourno" data-major="1" style="--h:18"><span class="hh">18</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:19"><span class="hh">19</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:20"><span class="hh">20</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:21"><span class="hh">21</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:22"><span class="hh">22</span><span class="mm">:00</span></span>
+    <span class="hourno" style="--h:23"><span class="hh">23</span><span class="mm">:00</span></span>
+  </div>
+
+  <div class="spine" id="spine">
+    <svg class="svg-v" viewBox="0 0 120 2300" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <line class="wall" x1="14" y1="0" x2="14" y2="2300" vector-effect="non-scaling-stroke"></line>
+      <line class="wall" x1="106" y1="0" x2="106" y2="2300" vector-effect="non-scaling-stroke"></line>
+      <path class="trace" id="trace" vector-effect="non-scaling-stroke" d="M 77.74 0 C 75.75 16.67 69.44 66.67 65.78 100 C 62.12 133.33 58.77 166.67 55.79 200 C 52.81 233.33 50.08 266.67 47.91 300 C 45.74 333.33 44.29 366.67 42.78 400 C 41.27 433.33 39.63 466.67 38.84 500 C 38.05 533.33 37.46 566.67 38.05 600 C 38.64 633.33 40.81 666.67 42.39 700 C 43.97 733.33 46.24 766.67 47.51 800 C 48.78 833.33 47.43 866.67 50.01 900 C 52.60 933.33 59.03 966.67 63.02 1000 C 67.01 1033.33 70.32 1066.67 73.93 1100 C 77.55 1133.33 81.45 1166.67 84.71 1200 C 87.97 1233.33 91.52 1266.67 93.51 1300 C 95.50 1333.33 97.90 1366.67 96.67 1400 C 95.44 1433.33 88.89 1466.67 86.15 1500 C 83.41 1533.33 80.92 1566.67 80.24 1600 C 79.56 1633.33 80.44 1666.67 82.08 1700 C 83.72 1733.33 87.30 1766.67 90.10 1800 C 92.90 1833.33 96.82 1866.67 98.90 1900 C 100.98 1933.33 102.32 1966.67 102.58 2000 C 102.84 2033.33 101.31 2066.67 100.48 2100 C 99.65 2133.33 99.50 2166.67 97.59 2200 C 95.69 2233.33 90.47 2283.33 89.05 2300"></path>
+    </svg>
+    <svg class="svg-h" viewBox="0 0 1200 420" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <line class="wall" x1="0" y1="400" x2="1200" y2="400" vector-effect="non-scaling-stroke"></line>
+      <line class="wall" x1="0" y1="20" x2="1200" y2="20" vector-effect="non-scaling-stroke"></line>
+      <path class="trace" id="traceh" vector-effect="non-scaling-stroke" d="M 40.00 136.73 C 48.12 144.96 72.46 171.01 88.70 186.13 C 104.93 201.24 121.16 215.09 137.39 227.39 C 153.62 239.69 169.86 250.98 186.09 259.94 C 202.32 268.89 218.55 274.88 234.78 281.13 C 251.01 287.37 267.25 294.14 283.48 297.40 C 299.71 300.66 315.94 303.11 332.17 300.66 C 348.41 298.22 364.64 289.25 380.87 282.74 C 397.10 276.22 413.33 266.83 429.57 261.59 C 445.80 256.34 462.03 261.94 478.26 251.26 C 494.49 240.59 510.72 213.99 526.96 197.53 C 543.19 181.06 559.42 167.39 575.65 152.46 C 591.88 137.53 608.12 121.42 624.35 107.94 C 640.58 94.46 656.81 79.82 673.04 71.59 C 689.28 63.35 705.51 53.47 721.74 58.54 C 737.97 63.60 754.20 90.68 770.43 101.99 C 786.67 113.30 802.90 123.60 819.13 126.40 C 835.36 129.20 851.59 125.59 867.83 118.80 C 884.06 112.01 900.29 97.25 916.52 85.67 C 932.75 74.10 948.99 57.92 965.22 49.33 C 981.45 40.73 997.68 35.21 1013.91 34.13 C 1030.14 33.04 1046.38 39.36 1062.61 42.80 C 1078.84 46.24 1095.07 46.87 1111.30 54.74 C 1127.54 62.61 1151.88 84.13 1160.00 90.01"></path>
+    </svg>
+    <span class="spine-fallback" aria-hidden="true"></span>
+    <div class="dots" aria-hidden="true">
+      <span class="mark" data-h="0" style="--h:0;--x:64.783"></span>
+      <span class="tick" data-h="1" style="--h:1;--x:54.817"></span>
+      <span class="tick" data-h="2" style="--h:2;--x:46.492"></span>
+      <span class="tick" data-h="3" style="--h:3;--x:39.925"></span>
+      <span class="tick" data-h="4" style="--h:4;--x:35.65"></span>
+      <span class="tick" data-h="5" style="--h:5;--x:32.367"></span>
+      <span class="tick" data-h="6" style="--h:6;--x:31.708"></span>
+      <span class="mark" data-h="7" style="--h:7;--x:35.325"></span>
+      <span class="tick" data-h="8" style="--h:8;--x:39.592"></span>
+      <span class="mark" data-h="9" style="--h:9;--x:41.675"></span>
+      <span class="tick" data-h="10" style="--h:10;--x:52.517"></span>
+      <span class="tick" data-h="11" style="--h:11;--x:61.608"></span>
+      <span class="tick" data-h="12" style="--h:12;--x:70.592"></span>
+      <span class="tick" data-h="13" style="--h:13;--x:77.925"></span>
+      <span class="mark" data-h="14" style="--h:14;--x:80.558"></span>
+      <span class="tick" data-h="15" style="--h:15;--x:71.792"></span>
+      <span class="tick" data-h="16" style="--h:16;--x:66.867"></span>
+      <span class="tick" data-h="17" style="--h:17;--x:68.4"></span>
+      <span class="mark" data-h="18" style="--h:18;--x:75.083"></span>
+      <span class="tick" data-h="19" style="--h:19;--x:82.417"></span>
+      <span class="mark" data-h="20" style="--h:20;--x:85.483"></span>
+      <span class="tick" data-h="21" style="--h:21;--x:83.733"></span>
+      <span class="mark" data-h="22" style="--h:22;--x:81.325"></span>
+      <span class="tick" data-h="23" style="--h:23;--x:74.208"></span>
+    </div>
+  </div>
+
+  <div class="block b0">
+    <span class="stamp">00:00</span>
+    <p class="note">The line is the hourly curve from this site's own live file. For each hour of the day it is the mean of every reading taken in that hour since collecting began; one reading is one department at one moment. Midnight at the start of the line, 23:00 at the end.</p>
+    <p class="meta" id="legend">people waiting &middot; scale 0 to 7</p>
+    <p class="meta" id="figures">more than 120,000 readings &middot; 59 departments reporting &middot; collecting since 20 July 2026</p>
+    <p class="meta" id="srcline">curve drawn from a stored snapshot</p>
+  </div>
+
+  <section class="block b7">
+    <span class="stamp">07:00</span>
+    <h2>The work</h2>
+    <p>Point-of-sale and payment terminals, Windows machines, structured cabling, cameras. For venues and small businesses around Sydney.</p>
+    <p>Usually the same day, usually on site.</p>
+  </section>
+
+  <section class="block b9">
+    <span class="stamp">09:00</span>
+    <h2>Certifications</h2>
+    <dl>
+      <div class="cert"><dt>CompTIA A+</dt><dd>held</dd></div>
+      <div class="cert"><dt>Microsoft Azure Fundamentals AZ-900</dt><dd>held</dd></div>
+      <div class="cert"><dt>CompTIA Security+</dt><dd>in progress</dd></div>
+    </dl>
+  </section>
+
+  <section class="block b14">
+    <span class="stamp">14:00</span>
+    <h2>Aussie Health Utility</h2>
+    <p>A collector that reads how many people are waiting in each NSW emergency department that publishes a live count, every fifteen minutes, and appends the reading to a PostgreSQL series that is never rewritten.</p>
+    <p>59 departments. NSW has 176 in total; these are the ones that publish a live count. Collecting since 20 July 2026. More than 120,000 readings.</p>
+    <p>No personal or health information is collected, because the schema has no fields for it. The upstream feed publishes the current moment only and keeps no history, so a reading not taken at the time is gone for good.</p>
+    <p>It ran on a laptop first, which slept, so the early weeks have gaps. Since 23 August 2026 it has run on a small Melbourne server and nothing after that is missing. A database dump is taken at 03:30 Melbourne time each night and copied off the machine.</p>
+    <div class="links">
+      <ul>
+        <li><a href="/queue-board/">The live board</a></li>
+        <li><a href="/record/">The collection record</a></li>
+        <li><a href="/waits/">The Tally</a></li>
+        <li><a href="https://github.com/jaredlilliss/aussie-health-utility">Source (public mirror)</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block b18">
+    <span class="stamp">18:00</span>
+    <h2>Still Wild</h2>
+    <p>A concept rebuild for a real Brisbane adventure business. One self-contained HTML file: a live canvas dawn scene, a five-language dictionary in English, Simplified Chinese, Traditional Chinese, Japanese and Korean, and an honesty layer that labels every invented detail as invented.</p>
+    <p>Photographs used with the business permission, for prototyping. Not affiliated with them. <a href="https://lilliss.au/stillwild-concept/">lilliss.au/stillwild-concept/</a></p>
+  </section>
+
+  <section class="block b20">
+    <span class="stamp">20:00</span>
+    <h2>The Span</h2>
+    <p>A design concept. One screen holding 1975 to 2117: the space programme of the United Arab Emirates drawn as a single span you travel by dragging. Fifteen milestones, each a drawn line that means its own event rather than an icon off a shelf, and every one names the source that establishes it, thirteen linking straight to the government page it came from.</p>
+    <p>Nothing is estimated. Deep-linkable to any year, keyboard-navigable, and readable as a plain sourced list with scripting switched off. An unsolicited concept, no affiliation. <a href="https://lilliss.au/xperience-concept/spine.html">lilliss.au/xperience-concept/spine.html</a></p>
+  </section>
+
+  <section class="block b23">
+    <span class="stamp">23:00</span>
+    <h2>Lilliss IT</h2>
+    <p>The trading name for the same work: small-business IT across Sydney and regional NSW. Trading since 2019, registered 2026. <a href="/lilliss-it/">The Lilliss IT page</a> &middot; <a href="https://lilliss.au/">lilliss.au</a></p>
+  </section>
+</main>
+
+<footer>
+  <div class="inner">
+    <h2>This page</h2>
+    <p>Every page on this site is a single HTML file with no build step and no framework. Zero external requests: the fonts are self-hosted and nothing is loaded from another host. Pages work with the network cable pulled once loaded.</p>
+    <div class="links">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+        <li><a href="https://github.com/jaredlilliss">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/jaredlilliss/">LinkedIn</a></li>
+        <li><a href="mailto:jaredlils99@gmail.com">Email</a></li>
+      </ul>
+    </div>
+    <p class="attrib">Copyright State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au.<br>Licence CC BY 4.0.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var spine=document.getElementById('spine');
+  var trace=document.getElementById('trace');
+  var traceh=document.getElementById('traceh');
+  if(!spine||!trace){return;}
+  var nodes=spine.querySelectorAll('.mark,.tick');
+  var i;
+
+  if(typeof trace.getTotalLength!=='function'){
+    spine.setAttribute('data-mode','rule');
+    for(i=0;i<nodes.length;i++){ nodes[i].style.setProperty('--x','50'); }
+    return;
+  }
+
+  function curve(xs,ys){
+    var n=xs.length, out=['M '+xs[0].toFixed(2)+' '+ys[0].toFixed(2)], k, a, b, c1x, c1y, c2x, c2y;
+    for(k=0;k<n-1;k++){
+      a=Math.max(k-1,0); b=Math.min(k+2,n-1);
+      c1x=xs[k]+(xs[k+1]-xs[a])/6; c1y=ys[k]+(ys[k+1]-ys[a])/6;
+      c2x=xs[k+1]-(xs[b]-xs[k])/6; c2y=ys[k+1]-(ys[b]-ys[k])/6;
+      out.push('C '+c1x.toFixed(2)+' '+c1y.toFixed(2)+' '+c2x.toFixed(2)+' '+c2y.toFixed(2)+' '+xs[k+1].toFixed(2)+' '+ys[k+1].toFixed(2));
+    }
+    return out.join(' ');
+  }
+
+  function buildPath(vals,top){
+    var n=vals.length, xs=[], ys=[], k;
+    for(k=0;k<n;k++){ xs.push(14+(vals[k]/top)*92); ys.push(k*(2300/(n-1))); }
+    return {d:curve(xs,ys), xs:xs};
+  }
+
+  function buildPathH(vals,top){
+    var n=vals.length, xs=[], ys=[], k;
+    for(k=0;k<n;k++){ xs.push(40+k*(1120/(n-1))); ys.push(400-(vals[k]/top)*380); }
+    return curve(xs,ys);
+  }
+
+  var reduce=false;
+  try{ reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }catch(e){ reduce=false; }
+
+  var len=0;
+  try{ len=trace.getTotalLength(); }catch(e){ len=0; }
+  if(!reduce&&len>0){
+    trace.style.strokeDasharray=len+' '+len;
+    trace.style.strokeDashoffset=len;
+    spine.setAttribute('data-anim','pre');
+    void trace.getBoundingClientRect();
+    trace.style.transition='stroke-dashoffset 2600ms cubic-bezier(.32,.06,.18,1)';
+    trace.style.strokeDashoffset='0';
+    spine.setAttribute('data-anim','run');
+  }
+
+  function group(n){
+    var s=String(Math.floor(n)), out='', c=0, k;
+    for(k=s.length-1;k>=0;k--){ out=s.charAt(k)+out; c++; if(c%3===0&&k>0){ out=','+out; } }
+    return out;
+  }
+
+  function day(v){
+    var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(v));
+    if(!m){return null;}
+    var names=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var mi=parseInt(m[2],10)-1;
+    if(mi<0||mi>11){return null;}
+    return parseInt(m[3],10)+' '+names[mi]+' '+m[1];
+  }
+
+  function apply(json){
+    var hourly=json&&json.hourly;
+    if(!hourly||hourly.length!==24){return;}
+    var vals=[],slot=[],seen={},v,h,k;
+    for(k=0;k<24;k++){
+      h=hourly[k]?Number(hourly[k].h):NaN;
+      v=hourly[k]?hourly[k].avg:null;
+      if(!isFinite(h)||h<0||h>23||h!==Math.floor(h)||seen[h]){return;}
+      seen[h]=1;
+      if(typeof v!=='number'||!isFinite(v)||v<0){return;}
+      slot[h]=v;
+    }
+    for(k=0;k<24;k++){ vals.push(slot[k]); }
+    var max=0;
+    for(k=0;k<24;k++){ if(vals[k]>max){max=vals[k];} }
+    var top=Math.max(7,Math.ceil(max));
+    var built=buildPath(vals,top);
+    trace.setAttribute('d',built.d);
+    if(traceh){ traceh.setAttribute('d',buildPathH(vals,top)); }
+    if(spine.getAttribute('data-anim')!=='run'){
+      trace.style.strokeDasharray='';
+      trace.style.strokeDashoffset='';
+    }
+    for(k=0;k<nodes.length;k++){
+      var nh=parseInt(nodes[k].getAttribute('data-h'),10);
+      if(nh>=0&&nh<24){ nodes[k].style.setProperty('--x',(built.xs[nh]/120*100).toFixed(3)); }
+    }
+    var legend=document.getElementById('legend');
+    if(legend){ legend.textContent='people waiting · scale 0 to '+top; }
+    var meta=json.meta||{};
+    var figures=document.getElementById('figures');
+    var first=day(meta.first), last=day(meta.last);
+    if(figures&&typeof meta.snapshots==='number'&&typeof meta.facilities_reporting==='number'&&first&&last){
+      figures.textContent=group(meta.snapshots)+' readings · '+meta.facilities_reporting+' departments reporting · '+first+' to '+last;
+    }
+    var src=document.getElementById('srcline');
+    var gen=day(json.generated_at);
+    if(src){ src.textContent='curve drawn from the live file'+(gen?', read '+gen:''); }
+  }
+
+  if(typeof fetch!=='function'){return;}
+  var ctrl=null, timer=null;
+  try{ ctrl=new AbortController(); }catch(e){ ctrl=null; }
+  if(ctrl){ timer=setTimeout(function(){ try{ctrl.abort();}catch(e){} },3000); }
+  fetch('/queue-board/ed.json',ctrl?{signal:ctrl.signal,credentials:'same-origin'}:undefined)
+    .then(function(r){ if(!r.ok){throw new Error('bad');} return r.json(); })
+    .then(function(j){ if(timer){clearTimeout(timer);} apply(j); })
+    .catch(function(){ if(timer){clearTimeout(timer);} });
+})();
+</script>
+</body>
+</html>

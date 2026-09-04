@@ -1,0 +1,1034 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>JL-1 — Datasheet — Jared Lilliss</title>
+<meta name="description" content="Component datasheet for JL-1. Jared Lilliss, IT field technician, Sydney, Australia.">
+<style>
+@font-face{
+  font-family:"Inter var";
+  src:url("/fonts/inter.woff2") format("woff2");
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"IBM Plex Mono";
+  src:url("/fonts/plexmono-400.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"IBM Plex Mono";
+  src:url("/fonts/plexmono-500.woff2") format("woff2");
+  font-weight:500;
+  font-style:normal;
+  font-display:swap;
+}
+
+:root{
+  --paper:#E4E7EA;
+  --ink:#12161B;
+  --ink-2:#4A5560;
+  --spot:#14458C;
+  --flag:#8E2A12;
+  --band-head:#CDD3D9;
+  --zebra:#DDE1E5;
+  --rule:#737E89;
+  --hairline:#7C858D;
+  --chrome-bg:#12161B;
+  --chrome-fg:#E4E7EA;
+  --chrome-link:#9EC1F0;
+
+  --sans:"Inter var",Inter,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#1A1E23;
+    --ink:#DCE2E8;
+    --ink-2:#93A0AC;
+    --spot:#9EC1F0;
+    --flag:#E8917A;
+    --band-head:#2A3138;
+    --zebra:#21262C;
+    --rule:#67717B;
+    --hairline:#626C76;
+    --chrome-bg:#DCE2E8;
+    --chrome-fg:#12161B;
+    --chrome-link:#14458C;
+  }
+}
+
+:root[data-theme="dark"]{
+  --paper:#1A1E23;
+  --ink:#DCE2E8;
+  --ink-2:#93A0AC;
+  --spot:#9EC1F0;
+  --flag:#E8917A;
+  --band-head:#2A3138;
+  --zebra:#21262C;
+  --rule:#67717B;
+  --hairline:#626C76;
+  --chrome-bg:#DCE2E8;
+  --chrome-fg:#12161B;
+  --chrome-link:#14458C;
+}
+
+:root[data-theme="light"]{
+  --paper:#E4E7EA;
+  --ink:#12161B;
+  --ink-2:#4A5560;
+  --spot:#14458C;
+  --flag:#8E2A12;
+  --band-head:#CDD3D9;
+  --zebra:#DDE1E5;
+  --rule:#737E89;
+  --hairline:#7C858D;
+  --chrome-bg:#12161B;
+  --chrome-fg:#E4E7EA;
+  --chrome-link:#9EC1F0;
+}
+
+*,*::before,*::after{box-sizing:border-box;border-radius:0;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:400;
+  font-size:15.5px;
+  line-height:1.55;
+  font-style:normal;
+  text-align:left;
+}
+img,svg{max-width:100%;}
+
+.skip{
+  position:absolute;
+  left:-9999px;
+  top:0;
+  font-family:var(--mono);
+  font-size:12px;
+  padding:8px 12px;
+  background:var(--paper);
+  color:var(--spot);
+  border:1px solid var(--rule);
+  z-index:20;
+}
+.skip:focus{left:8px;top:8px;}
+
+a{color:var(--spot);text-decoration:underline;text-underline-offset:2px;}
+a:hover{text-decoration-thickness:2px;}
+a:focus-visible,.scroller:focus-visible{outline:2px solid var(--spot);outline-offset:2px;}
+.scroller:focus-visible{outline-offset:-2px;}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+.chrome{
+  background:var(--chrome-bg);
+  color:var(--chrome-fg);
+  font-family:var(--mono);
+  font-weight:400;
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  line-height:1.2;
+  padding:9px 0;
+}
+.chrome .wrap{display:flex;gap:16px;align-items:baseline;justify-content:space-between;}
+.chrome span{min-width:0;}
+.chrome a{color:var(--chrome-link);white-space:nowrap;padding:6px 4px;margin:-6px -4px;}
+.chrome a:focus-visible{outline:2px solid var(--chrome-link);outline-offset:2px;}
+
+.runhead{
+  font-family:var(--mono);
+  font-weight:400;
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  padding-top:22px;
+}
+.dbl{border-top:1px solid var(--rule);margin-top:8px;}
+.dbl::after{content:"";display:block;border-top:1px solid var(--rule);margin-top:3px;}
+
+h1{
+  margin:28px 0 0;
+  font-weight:650;
+  font-size:clamp(34px,6.6vw,52px);
+  line-height:1.02;
+  letter-spacing:-0.02em;
+  font-variant-numeric:tabular-nums;
+}
+h1 .sub{
+  display:block;
+  margin-top:10px;
+  font-weight:450;
+  font-size:20px;
+  line-height:1.35;
+  letter-spacing:0;
+  color:var(--ink);
+}
+
+main{padding-bottom:8px;}
+
+.sec{
+  display:grid;
+  grid-template-columns:132px minmax(0,1fr);
+  column-gap:24px;
+  align-items:baseline;
+  border-top:1px solid var(--rule);
+  padding-top:12px;
+  margin-top:56px;
+}
+.rail{
+  grid-column:1;
+  margin:0;
+  font-family:var(--mono);
+  font-weight:500;
+  font-size:12px;
+  color:var(--ink-2);
+  line-height:1.5;
+}
+.rail .tag{
+  display:block;
+  font-weight:400;
+  font-size:11px;
+  letter-spacing:0.12em;
+}
+h2{
+  grid-column:2;
+  margin:0;
+  font-weight:600;
+  font-size:15px;
+  line-height:1.5;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+}
+.sec .bodycol{grid-column:2;padding-top:12px;}
+h3{
+  margin:0 0 8px;
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:0.10em;
+  text-transform:uppercase;
+}
+p{margin:0 0 16px;max-width:68ch;}
+p:last-child{margin-bottom:0;}
+
+.flagged h2{color:var(--flag);}
+
+.front{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;}
+@media (min-width:1000px){
+  .front{grid-template-columns:minmax(0,1fr) 320px;gap:40px;}
+}
+.features{border:1px solid var(--rule);padding:14px;}
+.features ul{margin:0;padding:0;list-style:none;}
+.features li{
+  position:relative;
+  padding-left:16px;
+  font-size:14px;
+  line-height:1.5;
+  margin-bottom:6px;
+}
+.features li:last-child{margin-bottom:0;}
+.features li::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:8px;
+  width:5px;
+  height:5px;
+  background:var(--spot);
+}
+
+.scroller{overflow-x:auto;}
+.scroller + .notes,.scroller + .cap{margin-top:12px;}
+
+table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:560px;
+  border:1px solid var(--rule);
+  font-size:14px;
+  line-height:1.45;
+  font-variant-numeric:tabular-nums;
+}
+caption{
+  text-align:left;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  padding-bottom:8px;
+}
+thead th{
+  background:var(--band-head);
+  color:var(--ink);
+  font-family:var(--mono);
+  font-weight:500;
+  font-size:11px;
+  letter-spacing:0.10em;
+  text-transform:uppercase;
+  text-align:left;
+  padding:7px 10px;
+  border-bottom:1px solid var(--ink-2);
+  white-space:nowrap;
+}
+tbody td,tbody th{
+  padding:7px 10px;
+  height:34px;
+  border-top:1px solid var(--hairline);
+  text-align:left;
+  font-weight:400;
+  vertical-align:top;
+}
+tbody tr:first-child td,tbody tr:first-child th{border-top:0;}
+tbody tr:nth-child(even){background:var(--zebra);}
+th[scope="row"]{font-weight:500;color:var(--ink);}
+tbody td a,tbody th a{display:inline-block;padding:4px 2px;}
+.reflist a{margin-right:10px;}
+.reflist a:last-child{margin-right:0;}
+.num-c{font-family:var(--mono);font-weight:500;text-align:right;white-space:nowrap;}
+.sym-c{font-family:var(--mono);font-weight:500;white-space:nowrap;}
+.unit-c{font-family:var(--mono);font-weight:400;width:72px;color:var(--ink-2);white-space:nowrap;}
+.cond-c{color:var(--ink-2);}
+.flag-num{color:var(--flag);}
+
+.notes{margin-top:12px;}
+.notes p{
+  margin:0 0 6px;
+  font-size:13.5px;
+  line-height:1.5;
+  color:var(--ink-2);
+  max-width:74ch;
+}
+.notes p:last-child{margin-bottom:0;}
+.nl{
+  font-family:var(--mono);
+  font-weight:500;
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+}
+.nl.warn{color:var(--flag);}
+.cap{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.06em;
+  color:var(--ink-2);
+  margin:12px 0 0;
+  max-width:74ch;
+}
+
+figure{margin:0;}
+.fig-svg{display:block;min-width:640px;}
+figcaption{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--ink-2);
+  padding-top:8px;
+}
+
+svg .body-fill{fill:var(--band-head);}
+svg .paper-fill{fill:var(--paper);}
+svg .stroke{stroke:var(--rule);stroke-width:1;}
+svg .stroke.on-band{stroke:var(--ink-2);}
+svg text{font-family:var(--mono);font-size:10.5px;font-weight:500;fill:var(--ink);letter-spacing:0.06em;}
+svg .mark{font-size:13px;fill:var(--ink-2);letter-spacing:0.14em;}
+svg .pin rect{fill:var(--paper);transition:fill 120ms linear;}
+svg .pin text{transition:fill 120ms linear;}
+svg .pin.hot rect{fill:var(--spot);}
+svg .pin.hot text{fill:var(--spot);}
+svg .dot{fill:var(--spot);}
+svg .blk{font-size:11px;font-weight:500;fill:var(--ink);letter-spacing:0.08em;}
+svg .blk-sub{font-size:10px;font-weight:400;fill:var(--ink-2);letter-spacing:0.04em;}
+svg .arrow{fill:var(--rule);}
+
+#pf tbody tr:hover{background:var(--band-head);}
+
+.runfoot{
+  border-top:1px solid var(--rule);
+  margin-top:56px;
+  padding:12px 0 40px;
+  font-family:var(--mono);
+  font-weight:400;
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+}
+
+@media (max-width:700px){
+  .sec{
+    grid-template-columns:auto minmax(0,1fr);
+    column-gap:8px;
+    margin-top:40px;
+  }
+  .rail .tag{display:none;}
+  .sec .bodycol{grid-column:1 / -1;}
+}
+@media (max-width:560px){
+  body{font-size:16px;line-height:1.6;}
+  .wrap{padding:0 16px;}
+  h1{font-size:34px;}
+  h1 .sub{font-size:18px;}
+  .runhead{flex-direction:column;gap:2px;}
+  .runfoot{flex-direction:column;gap:2px;}
+  .chrome .wrap{gap:6px;flex-direction:column;align-items:flex-start;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important;}
+  svg .pin rect,svg .pin text{transition:none;}
+}
+
+.xscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.xscroll:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+
+.xlooks{color:inherit;text-decoration:underline;text-underline-offset:3px;font:inherit;white-space:nowrap;display:inline-block;padding:6px 0;margin-inline-start:.9em}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to document</a>
+
+<div class="chrome">
+  <div class="wrap">
+    <span>An alternative look for this site. Not the live page.</span><a class="xlooks" href="/looks/">All looks</a>
+    <a href="/">Front page</a>
+  </div>
+</div>
+
+<header class="wrap">
+  <div class="runhead">
+    <span>Jared Lilliss</span>
+    <span>Datasheet — JL-1 — Rev C</span>
+  </div>
+  <div class="dbl"></div>
+  <h1>JL-1<span class="sub">Jared Lilliss — IT field technician, Sydney, Australia.</span></h1>
+</header>
+
+<main class="wrap" id="main" tabindex="-1">
+
+  <section class="sec" aria-labelledby="h-gen">
+    <p class="rail">1.0<span class="tag">Gen</span></p>
+    <h2 id="h-gen">General description</h2>
+    <div class="bodycol">
+      <div class="front">
+        <div>
+          <p>Jared Lilliss is an IT field technician in Sydney, Australia. The work is point-of-sale and payment terminals, Windows machines, structured cabling and cameras, for venues and small businesses around Sydney. Attendance is usually the same day and usually on site.</p>
+          <p>The same work trades as Lilliss IT: small-business IT across Sydney and regional NSW. Trading since 2019, registered 2026.</p>
+          <p>Contact: <a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></p>
+        </div>
+        <aside class="features" aria-labelledby="h-feat">
+          <h3 id="h-feat">Features</h3>
+          <ul>
+            <li>Point-of-sale and payment terminals</li>
+            <li>Windows machines</li>
+            <li>Structured cabling</li>
+            <li>Cameras</li>
+            <li>Usually the same day, usually on site</li>
+            <li>Venues and small businesses around Sydney</li>
+            <li>CompTIA A+</li>
+            <li>Microsoft Azure Fundamentals AZ-900</li>
+            <li>CompTIA Security+ (in progress)</li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-pin">
+    <p class="rail">2.0<span class="tag">Pkg</span></p>
+    <h2 id="h-pin">Pin configuration</h2>
+    <div class="bodycol">
+      <figure>
+        <div class="scroller" tabindex="0" aria-label="Package outline drawing, horizontally scrollable">
+          <svg class="fig-svg" id="pkg" viewBox="0 0 720 420" width="720" height="420" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <rect class="body-fill stroke on-band" x="180" y="80" width="360" height="260"></rect>
+            <path class="paper-fill stroke on-band" d="M 346 80 A 14 14 0 0 0 374 80"></path>
+            <circle class="dot" cx="196" cy="96" r="4"></circle>
+
+            <g class="pin" id="pin-1">
+              <rect class="stroke" x="146" y="93.6" width="34" height="10"></rect>
+              <text class="pn" x="214" y="102.6" text-anchor="start">1</text>
+              <text class="pl" x="140" y="102.6" text-anchor="end">HOME</text>
+            </g>
+            <g class="pin" id="pin-2">
+              <rect class="stroke" x="146" y="130.7" width="34" height="10"></rect>
+              <text class="pn" x="214" y="139.7" text-anchor="start">2</text>
+              <text class="pl" x="140" y="139.7" text-anchor="end">QBRD</text>
+            </g>
+            <g class="pin" id="pin-3">
+              <rect class="stroke" x="146" y="167.9" width="34" height="10"></rect>
+              <text class="pn" x="214" y="176.9" text-anchor="start">3</text>
+              <text class="pl" x="140" y="176.9" text-anchor="end">REC</text>
+            </g>
+            <g class="pin" id="pin-4">
+              <rect class="stroke" x="146" y="205" width="34" height="10"></rect>
+              <text class="pn" x="214" y="214" text-anchor="start">4</text>
+              <text class="pl" x="140" y="214" text-anchor="end">TALLY</text>
+            </g>
+            <g class="pin" id="pin-5">
+              <rect class="stroke" x="146" y="242.1" width="34" height="10"></rect>
+              <text class="pn" x="214" y="251.1" text-anchor="start">5</text>
+              <text class="pl" x="140" y="251.1" text-anchor="end">LIT</text>
+            </g>
+            <g class="pin" id="pin-6">
+              <rect class="stroke" x="146" y="279.3" width="34" height="10"></rect>
+              <text class="pn" x="214" y="288.3" text-anchor="start">6</text>
+              <text class="pl" x="140" y="288.3" text-anchor="end">PRIV</text>
+            </g>
+            <g class="pin" id="pin-7">
+              <rect class="stroke" x="146" y="316.4" width="34" height="10"></rect>
+              <text class="pn" x="214" y="325.4" text-anchor="start">7</text>
+              <text class="pl" x="140" y="325.4" text-anchor="end">NC</text>
+            </g>
+
+            <g class="pin" id="pin-8">
+              <rect class="stroke" x="540" y="316.4" width="34" height="10"></rect>
+              <text class="pn" x="506" y="325.4" text-anchor="end">8</text>
+              <text class="pl" x="580" y="325.4" text-anchor="start">MAIL</text>
+            </g>
+            <g class="pin" id="pin-9">
+              <rect class="stroke" x="540" y="279.3" width="34" height="10"></rect>
+              <text class="pn" x="506" y="288.3" text-anchor="end">9</text>
+              <text class="pl" x="580" y="288.3" text-anchor="start">LNKD</text>
+            </g>
+            <g class="pin" id="pin-10">
+              <rect class="stroke" x="540" y="242.1" width="34" height="10"></rect>
+              <text class="pn" x="506" y="251.1" text-anchor="end">10</text>
+              <text class="pl" x="580" y="251.1" text-anchor="start">GHUB</text>
+            </g>
+            <g class="pin" id="pin-11">
+              <rect class="stroke" x="540" y="205" width="34" height="10"></rect>
+              <text class="pn" x="506" y="214" text-anchor="end">11</text>
+              <text class="pl" x="580" y="214" text-anchor="start">AHU-SRC</text>
+            </g>
+            <g class="pin" id="pin-12">
+              <rect class="stroke" x="540" y="167.9" width="34" height="10"></rect>
+              <text class="pn" x="506" y="176.9" text-anchor="end">12</text>
+              <text class="pl" x="580" y="176.9" text-anchor="start">SPAN</text>
+            </g>
+            <g class="pin" id="pin-13">
+              <rect class="stroke" x="540" y="130.7" width="34" height="10"></rect>
+              <text class="pn" x="506" y="139.7" text-anchor="end">13</text>
+              <text class="pl" x="580" y="139.7" text-anchor="start">SWLD</text>
+            </g>
+            <g class="pin" id="pin-14">
+              <rect class="stroke" x="540" y="93.6" width="34" height="10"></rect>
+              <text class="pn" x="506" y="102.6" text-anchor="end">14</text>
+              <text class="pl" x="580" y="102.6" text-anchor="start">BIZ</text>
+            </g>
+
+            <text class="mark" x="360" y="205" text-anchor="middle">JL-1</text>
+            <text class="mark" x="360" y="228" text-anchor="middle" style="font-size:10.5px">DIP-14</text>
+            <text x="180" y="392" text-anchor="start" style="font-size:12px;font-weight:400;fill:var(--ink-2)">JL-1 — PIN CONFIGURATION (TOP VIEW)</text>
+          </svg>
+        </div>
+        <figcaption>Figure 1. JL-1 package outline, top view. Pin 1 is marked by the dot and the notch.</figcaption>
+      </figure>
+
+      <div class="scroller" tabindex="0" role="region" aria-label="Pin functions table, horizontally scrollable" style="margin-top:24px">
+        <div class="xscroll" tabindex="0" role="region" aria-label="Table, scrolls sideways"><table id="pf">
+          <caption>Table 1. Pin functions</caption>
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Name</th>
+              <th scope="col">Type</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-pin="1"><td class="num-c">1</td><td class="sym-c"><a href="/">HOME</a></td><td class="sym-c">OUT</td><td>Front page of this site.</td></tr>
+            <tr data-pin="2"><td class="num-c">2</td><td class="sym-c"><a href="/queue-board/">QBRD</a></td><td class="sym-c">OUT</td><td>The live board. People waiting now, per department.</td></tr>
+            <tr data-pin="3"><td class="num-c">3</td><td class="sym-c"><a href="/record/">REC</a></td><td class="sym-c">OUT</td><td>The collection record. What has been taken and what is missing.</td></tr>
+            <tr data-pin="4"><td class="num-c">4</td><td class="sym-c"><a href="/waits/">TALLY</a></td><td class="sym-c">OUT</td><td>The Tally. The series read back over time.</td></tr>
+            <tr data-pin="5"><td class="num-c">5</td><td class="sym-c"><a href="/lilliss-it/">LIT</a></td><td class="sym-c">OUT</td><td>Lilliss IT. Small-business IT across Sydney and regional NSW.</td></tr>
+            <tr data-pin="6"><td class="num-c">6</td><td class="sym-c"><a href="/privacy.html">PRIV</a></td><td class="sym-c">OUT</td><td>Privacy statement for this site.</td></tr>
+            <tr data-pin="7"><td class="num-c">7</td><td class="sym-c">NC</td><td class="sym-c">NC</td><td>No connect. Not used.</td></tr>
+            <tr data-pin="8"><td class="num-c">8</td><td class="sym-c"><a href="mailto:jaredlils99@gmail.com">MAIL</a></td><td class="sym-c">I/O</td><td>Electronic mail. jaredlils99@gmail.com</td></tr>
+            <tr data-pin="9"><td class="num-c">9</td><td class="sym-c"><a href="https://www.linkedin.com/in/jaredlilliss/">LNKD</a></td><td class="sym-c">I/O</td><td>LinkedIn profile.</td></tr>
+            <tr data-pin="10"><td class="num-c">10</td><td class="sym-c"><a href="https://github.com/jaredlilliss">GHUB</a></td><td class="sym-c">OUT</td><td>Code repositories.</td></tr>
+            <tr data-pin="11"><td class="num-c">11</td><td class="sym-c"><a href="https://github.com/jaredlilliss/aussie-health-utility">AHU-SRC</a></td><td class="sym-c">OUT</td><td>Aussie Health Utility source. Public mirror; the working repository stays private.</td></tr>
+            <tr data-pin="12"><td class="num-c">12</td><td class="sym-c"><a href="https://lilliss.au/xperience-concept/spine.html">SPAN</a></td><td class="sym-c">OUT</td><td>The Span. 1975 to 2117 on one screen.</td></tr>
+            <tr data-pin="13"><td class="num-c">13</td><td class="sym-c"><a href="https://lilliss.au/stillwild-concept/">SWLD</a></td><td class="sym-c">OUT</td><td>Still Wild. A concept rebuild for a Brisbane adventure business.</td></tr>
+            <tr data-pin="14"><td class="num-c">14</td><td class="sym-c"><a href="https://lilliss.au/">BIZ</a></td><td class="sym-c">PWR</td><td>The business site.</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="notes">
+        <p><span class="nl">Note 1:</span> Pin names are abbreviations. The Name cell is the connection; the drawing above is a drawing only.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flagged" aria-labelledby="h-max">
+    <p class="rail">3.0<span class="tag">Key</span></p>
+    <h2 id="h-max">Key figures</h2>
+    <div class="bodycol">
+      <div class="scroller" tabindex="0" role="region" aria-label="Key figures table, horizontally scrollable">
+        <div class="xscroll" tabindex="0" role="region" aria-label="Table, scrolls sideways"><table>
+          <caption>Table 2. Key figures</caption>
+          <thead>
+            <tr>
+              <th scope="col">Parameter</th>
+              <th scope="col">Symbol</th>
+              <th scope="col">Value</th>
+              <th scope="col">Unit</th>
+              <th scope="col">Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Emergency departments publishing a live count</th><td class="sym-c">N_ED</td><td class="num-c flag-num">59</td><td class="unit-c">dept</td><td class="cond-c">2</td></tr>
+            <tr><th scope="row">Emergency departments in New South Wales</th><td class="sym-c">N_NSW</td><td class="num-c flag-num">176</td><td class="unit-c">dept</td><td class="cond-c">2</td></tr>
+            <tr><th scope="row">Collection interval</th><td class="sym-c">t_INT</td><td class="num-c flag-num">15</td><td class="unit-c">min</td><td class="cond-c">3</td></tr>
+            <tr><th scope="row">Quarter-hourly samples in a published facility series</th><td class="sym-c">N_S</td><td class="num-c flag-num">96</td><td class="unit-c">sample</td><td class="cond-c">—</td></tr>
+            <tr><th scope="row">Hourly aggregate entries published</th><td class="sym-c">N_H</td><td class="num-c flag-num">24</td><td class="unit-c">entry</td><td class="cond-c">—</td></tr>
+            <tr><th scope="row">Readings appended since 20 July 2026</th><td class="sym-c">N_R</td><td class="num-c flag-num">&gt;120,000</td><td class="unit-c">reading</td><td class="cond-c">3</td></tr>
+            <tr><th scope="row">Personal or health fields in the schema</th><td class="sym-c">N_PII</td><td class="num-c flag-num">0</td><td class="unit-c">field</td><td class="cond-c">4</td></tr>
+            <tr><th scope="row">Rewrites of a stored reading</th><td class="sym-c">N_RW</td><td class="num-c flag-num">0</td><td class="unit-c">write</td><td class="cond-c">—</td></tr>
+            <tr><th scope="row">External requests per page of this site</th><td class="sym-c">N_XR</td><td class="num-c flag-num">0</td><td class="unit-c">request</td><td class="cond-c">5</td></tr>
+            <tr><th scope="row">Build steps required to produce a page</th><td class="sym-c">N_BLD</td><td class="num-c flag-num">0</td><td class="unit-c">step</td><td class="cond-c">5</td></tr>
+            <tr><th scope="row">Certifications held</th><td class="sym-c">N_CERT</td><td class="num-c flag-num">2</td><td class="unit-c">cert</td><td class="cond-c">6</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="notes">
+        <p><span class="nl warn">Note 2:</span> The count is 59 of 176. It is the departments that publish a live count, not every department in the state.</p>
+        <p><span class="nl">Note 3:</span> One reading per department per fifteen minutes, appended and never rewritten. Collecting since 20 July 2026.</p>
+        <p><span class="nl">Note 4:</span> No personal or health information is collected, because the schema has no fields for it.</p>
+        <p><span class="nl">Note 5:</span> Every page on this site is a single HTML file. Fonts are self-hosted; nothing is loaded from another host. Pages work with the network cable pulled once loaded.</p>
+        <p><span class="nl">Note 6:</span> CompTIA A+ and Microsoft Azure Fundamentals AZ-900. CompTIA Security+ is in progress and is not counted.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-oc">
+    <p class="rail">4.0<span class="tag">Elec</span></p>
+    <h2 id="h-oc">Operating characteristics</h2>
+    <div class="bodycol">
+      <p>The following are read at page load from the published file the live board uses. They describe the state of the series at the moment named beneath the table. The unit throughout is people waiting. The feed has no minutes field, so nothing here is a waiting time.</p>
+      <div class="scroller" tabindex="0" role="region" aria-label="Operating characteristics table, horizontally scrollable">
+        <div class="xscroll" tabindex="0" role="region" aria-label="Table, scrolls sideways"><table id="oc">
+          <caption>Table 3. Operating characteristics</caption>
+          <thead>
+            <tr>
+              <th scope="col">Parameter</th>
+              <th scope="col">Symbol</th>
+              <th scope="col">Conditions</th>
+              <th scope="col">Min</th>
+              <th scope="col">Typ</th>
+              <th scope="col">Max</th>
+              <th scope="col">Unit</th>
+            </tr>
+          </thead>
+          <tbody id="oc-body">
+            <tr data-row="cur">
+              <th scope="row">People waiting, per department</th>
+              <td class="sym-c">Q_ED</td>
+              <td class="cond-c">Latest reading, all reporting departments</td>
+              <td class="num-c" data-f="min">—</td><td class="num-c" data-f="typ">—</td><td class="num-c" data-f="max">—</td>
+              <td class="unit-c">person</td>
+            </tr>
+            <tr data-row="avg">
+              <th scope="row">Mean people waiting, per department</th>
+              <td class="sym-c">Q_AVG</td>
+              <td class="cond-c">The avg value published for that department</td>
+              <td class="num-c" data-f="min">—</td><td class="num-c" data-f="typ">—</td><td class="num-c" data-f="max">—</td>
+              <td class="unit-c">person</td>
+            </tr>
+            <tr data-row="peak">
+              <th scope="row">Published maximum, per department</th>
+              <td class="sym-c">Q_PK</td>
+              <td class="cond-c">The max value published for that department</td>
+              <td class="num-c" data-f="min">—</td><td class="num-c" data-f="typ">—</td><td class="num-c" data-f="max">—</td>
+              <td class="unit-c">person</td>
+            </tr>
+            <tr data-row="hourly">
+              <th scope="row">Mean people waiting, by hour of day</th>
+              <td class="sym-c">Q_H</td>
+              <td class="cond-c">The 24 hourly entries as published</td>
+              <td class="num-c" data-f="min">—</td><td class="num-c" data-f="typ">—</td><td class="num-c" data-f="max">—</td>
+              <td class="unit-c">person</td>
+            </tr>
+            <tr data-row="n">
+              <th scope="row">Samples reported per department (n)</th>
+              <td class="sym-c">N_N</td>
+              <td class="cond-c">The n value published for that department</td>
+              <td class="num-c" data-f="min">—</td><td class="num-c" data-f="typ">—</td><td class="num-c" data-f="max">—</td>
+              <td class="unit-c">sample</td>
+            </tr>
+            <tr data-row="fac">
+              <th scope="row">Departments reporting</th>
+              <td class="sym-c">N_F</td>
+              <td class="cond-c">At the reading named below</td>
+              <td class="num-c" data-f="min">—</td><td class="num-c" data-f="typ">—</td><td class="num-c" data-f="max">—</td>
+              <td class="unit-c">dept</td>
+            </tr>
+            <tr data-row="snap">
+              <th scope="row">Snapshots in the published file</th>
+              <td class="sym-c">N_SNP</td>
+              <td class="cond-c">As published</td>
+              <td class="num-c" data-f="min">—</td><td class="num-c" data-f="typ">—</td><td class="num-c" data-f="max">—</td>
+              <td class="unit-c">snapshot</td>
+            </tr>
+            <tr data-row="cyc">
+              <th scope="row">Collection cycles in the published file</th>
+              <td class="sym-c">N_CYC</td>
+              <td class="cond-c">As published</td>
+              <td class="num-c" data-f="min">—</td><td class="num-c" data-f="typ">—</td><td class="num-c" data-f="max">—</td>
+              <td class="unit-c">cycle</td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+      <p class="cap" id="oc-cap" aria-live="polite">Values are read at page load. Until they are read, every cell shows an em dash.</p>
+      <div class="notes">
+        <p><span class="nl">Note 7:</span> For Q_ED, Q_AVG, Q_PK and N_N, Typ is the median across departments, and Min and Max are the lowest and highest values across departments, not a rating. For Q_H, the three columns are taken across the 24 hourly entries, not across departments. N_F, N_SNP and N_CYC are single counts, printed in the Typ column; Min and Max do not apply to them.</p>
+        <p>Copyright State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au.</p>
+        <p>Licence: CC BY 4.0.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-fbd">
+    <p class="rail">5.0<span class="tag">Fbd</span></p>
+    <h2 id="h-fbd">Functional block diagram</h2>
+    <div class="bodycol">
+      <figure>
+        <div class="scroller" tabindex="0" role="region" aria-label="Functional block diagram, horizontally scrollable">
+          <svg class="fig-svg" viewBox="0 0 900 380" width="900" height="380" role="img" aria-labelledby="fbd-title fbd-desc" xmlns="http://www.w3.org/2000/svg">
+            <title id="fbd-title">Functional block diagram of the collector</title>
+            <desc id="fbd-desc">The upstream feed publishes the current moment only. A poll runs every fifteen minutes, the reading is normalised across the 59 departments that publish a live count, and appended to a PostgreSQL series that is never rewritten. The series feeds the live board, the collection record and the Tally, and is dumped nightly at 03:30 Melbourne time and copied off the machine.</desc>
+
+            <rect class="paper-fill stroke" x="20" y="140" width="150" height="76"></rect>
+            <text class="blk" x="34" y="168">UPSTREAM FEED</text>
+            <text class="blk-sub" x="34" y="186">current moment only</text>
+            <text class="blk-sub" x="34" y="202">no history kept</text>
+
+            <line class="stroke" x1="170" y1="178" x2="200" y2="178"></line>
+            <polygon class="arrow" points="200,173 210,178 200,183"></polygon>
+
+            <rect class="paper-fill stroke" x="210" y="140" width="140" height="76"></rect>
+            <text class="blk" x="224" y="168">POLL</text>
+            <text class="blk-sub" x="224" y="186">t = 15 min</text>
+            <text class="blk-sub" x="224" y="202">since 20 Jul 2026</text>
+
+            <line class="stroke" x1="350" y1="178" x2="380" y2="178"></line>
+            <polygon class="arrow" points="380,173 390,178 380,183"></polygon>
+
+            <rect class="paper-fill stroke" x="390" y="140" width="140" height="76"></rect>
+            <text class="blk" x="404" y="168">NORMALISE</text>
+            <text class="blk-sub" x="404" y="186">59 of 176 depts</text>
+            <text class="blk-sub" x="404" y="202">no PII fields</text>
+
+            <line class="stroke" x1="530" y1="178" x2="560" y2="178"></line>
+            <polygon class="arrow" points="560,173 570,178 560,183"></polygon>
+
+            <rect class="body-fill stroke on-band" x="570" y="140" width="160" height="76"></rect>
+            <text class="blk" x="584" y="168">SERIES</text>
+            <text class="blk-sub" x="584" y="186">append only</text>
+            <text class="blk-sub" x="584" y="202">PostgreSQL</text>
+
+            <polyline class="stroke" fill="none" points="730,178 750,178 750,68 762,68"></polyline>
+            <polygon class="arrow" points="762,63 770,68 762,73"></polygon>
+            <polyline class="stroke" fill="none" points="750,178 762,178"></polyline>
+            <polygon class="arrow" points="762,173 770,178 762,183"></polygon>
+            <polyline class="stroke" fill="none" points="750,178 750,248 762,248"></polyline>
+            <polygon class="arrow" points="762,243 770,248 762,253"></polygon>
+
+            <rect class="paper-fill stroke" x="770" y="40" width="110" height="56"></rect>
+            <text class="blk" x="782" y="64">QBRD</text>
+            <text class="blk-sub" x="782" y="82">live board</text>
+
+            <rect class="paper-fill stroke" x="770" y="150" width="110" height="56"></rect>
+            <text class="blk" x="782" y="174">REC</text>
+            <text class="blk-sub" x="782" y="192">collection record</text>
+
+            <rect class="paper-fill stroke" x="770" y="220" width="110" height="56"></rect>
+            <text class="blk" x="782" y="244">TALLY</text>
+            <text class="blk-sub" x="782" y="262">series read back</text>
+
+            <line class="stroke" x1="650" y1="216" x2="650" y2="272"></line>
+            <polygon class="arrow" points="645,272 650,280 655,272"></polygon>
+
+            <rect class="paper-fill stroke" x="570" y="280" width="160" height="56"></rect>
+            <text class="blk" x="584" y="304">DUMP</text>
+            <text class="blk-sub" x="584" y="322">03:30, copied off host</text>
+
+            <text x="20" y="362" style="font-size:12px;font-weight:400;fill:var(--ink-2)">JL-1 — AHU-1 COLLECTION PATH</text>
+          </svg>
+        </div>
+        <figcaption>Figure 2. Collection path. One reading per department per cycle, appended to the series and never rewritten.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-app">
+    <p class="rail">6.0<span class="tag">App</span></p>
+    <h2 id="h-app">Applications information</h2>
+    <div class="bodycol">
+      <h3>6.1 Field service</h3>
+      <p>Point-of-sale and payment terminals, Windows machines, structured cabling and cameras. The customers are venues and small businesses around Sydney. Attendance is usually the same day and usually on site. The same work trades as Lilliss IT and covers Sydney and regional NSW.</p>
+
+      <h3 style="margin-top:24px">6.2 Collection</h3>
+      <p>The Aussie Health Utility reads how many people are waiting in each NSW emergency department that publishes a live count, every fifteen minutes, and appends the reading to a PostgreSQL series that is never rewritten. Fifty-nine departments publish a live count; there are 176 in NSW.</p>
+      <p>The upstream feed publishes the current moment only and keeps no history. A reading not taken at the time is gone for good. Collection started on 20 July 2026 and more than 120,000 readings have been appended since. It ran on a laptop first, which slept, so the early weeks have gaps. Since 23 August 2026 it has run on a small Melbourne server and nothing after that is missing. A database dump is taken at 03:30 Melbourne time each night and copied off the machine.</p>
+      <p>No personal or health information is collected, because the schema has no fields for it.</p>
+
+      <h3 style="margin-top:24px">6.3 Documents</h3>
+      <p>Every page on this site is a single HTML file with no build step and no framework. There are zero external requests: the fonts are self-hosted and nothing is loaded from another host. Once loaded, a page works with the network cable pulled.</p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-rel">
+    <p class="rail">7.0<span class="tag">Rel</span></p>
+    <h2 id="h-rel">Related parts</h2>
+    <div class="bodycol">
+      <div class="scroller" tabindex="0" role="region" aria-label="Related parts table, horizontally scrollable">
+        <div class="xscroll" tabindex="0" role="region" aria-label="Table, scrolls sideways"><table>
+          <caption>Table 4. Related parts</caption>
+          <thead>
+            <tr>
+              <th scope="col">Part</th>
+              <th scope="col">Description</th>
+              <th scope="col">Key figures</th>
+              <th scope="col">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">AHU-1</th>
+              <td>Aussie Health Utility. A collector for the live count of people waiting in NSW emergency departments, appended to a series that is never rewritten.</td>
+              <td>59 of 176 departments · 15 min · &gt;120,000 readings · since 20 Jul 2026</td>
+              <td class="reflist"><a href="/queue-board/">Board</a> <a href="/record/">record</a> <a href="/waits/">Tally</a> <a href="https://github.com/jaredlilliss/aussie-health-utility">source</a></td>
+            </tr>
+            <tr>
+              <th scope="row">SW-1</th>
+              <td>Still Wild. A concept rebuild for a real Brisbane adventure business, in one self-contained HTML file: a live canvas dawn scene, a dictionary, and an honesty layer that labels every invented detail as invented. Photographs used with the business permission, for prototyping. Not affiliated with them.</td>
+              <td>1 file · 5 languages (English, Simplified Chinese, Traditional Chinese, Japanese, Korean)</td>
+              <td><a href="https://lilliss.au/stillwild-concept/">Concept</a></td>
+            </tr>
+            <tr>
+              <th scope="row">SPAN-1</th>
+              <td>The Span. One screen holding 1975 to 2117: the space programme of the United Arab Emirates drawn as a single span you travel by dragging. Each milestone is a drawn line that means its own event, and every one names the source that establishes it. Nothing is estimated. Deep-linkable to any year, keyboard-navigable, and readable as a plain sourced list with scripting switched off. An unsolicited concept, no affiliation.</td>
+              <td>1975–2117 · 15 milestones · 13 linking to the government page</td>
+              <td><a href="https://lilliss.au/xperience-concept/spine.html">Concept</a></td>
+            </tr>
+            <tr>
+              <th scope="row">LIT-1</th>
+              <td>Lilliss IT. The trading name for the same field work: small-business IT across Sydney and regional NSW.</td>
+              <td>Trading since 2019 · registered 2026</td>
+              <td class="reflist"><a href="/lilliss-it/">Page</a> <a href="https://lilliss.au/">site</a></td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-ord">
+    <p class="rail">8.0<span class="tag">Ord</span></p>
+    <h2 id="h-ord">Ordering information</h2>
+    <div class="bodycol">
+      <div class="scroller" tabindex="0" role="region" aria-label="Ordering information table, horizontally scrollable">
+        <div class="xscroll" tabindex="0" role="region" aria-label="Table, scrolls sideways"><table>
+          <caption>Table 5. Ordering information</caption>
+          <thead>
+            <tr>
+              <th scope="col">Part number</th>
+              <th scope="col">Description</th>
+              <th scope="col">Package</th>
+              <th scope="col">Region</th>
+              <th scope="col">Contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">JL-1</th>
+              <td>IT field technician. Point-of-sale and payment terminals, Windows machines, structured cabling, cameras.</td>
+              <td>On site</td>
+              <td>Sydney, Australia</td>
+              <td><a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></td>
+            </tr>
+            <tr>
+              <th scope="row">JL-1-LIT</th>
+              <td>The same work as Lilliss IT. Small-business IT. Trading since 2019, registered 2026.</td>
+              <td>On site</td>
+              <td>Sydney and regional NSW</td>
+              <td><a href="https://lilliss.au/">lilliss.au</a></td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="notes">
+        <p><span class="nl">Note 8:</span> Attendance is usually the same day and usually on site. jaredlils99@gmail.com is the contact address.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-rev">
+    <p class="rail">9.0<span class="tag">Rev</span></p>
+    <h2 id="h-rev">Revision history</h2>
+    <div class="bodycol">
+      <div class="scroller" tabindex="0" role="region" aria-label="Revision history table, horizontally scrollable">
+        <div class="xscroll" tabindex="0" role="region" aria-label="Table, scrolls sideways"><table>
+          <caption>Table 6. Revision history</caption>
+          <thead>
+            <tr>
+              <th scope="col">Rev</th>
+              <th scope="col">Date</th>
+              <th scope="col">Change</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row" class="sym-c">A</th><td class="sym-c">2019</td><td>Trading started. Field work for venues and small businesses around Sydney.</td></tr>
+            <tr><th scope="row" class="sym-c">B</th><td class="sym-c">20 Jul 2026</td><td>Aussie Health Utility placed in service. First reading appended to the series. Collector running on a laptop.</td></tr>
+            <tr><th scope="row" class="sym-c">C</th><td class="sym-c">23 Aug 2026</td><td>Collector moved to a small Melbourne server. Laptop gaps stop. Nightly database dump at 03:30 Melbourne time, copied off the machine.</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="notes">
+        <p><span class="nl">Note 9:</span> Lilliss IT registered 2026. Trading since 2019.</p>
+        <p><span class="nl">Note 10:</span> Readings taken before the 23 August 2026 move came from a laptop that slept. Those gaps are in the record and are not filled in, because the upstream feed keeps no history.</p>
+        <p><span class="nl">Note 11:</span> The part number JL-1, the revision letters A to C, the package name and the page count are a presentation device for this layout. They identify nothing and are not a version scheme. The dates and the changes beside them are real.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="runfoot">
+    <span>Jared Lilliss · JL-1 · Rev C</span>
+    <span>Page 1 of 1</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var pkg = document.getElementById("pkg");
+  var pf = document.getElementById("pf");
+  if (pkg && pf) {
+    var rows = pf.querySelectorAll("tbody tr[data-pin]");
+    Array.prototype.forEach.call(rows, function(tr){
+      var g = document.getElementById("pin-" + tr.getAttribute("data-pin"));
+      if (!g) return;
+      var on = function(){ g.classList.add("hot"); };
+      var off = function(){ g.classList.remove("hot"); };
+      tr.addEventListener("mouseenter", on);
+      tr.addEventListener("mouseleave", off);
+      tr.addEventListener("focusin", on);
+      tr.addEventListener("focusout", off);
+    });
+  }
+
+  var body = document.getElementById("oc-body");
+  var cap = document.getElementById("oc-cap");
+  if (!body) return;
+
+  function nums(list){
+    var out = [];
+    for (var i = 0; i < list.length; i++) {
+      var v = Number(list[i]);
+      if (isFinite(v)) out.push(v);
+    }
+    out.sort(function(a,b){ return a - b; });
+    return out;
+  }
+  function median(a){
+    if (!a.length) return null;
+    var m = Math.floor(a.length / 2);
+    return a.length % 2 ? a[m] : (a[m-1] + a[m]) / 2;
+  }
+  function group(s){
+    var parts = String(s).split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+  }
+  function fmt(v){
+    if (v === null || v === undefined || !isFinite(v)) return "—";
+    var r = Math.round(v * 10) / 10;
+    if (Math.abs(r - Math.round(r)) < 0.05) return group(Math.round(r));
+    return group(r.toFixed(1));
+  }
+  function put(key, min, typ, max){
+    var tr = body.querySelector('tr[data-row="' + key + '"]');
+    if (!tr) return;
+    var cells = tr.querySelectorAll("[data-f]");
+    var vals = { min: min, typ: typ, max: max };
+    Array.prototype.forEach.call(cells, function(td){
+      td.textContent = fmt(vals[td.getAttribute("data-f")]);
+    });
+  }
+  function span(a){
+    if (!a.length) return [null, null, null];
+    return [a[0], median(a), a[a.length - 1]];
+  }
+
+  fetch("/queue-board/ed.json", { cache: "no-store" })
+    .then(function(r){
+      if (!r.ok) throw new Error("read failed");
+      return r.json();
+    })
+    .then(function(d){
+      var fac = (d && d.facilities) || [];
+      var meta = (d && d.meta) || {};
+      var hourly = (d && d.hourly) || [];
+
+      var cur = nums(fac.map(function(f){ return f.current; }));
+      var avg = nums(fac.map(function(f){ return f.avg; }));
+      var peak = nums(fac.map(function(f){ return f.max; }));
+      var n = nums(fac.map(function(f){ return f.n; }));
+      var hr = nums(hourly.map(function(h){ return h.avg; }));
+
+      var s;
+      s = span(cur);   put("cur", s[0], s[1], s[2]);
+      s = span(avg);   put("avg", s[0], s[1], s[2]);
+      s = span(peak);  put("peak", s[0], s[1], s[2]);
+      s = span(hr);    put("hourly", s[0], s[1], s[2]);
+      s = span(n);     put("n", s[0], s[1], s[2]);
+
+      var nf = isFinite(Number(meta.facilities_reporting)) ? Number(meta.facilities_reporting) : (fac.length || null);
+      put("fac", null, nf, null);
+      put("snap", null, isFinite(Number(meta.snapshots)) ? Number(meta.snapshots) : null, null);
+      put("cyc", null, isFinite(Number(meta.cycles)) ? Number(meta.cycles) : null, null);
+
+      if (cap) {
+        var parts = ["Characterised from the published file at page load."];
+        if (meta.first) parts.push("First reading in the file: " + String(meta.first) + ".");
+        if (meta.last) parts.push("Last reading: " + String(meta.last) + ".");
+        if (d.generated_at) parts.push("File generated " + String(d.generated_at) + ".");
+        if (!cur.length && !avg.length && !hr.length) {
+          parts.push("The file read did not carry the per-department series, so those rows are em dashes.");
+        }
+        cap.textContent = parts.join(" ");
+      }
+    })
+    .catch(function(){
+      if (cap) {
+        cap.textContent = "The published file was not read at page load, so every value above is an em dash. The rest of this document is unaffected.";
+      }
+    });
+})();
+</script>
+</body>
+</html>

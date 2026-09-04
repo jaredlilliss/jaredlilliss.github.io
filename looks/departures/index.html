@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Jared Lilliss — IT field technician, Sydney</title>
+<meta name="description" content="Jared Lilliss, IT field technician in Sydney. Point-of-sale and payment terminals, Windows machines, structured cabling, cameras. Plus the projects currently running.">
+<style>
+@font-face{font-family:"Inter";src:url("/fonts/inter.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("/fonts/plexmono-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("/fonts/plexmono-500.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+
+:root{
+  color-scheme:light dark;
+  --paper:#E7E9EC;
+  --paper-2:#DDE0E4;
+  --ink:#16191E;
+  --ink-2:#4A5058;
+  --link:#095E6C;
+  --rule:#8A929C;
+  --board:#14171C;
+  --board-type:#EDEFF2;
+  --board-dim:#9BA3AD;
+  --signal:#62CDDD;
+  --seam:#2A303A;
+  --fold:#252A33;
+  --focus:#095E6C;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,"Cascadia Mono",Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#262C34;
+    --paper-2:#1E232A;
+    --ink:#E6E9ED;
+    --ink-2:#A7AEB8;
+    --link:#62CDDD;
+    --rule:#5A6270;
+    --board:#08090C;
+    --board-type:#F0F2F5;
+    --board-dim:#98A0AA;
+    --signal:#62CDDD;
+    --seam:#1D222A;
+    --fold:#191D24;
+    --focus:#62CDDD;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#262C34;
+  --paper-2:#1E232A;
+  --ink:#E6E9ED;
+  --ink-2:#A7AEB8;
+  --link:#62CDDD;
+  --rule:#5A6270;
+  --board:#08090C;
+  --board-type:#F0F2F5;
+  --board-dim:#98A0AA;
+  --signal:#62CDDD;
+  --seam:#1D222A;
+  --fold:#191D24;
+  --focus:#62CDDD;
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --paper:#E7E9EC;
+  --paper-2:#DDE0E4;
+  --ink:#16191E;
+  --ink-2:#4A5058;
+  --link:#095E6C;
+  --rule:#8A929C;
+  --board:#14171C;
+  --board-type:#EDEFF2;
+  --board-dim:#9BA3AD;
+  --signal:#62CDDD;
+  --seam:#2A303A;
+  --fold:#252A33;
+  --focus:#095E6C;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:400;
+  font-size:17px;
+  line-height:28px;
+}
+img{max-width:100%}
+h1,h2,h3,p,ul,ol,figure{margin:0}
+a{color:var(--link)}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:0}
+.vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+.skip{
+  --focus:var(--signal);
+  position:absolute;left:-9999px;top:0;z-index:20;
+  font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--board);color:var(--board-type);
+  padding:12px 20px;text-decoration:none;
+}
+.skip:focus{left:0}
+
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+
+.preview{
+  background:var(--board);
+  color:var(--board-dim);
+  font-family:var(--mono);font-weight:500;
+  font-size:12px;line-height:20px;letter-spacing:.08em;
+  border-bottom:1px solid var(--seam);
+}
+.preview .wrap{
+  min-height:36px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding-top:8px;padding-bottom:8px;
+}
+.preview p{margin:0}
+
+header.masthead{padding-top:48px;padding-bottom:0}
+h1{
+  font-family:var(--sans);font-weight:600;
+  font-size:clamp(34px,4vw,46px);line-height:1.05;letter-spacing:-.015em;
+  margin:0 0 16px;
+}
+.lead{font-size:19px;line-height:30px;color:var(--ink);margin-bottom:16px}
+.blurb{max-width:68ch;color:var(--ink-2);margin-bottom:24px}
+.meta-lines{display:flex;flex-wrap:wrap;gap:8px 32px;align-items:baseline}
+.contact,.certs{
+  font-family:var(--mono);font-weight:500;
+  letter-spacing:.06em;margin:0;
+}
+.contact{font-size:12.5px;line-height:20px}
+.certs{font-size:12.5px;line-height:20px;color:var(--ink-2)}
+.contact a{color:var(--link);text-underline-offset:3px}
+
+main{display:block}
+main:focus{outline:none}
+.board-zone{padding-top:40px;padding-bottom:0}
+
+.board{
+  background:var(--board);
+  border:1px solid var(--rule);
+  color:var(--board-type);
+  --focus:var(--signal);
+}
+.clockstrip{
+  padding:24px 20px 20px;
+  border-bottom:1px solid var(--seam);
+}
+.clock-label{
+  font-family:var(--mono);font-weight:500;
+  font-size:11px;line-height:16px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--board-dim);
+  margin-bottom:8px;
+}
+.clock-figure{
+  font-family:var(--mono);font-weight:500;
+  font-size:clamp(40px,5.6vw,62px);
+  line-height:1.1;letter-spacing:.01em;
+  font-variant-numeric:tabular-nums lining-nums;
+  text-transform:uppercase;
+  color:var(--board-dim);
+  margin-bottom:12px;
+  word-break:break-word;
+}
+.clock-figure[data-state="live"]{color:var(--signal)}
+@media (prefers-reduced-motion:no-preference){
+  .clock-figure{transition:opacity 120ms linear}
+}
+.clock-meta{
+  font-family:var(--mono);font-weight:500;
+  font-size:12px;line-height:20px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--board-dim);
+  max-width:92ch;
+}
+
+.board-scroll{overflow-x:auto}
+.board-scroll:focus-visible{outline:2px solid var(--signal);outline-offset:-2px}
+
+table.board-table{
+  width:100%;
+  min-width:760px;
+  table-layout:fixed;
+  border-collapse:separate;
+  border-spacing:1px 3px;
+  background:var(--seam);
+  font-size:13px;
+}
+.board-table th{
+  background:var(--board);
+  color:var(--board-dim);
+  font-family:var(--mono);font-weight:500;
+  font-size:11px;line-height:16px;letter-spacing:.18em;text-transform:uppercase;
+  text-align:left;
+  padding:14px 20px 12px;
+  vertical-align:bottom;
+}
+.board-table td{
+  height:56px;
+  padding:0 20px;
+  vertical-align:middle;
+  background-color:var(--board);
+  background-image:linear-gradient(to bottom,var(--board) 0,var(--board) 27px,var(--fold) 27px,var(--fold) 28px,var(--board) 28px,var(--board) 100%);
+}
+col.k-time{width:112px}
+col.k-svc{width:auto}
+col.k-status{width:132px}
+col.k-gate{width:184px}
+
+.c-time,.c-status{
+  font-family:var(--mono);font-weight:500;
+  font-size:13px;line-height:20px;letter-spacing:.06em;text-transform:uppercase;
+  font-variant-numeric:tabular-nums lining-nums;
+  white-space:nowrap;
+}
+.c-time{color:var(--board-dim)}
+.c-svc{
+  font-family:var(--sans);font-weight:500;
+  font-size:16px;line-height:22px;letter-spacing:0;
+  color:var(--board-type);
+}
+.c-gate{
+  font-family:var(--mono);font-weight:500;
+  font-size:13px;line-height:20px;letter-spacing:.06em;
+}
+.c-gate a{
+  color:var(--board-type);
+  text-decoration:underline;
+  text-underline-offset:4px;
+  text-decoration-color:var(--board-dim);
+}
+.c-gate a:hover{color:var(--signal);text-decoration-color:var(--signal)}
+.st-run{color:var(--signal)}
+.st-closed{color:var(--board-dim)}
+.st-concept{color:var(--board-type)}
+
+.details{padding-top:0}
+.detail{
+  display:grid;
+  grid-template-columns:200px minmax(0,68ch);
+  gap:40px;
+  padding:40px 24px 40px;
+  border-top:1px solid var(--rule);
+}
+.detail:first-of-type{margin-top:64px}
+.detail + .detail{margin-top:24px}
+.detail.band{background:var(--paper-2)}
+.rail{padding-top:6px}
+.rail-code{
+  font-family:var(--mono);font-weight:500;
+  font-size:12px;line-height:20px;letter-spacing:.10em;text-transform:uppercase;
+  color:var(--ink-2);
+  word-break:break-all;
+  margin-bottom:4px;
+}
+.rail-status{
+  font-family:var(--mono);font-weight:500;
+  font-size:12px;line-height:20px;letter-spacing:.10em;text-transform:uppercase;
+  color:var(--ink);
+}
+.prose h2{
+  font-family:var(--sans);font-weight:600;
+  font-size:22px;line-height:28px;letter-spacing:-.005em;
+  margin-bottom:16px;
+}
+.prose p{margin-bottom:16px;max-width:68ch}
+.prose p:last-child{margin-bottom:0}
+.prose a{text-underline-offset:3px;overflow-wrap:anywhere}
+.prose .path{font-family:var(--mono);font-weight:400;font-size:15px;letter-spacing:.02em}
+
+footer{
+  border-top:1px solid var(--rule);
+  margin-top:64px;
+  padding-top:48px;
+  padding-bottom:64px;
+}
+.foot-links{
+  list-style:none;padding:0;margin:0 0 32px;
+  display:flex;flex-wrap:wrap;gap:24px 28px;
+  font-family:var(--mono);font-weight:400;
+  font-size:12.5px;line-height:20px;letter-spacing:.06em;
+}
+.foot-note{
+  font-family:var(--mono);font-weight:400;
+  font-size:12.5px;line-height:20px;
+  color:var(--ink-2);
+  max-width:80ch;
+  margin-bottom:16px;
+  overflow-wrap:anywhere;
+}
+.foot-note:last-child{margin-bottom:0}
+.foot-note strong{font-weight:400;color:var(--ink)}
+
+.c-gate a,.foot-links a,.contact a{
+  display:inline-block;
+  padding-block:12px;
+  margin-block:-12px;
+}
+
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  header.masthead{padding-top:32px}
+  .board-zone{padding-top:32px}
+  .clockstrip{padding:20px 16px 16px}
+  .clock-meta{letter-spacing:.06em}
+  table.board-table{min-width:660px;font-size:12.5px}
+  .board-table th{padding:12px 14px 10px}
+  .board-table td{padding:0 14px}
+  col.k-time{width:96px}
+  col.k-status{width:112px}
+  col.k-gate{width:150px}
+  .c-svc{font-size:15px;line-height:21px}
+  .detail{
+    grid-template-columns:minmax(0,1fr);
+    gap:16px;
+    padding:32px 16px;
+  }
+  .detail:first-of-type{margin-top:40px}
+  .detail + .detail{margin-top:8px}
+  .rail{padding-top:0;display:flex;gap:16px;flex-wrap:wrap}
+  .rail-code,.rail-status{margin-bottom:0}
+  footer{margin-top:40px;padding-top:40px}
+}
+
+.xscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.xscroll:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+
+.xlooks{color:inherit;text-decoration:underline;text-underline-offset:3px;font:inherit;white-space:nowrap;display:inline-block;padding:6px 0;margin-inline-start:.9em}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="preview">
+  <div class="wrap">
+    <p>An alternative look for this site. Not the live page.</p><a class="xlooks" href="/looks/">All looks</a>
+  </div>
+</div>
+
+<header class="masthead wrap">
+  <h1>Jared Lilliss</h1>
+  <p class="lead">IT field technician. Sydney, Australia.</p>
+  <p class="blurb">Point-of-sale and payment terminals, Windows machines, structured cabling, cameras. For venues and small businesses around Sydney. Usually the same day, usually on site.</p>
+  <div class="meta-lines">
+    <p class="contact"><a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></p>
+    <p class="certs">CompTIA A+ &middot; Microsoft Azure Fundamentals AZ-900 &middot; CompTIA Security+ in progress</p>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <section class="board-zone wrap" aria-labelledby="board-h">
+    <h2 class="vh" id="board-h">Projects and current work</h2>
+    <div class="board">
+      <div class="clockstrip">
+        <p class="clock-label">Last reading (Sydney)</p>
+        <p class="clock-figure" id="clock" data-state="await" aria-live="polite">Awaiting feed</p>
+        <p class="clock-meta">59 NSW emergency departments publish a live count &middot; 176 in NSW &middot; more than 120,000 readings since 20 Jul 2026</p>
+      </div>
+      <div class="board-scroll" tabindex="0" role="region" aria-label="Projects board, scrollable">
+        <div class="xscroll" tabindex="0" role="region" aria-label="Table, scrolls sideways"><table class="board-table">
+          <caption class="vh">Projects and current work, with status and link</caption>
+          <colgroup>
+            <col class="k-time">
+            <col class="k-svc">
+            <col class="k-status">
+            <col class="k-gate">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col">Time</th>
+              <th scope="col">Service</th>
+              <th scope="col">Status</th>
+              <th scope="col">Gate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="c-time">20 Jul 26</td>
+              <td class="c-svc">Aussie Health Utility &mdash; NSW emergency department collector</td>
+              <td class="c-status"><span class="st-run">Running</span></td>
+              <td class="c-gate"><a href="/queue-board/">/queue-board/</a></td>
+            </tr>
+            <tr>
+              <td class="c-time">Every 15 min</td>
+              <td class="c-svc">A reading appended to a PostgreSQL series that is never rewritten</td>
+              <td class="c-status"><span class="st-run">Running</span></td>
+              <td class="c-gate"><a href="/record/">/record/<span class="vh"> &mdash; collection cadence</span></a></td>
+            </tr>
+            <tr>
+              <td class="c-time">23 Aug 26</td>
+              <td class="c-svc">Melbourne server &mdash; nothing missing after this date</td>
+              <td class="c-status"><span class="st-run">Running</span></td>
+              <td class="c-gate"><a href="/record/">/record/<span class="vh"> &mdash; the Melbourne server</span></a></td>
+            </tr>
+            <tr>
+              <td class="c-time">03:30</td>
+              <td class="c-svc">Database dump, Melbourne time, copied off the machine</td>
+              <td class="c-status"><span class="st-run">Running</span></td>
+              <td class="c-gate"><a href="/record/">/record/<span class="vh"> &mdash; the nightly dump</span></a></td>
+            </tr>
+            <tr>
+              <td class="c-time">To 23 Aug 26</td>
+              <td class="c-svc">Laptop collector &mdash; it slept, so the early weeks have gaps</td>
+              <td class="c-status"><span class="st-closed">Closed</span></td>
+              <td class="c-gate"><a href="/record/">/record/<span class="vh"> &mdash; the gaps</span></a></td>
+            </tr>
+            <tr>
+              <td class="c-time">2019</td>
+              <td class="c-svc">Lilliss IT &mdash; small-business IT, Sydney and regional NSW</td>
+              <td class="c-status"><span class="st-run">Running</span></td>
+              <td class="c-gate"><a href="/lilliss-it/">/lilliss-it/</a></td>
+            </tr>
+            <tr>
+              <td class="c-time">&mdash; &mdash;</td>
+              <td class="c-svc">Still Wild &mdash; concept rebuild for a Brisbane adventure business</td>
+              <td class="c-status"><span class="st-concept">Concept</span></td>
+              <td class="c-gate"><a href="https://lilliss.au/stillwild-concept/">lilliss.au<span class="vh"> &mdash; Still Wild concept</span></a></td>
+            </tr>
+            <tr>
+              <td class="c-time">&mdash; &mdash;</td>
+              <td class="c-svc">The Span &mdash; the UAE space programme, 1975 to 2117</td>
+              <td class="c-status"><span class="st-concept">Concept</span></td>
+              <td class="c-gate"><a href="https://lilliss.au/xperience-concept/spine.html">lilliss.au<span class="vh"> &mdash; The Span concept</span></a></td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="details wrap">
+
+    <section class="detail" aria-labelledby="d-ahu">
+      <div class="rail">
+        <p class="rail-code">/queue-board/</p>
+        <p class="rail-status">Running</p>
+      </div>
+      <div class="prose">
+        <h2 id="d-ahu">Aussie Health Utility</h2>
+        <p>A collector reads how many people are waiting in each NSW emergency department that publishes a live count. It reads every fifteen minutes and appends the reading to a PostgreSQL series that is never rewritten.</p>
+        <p>Fifty-nine departments publish a live count. NSW has 176 in total, so this is the fifty-nine, not the state. Collecting started on 20 July 2026. There are now more than 120,000 readings.</p>
+        <p>The feed publishes a count of people waiting, not a duration. Nothing on these pages is a waiting time.</p>
+        <p>No personal or health information is collected, because the schema has no fields for it.</p>
+        <p>The live board is at <a class="path" href="/queue-board/">/queue-board/</a>. The Tally is at <a class="path" href="/waits/">/waits/</a>.</p>
+      </div>
+    </section>
+
+    <section class="detail band" aria-labelledby="d-record">
+      <div class="rail">
+        <p class="rail-code">/record/</p>
+        <p class="rail-status">Running &middot; one row closed</p>
+      </div>
+      <div class="prose">
+        <h2 id="d-record">The collection record</h2>
+        <p>The upstream feed publishes the current moment only and keeps no history. A reading not taken at the time is gone for good.</p>
+        <p>It ran on a laptop first. The laptop slept, so the early weeks have gaps. Since 23 August 2026 it has run on a small Melbourne server, and nothing after that date is missing.</p>
+        <p>A database dump is taken at 03:30 Melbourne time each night and copied off the machine.</p>
+        <p>The full record is at <a class="path" href="/record/">/record/</a>. The source is at <a href="https://github.com/jaredlilliss/aussie-health-utility">github.com/jaredlilliss/aussie-health-utility</a>, a public mirror; the working repository stays private.</p>
+      </div>
+    </section>
+
+    <section class="detail" aria-labelledby="d-lilliss">
+      <div class="rail">
+        <p class="rail-code">/lilliss-it/</p>
+        <p class="rail-status">Running</p>
+      </div>
+      <div class="prose">
+        <h2 id="d-lilliss">Lilliss IT</h2>
+        <p>Lilliss IT is the trading name for the day work: small-business IT across Sydney and regional NSW. Point-of-sale and payment terminals, Windows machines, structured cabling, cameras.</p>
+        <p>Trading since 2019, registered 2026.</p>
+        <p>Details at <a class="path" href="/lilliss-it/">/lilliss-it/</a>. The business site is <a href="https://lilliss.au/">lilliss.au</a>.</p>
+      </div>
+    </section>
+
+    <section class="detail band" aria-labelledby="d-stillwild">
+      <div class="rail">
+        <p class="rail-code">lilliss.au</p>
+        <p class="rail-status">Concept</p>
+      </div>
+      <div class="prose">
+        <h2 id="d-stillwild">Still Wild</h2>
+        <p>A concept rebuild for a real Brisbane adventure business. One self-contained HTML file: a live canvas dawn scene, a five-language dictionary covering English, Simplified Chinese, Traditional Chinese, Japanese and Korean, and an honesty layer that labels every invented detail as invented.</p>
+        <p>Photographs are used with the business&rsquo;s permission, for prototyping. Not affiliated with them.</p>
+        <p>Live at <a href="https://lilliss.au/stillwild-concept/">lilliss.au/stillwild-concept/</a>.</p>
+      </div>
+    </section>
+
+    <section class="detail" aria-labelledby="d-span">
+      <div class="rail">
+        <p class="rail-code">lilliss.au</p>
+        <p class="rail-status">Concept</p>
+      </div>
+      <div class="prose">
+        <h2 id="d-span">The Span</h2>
+        <p>A design concept. One screen holding 1975 to 2117: the space programme of the United Arab Emirates drawn as a single span you travel by dragging.</p>
+        <p>Fifteen milestones, each a drawn line that means its own event rather than an icon off a shelf. Every one names the source that establishes it, and thirteen link straight to the government page they came from. Nothing is estimated.</p>
+        <p>Deep-linkable to any year, keyboard-navigable, and readable as a plain sourced list with scripting switched off. An unsolicited concept, no affiliation.</p>
+        <p>Live at <a href="https://lilliss.au/xperience-concept/spine.html">lilliss.au/xperience-concept/spine.html</a>.</p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="wrap">
+  <h2 class="vh">Elsewhere and attribution</h2>
+  <ul class="foot-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/queue-board/">Queue board</a></li>
+    <li><a href="/record/">Record</a></li>
+    <li><a href="/waits/">The Tally</a></li>
+    <li><a href="/lilliss-it/">Lilliss IT</a></li>
+    <li><a href="/privacy.html">Privacy</a></li>
+    <li><a href="https://github.com/jaredlilliss">GitHub</a></li>
+    <li><a href="https://www.linkedin.com/in/jaredlilliss/">LinkedIn</a></li>
+    <li><a href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a></li>
+  </ul>
+  <p class="foot-note"><strong>Copyright State of New South Wales NSW Ministry of Health. For current information go to www.health.nsw.gov.au.</strong> Licensed CC BY 4.0.</p>
+  <p class="foot-note">Every page on this site is a single HTML file with no build step and no framework. Zero external requests: the fonts are self-hosted and nothing is loaded from another host. Once loaded, a page works with the network cable pulled.</p>
+</footer>
+
+<script>
+(function(){
+  var el = document.getElementById("clock");
+  if (!el || typeof window.fetch !== "function") { return; }
+
+  var reduced = false;
+  try {
+    reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch (e) { reduced = false; }
+
+  function paint(text, state){
+    if (reduced) {
+      el.setAttribute("data-state", state);
+      el.textContent = text;
+      return;
+    }
+    el.style.opacity = "0";
+    window.setTimeout(function(){
+      el.setAttribute("data-state", state);
+      el.textContent = text;
+      el.style.opacity = "1";
+    }, 120);
+  }
+
+  function format(value){
+    var d = new Date(value);
+    if (isNaN(d.getTime())) { return String(value); }
+    try {
+      var parts = new Intl.DateTimeFormat("en-AU", {
+        timeZone: "Australia/Sydney",
+        day: "2-digit", month: "short", year: "2-digit",
+        hour: "2-digit", minute: "2-digit",
+        hour12: false, hourCycle: "h23"
+      }).formatToParts(d);
+      var g = {};
+      for (var i = 0; i < parts.length; i++) { g[parts[i].type] = parts[i].value; }
+      if (g.day && g.month && g.year && g.hour && g.minute) {
+        return g.day + " " + g.month + " " + g.year + "  " + g.hour + ":" + g.minute;
+      }
+    } catch (e) {}
+    return String(value);
+  }
+
+  window.fetch("/queue-board/ed.json", { cache: "no-store" })
+    .then(function(r){
+      if (!r.ok) { throw new Error("bad response"); }
+      return r.json();
+    })
+    .then(function(data){
+      var last = data && data.meta && data.meta.last;
+      if (!last) { throw new Error("no reading"); }
+      paint(format(last), "live");
+    })
+    .catch(function(){
+      paint("Feed unreachable", "dead");
+    });
+})();
+</script>
+</body>
+</html>

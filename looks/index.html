@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Looks</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101010">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/plexmono-400.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/plexmono-500.woff2') format('woff2')}
+:root{--bg:#FFFFFF;--ink:#131313;--muted:#606060;--rule:#DDDDDD;--link:#0F5FA6;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101010;--ink:#EDEDED;--muted:#A0A0A0;--rule:#2A2A2A;--link:#79B8F0}}
+:root[data-theme="dark"]{--bg:#101010;--ink:#EDEDED;--muted:#A0A0A0;--rule:#2A2A2A;--link:#79B8F0}
+:root[data-theme="light"]{--bg:#FFFFFF;--ink:#131313;--muted:#606060;--rule:#DDDDDD;--link:#0F5FA6}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.3rem}
+a{color:var(--link)}
+a:focus-visible{outline:2px solid var(--link);outline-offset:3px}
+header{padding:3.4rem 0 0}
+.kicker{font:500 .78rem/1.6 'IBM Plex Mono',ui-monospace,Consolas,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 .8rem}
+h1{font:600 clamp(1.9rem,4.4vw,2.6rem)/1.15 'Inter',system-ui,sans-serif;letter-spacing:-.025em;margin:0 0 1rem}
+p{margin:0 0 1rem;max-width:60ch}
+.lede{font-size:1.1rem}
+.muted{color:var(--muted)}
+ol{list-style:none;margin:2.6rem 0 0;padding:0;counter-reset:none}
+.look{border-top:1px solid var(--rule);padding:1.4rem 0 1.5rem}
+.go{display:flex;align-items:baseline;gap:.9rem;text-decoration:none;color:var(--ink)}
+.go:hover .nm{text-decoration:underline;text-decoration-color:var(--link);text-underline-offset:4px}
+.n{font:500 .8rem/1.6 'IBM Plex Mono',ui-monospace,Consolas,monospace;color:var(--muted);font-variant-numeric:tabular-nums}
+.nm{font:600 1.35rem/1.2 'Inter',system-ui,sans-serif;letter-spacing:-.02em}
+.note{margin:.5rem 0 0 2.6rem;color:var(--ink)}
+.meta{margin:.45rem 0 0 2.6rem;font:500 .78rem/1.6 'IBM Plex Mono',ui-monospace,Consolas,monospace;letter-spacing:.06em;color:var(--muted)}
+.meta a{color:var(--link)}
+footer{border-top:1px solid var(--rule);margin-top:2.6rem;padding:1.4rem 0 4rem;font:500 .78rem/1.8 'IBM Plex Mono',ui-monospace,Consolas,monospace;letter-spacing:.06em;color:var(--muted)}
+footer a{color:var(--link)}
+@media (max-width:520px){.note,.meta{margin-left:0}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <p class="kicker">Unlisted &middot; 4 September 2026</p>
+    <h1>Looks</h1>
+    <p class="lede">Each of these is the same site &mdash; the same facts, the same links, the same single file &mdash; wearing a different register. Open them, and say which one is least wrong.</p>
+    <p class="muted">Nothing here is live. <a href="/">The current site</a> is unchanged. This page is deliberately plain so it isn&rsquo;t competing with the things it lists.</p>
+  </header>
+  <ol>
+    <li class="look"><a class="go" href="/looks/readout/"><span class="n">01</span><span class="nm">The Readout</span></a><p class="note">An instrument panel. Opens with what the collector is reading right now, not with a headline about him.</p><p class="meta">41 KB &middot; one file &middot; <a href="/looks/readout/">open</a></p></li>
+    <li class="look"><a class="go" href="/looks/ticket/"><span class="n">02</span><span class="nm">The Ticket Queue</span></a><p class="note">The interface of his own trade. Every project is a ticket with a status, a priority and a last update.</p><p class="meta">43 KB &middot; one file &middot; <a href="/looks/ticket/">open</a></p></li>
+    <li class="look"><a class="go" href="/looks/signal/"><span class="n">03</span><span class="nm">The Signal</span></a><p class="note">One drawn line runs the height of the page: the real 24-hour curve, with the content hung off it.</p><p class="meta">24 KB &middot; one file &middot; <a href="/looks/signal/">open</a></p></li>
+    <li class="look"><a class="go" href="/looks/datasheet/"><span class="n">04</span><span class="nm">The Datasheet</span></a><p class="note">A component datasheet for the collector. Ratings, characteristics, block diagram, ordering information.</p><p class="meta">46 KB &middot; one file &middot; <a href="/looks/datasheet/">open</a></p></li>
+    <li class="look"><a class="go" href="/looks/departures/"><span class="n">05</span><span class="nm">The Departures Board</span></a><p class="note">A transport board. Time, destination, status, gate — the projects as services.</p><p class="meta">22 KB &middot; one file &middot; <a href="/looks/departures/">open</a></p></li>
+  </ol>
+</main>
+<footer class="wrap">
+  <span>5 looks &middot; built 4 September 2026 &middot; <a href="/">back to the site</a></span>
+</footer>
+</body>
+</html>
