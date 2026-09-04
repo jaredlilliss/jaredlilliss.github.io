@@ -53,6 +53,13 @@ a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ember);outline-
 h1{margin:0;font:500 .78rem/1.6 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
 h1 em{font-style:normal;color:var(--ember)}
 #span{margin-inline-start:auto;font-variant-numeric:tabular-nums;white-space:nowrap}
+/* The way back, when this page was opened as the floor below level 6 rather than on
+   its own. First in the header, because that is what it is: a breadcrumb. */
+.backto{order:-1;display:inline-flex;align-items:center;gap:.45rem;text-decoration:none;
+  font:500 .64rem/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--ink);
+  background:rgba(232,237,242,.10);border:1px solid var(--line);border-radius:2px;
+  padding:.5rem .68rem;white-space:nowrap;transition:color .25s ease,border-color .25s ease}
+.backto:hover{color:var(--ember);border-color:var(--ember)}
 #span b{font-weight:500;color:var(--ink)}
 
 /* the readout names the real thing under the cursor, and nothing else */
@@ -478,5 +485,32 @@ noscript a{color:var(--ink)}
 })();
 </script>
 
+<script>
+/* ── the way back ───────────────────────────────────────────────────────────────
+   Opened from level 6 of the section, this page must return you to that level, not
+   to the top. Separate URLs rather than an overlay: Back keeps working, and the page
+   stays linkable on its own. The ?from= value is validated against the known level
+   ids and NEVER reflected into the DOM as it arrived — the label comes from this
+   table, so a link written by a stranger cannot put text or markup on the page. */
+(function () {
+  "use strict";
+  var LEVELS = { l1: 'the counter', l2: 'the wall', l3: 'the rack', l4: 'the wire out',
+                 l5: 'the server', l6: 'the row', l7: 'the board', l8: 'contact' };
+  var m = /[?&]from=([A-Za-z0-9]{1,4})(?:&|$)/.exec(location.search);
+  var key = m ? m[1].toLowerCase() : '';
+  if (!Object.prototype.hasOwnProperty.call(LEVELS, key)) return;
+  var target = '/looks/section/#' + key;
+  var head = document.getElementById('head');
+  if (!head) return;
+  var a = document.createElement('a');
+  a.className = 'backto';
+  a.href = target;
+  a.appendChild(document.createTextNode('← The section · ' + LEVELS[key]));
+  head.insertBefore(a, head.firstChild);
+  addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !e.defaultPrevented) { location.href = target; }
+  });
+})();
+</script>
 </body>
 </html>

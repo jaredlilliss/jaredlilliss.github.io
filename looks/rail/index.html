@@ -70,6 +70,14 @@ header{padding:1.6rem 1.4rem 0;display:flex;align-items:baseline;gap:.7rem 1.6re
 .sig a{text-decoration:none}
 .sig em{font-style:normal;color:var(--ember)}
 .role{font:500 .74rem/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+/* The way back, when this page was opened as a room of the section rather than on its own.
+   It sits first in the header because that is what it is: a breadcrumb, not a widget. */
+.backto{order:-1;display:inline-flex;align-items:center;gap:.45rem;text-decoration:none;
+  font:500 .68rem/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  background:var(--surface-2);border:1px solid var(--line-2);border-radius:2px;
+  padding:.52rem .7rem;white-space:nowrap;transition:color .25s ease,border-color .25s ease}
+.backto:hover{color:var(--ember);border-color:var(--ember)}
+.backto kbd{font:inherit;opacity:.6}
 .readout{margin-inline-start:auto;display:flex;align-items:baseline;gap:.6rem;
   font:500 .74rem/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);
   font-variant-numeric:tabular-nums}
@@ -481,6 +489,36 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
   /* If anything above throws, the page is already a complete readable document —
      the rail is added to the fallback, never required by it. */
   try { start(); } catch (e) { root.classList.remove('rail-on'); }
+})();
+</script>
+<script>
+/* ── the way back ───────────────────────────────────────────────────────────────
+   This page is also a room of the section: opened from level 1, it must return you
+   to the level you left, not to the top. Separate URLs rather than an overlay, so
+   the browser Back button keeps working and this page stays linkable on its own.
+
+   The ?from= value is validated against the known level ids and NEVER reflected into
+   the DOM as it arrived — the label comes from this table, so a link written by a
+   stranger cannot put text or markup on the page. hasOwnProperty, so inherited keys
+   like __proto__ or constructor cannot match. */
+(function () {
+  "use strict";
+  var LEVELS = { l1: 'the counter', l2: 'the wall', l3: 'the rack', l4: 'the wire out',
+                 l5: 'the server', l6: 'the row', l7: 'the board', l8: 'contact' };
+  var m = /[?&]from=([A-Za-z0-9]{1,4})(?:&|$)/.exec(location.search);
+  var key = m ? m[1].toLowerCase() : '';
+  if (!Object.prototype.hasOwnProperty.call(LEVELS, key)) return;
+  var target = '/looks/section/#' + key;
+  var head = document.querySelector('header');
+  if (!head) return;
+  var a = document.createElement('a');
+  a.className = 'backto';
+  a.href = target;
+  a.appendChild(document.createTextNode('← The section · ' + LEVELS[key]));
+  head.insertBefore(a, head.firstChild);
+  addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !e.defaultPrevented) { location.href = target; }
+  });
 })();
 </script>
 </body>
