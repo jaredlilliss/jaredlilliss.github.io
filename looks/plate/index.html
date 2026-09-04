@@ -139,7 +139,7 @@ a:hover{text-decoration-thickness:2px}
 
 .band{
   background:var(--band);
-  border-bottom:1px solid var(--rule);
+  border-bottom:1px solid var(--line-strong);
   padding:10px 16px;
   display:flex;
   flex-wrap:wrap;
@@ -233,8 +233,19 @@ a:hover{text-decoration-thickness:2px}
   min-height:44px;
   min-width:44px;
   cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
 }
 .tbtn:hover{background:var(--band)}
+.tbtn .box{
+  width:12px;
+  height:12px;
+  flex:0 0 12px;
+  border:1.4px solid var(--line-strong);
+  background:transparent;
+}
+.tbtn[aria-pressed="true"] .box{background:var(--line-strong)}
 
 main{padding:26px 16px 8px}
 
@@ -389,7 +400,7 @@ caption{
 }
 th,td{
   text-align:left;
-  padding:10px 12px;
+  padding:12px;
   border-bottom:1px solid var(--rule);
   border-right:1px solid var(--rule);
   vertical-align:top;
@@ -406,7 +417,7 @@ thead th{
 }
 tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
 td.ref,th.ref{font-weight:500;white-space:nowrap;color:var(--ink)}
-td a{display:inline-block;padding:6px 2px;margin:-6px 0;overflow-wrap:anywhere}
+td a{display:block;padding:12px 2px;margin:-12px -2px;overflow-wrap:anywhere}
 .state{
   display:inline-block;
   border:1.2px solid var(--line-strong);
@@ -511,7 +522,7 @@ td a{display:inline-block;padding:6px 2px;margin:-6px 0;overflow-wrap:anywhere}
   border-right:1px solid var(--rule);
   border-bottom:1px solid var(--rule);
 }
-.tbf-date,.tbf-status,.tbf.wide{border-right:0}
+.tbf-sheet,.tbf.wide{border-right:0}
 .tbf.wide{grid-column:1 / -1}
 .tbf .k{
   display:block;
@@ -573,7 +584,7 @@ footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:an
     border:0;
     border-top:2px solid var(--line-strong);
     background:var(--sheet);
-    grid-template-columns:1fr auto auto;
+    grid-template-columns:1fr auto;
     grid-template-rows:auto auto;
   }
   .tbf{border-right:0;border-bottom:0;padding:6px 10px}
@@ -581,10 +592,8 @@ footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:an
   .tbf .v{font-size:11.5px;letter-spacing:.04em;white-space:nowrap}
   .tbf.wide{grid-area:1 / 1 / 2 / 3}
   .tbf.wide .v{font-size:11.5px;letter-spacing:.04em}
-  .tbf-sheet{grid-area:1 / 3 / 2 / 4;text-align:right}
   .tbf-drawn{grid-area:2 / 1 / 3 / 2}
-  .tbf-date{grid-area:2 / 2 / 3 / 3}
-  .tbf-status{grid-area:2 / 3 / 3 / 4;text-align:right}
+  .tbf-sheet{grid-area:2 / 2 / 3 / 3;text-align:right}
   footer{padding:6px 14px 30px}
   h1{letter-spacing:0}
 }
@@ -597,7 +606,7 @@ footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:an
 <body>
 <a class="skip" href="#sheet">Skip to the drawing</a>
 
-<div class="band">
+<div class="band" role="region" aria-label="Preview notice">
   <p>An alternative look for this site. Not the live page.</p>
   <a href="/looks/">All looks</a>
 </div>
@@ -619,8 +628,8 @@ footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:an
 
   <div class="sheet">
     <header class="topstrip">
-      <p class="drg"><span><b>DRG</b> LIL-2026-01</span><span><b>REV</b> C</span><span><b>SCALE</b> NOT TO SCALE</span><span><b>UNITS</b> AS ANNOTATED</span></p>
-      <button class="tbtn" type="button" id="themebtn" aria-pressed="false">Blueprint</button>
+      <p class="drg"><span><b>SCALE</b> NOT TO SCALE</span><span><b>UNITS</b> AS ANNOTATED</span></p>
+      <button class="tbtn" type="button" id="themebtn" aria-pressed="false"><span class="box" aria-hidden="true"></span>Blueprint</button>
     </header>
 
     <main id="sheet">
@@ -678,11 +687,11 @@ footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:an
           <figcaption>Fig. 1 — Site plan. Items tagged 1 to 4, keyed below.</figcaption>
         </figure>
 
-        <ol class="keylist">
-          <li><span class="n" aria-hidden="true">1</span><span>Point-of-sale and payment terminals.</span></li>
-          <li><span class="n" aria-hidden="true">2</span><span>Windows machines.</span></li>
-          <li><span class="n" aria-hidden="true">3</span><span>Structured cabling.</span></li>
-          <li><span class="n" aria-hidden="true">4</span><span>Cameras.</span></li>
+        <ol class="keylist" role="list">
+          <li><span class="n">1</span><span>Point-of-sale and payment terminals.</span></li>
+          <li><span class="n">2</span><span>Windows machines.</span></li>
+          <li><span class="n">3</span><span>Structured cabling.</span></li>
+          <li><span class="n">4</span><span>Cameras.</span></li>
         </ol>
       </section>
 
@@ -787,7 +796,7 @@ footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:an
             <span>Licence: CC BY 4.0.</span>
           </p>
         </div>
-        <p>The annexe reads the same file the live board reads. With scripting off, or if the file cannot be read, it stays empty and the figures printed on this sheet still stand.</p>
+        <p>The annexe reads the same file the live board reads. With scripting off, or if the file cannot be read, every row reads Not measured, and the figures printed on this sheet still stand.</p>
 
         <div class="scroll" tabindex="0" role="group" aria-label="Schedule of pages for the Aussie Health Utility. Scrollable sideways.">
           <table>
@@ -850,10 +859,10 @@ footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:an
           <figcaption>Fig. 5 — Parts of the file. Parts tagged 1 to 3, keyed below.</figcaption>
         </figure>
 
-        <ol class="keylist">
-          <li><span class="n" aria-hidden="true">1</span><span>A live canvas dawn scene.</span></li>
-          <li><span class="n" aria-hidden="true">2</span><span>A dictionary in five languages: English, Simplified Chinese, Traditional Chinese, Japanese, Korean.</span></li>
-          <li><span class="n" aria-hidden="true">3</span><span>An honesty layer that labels every invented detail as invented.</span></li>
+        <ol class="keylist" role="list">
+          <li><span class="n">1</span><span>A live canvas dawn scene.</span></li>
+          <li><span class="n">2</span><span>A dictionary in five languages: English, Simplified Chinese, Traditional Chinese, Japanese, Korean.</span></li>
+          <li><span class="n">3</span><span>An honesty layer that labels every invented detail as invented.</span></li>
         </ol>
 
         <p>Photographs are used with the business's permission, for prototyping. Not affiliated with them. Live at <a href="https://lilliss.au/stillwild-concept/">lilliss.au/stillwild-concept/</a>.</p>
@@ -926,7 +935,7 @@ footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:an
             </tbody>
           </table>
         </div>
-        <p>Nothing else is listed, because nothing else is held.</p>
+        <p>These are the qualifications listed.</p>
 
         <nav aria-label="Sheet index">
           <div class="scroll" tabindex="0" role="group" aria-label="Sheet index, a list of every page and address on this site. Scrollable sideways.">
@@ -970,15 +979,15 @@ footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:an
       </section>
 
       <section aria-labelledby="rev">
-        <h2 id="rev"><span class="no">Revisions</span> What changed and when</h2>
-        <div class="scroll" tabindex="0" role="group" aria-label="Revision table. Scrollable sideways.">
+        <h2 id="rev"><span class="no">Chronology</span> What changed and when</h2>
+        <div class="scroll" tabindex="0" role="group" aria-label="Chronology of dated changes. Scrollable sideways.">
           <table>
-            <caption>Revision table</caption>
-            <thead><tr><th class="ref" scope="col">Rev</th><th scope="col">Date</th><th scope="col">Description</th><th scope="col">By</th></tr></thead>
+            <caption>Schedule E — chronology</caption>
+            <thead><tr><th class="ref" scope="col">Item</th><th scope="col">Date</th><th scope="col">What changed</th></tr></thead>
             <tbody>
-              <tr><td class="ref">A</td><td>2019</td><td>Trading begins. Small-business IT across Sydney and regional NSW.</td><td>JL</td></tr>
-              <tr><td class="ref">B</td><td>2026-07-20</td><td>Collection starts. A reading appended every fifteen minutes to a series that is never rewritten.</td><td>JL</td></tr>
-              <tr><td class="ref">C</td><td>2026-08-23</td><td>Collector moved from a laptop to a small Melbourne server. Nothing missing after this date.</td><td>JL</td></tr>
+              <tr><td class="ref">E1</td><td>2019</td><td>Trading begins. Small-business IT across Sydney and regional NSW.</td></tr>
+              <tr><td class="ref">E2</td><td>2026-07-20</td><td>Collection starts. A reading appended every fifteen minutes to a series that is never rewritten.</td></tr>
+              <tr><td class="ref">E3</td><td>2026-08-23</td><td>Collector moved from a laptop to a small Melbourne server. Nothing missing after this date.</td></tr>
             </tbody>
           </table>
         </div>
@@ -986,7 +995,7 @@ footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:an
 
       <section aria-labelledby="gn">
         <h2 id="gn"><span class="no">General notes</span> Read with the drawing</h2>
-        <ol class="notes">
+        <ol class="notes" role="list">
           <li>The feed counts people waiting. It has no minutes field, so no figure on this sheet is a waiting time.</li>
           <li>Fifty-nine departments publish a live count. New South Wales has 176 emergency departments in total. Nothing here describes all of them.</li>
           <li>No personal or health information is collected, because the schema has no fields for it.</li>
@@ -999,12 +1008,10 @@ footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:an
       </section>
     </main>
 
-    <div class="tb">
+    <div class="tb" role="region" aria-label="Title block">
       <div class="tbf wide"><span class="k">Title</span><span class="v">Capability and works</span></div>
       <div class="tbf tbf-drawn"><span class="k">Drawn by</span><span class="v">J. Lilliss</span></div>
-      <div class="tbf tbf-date"><span class="k">Date</span><span class="v">2026-09-04</span></div>
-      <div class="tbf tbf-sheet"><span class="k">Sheet</span><span class="v">1 of 1 · Rev C</span></div>
-      <div class="tbf tbf-status"><span class="k">Status</span><span class="v">In service</span></div>
+      <div class="tbf tbf-sheet"><span class="k">Sheet</span><span class="v">1 of 1</span></div>
     </div>
   </div>
 </div>
@@ -1034,7 +1041,6 @@ footer a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:an
     }
     if(btn){
       btn.setAttribute("aria-pressed",dark?"true":"false");
-      btn.textContent=dark?"Sheet":"Blueprint";
     }
   }
   paint(stored);
