@@ -76,6 +76,21 @@ header{padding:1.6rem 1.4rem 0;display:flex;align-items:baseline;gap:.7rem 1.6re
 .readout b{font-weight:500;color:var(--ember);font-size:.95rem}
 .hint{display:none}
 
+/* ── the scalar as the SUBJECT ────────────────────────────────────────────────
+   Put beside the spine at the same size, its year is ~90px and dead centre — the
+   scalar IS the page. Here the same value was 11px of metadata in a corner while a
+   white card with a paragraph dominated the composition, so the one continuous
+   interaction that justifies the design had almost no visual presence. It sits in
+   the empty band above the track, so it competes with nothing; it is aria-hidden
+   because the header readout is already the accessible one, and it appears only
+   where the rail behaviour actually exists. */
+#bigyear{display:none}
+.rail-on #bigyear{display:block;position:fixed;top:13vh;left:0;right:0;z-index:2;
+  pointer-events:none;text-align:center;
+  font:600 clamp(3.2rem,8.4vw,6.6rem)/1 var(--sans);letter-spacing:-.035em;
+  color:var(--ink-2);font-variant-numeric:tabular-nums;
+  transition:opacity .3s ease}
+
 /* ── the stops, as an ordinary document by default ────────────────────────── */
 main{padding:2.2rem 1.4rem 4rem;max-width:44rem;margin:0 auto}
 .stop{margin:0 0 1.1rem;padding:1.15rem 1.25rem 1.25rem;
@@ -143,7 +158,9 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
   *,*::before,*::after{transition:none!important;animation:none!important}
   html{scroll-behavior:auto}
 }
-@media (max-width:900px){ .hint{display:none} }
+@media (max-width:900px){ .hint{display:none}
+
+.hint{display:none} }
 </style>
 </head>
 <body>
@@ -157,6 +174,7 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
   <h1 class="sig"><a href="/">Jared <em>Lilliss</em></a></h1>
   <span class="role">IT field technician &middot; Sydney</span>
   <span class="readout"><span class="hint">Drag &middot; scroll &middot; arrows</span><b id="year">2019</b></span>
+<div id="bigyear" aria-hidden="true">2019</div>
 </header>
 
 <main id="main">
@@ -238,7 +256,7 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
      One variable in, everything out. */
   var x = 0, target = 0, stops = [].slice.call(doc.querySelectorAll('.stop'));
   var track = doc.getElementById('track'), main = doc.getElementById('main');
-  var yearEl = doc.getElementById('year'), thumb = doc.getElementById('thumb');
+  var yearEl = doc.getElementById('year'), bigYear = doc.getElementById('bigyear'), thumb = doc.getElementById('thumb');
   var hazeEl = doc.getElementById('haze'), ticksEl = doc.getElementById('ticks');
   var vigEl = doc.getElementById('vig');
   var railOn = false, span = 1, focusIdx = -1, navIdx = 0;
@@ -291,7 +309,11 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
   function setFocus(i) {
     focusIdx = i;
     for (var k = 0; k < stops.length; k++) stops[k].classList.toggle('near', k === i);
-    if (i >= 0 && yearEl) yearEl.textContent = LABELS[i];
+    if (i >= 0) {
+      /* one clock: both readouts are written from the same index, never computed twice */
+      if (yearEl) yearEl.textContent = LABELS[i];
+      if (bigYear) bigYear.textContent = LABELS[i];
+    }
   }
 
   function paint(ts) {
@@ -325,7 +347,7 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
   function seedField() {
     motes = [];
     var n = Math.min(150, Math.round(innerWidth / 9));
-    for (var i = 0; i < n; i++) motes.push({ x: rnd(), y: rnd(), r: rnd() * 4.2 + 1.1, s: rnd() * 0.6 + 0.2 });
+    for (var i = 0; i < n; i++) motes.push({ x: rnd(), y: rnd(), r: rnd() * 2.0 + 0.6, s: rnd() * 0.6 + 0.2 });
   }
   function sizeCanvas() {
     if (!cx) return;
@@ -350,7 +372,11 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
       /* the field warms as you travel: cool ash at 2019, ember dust at now */
       var warm = Math.min(1, Math.max(0, p));
       var r = Math.round(70 + warm * 98), g = Math.round(83 + warm * 30), b = Math.round(95 - warm * 45);
-      cx.globalAlpha = 0.13 + m.s * 0.20;
+      /* Beside the spine these read as dirt on a scanner rather than atmosphere: hard grey discs
+         at up to a third opacity on a pale ground. The spine carries NO particles at all — its air
+         is a smooth field. Kept, because the drift is the only thing alive when the rail is idle,
+         but taken down to where it registers as depth of field and never as speckle. */
+      cx.globalAlpha = 0.04 + m.s * 0.07;
       cx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
       cx.beginPath();
       cx.arc(px, py, m.r * Math.min(devicePixelRatio || 1, 1.5), 0, 6.2832);
