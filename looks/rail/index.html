@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jared Lilliss</title>
+<meta name="description" content="Jared Lilliss — IT field technician in Sydney. The work laid along one line: point-of-sale and networks by day, a collector reading NSW emergency department queues every fifteen minutes since July.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#E4E3E2">
+<link rel="icon" type="image/svg+xml" href="/icon.svg">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/plexmono-400.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/plexmono-500.woff2') format('woff2')}
+
+/* ONE palette. No prefers-color-scheme, no theme switch, nothing for the visitor's OS to
+   decide. Every page in this set that shipped two palettes was rejected; all three the
+   owner keeps come back to are committed to one. A page that ships two has chosen neither.
+   Ground is never pure white, ink never pure black. Surfaces are low-alpha WHITE over the
+   ground rather than separate greys — a lighter grey reads as a different material, white
+   at low alpha reads as the same material lit more. */
+:root{
+  --dawn:#C6D2E0;            /* the cool end: 2019, before dawn */
+  --noon:#F3DFC4;            /* the warm end: now, low sun */
+  --ink:#16202A;
+  --ink-2:#46535F;
+  --line:rgba(22,32,42,.14);
+  --line-2:rgba(22,32,42,.26);
+  --surface:rgba(255,255,255,.46);
+  --surface-2:rgba(255,255,255,.72);
+  --ember:#A83914;           /* STATE ONLY: where you are, what is live, one word of the name */
+  --cool:#2E6B78;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,'Cascadia Mono',monospace;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;color:var(--ink);font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased;
+  background:#E4E3E2;
+  overflow-x:hidden;
+}
+a{color:inherit}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ember);outline-offset:4px;border-radius:2px}
+p{margin:0 0 1rem;max-width:60ch}
+.skip{position:absolute;left:-999px;top:0;z-index:40;background:var(--ember);color:#fff;padding:.7rem 1rem;font:500 .85rem var(--mono);text-decoration:none}
+.skip:focus{left:1rem;top:1rem}
+
+/* ── the ground ──────────────────────────────────────────────────────────────
+   The atmosphere is generated, never an asset: a gradient plus a canvas dust
+   field. Both are fixed behind everything, and both are derived from the SAME
+   scalar the reader controls, so nothing on the page moves on its own. */
+#ground{
+  position:fixed;inset:0;z-index:0;
+  background:linear-gradient(104deg,var(--dawn) 0%,#CFD3DF 24%,#DCD6DA 46%,#E9D9CE 72%,var(--noon) 100%);
+  background-size:280% 100%;background-position:0% 50%;
+}
+#dust{position:fixed;inset:0;z-index:1;display:block;width:100%;height:100%;pointer-events:none;opacity:1}
+#haze{position:fixed;inset:0;z-index:1;pointer-events:none;mix-blend-mode:multiply;
+  background:radial-gradient(58% 44% at var(--hx,18%) 34%,rgba(120,140,170,.20),transparent 62%),
+             radial-gradient(52% 40% at calc(var(--hx,18%) + 46%) 72%,rgba(196,124,72,.17),transparent 66%)}
+#vig{position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 45%,transparent 40%,rgba(22,32,42,.10) 100%)}
+header,main,footer{position:relative;z-index:3}
+
+/* ── masthead ─────────────────────────────────────────────────────────────── */
+header{padding:1.6rem 1.4rem 0;display:flex;align-items:baseline;gap:.7rem 1.6rem;flex-wrap:wrap}
+.sig{margin:0;font:500 1.02rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.sig a{text-decoration:none}
+.sig em{font-style:normal;color:var(--ember)}
+.role{font:500 .74rem/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.readout{margin-inline-start:auto;display:flex;align-items:baseline;gap:.6rem;
+  font:500 .74rem/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);
+  font-variant-numeric:tabular-nums}
+.readout b{font-weight:500;color:var(--ember);font-size:.95rem}
+.hint{display:none}
+
+/* ── the stops, as an ordinary document by default ────────────────────────── */
+main{padding:2.2rem 1.4rem 4rem;max-width:44rem;margin:0 auto}
+.stop{margin:0 0 1.1rem;padding:1.15rem 1.25rem 1.25rem;
+  background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.when{display:block;font:500 .72rem/1.6 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ember);margin-bottom:.35rem}
+.stop h2{font:500 1.45rem/1.16 var(--sans);letter-spacing:-.022em;margin:0 0 .5rem;font-weight:600}
+.stop p{font-size:.98rem;color:var(--ink-2);margin:0 0 .7rem}
+.stop p strong{color:var(--ink);font-weight:600}
+.stop p:last-of-type{margin-bottom:0}
+.go{display:inline-block;margin-top:.55rem;font:500 .84rem/1.5 var(--mono);letter-spacing:.06em;
+  text-decoration:none;border-bottom:1.5px solid var(--ember);padding-bottom:1px}
+.go:hover{color:var(--ember)}
+.fine{font:400 .78rem/1.6 var(--mono);color:var(--ink-2);margin-top:.5rem;display:block}
+.figs{display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;margin:.2rem 0 .6rem;
+  font:500 .74rem/1.7 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.figs b{font-weight:500;color:var(--ink);font-size:1.02rem;letter-spacing:0}
+.certs{margin:.6rem 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.35rem .5rem}
+.certs li{font:500 .7rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-2);border:1px solid var(--line-2);border-radius:2px;padding:.28rem .5rem}
+.certs li.held{color:var(--cool);border-color:rgba(46,107,120,.4)}
+footer{padding:0 1.4rem 3rem;max-width:44rem;margin:0 auto;
+  font:500 .74rem/1.9 var(--mono);letter-spacing:.08em;color:var(--ink-2)}
+footer a{text-decoration:none;border-bottom:1px solid var(--line-2)}
+footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
+
+/* ── the rail: only when script has confirmed it can drive it ──────────────
+   Everything above is the honest fallback. It is what a reader gets with
+   scripting off, on a phone, or on a coarse pointer — a plain document with
+   every fact and every link. The horizontal traverse is an ENHANCEMENT that
+   is added to it, never a prerequisite for it. */
+.rail-on main{
+  max-width:none;margin:0;padding:0;height:100svh;overflow:hidden;position:relative;
+}
+.rail-on #track{
+  position:absolute;top:0;left:0;height:100%;display:flex;align-items:center;gap:0;
+  will-change:transform;
+}
+.rail-on .stop{
+  flex:0 0 auto;width:min(30rem,62vw);margin:0 clamp(2rem,5vw,5.5rem) 0 0;
+  background:var(--surface);border:1px solid var(--line);
+  transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.3,1);
+  opacity:.34;transform:scale(.94);transform-origin:50% 60%;
+}
+.rail-on .stop.near{opacity:1;transform:scale(1);background:var(--surface-2)}
+.rail-on .stop:first-child{margin-left:clamp(2rem,14vw,12rem)}
+.rail-on .stop:last-child{margin-right:clamp(2rem,14vw,12rem)}
+.rail-on .hint{display:inline-flex;align-items:center;gap:.5rem;
+  font:500 .72rem/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.rail-on footer{position:fixed;bottom:0;left:0;right:0;padding:.9rem 1.4rem;max-width:none;
+  background:linear-gradient(transparent,rgba(228,227,226,.85) 55%);z-index:4}
+.rail-on .scrub{display:block}
+.scrub{display:none;position:fixed;left:1.4rem;right:1.4rem;bottom:3.4rem;z-index:5;height:2px;background:var(--line-2)}
+.scrub i{position:absolute;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--ember);
+  transform:translateX(-50%);will-change:left}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+@media (max-width:900px){ .hint{display:none} }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div id="ground" aria-hidden="true"></div>
+<canvas id="dust" aria-hidden="true"></canvas>
+<div id="haze" aria-hidden="true"></div>
+<div id="vig" aria-hidden="true"></div>
+
+<header>
+  <h1 class="sig"><a href="/">Jared <em>Lilliss</em></a></h1>
+  <span class="role">IT field technician &middot; Sydney</span>
+  <span class="readout"><span class="hint">Drag &middot; scroll &middot; arrows</span><b id="year">2019</b></span>
+</header>
+
+<main id="main">
+<div id="track">
+
+  <article class="stop" data-at="2019">
+    <span class="when">2019</span>
+    <h2>The trade starts</h2>
+    <p>Point-of-sale and payment terminals, Windows machines, structured cabling, cameras. For venues and small businesses around Sydney &mdash; usually the same day, usually on site.</p>
+    <p><strong>Trading since 2019, registered 2026.</strong></p>
+    <a class="go" href="/lilliss-it/">Lilliss IT</a>
+  </article>
+
+  <article class="stop" data-at="2026.45">
+    <span class="when">2026</span>
+    <h2>Still Wild</h2>
+    <p>A concept rebuild for a real Brisbane adventure business, built as one self-contained file: a live canvas dawn over layered ridges, five languages, and an honesty layer that labels every invented detail as invented.</p>
+    <a class="go" href="https://lilliss.au/stillwild-concept/">See the concept</a>
+    <span class="fine">Photographs used with the business&rsquo;s permission, for prototyping. Not affiliated.</span>
+  </article>
+
+  <article class="stop" data-at="2026.55">
+    <span class="when">20 July 2026</span>
+    <h2>The first reading</h2>
+    <p>A collector starts counting how many people are waiting in each NSW emergency department that publishes a live count, every fifteen minutes, and appends each reading to a series that is never rewritten.</p>
+    <p>The feed publishes the current moment only and keeps no history, so <strong>a reading not taken at the time is gone for good.</strong></p>
+    <a class="go" href="/queue-board/">The live board</a>
+  </article>
+
+  <article class="stop" data-at="2026.62">
+    <span class="when">August 2026</span>
+    <h2>The Span</h2>
+    <p>One screen holding 1975 to 2117: fifteen milestones, each a drawn line that means its own event rather than an icon off a shelf. Every one names the source that establishes it, and thirteen link straight to the government page it came from. Nothing is estimated.</p>
+    <a class="go" href="https://lilliss.au/xperience-concept/spine.html">Travel the span</a>
+    <span class="fine">An unsolicited concept. No affiliation.</span>
+  </article>
+
+  <article class="stop" data-at="2026.65">
+    <span class="when">23 August 2026</span>
+    <h2>The gaps end</h2>
+    <p>It ran on a laptop first, which slept, so the early weeks have gaps and the record shows them rather than smoothing them over.</p>
+    <p>Since 23 August it has run on a small Melbourne server, and <strong>nothing after that is missing.</strong> A database dump is taken at 03:30 Melbourne time each night and copied off the machine.</p>
+    <a class="go" href="/record/">The collection record</a>
+  </article>
+
+  <article class="stop near" data-at="2026.68">
+    <span class="when">Now</span>
+    <h2>Still counting</h2>
+    <p class="figs"><span><b>59</b> departments</span><span><b>15</b> min</span><span><b>120,000+</b> readings</span></p>
+    <p>NSW has 176 emergency departments; these are the ones that publish a live count. The figure is <strong>people waiting</strong>, never a waiting time &mdash; the feed has no minutes field. No personal or health information is collected, because the schema has no fields for it.</p>
+    <a class="go" href="/waits/">The Tally</a>
+  </article>
+
+  <article class="stop" data-at="2026.70">
+    <span class="when">Contact</span>
+    <h2>Email is best</h2>
+    <p>Tell me what you need and you&rsquo;ll get a straight answer.</p>
+    <a class="go" href="mailto:jaredlils99@gmail.com">jaredlils99@gmail.com</a>
+    <ul class="certs">
+      <li class="held">CompTIA A+ &middot; held</li>
+      <li class="held">AZ-900 &middot; held</li>
+      <li>CompTIA Security+ &middot; in progress</li>
+    </ul>
+    <span class="fine"><a class="go" href="https://github.com/jaredlilliss" style="margin-right:1rem">GitHub</a><a class="go" href="https://www.linkedin.com/in/jaredlilliss/">LinkedIn</a></span>
+  </article>
+
+</div>
+</main>
+
+<div class="scrub" aria-hidden="true"><i id="thumb"></i></div>
+
+<footer>
+  <span>&copy; 2026 Jared Lilliss &middot; Sydney, Australia &middot; <a href="/lilliss-it/">Lilliss IT</a> &middot; <a href="/privacy.html">Privacy</a></span>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var doc = document, root = doc.documentElement;
+  var reduced = false;
+  try { reduced = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  /* ── the single scalar ───────────────────────────────────────────────────
+     Every moving thing on this page is derived from `x`, and every input —
+     wheel, drag, arrows, Home/End, a deep link — writes only to `target`.
+     One variable in, everything out. */
+  var x = 0, target = 0, stops = [].slice.call(doc.querySelectorAll('.stop'));
+  var track = doc.getElementById('track'), main = doc.getElementById('main');
+  var yearEl = doc.getElementById('year'), thumb = doc.getElementById('thumb');
+  var hazeEl = doc.getElementById('haze');
+  var railOn = false, span = 1, focusIdx = -1, navIdx = 0;
+
+  var LABELS = stops.map(function (s) {
+    var w = s.querySelector('.when');
+    return w ? w.textContent.trim() : '';
+  });
+
+  function canRail() {
+    try {
+      return matchMedia('(min-width: 900px)').matches &&
+             matchMedia('(pointer: fine)').matches &&
+             !!track && stops.length > 1;
+    } catch (e) { return false; }
+  }
+
+  function measure() {
+    if (!railOn) return;
+    span = Math.max(1, track.scrollWidth - innerWidth);
+  }
+
+  /* Proximity opens a stop, and RELEASES at a wider threshold than it grabs, so a
+     stop sitting near the boundary cannot flicker between states as you drift. */
+  var GRAB = 0.30, RELEASE = 0.42, keyDriving = false, keyTimer = null;
+  function focusFromCentre() {
+    var centre = innerWidth / 2, best = -1, bestD = Infinity;
+    for (var i = 0; i < stops.length; i++) {
+      var r = stops[i].getBoundingClientRect();
+      var d = Math.abs((r.left + r.width / 2) - centre) / innerWidth;
+      if (d < bestD) { bestD = d; best = i; }
+    }
+    if (focusIdx === -1) { if (bestD < GRAB) setFocus(best); return; }
+    if (!keyDriving && best === focusIdx) navIdx = best;
+    if (best !== focusIdx && bestD < GRAB) setFocus(best);
+    else if (best === focusIdx && bestD > RELEASE) setFocus(-1);
+  }
+  function setFocus(i) {
+    focusIdx = i;
+    for (var k = 0; k < stops.length; k++) stops[k].classList.toggle('near', k === i);
+    if (i >= 0 && yearEl) yearEl.textContent = LABELS[i];
+  }
+
+  function paint(ts) {
+    if (railOn) {
+      x += (target - x) * (reduced ? 1 : 0.12);
+      if (Math.abs(target - x) < 0.4) x = target;
+      track.style.transform = 'translate3d(' + (-x) + 'px,0,0)';
+      var p = span ? x / span : 0;
+      var g = doc.getElementById('ground');
+      if (g) g.style.backgroundPosition = (p * 100).toFixed(2) + '% 50%';
+      if (hazeEl) hazeEl.style.setProperty('--hx', (10 + p * 52).toFixed(1) + '%');
+      if (thumb) thumb.style.left = (p * 100).toFixed(2) + '%';
+      focusFromCentre();
+      dust(p);
+    }
+    raf = requestAnimationFrame(paint);
+  }
+
+  /* ── dust ────────────────────────────────────────────────────────────────
+     A seeded field, so the composition is authored rather than different on every
+     load. Park–Miller, the same generator the concept pages use. DPR is capped,
+     the loop is capped, and it stops entirely when the tab is hidden — the
+     measured lesson from this estate is that full-screen per-frame painting can
+     saturate the main thread badly enough to lock the page. */
+  var cv = doc.getElementById('dust'), cx = cv && cv.getContext ? cv.getContext('2d') : null;
+  var motes = [], W = 0, H = 0, lastPaint = 0;
+  var seed = 7;
+  function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+  function seedField() {
+    motes = [];
+    var n = Math.min(150, Math.round(innerWidth / 9));
+    for (var i = 0; i < n; i++) motes.push({ x: rnd(), y: rnd(), r: rnd() * 4.2 + 1.1, s: rnd() * 0.6 + 0.2 });
+  }
+  function sizeCanvas() {
+    if (!cx) return;
+    var d = Math.min(devicePixelRatio || 1, 1.5);
+    if (!(innerWidth > 0 && innerHeight > 0)) { W = H = 0; return; }
+    W = cv.width = Math.round(innerWidth * d);
+    H = cv.height = Math.round(innerHeight * d);
+    cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px';
+    if (!motes.length) seedField();
+  }
+  function dust(p) {
+    if (!cx || !(W > 0 && H > 0)) return;
+    var now = performance.now();
+    if (now - lastPaint < 33) return;          /* ~30fps is plenty for drifting dust */
+    lastPaint = now;
+    cx.clearRect(0, 0, W, H);
+    for (var i = 0; i < motes.length; i++) {
+      var m = motes[i];
+      var drift = reduced ? 0 : (p * 0.30 * m.s);
+      var px = ((m.x + drift) % 1) * W;
+      var py = m.y * H;
+      /* the field warms as you travel: cool ash at 2019, ember dust at now */
+      var warm = Math.min(1, Math.max(0, p));
+      var r = Math.round(70 + warm * 98), g = Math.round(83 + warm * 30), b = Math.round(95 - warm * 45);
+      cx.globalAlpha = 0.13 + m.s * 0.20;
+      cx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+      cx.beginPath();
+      cx.arc(px, py, m.r * Math.min(devicePixelRatio || 1, 1.5), 0, 6.2832);
+      cx.fill();
+    }
+    cx.globalAlpha = 1;
+  }
+
+  /* ── inputs: all of them write to `target` and nothing else ─────────────── */
+  function clampTarget() { target = Math.max(0, Math.min(span, target)); }
+  function stepTo(i) {
+    if (!railOn || i < 0 || i >= stops.length) return;
+    var r = stops[i].getBoundingClientRect();
+    /* rect.left is where the stop is NOW, so add the distance still being eased away */
+    target = target + (r.left + r.width / 2) - innerWidth / 2 + (x - target);
+    clampTarget();
+  }
+
+  function bind() {
+    addEventListener('wheel', function (e) {
+      if (!railOn) return;
+      var d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      target += d * 1.05; keyDriving = false; clampTarget(); e.preventDefault();
+    }, { passive: false });
+
+    var dragging = false, lastX = 0, moved = 0;
+    main.addEventListener('pointerdown', function (e) {
+      if (!railOn || e.button !== 0) return;
+      dragging = true; moved = 0; lastX = e.clientX;
+      try { main.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+    main.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - lastX; lastX = e.clientX; moved += Math.abs(dx);
+      target -= dx; clampTarget();
+    });
+    function endDrag() { dragging = false; }
+    main.addEventListener('pointerup', endDrag);
+    main.addEventListener('pointercancel', endDrag);
+    /* A drag that moved is not a click: do not follow a link the reader was only pulling on. */
+    main.addEventListener('click', function (e) {
+      if (moved > 6) { e.preventDefault(); e.stopPropagation(); moved = 0; }
+    }, true);
+
+    main.addEventListener('keydown', function (e) {
+      if (!railOn) return;
+      var k = e.key;
+      if (k === 'ArrowRight' || k === 'ArrowDown') { navIdx = Math.min(stops.length - 1, navIdx + 1); stepTo(navIdx); }
+      else if (k === 'ArrowLeft' || k === 'ArrowUp') { navIdx = Math.max(0, navIdx - 1); stepTo(navIdx); }
+      else if (k === 'Home') { navIdx = 0; target = 0; }
+      else if (k === 'End') { navIdx = stops.length - 1; target = span; }
+      else return;
+      keyDriving = true; clearTimeout(keyTimer);
+      keyTimer = setTimeout(function () { keyDriving = false; }, 700);
+      clampTarget(); e.preventDefault();
+    });
+
+    addEventListener('resize', function () { sizeCanvas(); measure(); clampTarget(); });
+    addEventListener('visibilitychange', function () {
+      if (doc.hidden) { if (raf) cancelAnimationFrame(raf); raf = 0; }
+      else if (!raf) raf = requestAnimationFrame(paint);
+    });
+  }
+
+  /* deep link: ?at=2 opens on the third stop, and the address follows the reader */
+  function fromQuery() {
+    var m = /[?&]at=(\d+)/.exec(location.search);
+    if (!m) return -1;
+    var i = parseInt(m[1], 10);
+    return (i >= 0 && i < stops.length) ? i : -1;
+  }
+  var writeTimer = null;
+  function rememberPlace() {
+    clearTimeout(writeTimer);
+    writeTimer = setTimeout(function () {
+      if (focusIdx < 0) return;
+      try { history.replaceState(null, '', '?at=' + focusIdx); } catch (e) {}
+    }, 400);
+  }
+
+  var raf = 0;
+  function start() {
+    railOn = canRail();
+    if (railOn) {
+      root.classList.add('rail-on');
+      main.setAttribute('role', 'region');
+      main.setAttribute('tabindex', '0');
+      main.setAttribute('aria-label', 'The work, along one line from 2019 to now');
+      measure();
+      var q = fromQuery();
+      setFocus(-1);
+      if (q >= 0) { stepTo(q); x = target; }
+      focusFromCentre();          /* never announce a stop the rail is not showing */
+      setInterval(rememberPlace, 600);
+    }
+    sizeCanvas();
+    bind();
+    raf = requestAnimationFrame(paint);
+  }
+
+  /* If anything above throws, the page is already a complete readable document —
+     the rail is added to the fallback, never required by it. */
+  try { start(); } catch (e) { root.classList.remove('rail-on'); }
+})();
+</script>
+</body>
+</html>
