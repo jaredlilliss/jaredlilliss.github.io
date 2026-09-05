@@ -516,7 +516,17 @@ footer a:hover{color:var(--ember);border-bottom-color:var(--ember)}
     for (var i = 0; i < bits.length; i++) {
       var b = bits[i];
       var py = ((b.y + drift * b.s) % 1) * H;
-      cx.globalAlpha = (0.05 + b.s * 0.10) + depth * 0.15;
+      /* Density brought into the band the Rail already settled on (06/09/2026). The Rail's
+         own note records the judgement: particles "beside the spine read as dirt on a
+         scanner rather than atmosphere: hard grey discs at up to a third opacity on a pale
+         ground", and it was taken down to alpha 0.054–0.096. This page kept the pre-fix
+         value — 0.065–0.285, i.e. up to a third opacity on a pale ground, the exact fault
+         its sibling had already corrected. One page got the fix; the other never did.
+         Contrast is the reason it surfaced: modelled as a uniform scrim, grain at .285 drags
+         the ember on this ground from 5.52 to 3.47, and no ember dark enough to survive that
+         is still the ember. In this band the same bound gives 4.73 and the question closes
+         without touching the palette. */
+      cx.globalAlpha = (0.035 + b.s * 0.05) + depth * 0.02;
       cx.fillStyle = 'rgb(' + Math.round(84 - depth * 26) + ',' + Math.round(96 - depth * 28) + ',' + Math.round(110 - depth * 30) + ')';
       cx.beginPath();
       cx.arc(b.x * W, py, b.r * d, 0, 6.2832);
