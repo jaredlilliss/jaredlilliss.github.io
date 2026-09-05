@@ -23,13 +23,26 @@
   --dawn:#C6D2E0;            /* the cool end: 2019, before dawn */
   --noon:#F3DFC4;            /* the warm end: now, low sun */
   --ink:#16202A;
-  --ink-2:#46535F;
+  /* Derived from --ink, not a second grey — the spine's technique (one ink, several
+     opacities) rather than a scattered palette. .78 by arithmetic against this page's
+     OWN worst backdrop, which is harsher than The Section's because the plate here is
+     .46 rather than .60: darkest ground stop rgb(198,210,224) under #haze at .20, then
+     the surface. #46535F gave 5.25 there; .78 gives 6.25. The contrast probe cannot
+     check this — #ground is position:fixed and so is not an ancestor of any text. */
+  --ink-2:rgba(22,32,42,.78);
   --line:rgba(22,32,42,.14);
   --line-2:rgba(22,32,42,.26);
   --surface:rgba(255,255,255,.46);
   --surface-2:rgba(255,255,255,.72);
-  --ember:#A83914;           /* STATE ONLY: where you are, what is live, one word of the name */
-  --cool:#2E6B78;
+  /* ⚠️ DARKENED 05/09/2026 — #A83914 was a REAL AA failure, hidden by an instrument.
+     Nine elements wear the ember and every one is body-size (11.5–16.3px, weight 500),
+     so all nine need 4.5:1. At this page's darkest ground the old value gave 4.29.
+     The contrast probe reported zero failures because it composites against body's
+     static colour and cannot see #ground, which is position:fixed — so the failure
+     only exists at depth, exactly where nothing was looking.
+     #9B3412 is the same hue 8% darker: 4.83 here, 5.04 on The Section. (-4% also
+     passes at 4.55 but by 0.05, which is inside the error of this arithmetic.) */
+  --ember:#9B3412;           /* STATE ONLY: where you are, what is live, one word of the name */
   --mono:'IBM Plex Mono',ui-monospace,Consolas,'Cascadia Mono',monospace;
   --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
 }
@@ -131,7 +144,10 @@ main{padding:2.2rem 1.4rem 4rem;max-width:44rem;margin:0 auto}
 .certs{margin:.6rem 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.35rem .5rem}
 .certs li{font:500 .7rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink-2);border:1px solid var(--line-2);border-radius:2px;padding:.28rem .5rem}
-.certs li.held{color:var(--cool);border-color:rgba(46,107,120,.4)}
+/* Was teal — a fourth hue encoding a distinction the pills already state in words
+   ("· held" / "· in progress"). Redundant colour, not semantic colour; held now reads
+   by weight of ink instead. Same fix as looks/section/, same finding. */
+.certs li.held{color:var(--ink)}
 footer{padding:0 1.4rem 3rem;max-width:44rem;margin:0 auto;
   font:500 .74rem/1.9 var(--mono);letter-spacing:.08em;color:var(--ink-2)}
 footer a{text-decoration:none;border-bottom:1px solid var(--line-2)}
