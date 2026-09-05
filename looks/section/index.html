@@ -26,7 +26,22 @@
   --day:#DFE5EA;              /* the counter, in daylight */
   --deep:#A3AFBB;             /* the plant room, in shadow */
   --ink:#16202A;
-  --ink-2:#46535F;
+  /* DERIVED from --ink, not a second grey. The spine — the bar for this estate — carries
+     TWO hues and makes its whole hierarchy out of one ink at four opacities; this page was
+     carrying three separate hues instead. Same technique now: the muted tone is the ink,
+     quieter, so it tracks --ink automatically instead of drifting away from it.
+
+     .78 chosen by arithmetic, not by eye, and NOT by the contrast probe — #ground is
+     position:fixed, so it is not an ancestor of any text and the probe composites every
+     element against body's static --day. It reports identical numbers at the top of the
+     page and at the bottom. The states that matter had to be computed by hand:
+       deepest ground + full shade, .60 plate : #46535F 5.48  ->  .78 gives 6.42
+       deepest, bare ground, no plate         : #46535F 2.83  ->  .78 gives 4.08
+       top of page, .60 plate                 : #46535F 7.18  ->  .78 gives 7.61
+     Better in every state, and it renders rgb(70,79,87) against the old rgb(70,83,95) —
+     the same tone to look at. (.72 also passed but composites visibly lighter, which the
+     contrast numbers alone would not have told me.) */
+  --ink-2:rgba(22,32,42,.78);
   --line:rgba(22,32,42,.16);
   --line-2:rgba(22,32,42,.30);
   --surface:rgba(255,255,255,.60);
