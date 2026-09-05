@@ -28,7 +28,15 @@ html{font-optical-sizing:auto}
 :root{
   --night:#0A0E16; --panel:rgba(253,250,247,.06); --panel-line:rgba(253,250,247,.14);
   --panel-line-strong:rgba(253,250,247,.28);
-  --ink:#FDFAF7; --muted:rgba(253,250,247,.62); --faint:rgba(253,250,247,.40);
+  /* --faint was .40, which measures 3.70:1 on --night against a 4.5 requirement, and it
+     carries TEXT in three places (.q at 11.5px, .stamp at 12.5px, the footer at 14px) —
+     eleven elements on the page, every section heading among them. .50 gives 5.17. The
+     tiers stay ordered and distinct: ink 1.0, muted .62 (7.43:1), faint .50 (5.17:1).
+     Worth the note because this is the privacy policy: it is the one page whose whole
+     job is to be read, and it was the quietest type on the site. Found 06/09/2026 by a
+     composited sweep at 100% coverage — no fixed layer, no canvas, plain body ground, so
+     the old probe could see this one and simply had never been pointed at the page. */
+  --ink:#FDFAF7; --muted:rgba(253,250,247,.62); --faint:rgba(253,250,247,.50);
   --ember:#F2A65A; --ember-soft:rgba(242,166,90,.08);
   --serif:"Fraunces",Georgia,"Times New Roman",serif;
   --sans:"Inter",ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
