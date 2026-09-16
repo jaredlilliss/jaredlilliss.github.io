@@ -32,7 +32,7 @@
 <style>
 :root{
   --bg:#ECEFF0; --surface:#FFFFFF; --surface-2:#E3E9EA; --raise:#F7F9F9;
-  --ink:#0D1417; --muted:#5A6D73; --faint:#86989D; --rule:#CFD9DB;
+  --ink:#0D1417; --muted:#54666C; --faint:#54666C; --rule:#CFD9DB;   /* 16/09: faint was #86989D (2.7:1 on white, on text) and muted #5A6D73 read 4.42 on the table-head surface. No lighter grey clears 4.5 on these grounds, so both tiers sit at #54666C (4.9 on surface-2, 6.0 on white) and size carries the tier. */
   --accent:#0D6675; --accent-soft:#0D66751a;
   --hot:#A9491A; --hot-soft:#A9491A16;
   --cool:#256349; --cool-soft:#25634916;
@@ -41,7 +41,7 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0A1013; --surface:#111A1D; --surface-2:#172226; --raise:#1B282C;
-    --ink:#E1EAEC; --muted:#83999F; --faint:#5E7278; --rule:#1E2B2F;
+    --ink:#E1EAEC; --muted:#83999F; --faint:#7F9399; --rule:#1E2B2F;   /* faint was #5E7278: 3.49:1 on the card surface, and it carries every row's locality line and the chart axis labels (16/09). 5.47 now. */
     --accent:#4EC5D8; --accent-soft:#4EC5D81f;
     --hot:#E39B5F; --hot-soft:#E39B5F1c;
     --cool:#5CD0A0; --cool-soft:#5CD0A01a;
@@ -50,7 +50,7 @@
 }
 :root[data-theme="dark"]{
   --bg:#0A1013; --surface:#111A1D; --surface-2:#172226; --raise:#1B282C;
-  --ink:#E1EAEC; --muted:#83999F; --faint:#5E7278; --rule:#1E2B2F;
+  --ink:#E1EAEC; --muted:#83999F; --faint:#7F9399; --rule:#1E2B2F;   /* faint was #5E7278: 3.49:1 on the card surface, and it carries every row's locality line and the chart axis labels (16/09). 5.47 now. */
   --accent:#4EC5D8; --accent-soft:#4EC5D81f;
   --hot:#E39B5F; --hot-soft:#E39B5F1c;
   --cool:#5CD0A0; --cool-soft:#5CD0A01a;
