@@ -186,7 +186,7 @@ footer a:hover{color:var(--accent);border-bottom-color:var(--accent)}
 <main id="main">
   <section class="hero wrap">
     <div class="card">
-      <p class="kicker"><span class="live"><span class="dot"></span>A reading every 15 minutes</span><span id="nfac">59 emergency departments</span><span class="when" id="when">Readings to Thu 17 Sep 17:45 AEST</span></p>
+      <p class="kicker"><span class="live"><span class="dot"></span>A reading every 15 minutes</span><span id="nfac">59 emergency departments</span><span class="when" id="when">Snapshot &mdash; readings to Sat 19 Sep 15:00 AEST</span></p>
       <div class="body">
         <h1>The <em>Tally</em></h1>
         <p class="lede">How many people were waiting for treatment in the NSW emergency departments that publish a live count &mdash; the last day of it, one stroke for each person, and a hand you can drag back through the night.</p>
@@ -202,7 +202,7 @@ footer a:hover{color:var(--accent);border-bottom-color:var(--accent)}
         <span class="n" id="rn">&mdash;</span>
         <button class="play" id="play" type="button" aria-pressed="false" hidden>Play the day</button>
       </div>
-      <div class="track" id="track" tabindex="0" role="slider" aria-label="Time of reading" aria-valuemin="0" aria-valuemax="95" aria-valuenow="95" aria-valuetext="Thu 17 Sep 17:45 AEST">
+      <div class="track" id="track" tabindex="0" role="slider" aria-label="Time of reading" aria-valuemin="0" aria-valuemax="95" aria-valuenow="95" aria-valuetext="Sat 19 Sep 15:00 AEST">
         <svg class="area" viewBox="0 0 95 100" preserveAspectRatio="none" aria-hidden="true"><path class="fill" id="fill" d=""></path><path class="line" id="curve" d=""></path><line class="base" x1="0" y1="100" x2="95" y2="100"></line></svg>
         <div id="hours"></div>
         <div class="hand" id="hand" style="left:100%"><span class="v" id="hv"></span></div>
@@ -219,68 +219,68 @@ footer a:hover{color:var(--accent);border-bottom-color:var(--accent)}
     <div class="snap" id="snap">
       <div class="snapwrap">
       <table>
-        <caption>Snapshot embedded when this page was built &mdash; readings to Thu 17 Sep 17:45 AEST. With scripting on, the page reads the collector&rsquo;s current file instead.</caption>
+        <caption>Snapshot embedded when this page was built &mdash; readings to Sat 19 Sep 15:00 AEST. With scripting on, the page reads the collector&rsquo;s current file instead.</caption>
         <thead><tr><th scope="col">Department, north to south</th><th scope="col">Local health district</th><th scope="col">Waiting at the last reading</th><th scope="col">Busiest reading of the day</th></tr></thead>
         <tbody>
-<tr><th scope="row">Tweed Valley Hospital</th><td>Northern NSW LHD</td><td>2</td><td>7 <small>at 13:00</small></td></tr>
-<tr><th scope="row">Murwillumbah District Hospital</th><td>Northern NSW LHD</td><td>0</td><td>2 <small>at 14:00</small></td></tr>
-<tr><th scope="row">Lismore Base Hospital</th><td>Northern NSW LHD</td><td>0</td><td>5 <small>at 19:45</small></td></tr>
-<tr><th scope="row">Moree District Hospital</th><td>Hunter New England LHD</td><td>0</td><td>2 <small>at 19:45</small></td></tr>
-<tr><th scope="row">Grafton Base Hospital</th><td>Northern NSW LHD</td><td>6</td><td>14 <small>at 18:00</small></td></tr>
-<tr><th scope="row">Inverell District Hospital</th><td>Hunter New England LHD</td><td>2</td><td>8 <small>at 13:15</small></td></tr>
-<tr><th scope="row">Coffs Harbour Base Hospital</th><td>Mid North Coast LHD</td><td>6</td><td>8 <small>at 21:45</small></td></tr>
-<tr><th scope="row">Narrabri District Hospital</th><td>Hunter New England LHD</td><td>0</td><td>3 <small>at 11:00</small></td></tr>
-<tr><th scope="row">Armidale Rural Referral Hospital</th><td>Hunter New England LHD</td><td>0</td><td>5 <small>at 12:45</small></td></tr>
-<tr><th scope="row">Gunnedah District Hospital</th><td>Hunter New England LHD</td><td>1</td><td>2 <small>at 12:00</small></td></tr>
-<tr><th scope="row">Kempsey District Hospital</th><td>Mid North Coast LHD</td><td>0</td><td>5 <small>at 21:45</small></td></tr>
-<tr><th scope="row">Tamworth Rural Referral Hospital</th><td>Hunter New England LHD</td><td>4</td><td>13 <small>at 13:15</small></td></tr>
-<tr><th scope="row">Port Macquarie Base Hospital</th><td>Mid North Coast LHD</td><td>7</td><td>15 <small>at 12:15</small></td></tr>
-<tr><th scope="row">Manning Rural Referral Hospital (Taree)</th><td>Hunter New England LHD</td><td>8</td><td>8 <small>at 17:45</small></td></tr>
-<tr><th scope="row">Broken Hill Base Hospital</th><td>Far West LHD</td><td>2</td><td>4 <small>at 12:15</small></td></tr>
-<tr><th scope="row">Dubbo Base Hospital</th><td>Western NSW LHD</td><td>4</td><td>10 <small>at 12:15</small></td></tr>
-<tr><th scope="row">Muswellbrook Hospital</th><td>Hunter New England LHD</td><td>2</td><td>6 <small>at 18:15</small></td></tr>
-<tr><th scope="row">Singleton District Hospital</th><td>Hunter New England LHD</td><td>0</td><td>5 <small>at 21:15</small></td></tr>
-<tr><th scope="row">Cessnock District Hospital</th><td>Hunter New England LHD</td><td>1</td><td>7 <small>at 23:00</small></td></tr>
-<tr><th scope="row">Calvary Mater Newcastle</th><td>Hunter New England LHD</td><td>7</td><td>7 <small>at 20:45</small></td></tr>
-<tr><th scope="row">John Hunter Hospital (including Royal Newcastle Centre and John Hunter Children&#x27;s Hospital)</th><td>Hunter New England LHD</td><td>17</td><td>19 <small>at 20:00</small></td></tr>
-<tr><th scope="row">Belmont Hospital</th><td>Hunter New England LHD</td><td>1</td><td>5 <small>at 18:15</small></td></tr>
-<tr><th scope="row">Wyong Public Hospital</th><td>Central Coast LHD</td><td>19</td><td>23 <small>at 15:30</small></td></tr>
-<tr><th scope="row">Orange Health Service</th><td>Western NSW LHD</td><td>4</td><td>8 <small>at 23:00</small></td></tr>
-<tr><th scope="row">Bathurst Base Hospital</th><td>Western NSW LHD</td><td>0</td><td>9 <small>at 23:00</small></td></tr>
-<tr><th scope="row">Gosford Hospital</th><td>Central Coast LHD</td><td>5</td><td>17 <small>at 14:45</small></td></tr>
-<tr><th scope="row">Lithgow Integrated Health Service</th><td>Nepean Blue Mountains LHD</td><td>0</td><td>5 <small>at 18:00</small></td></tr>
-<tr><th scope="row">Hornsby Ku-ring-gai Hospital</th><td>Northern Sydney LHD</td><td>13</td><td>14 <small>at 19:15</small></td></tr>
-<tr><th scope="row">Blue Mountains District ANZAC Memorial Hospital</th><td>Nepean Blue Mountains LHD</td><td>3</td><td>3 <small>at 11:45</small></td></tr>
-<tr><th scope="row">Northern Beaches Hospital</th><td>Northern Sydney LHD</td><td>11</td><td>14 <small>at 16:15</small></td></tr>
-<tr><th scope="row">Nepean Hospital</th><td>Nepean Blue Mountains LHD</td><td>7</td><td>24 <small>at 22:45</small></td></tr>
-<tr><th scope="row">Mount Druitt Hospital</th><td>Western Sydney LHD</td><td>2</td><td>15 <small>at 19:45</small></td></tr>
-<tr><th scope="row">Blacktown Hospital</th><td>Western Sydney LHD</td><td>9</td><td>14 <small>at 22:15</small></td></tr>
-<tr><th scope="row">Ryde Hospital</th><td>Northern Sydney LHD</td><td>1</td><td>5 <small>at 21:15</small></td></tr>
-<tr><th scope="row">The Children&#x27;s Hospital at Westmead</th><td>Sydney Children&#x27;s Hospitals Specialty Network</td><td>2</td><td>16 <small>at 22:00</small></td></tr>
-<tr><th scope="row">Westmead Hospital</th><td>Western Sydney LHD</td><td>7</td><td>16 <small>at 21:15</small></td></tr>
-<tr><th scope="row">Royal North Shore Hospital</th><td>Northern Sydney LHD</td><td>7</td><td>11 <small>at 13:15</small></td></tr>
-<tr><th scope="row">Concord Repatriation General Hospital</th><td>Sydney LHD</td><td>0</td><td>12 <small>at 19:45</small></td></tr>
-<tr><th scope="row">Fairfield Hospital</th><td>South Western Sydney LHD</td><td>4</td><td>11 <small>at 18:00</small></td></tr>
-<tr><th scope="row">Auburn Hospital &amp; Community Health Services</th><td>Western Sydney LHD</td><td>1</td><td>7 <small>at 11:15</small></td></tr>
-<tr><th scope="row">Sydney Hospital &amp; Sydney Eye Hospital</th><td>South Eastern Sydney LHD</td><td>2</td><td>8 <small>at 13:15</small></td></tr>
-<tr><th scope="row">St Vincent&#x27;s Hospital</th><td>St Vincent&#x27;s Health Network</td><td>10</td><td>15 <small>at 18:15</small></td></tr>
-<tr><th scope="row">Royal Prince Alfred Hospital</th><td>Sydney LHD</td><td>10</td><td>12 <small>at 12:45</small></td></tr>
-<tr><th scope="row">Sydney Children&#x27;s Hospital</th><td>Sydney Children&#x27;s Hospitals Specialty Network</td><td>1</td><td>7 <small>at 00:15</small></td></tr>
-<tr><th scope="row">Prince of Wales Hospital</th><td>South Eastern Sydney LHD</td><td>10</td><td>14 <small>at 15:00</small></td></tr>
-<tr><th scope="row">Canterbury Hospital</th><td>Sydney LHD</td><td>12</td><td>12 <small>at 17:30</small></td></tr>
-<tr><th scope="row">Liverpool Hospital</th><td>South Western Sydney LHD</td><td>7</td><td>23 <small>at 20:45</small></td></tr>
-<tr><th scope="row">Bankstown Lidcombe Hospital</th><td>South Western Sydney LHD</td><td>5</td><td>8 <small>at 18:30</small></td></tr>
-<tr><th scope="row">St George Hospital</th><td>South Eastern Sydney LHD</td><td>7</td><td>17 <small>at 12:45</small></td></tr>
-<tr><th scope="row">Sutherland Hospital &amp; Community Health Service</th><td>South Eastern Sydney LHD</td><td>3</td><td>9 <small>at 21:45</small></td></tr>
-<tr><th scope="row">Campbelltown Hospital</th><td>South Western Sydney LHD</td><td>12</td><td>33 <small>at 22:45</small></td></tr>
-<tr><th scope="row">Griffith Base Hospital</th><td>Murrumbidgee LHD</td><td>1</td><td>8 <small>at 18:45</small></td></tr>
-<tr><th scope="row">Wollongong Hospital</th><td>Illawarra Shoalhaven LHD</td><td>6</td><td>14 <small>at 23:45</small></td></tr>
-<tr><th scope="row">Bowral Hospital</th><td>South Western Sydney LHD</td><td>3</td><td>3 <small>at 16:30</small></td></tr>
-<tr><th scope="row">Shellharbour Hospital</th><td>Illawarra Shoalhaven LHD</td><td>8</td><td>9 <small>at 21:00</small></td></tr>
-<tr><th scope="row">Goulburn Base Hospital</th><td>Southern NSW LHD</td><td>6</td><td>7 <small>at 19:15</small></td></tr>
-<tr><th scope="row">Shoalhaven Hospital</th><td>Illawarra Shoalhaven LHD</td><td>6</td><td>15 <small>at 14:30</small></td></tr>
-<tr><th scope="row">Wagga Wagga Base Hospital</th><td>Murrumbidgee LHD</td><td>5</td><td>13 <small>at 13:15</small></td></tr>
-<tr><th scope="row">Milton Ulladulla Hospital</th><td>Illawarra Shoalhaven LHD</td><td>1</td><td>2 <small>at 20:15</small></td></tr>
+<tr><th scope="row">Tweed Valley Hospital</th><td>Northern NSW LHD</td><td>0</td><td>10 <small>at 19:15</small></td></tr>
+<tr><th scope="row">Murwillumbah District Hospital</th><td>Northern NSW LHD</td><td>0</td><td>4 <small>at 18:15</small></td></tr>
+<tr><th scope="row">Lismore Base Hospital</th><td>Northern NSW LHD</td><td>4</td><td>14 <small>at 12:15</small></td></tr>
+<tr><th scope="row">Moree District Hospital</th><td>Hunter New England LHD</td><td>2</td><td>6 <small>at 17:45</small></td></tr>
+<tr><th scope="row">Grafton Base Hospital</th><td>Northern NSW LHD</td><td>3</td><td>8 <small>at 16:45</small></td></tr>
+<tr><th scope="row">Inverell District Hospital</th><td>Hunter New England LHD</td><td>3</td><td>5 <small>at 19:15</small></td></tr>
+<tr><th scope="row">Coffs Harbour Base Hospital</th><td>Mid North Coast LHD</td><td>8</td><td>16 <small>at 19:45</small></td></tr>
+<tr><th scope="row">Narrabri District Hospital</th><td>Hunter New England LHD</td><td>0</td><td>3 <small>at 17:45</small></td></tr>
+<tr><th scope="row">Armidale Rural Referral Hospital</th><td>Hunter New England LHD</td><td>3</td><td>8 <small>at 17:45</small></td></tr>
+<tr><th scope="row">Gunnedah District Hospital</th><td>Hunter New England LHD</td><td>5</td><td>7 <small>at 13:15</small></td></tr>
+<tr><th scope="row">Kempsey District Hospital</th><td>Mid North Coast LHD</td><td>1</td><td>6 <small>at 13:45</small></td></tr>
+<tr><th scope="row">Tamworth Rural Referral Hospital</th><td>Hunter New England LHD</td><td>0</td><td>13 <small>at 20:45</small></td></tr>
+<tr><th scope="row">Port Macquarie Base Hospital</th><td>Mid North Coast LHD</td><td>8</td><td>18 <small>at 20:30</small></td></tr>
+<tr><th scope="row">Manning Rural Referral Hospital (Taree)</th><td>Hunter New England LHD</td><td>4</td><td>15 <small>at 21:15</small></td></tr>
+<tr><th scope="row">Broken Hill Base Hospital</th><td>Far West LHD</td><td>1</td><td>3 <small>at 18:45</small></td></tr>
+<tr><th scope="row">Dubbo Base Hospital</th><td>Western NSW LHD</td><td>2</td><td>14 <small>at 18:30</small></td></tr>
+<tr><th scope="row">Muswellbrook Hospital</th><td>Hunter New England LHD</td><td>0</td><td>3 <small>at 16:45</small></td></tr>
+<tr><th scope="row">Singleton District Hospital</th><td>Hunter New England LHD</td><td>0</td><td>2 <small>at 12:30</small></td></tr>
+<tr><th scope="row">Cessnock District Hospital</th><td>Hunter New England LHD</td><td>0</td><td>5 <small>at 16:15</small></td></tr>
+<tr><th scope="row">Calvary Mater Newcastle</th><td>Hunter New England LHD</td><td>4</td><td>8 <small>at 19:45</small></td></tr>
+<tr><th scope="row">John Hunter Hospital (including Royal Newcastle Centre and John Hunter Children&#x27;s Hospital)</th><td>Hunter New England LHD</td><td>6</td><td>18 <small>at 20:15</small></td></tr>
+<tr><th scope="row">Belmont Hospital</th><td>Hunter New England LHD</td><td>3</td><td>7 <small>at 19:45</small></td></tr>
+<tr><th scope="row">Wyong Public Hospital</th><td>Central Coast LHD</td><td>2</td><td>14 <small>at 18:45</small></td></tr>
+<tr><th scope="row">Orange Health Service</th><td>Western NSW LHD</td><td>8</td><td>10 <small>at 19:00</small></td></tr>
+<tr><th scope="row">Bathurst Base Hospital</th><td>Western NSW LHD</td><td>0</td><td>3 <small>at 23:00</small></td></tr>
+<tr><th scope="row">Gosford Hospital</th><td>Central Coast LHD</td><td>8</td><td>27 <small>at 18:15</small></td></tr>
+<tr><th scope="row">Lithgow Integrated Health Service</th><td>Nepean Blue Mountains LHD</td><td>3</td><td>11 <small>at 19:45</small></td></tr>
+<tr><th scope="row">Hornsby Ku-ring-gai Hospital</th><td>Northern Sydney LHD</td><td>2</td><td>7 <small>at 21:15</small></td></tr>
+<tr><th scope="row">Blue Mountains District ANZAC Memorial Hospital</th><td>Nepean Blue Mountains LHD</td><td>0</td><td>4 <small>at 19:15</small></td></tr>
+<tr><th scope="row">Northern Beaches Hospital</th><td>Northern Sydney LHD</td><td>10</td><td>29 <small>at 18:45</small></td></tr>
+<tr><th scope="row">Nepean Hospital</th><td>Nepean Blue Mountains LHD</td><td>8</td><td>15 <small>at 15:30</small></td></tr>
+<tr><th scope="row">Mount Druitt Hospital</th><td>Western Sydney LHD</td><td>1</td><td>11 <small>at 19:00</small></td></tr>
+<tr><th scope="row">Blacktown Hospital</th><td>Western Sydney LHD</td><td>3</td><td>16 <small>at 16:15</small></td></tr>
+<tr><th scope="row">Ryde Hospital</th><td>Northern Sydney LHD</td><td>3</td><td>6 <small>at 17:15</small></td></tr>
+<tr><th scope="row">The Children&#x27;s Hospital at Westmead</th><td>Sydney Children&#x27;s Hospitals Specialty Network</td><td>4</td><td>11 <small>at 22:45</small></td></tr>
+<tr><th scope="row">Westmead Hospital</th><td>Western Sydney LHD</td><td>13</td><td>17 <small>at 18:15</small></td></tr>
+<tr><th scope="row">Royal North Shore Hospital</th><td>Northern Sydney LHD</td><td>4</td><td>13 <small>at 18:45</small></td></tr>
+<tr><th scope="row">Concord Repatriation General Hospital</th><td>Sydney LHD</td><td>5</td><td>9 <small>at 15:30</small></td></tr>
+<tr><th scope="row">Fairfield Hospital</th><td>South Western Sydney LHD</td><td>3</td><td>21 <small>at 23:00</small></td></tr>
+<tr><th scope="row">Auburn Hospital &amp; Community Health Services</th><td>Western Sydney LHD</td><td>8</td><td>9 <small>at 13:15</small></td></tr>
+<tr><th scope="row">Sydney Hospital &amp; Sydney Eye Hospital</th><td>South Eastern Sydney LHD</td><td>9</td><td>11 <small>at 15:15</small></td></tr>
+<tr><th scope="row">St Vincent&#x27;s Hospital</th><td>St Vincent&#x27;s Health Network</td><td>11</td><td>17 <small>at 02:45</small></td></tr>
+<tr><th scope="row">Royal Prince Alfred Hospital</th><td>Sydney LHD</td><td>11</td><td>30 <small>at 23:15</small></td></tr>
+<tr><th scope="row">Sydney Children&#x27;s Hospital</th><td>Sydney Children&#x27;s Hospitals Specialty Network</td><td>0</td><td>7 <small>at 18:45</small></td></tr>
+<tr><th scope="row">Prince of Wales Hospital</th><td>South Eastern Sydney LHD</td><td>6</td><td>10 <small>at 19:45</small></td></tr>
+<tr><th scope="row">Canterbury Hospital</th><td>Sydney LHD</td><td>2</td><td>12 <small>at 21:45</small></td></tr>
+<tr><th scope="row">Liverpool Hospital</th><td>South Western Sydney LHD</td><td>4</td><td>15 <small>at 23:00</small></td></tr>
+<tr><th scope="row">Bankstown Lidcombe Hospital</th><td>South Western Sydney LHD</td><td>2</td><td>11 <small>at 20:00</small></td></tr>
+<tr><th scope="row">St George Hospital</th><td>South Eastern Sydney LHD</td><td>3</td><td>10 <small>at 19:15</small></td></tr>
+<tr><th scope="row">Sutherland Hospital &amp; Community Health Service</th><td>South Eastern Sydney LHD</td><td>4</td><td>12 <small>at 19:00</small></td></tr>
+<tr><th scope="row">Campbelltown Hospital</th><td>South Western Sydney LHD</td><td>10</td><td>20 <small>at 15:15</small></td></tr>
+<tr><th scope="row">Griffith Base Hospital</th><td>Murrumbidgee LHD</td><td>0</td><td>5 <small>at 20:45</small></td></tr>
+<tr><th scope="row">Wollongong Hospital</th><td>Illawarra Shoalhaven LHD</td><td>1</td><td>18 <small>at 18:30</small></td></tr>
+<tr><th scope="row">Bowral Hospital</th><td>South Western Sydney LHD</td><td>4</td><td>10 <small>at 20:30</small></td></tr>
+<tr><th scope="row">Shellharbour Hospital</th><td>Illawarra Shoalhaven LHD</td><td>6</td><td>9 <small>at 20:45</small></td></tr>
+<tr><th scope="row">Goulburn Base Hospital</th><td>Southern NSW LHD</td><td>5</td><td>8 <small>at 14:30</small></td></tr>
+<tr><th scope="row">Shoalhaven Hospital</th><td>Illawarra Shoalhaven LHD</td><td>4</td><td>10 <small>at 23:15</small></td></tr>
+<tr><th scope="row">Wagga Wagga Base Hospital</th><td>Murrumbidgee LHD</td><td>4</td><td>10 <small>at 16:15</small></td></tr>
+<tr><th scope="row">Milton Ulladulla Hospital</th><td>Illawarra Shoalhaven LHD</td><td>2</td><td>6 <small>at 16:45</small></td></tr>
         </tbody>
       </table>
       </div>
